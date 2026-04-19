@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-primary: #0F0F0F;
+  --color-secondary: #FFFFFF;
+  --color-accent: #FF7A00;
+  --color-highlight: #C4FF3F;
+  --color-muted: #777777;
+  --color-bg-light: #F5F5F5;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-bg-light text-primary font-sans antialiased overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-black tracking-tight uppercase;
+  }
+}
+
+@layer components {
+  .bento-card {
+    @apply bg-white rounded-[24px] p-6 md:p-10 shadow-[0_4px_12px_rgba(0,0,0,0.03)] overflow-hidden relative;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 md:px-6 py-6;
+  }
+  
+  .btn-primary {
+    @apply flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105 active:scale-95 text-xs uppercase tracking-widest;
+  }
+  
+  .btn-accent {
+    @apply flex items-center gap-2 bg-accent text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105 active:scale-95 text-xs uppercase tracking-widest;
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.marquee-content {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  min-width: 100%;
+}
+
