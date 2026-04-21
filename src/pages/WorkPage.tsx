@@ -11,8 +11,7 @@ const WorkPage = () => {
     <div className="flex flex-col min-h-screen">
       <Helmet>
         <title>Portfolio | G. Hari Kiran - Strategic Growth Projects</title>
-        <meta name="description" content="Explore my selected work in growth marketing, SEO, and performance-driven campaigns. Case studies on scaling brands." />
-        <meta name="keywords" content="Growth Marketing Portfolio, SEO Case Studies, Digital Marketing Results, G. Hari Kiran Work, Performance Marketing India" />
+        <meta name="description" content="Explore my selected work in growth marketing, SEO, and performance-driven campaigns." />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />

@@ -23,7 +23,7 @@ const WorkingProcess = () => {
     <section className="bento-card bg-highlight/10">
       <div className="text-center">
         <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-4 block">Workflow</span>
-        <h2 className="text-4xl md:text-5xl mb-12">How I Scale Brands</h2>
+        <h2 className="text-3xl md:text-5xl mb-12">How I Scale Brands</h2>
 
         <div className="grid md:grid-cols-3 gap-8 text-left">
           {steps.map((step, index) => (

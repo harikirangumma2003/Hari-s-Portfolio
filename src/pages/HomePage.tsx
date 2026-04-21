@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { motion } from "motion/react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Marquee from "../components/Marquee";
@@ -9,64 +10,123 @@ import { TestimonialCard } from "../components/BrandsAndTestimonials";
 import Blog from "../components/Blog";
 import { Contact, Footer } from "../components/ContactFooter";
 
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { projects } from "../data/projects";
+
 const HomePage = () => {
+  const featuredProjects = projects.slice(0, 3);
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  };
+
   return (
-    <div className="flex flex-col min-h-screen pt-24">
+    <div className="flex flex-col min-h-screen pt-24 pb-12 bg-bg-light">
       <Helmet>
         <title>G. Hari Kiran | Digital Marketing Expert & Growth Strategist</title>
-        <meta name="description" content="G. Hari Kiran is a leading Digital Marketing Expert and Growth Strategist at SuMeera Solutions. Specialized in high-impact SEO, conversion-optimized SMS marketing, and data-driven retention strategies." />
-        <meta name="keywords" content="Digital Marketing Expert, Growth Strategist, SEO Specialist, SMS Marketing, Performance Marketing, G. Hari Kiran, SuMeera Solutions, Jamshedpur Blogger, India Digital Marketer" />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="G. Hari Kiran | Digital Marketing Expert & Growth Strategist" />
-        <meta property="og:description" content="Strategizing growth through data-driven SEO and high-conversion marketing engines. View my portfolio and case studies." />
-        <meta property="og:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
-        
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="G. Hari Kiran | Digital Marketing Expert & Growth Strategist" />
-        <meta property="twitter:description" content="Strategizing growth through data-driven SEO and high-conversion marketing engines. View my portfolio and case studies." />
-        <meta property="twitter:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
+        <meta name="description" content="G. Hari Kiran is a leading Digital Marketing Expert and Growth Strategist at SuMeera Solutions." />
       </Helmet>
       <Navbar />
       
       <main className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-[repeat(12,_minmax(120px,_auto))] gap-4 sm:gap-6">
-          
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-[repeat(12,_minmax(120px,_auto))] gap-4 sm:gap-6"
+        >
           {/* Hero Section */}
-          <div className="md:col-span-12 md:row-span-5 bento-card p-6 sm:p-10">
+          <motion.div variants={item} className="md:col-span-12 lg:col-span-12 md:row-span-5 bento-card p-6 sm:p-10 flex flex-col justify-center bg-white">
             <Hero />
-          </div>
+          </motion.div>
 
           {/* Skills Ticker */}
-          <div className="md:col-span-12 md:row-span-1 rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white">
+          <motion.div variants={item} className="md:col-span-12 md:row-span-1 rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white">
             <Marquee />
-          </div>
+          </motion.div>
 
           {/* Stats 1 */}
-          <div className="md:col-span-3 md:row-span-2">
-            <StatsCard value="10+" label="Brands" />
-          </div>
-
-          {/* Testimonial */}
-          <div className="md:col-span-4 md:row-span-4 rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white">
-            <TestimonialCard />
-          </div>
-
-          {/* Services */}
-          <div className="md:col-span-5 md:row-span-5 bento-card">
-            <Services />
-          </div>
+          <motion.div variants={item} className="md:col-span-6 lg:col-span-3 md:row-span-2">
+            <StatsCard value="10+" label="Global Brands" />
+          </motion.div>
 
           {/* Stats 2 */}
-          <div className="md:col-span-3 md:row-span-2">
-            <StatsCard value="98%" label="Success Rate" accent />
+          <motion.div variants={item} className="md:col-span-6 lg:col-span-3 md:row-span-2">
+            <StatsCard value="98%" label="Client Retention" accent />
+          </motion.div>
+
+          {/* Services */}
+          <motion.div variants={item} className="md:col-span-12 lg:col-span-6 md:row-span-5 bento-card overflow-visible">
+            <Services />
+          </motion.div>
+
+          {/* Testimonial */}
+          <motion.div variants={item} className="md:col-span-12 lg:col-span-12 md:row-span-4 rounded-[40px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] bg-primary text-white border border-white/5">
+            <TestimonialCard />
+          </motion.div>
+        </motion.div>
+
+        {/* Featured Projects Grid for Mobile/Tablet or Desktop Lower Section */}
+        <section className="mt-40">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8"
+          >
+            <div className="max-w-xl">
+              <span className="text-[10px] font-black uppercase tracking-[4px] text-accent mb-4 block">Selected Works</span>
+              <h2 className="text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[0.85]">Selected <br className="hidden md:block"/> Solutions</h2>
+            </div>
+            <Link to="/work" className="btn-primary group">
+              Explore All <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredProjects.map((project, i) => (
+              <motion.div
+                key={project.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.1 }}
+                className="group bento-card p-0 h-[450px] relative cursor-pointer border-none"
+              >
+                <Link to="/work" className="block h-full w-full relative overflow-hidden rounded-[40px]">
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" 
+                    referrerPolicy="no-referrer" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                  
+                  <div className="absolute bottom-10 left-10 right-10">
+                    <p className="text-[9px] font-black uppercase tracking-[2px] text-accent mb-3 block">{project.category}</p>
+                    <h3 className="text-3xl font-display font-black text-white uppercase tracking-tighter leading-none group-hover:translate-x-2 transition-transform duration-500">{project.title}</h3>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </section>
 
         {/* Supporting Sections */}
-        <div className="mt-16 sm:mt-24 space-y-24 mb-32">
+        <div className="mt-40 space-y-40 mb-32">
           <WorkingProcess />
           <Blog />
           <Contact />

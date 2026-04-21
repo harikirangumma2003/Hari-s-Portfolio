@@ -34,7 +34,6 @@ const AboutPage = () => {
       <Helmet>
         <title>About | G. Hari Kiran - Digital Consultant</title>
         <meta name="description" content="Learn more about G. Hari Kiran, a performance-driven marketing strategist helping brands bridge the gap between vision and potential." />
-        <meta name="keywords" content="G. Hari Kiran biography, Digital Marketing Strategist, SEO Expert India, Growth Marketing Philosophy, SuMeera Solutions Strategist" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="profile" />

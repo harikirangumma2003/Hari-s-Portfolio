@@ -30,53 +30,55 @@ const Navbar = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-500",
-        isScrolled ? "bg-white/80 backdrop-blur-xl shadow-lg py-4" : "bg-transparent py-8"
+        isScrolled ? "bg-white/80 backdrop-blur-xl shadow-lg py-2 md:py-4" : "bg-transparent py-4 md:py-8"
       )}
     >
       <div className="container-custom flex justify-between items-center">
         <Link 
           to="/" 
-          className="text-xl font-display font-black tracking-tighter uppercase focus:outline-none flex items-center gap-2 group"
+          className="text-lg md:text-2xl font-display font-black tracking-tighter uppercase focus:outline-none flex items-center gap-2 group"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white text-sm">H</div>
+          <div className="w-7 h-7 md:w-8 md:h-8 bg-primary rounded-lg flex items-center justify-center text-white text-[10px] md:text-sm group-hover:bg-accent transition-colors">H</div>
           <span className="group-hover:text-accent transition-colors">G. Hari Kiran</span>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              className={cn(
-                "text-[10px] font-black uppercase tracking-[2px] transition-colors relative group",
-                location.pathname === link.href ? "text-accent" : "text-primary/60 hover:text-accent"
-              )}
-            >
-              {link.name}
-              {location.pathname === link.href && (
-                 <motion.div 
-                   layoutId="nav-dot"
-                   className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent rounded-full"
-                 />
-              )}
-            </Link>
-          ))}
+          <div className="flex items-center gap-8 bg-white/50 backdrop-blur-md px-6 py-2 rounded-full border border-primary/5">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className={cn(
+                  "text-[10px] font-black uppercase tracking-[2px] transition-colors relative group py-1",
+                  location.pathname === link.href ? "text-accent" : "text-primary/60 hover:text-accent"
+                )}
+              >
+                {link.name}
+                {location.pathname === link.href && (
+                   <motion.div 
+                     layoutId="nav-pill"
+                     className="absolute -bottom-2 left-0 right-0 h-[2px] bg-accent"
+                   />
+                )}
+              </Link>
+            ))}
+          </div>
           <a
             href="mailto:harikirangumma2003@gmail.com"
-            className="bg-primary text-white text-[10px] font-black px-6 py-2.5 rounded-full hover:bg-accent transition-all hover:scale-105 active:scale-95 uppercase tracking-[2px] shadow-lg shadow-primary/10"
+            className="btn-primary !px-6 !py-2.5 !text-[10px]"
           >
-            Contact
+            Get in Touch
           </a>
         </div>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-[#faf9f6] border border-primary/5 text-primary active:scale-90 transition-transform"
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#faf9f6] border border-primary/5 text-primary active:scale-90 transition-transform"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
@@ -92,14 +94,14 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute top-full left-4 right-4 mt-4 bg-white rounded-[40px] shadow-2xl border border-primary/5 overflow-hidden md:hidden z-50 p-10"
+              className="absolute top-full left-4 right-4 mt-2 bg-white rounded-[32px] shadow-2xl border border-primary/5 overflow-hidden md:hidden z-50 p-6 sm:p-10"
             >
-              <div className="flex flex-col gap-10">
-                <span className="text-[10px] font-black uppercase tracking-[4px] text-accent opacity-50 mb-2 italic">Navigation</span>
+              <div className="flex flex-col gap-6">
+                <span className="text-[9px] font-black uppercase tracking-[3px] text-accent opacity-50 mb-1 italic">Navigation</span>
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.name}
@@ -111,7 +113,7 @@ const Navbar = () => {
                       to={link.href}
                       onClick={() => setIsMenuOpen(false)}
                       className={cn(
-                        "text-5xl font-display font-black uppercase tracking-tighter transition-all block py-2",
+                        "text-3xl font-display font-black uppercase tracking-tighter transition-all block py-1.5",
                         location.pathname === link.href ? "text-accent" : "text-primary hover:text-accent"
                       )}
                     >
@@ -124,14 +126,14 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: navLinks.length * 0.1 }}
-                  className="mt-10"
+                  className="mt-6"
                 >
                   <a
                     href="mailto:harikirangumma2003@gmail.com"
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-full bg-primary text-white py-6 rounded-3xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl active:scale-95 transition-all group"
+                    className="w-full bg-primary text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl active:scale-95 transition-all group"
                   >
-                    Let's Build Something <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    Let's Build Something <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </a>
                 </motion.div>
               </div>

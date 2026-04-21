@@ -17,7 +17,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-7xl font-display font-black tracking-tighter uppercase leading-[0.85]"
+            className="text-3xl md:text-7xl font-display font-black tracking-tighter uppercase leading-[0.85]"
           >
             Let's build the <br/> <span className="text-accent underline underline-offset-8 decoration-4">Next Big Thing</span>
           </motion.h2>
@@ -80,27 +80,27 @@ const Footer = () => {
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8 mb-24">
           {/* Brand Column */}
-          <div className="md:col-span-5">
-            <Link to="/" className="text-4xl font-display font-black tracking-tighter uppercase mb-8 block group">
+          <div className="md:col-span-5 relative group">
+            <Link to="/" className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase mb-8 block">
               Hari <span className="text-accent">.</span>
             </Link>
-            <p className="text-sm md:text-base text-white/50 leading-relaxed max-w-sm mb-10 italic">
-              A Digital Marketer & Growth Strategist architecting scalable brand systems through data, SEO, and human-centric content.
+            <p className="text-sm md:text-lg text-white/50 leading-relaxed max-w-sm mb-12 italic border-l border-accent/30 pl-6">
+              Architecting scalable brand systems through high-velocity SEO, data-driven content, and human-centric growth engines.
             </p>
             <div className="flex gap-4">
-               {/* Decorative digital status */}
-               <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                 <span className="text-[9px] font-black uppercase tracking-widest text-white/50">Open for Scale</span>
+               {/* Digital Availability Badge */}
+               <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(255,107,0,0.5)]" />
+                 <span className="text-[10px] font-black uppercase tracking-[2px] text-white/60">Currently Open for Consultation</span>
                </div>
             </div>
           </div>
           
           {/* Links Columns */}
-          <div className="md:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-12">
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block">Navigation</p>
-              <ul className="space-y-4">
+          <div className="md:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-12 pt-4">
+            <div className="space-y-8">
+              <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Navigation</p>
+              <ul className="space-y-5">
                 {[
                   { name: "Home", path: "/" },
                   { name: "About", path: "/about" },
@@ -109,41 +109,41 @@ const Footer = () => {
                   { name: "Blog", path: "/blog" }
                 ].map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">{link.name}</Link>
+                    <Link to={link.path} className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
                   </li>
                 ))}
               </ul>
             </div>
             
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block">Resources</p>
-              <ul className="space-y-4">
-                {["Case Studies", "SEO Guide", "Media Kit", "Contact"].map((item) => (
+            <div className="space-y-8">
+              <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Services</p>
+              <ul className="space-y-5">
+                {["SEO Strategy", "Market Research", "Content Audits", "Growth Hacking"].map((item) => (
                   <li key={item}>
-                    <a href="#" className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">{item}</a>
+                    <a href="#" className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</a>
                   </li>
                 ))}
               </ul>
             </div>
             
-            <div className="col-span-2 lg:col-span-1">
-              <p className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block">Philosophy</p>
-              <p className="text-[10px] font-bold uppercase leading-relaxed text-white/30 tracking-widest underline decoration-accent/20 underline-offset-8">
-                Great marketing isn't built for the moment—it's built to last.
+            <div className="col-span-2 lg:col-span-1 border-t lg:border-t-0 lg:border-l border-white/5 pt-12 lg:pt-0 lg:pl-12 space-y-8">
+              <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Mission</p>
+              <p className="text-[11px] font-bold uppercase leading-[1.8] text-white/30 tracking-widest">
+                I believe that <span className="text-white/60 italic">meaningful marketing</span> is the bridge between a visionary product and its global community. Let's build that bridge.
               </p>
             </div>
           </div>
         </div>
         
-        {/* Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-[9px] font-black uppercase tracking-widest text-white/30">
-            &copy; {currentYear} G. Hari Kiran. All Architecture Reserved.
+        {/* Final Bottom Bar */}
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[3px] text-white/20">
+          <p className="text-center md:text-left">
+            &copy; {currentYear} G. Hari Kiran. All Architecture & Intellectual Reserved.
           </p>
-          <div className="flex gap-10">
-            <a href="#" className="text-[9px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="text-[9px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors">Terms</a>
-            <a href="#" className="text-[9px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors">Security</a>
+          <div className="flex gap-12">
+            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="#" className="hover:text-white transition-colors">Attributions</a>
           </div>
         </div>
       </div>

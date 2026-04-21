@@ -11,7 +11,7 @@ const Blog = () => {
       <div className="flex justify-between items-end mb-12">
         <div>
           <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-4 block">Insights</span>
-          <h2 className="text-4xl md:text-5xl">Latest From The Studio</h2>
+          <h2 className="text-3xl md:text-5xl">Latest From The Studio</h2>
         </div>
         <Link to="/blog" className="btn-primary hidden md:flex items-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
           Browse All <ArrowRight className="ml-2" size={16}/>
