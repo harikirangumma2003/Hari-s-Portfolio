@@ -21,13 +21,13 @@ const HomePage = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="G. Hari Kiran | Digital Marketing Expert & Growth Strategist" />
         <meta property="og:description" content="Strategizing growth through data-driven SEO and high-conversion marketing engines. View my portfolio and case studies." />
-        <meta property="og:image" content="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" />
+        <meta property="og:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="G. Hari Kiran | Digital Marketing Expert & Growth Strategist" />
         <meta property="twitter:description" content="Strategizing growth through data-driven SEO and high-conversion marketing engines. View my portfolio and case studies." />
-        <meta property="twitter:image" content="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" />
+        <meta property="twitter:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
       </Helmet>
       <Navbar />
       

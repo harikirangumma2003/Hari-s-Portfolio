@@ -98,7 +98,7 @@ const Navbar = () => {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="absolute top-full left-4 right-4 mt-4 bg-white rounded-[40px] shadow-2xl border border-primary/5 overflow-hidden md:hidden z-50 p-10"
             >
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-10">
                 <span className="text-[10px] font-black uppercase tracking-[4px] text-accent opacity-50 mb-2 italic">Navigation</span>
                 {navLinks.map((link, i) => (
                   <motion.div
@@ -111,7 +111,7 @@ const Navbar = () => {
                       to={link.href}
                       onClick={() => setIsMenuOpen(false)}
                       className={cn(
-                        "text-4xl font-display font-black uppercase tracking-tighter transition-all block",
+                        "text-5xl font-display font-black uppercase tracking-tighter transition-all block py-2",
                         location.pathname === link.href ? "text-accent" : "text-primary hover:text-accent"
                       )}
                     >

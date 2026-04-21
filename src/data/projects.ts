@@ -16,7 +16,7 @@ export const projects: Project[] = [
     slug: "local-search-dominance",
     title: "Local Search Dominance",
     category: "SEO & Content",
-    image: "https://i.postimg.cc/mgGJ9vdp/Screenshot-2026-04-19-131741.png",
+    image: "https://i.postimg.cc/d3R2wZtw/Screenshot-2026-04-19-131741.png",
     description: "Achieved 300% growth in organic traffic through local SEO excellence.",
     longDescription: "For local brands, visibility is everything. The goal was to break through a crowded search landscape and position the brand at the top of search results. By implementing a targeted, content-driven SEO strategy, we transformed a single blog into a high-performing traffic asset that consistently attracts and converts local audiences.",
     tags: ["SEO", "Content Strategy", "Local Search"],

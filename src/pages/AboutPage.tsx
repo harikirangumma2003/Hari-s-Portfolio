@@ -39,13 +39,13 @@ const AboutPage = () => {
         <meta property="og:type" content="profile" />
         <meta property="og:title" content="About | G. Hari Kiran - Digital Consultant" />
         <meta property="og:description" content="Meet G. Hari Kiran, a Digital Marketer and Growth Strategist focused on building scaleable brands." />
-        <meta property="og:image" content="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" />
+        <meta property="og:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary" />
         <meta property="twitter:title" content="About | G. Hari Kiran - Digital Consultant" />
         <meta property="twitter:description" content="Meet G. Hari Kiran, a Digital Marketer and Growth Strategist focused on building scaleable brands." />
-        <meta property="twitter:image" content="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" />
+        <meta property="twitter:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -107,11 +107,11 @@ const AboutPage = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="relative aspect-square bg-[#faf9f6] rounded-[40px] overflow-hidden border border-primary/5 shadow-inner"
+              className="relative aspect-square bg-[#faf9f6] rounded-[40px] overflow-hidden border border-primary/5 shadow-inner group"
             >
-              <div className="absolute inset-0 bg-radial-[circle_at_center,_var(--color-primary)_30%,_transparent_70%] opacity-5"></div>
+              <div className="absolute inset-0 bg-radial-[circle_at_center,_var(--color-accent)_25%,_transparent_65%] opacity-10 mix-blend-overlay transition-opacity group-hover:opacity-20"></div>
               <img 
-                src="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" 
+                src="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" 
                 alt="Professional portrait of G. Hari Kiran"
                 loading="lazy"
                 decoding="async"

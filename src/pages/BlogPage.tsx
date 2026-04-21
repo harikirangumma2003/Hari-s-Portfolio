@@ -18,13 +18,13 @@ const BlogPage = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Blog | G. Hari Kiran - Digital Marketing & Growth Insights" />
         <meta property="og:description" content="Fresh insights on SEO, digital marketing, and performance growth strategies." />
-        <meta property="og:image" content="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" />
+        <meta property="og:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="Blog | G. Hari Kiran - Digital Marketing & Growth Insights" />
         <meta property="twitter:description" content="Fresh insights on SEO, digital marketing, and performance growth strategies." />
-        <meta property="twitter:image" content="https://i.postimg.cc/R0x0LnzW/Hari-Portfolio.png" />
+        <meta property="twitter:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -61,7 +61,7 @@ const BlogPage = () => {
 
           {/* Search/Filter placeholder */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-16 pb-8 border-b border-primary/5">
-            <div className="flex gap-3 overflow-x-auto pb-4 w-full md:w-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+            <div className="flex gap-3 overflow-x-auto pb-4 w-full md:w-auto -mx-5 px-5 sm:mx-0 sm:px-0 no-scrollbar">
               {["All Posts", "SEO", "Social Media", "Growth"].map((cat) => (
                 <button 
                   key={cat}
