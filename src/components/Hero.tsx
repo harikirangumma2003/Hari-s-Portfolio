@@ -8,8 +8,8 @@ const Hero = () => {
     <div className="h-full flex flex-col justify-center py-10 md:py-0">
       <div className="relative z-10 text-center md:text-left">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           className="mb-4"
         >

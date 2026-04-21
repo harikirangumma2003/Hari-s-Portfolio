@@ -15,7 +15,7 @@ const HomePage = () => {
       <Helmet>
         <title>G. Hari Kiran | Digital Marketing Expert & Growth Strategist</title>
         <meta name="description" content="G. Hari Kiran is a leading Digital Marketing Expert and Growth Strategist at SuMeera Solutions. Specialized in high-impact SEO, conversion-optimized SMS marketing, and data-driven retention strategies." />
-        <meta name="keywords" content="Digital Marketing Expert, Growth Strategist, SEO Specialist, SMS Marketing, Performance Marketing, G. Hari Kiran, SuMeera Solutions" />
+        <meta name="keywords" content="Digital Marketing Expert, Growth Strategist, SEO Specialist, SMS Marketing, Performance Marketing, G. Hari Kiran, SuMeera Solutions, Jamshedpur Blogger, India Digital Marketer" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />

@@ -3,6 +3,7 @@ import { ArrowLeft, Briefcase, Calendar, MapPin, ExternalLink } from "lucide-rea
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Footer } from "../components/ContactFooter";
+import { Helmet } from "react-helmet-async";
 
 const experiences = [
   {
@@ -84,6 +85,21 @@ const experiences = [
 const ExperiencePage = () => {
   return (
     <div className="flex flex-col min-h-screen">
+      <Helmet>
+        <title>Experience | G. Hari Kiran - Professional Journey</title>
+        <meta name="description" content="Detailed professional experience of G. Hari Kiran in digital marketing, SEO, and business development across global and local brands." />
+        <meta name="keywords" content="G. Hari Kiran Resume, Professional Marketing Experience, SEO Specialist SuMeera Solutions, Digital Marketing Specialist Jamshedpur" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Experience | G. Hari Kiran - Professional Journey" />
+        <meta property="og:description" content="A history of driving measurable growth and marketing excellence." />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Experience | G. Hari Kiran - Professional Journey" />
+        <meta name="twitter:description" content="A history of driving measurable growth and marketing excellence." />
+      </Helmet>
       <Navbar />
       
       <main className="flex-grow pt-32 pb-24">
