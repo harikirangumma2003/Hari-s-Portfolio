@@ -33,14 +33,14 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen pt-24 pb-12 bg-bg-light">
+    <div className="flex flex-col min-h-screen pt-24 bg-bg-light">
       <Helmet>
         <title>G. Hari Kiran | Digital Marketing Expert & Growth Strategist</title>
         <meta name="description" content="G. Hari Kiran is a leading Digital Marketing Expert and Growth Strategist at SuMeera Solutions." />
       </Helmet>
       <Navbar />
       
-      <main className="container-custom">
+      <main className="container-custom flex-grow">
         <motion.div 
           variants={container}
           initial="hidden"
@@ -139,7 +139,7 @@ const HomePage = () => {
         </section>
 
         {/* Supporting Sections */}
-        <div className="mt-40 space-y-40 mb-20 lg:mb-40">
+        <div className="mt-40 space-y-40 mb-12">
           <WorkingProcess />
           <Blog />
           <Contact />

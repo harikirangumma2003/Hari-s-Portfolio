@@ -81,6 +81,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-primary text-white pt-24 md:pt-32 pb-12 overflow-hidden relative">
+      {/* Extension for mobile overscroll */}
+      <div className="absolute top-full left-0 right-0 h-screen bg-primary -z-10" />
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8 mb-20 md:mb-24">
           {/* Brand Column */}
