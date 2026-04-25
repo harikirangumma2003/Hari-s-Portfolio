@@ -115,13 +115,18 @@ const AboutPage = () => {
                 alt="Professional portrait of G. Hari Kiran"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute bottom-8 left-8 right-8 bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-xl">
+              <div className="absolute bottom-8 left-8 right-8 bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-xl hidden md:block">
                 <p className="font-display font-black text-primary uppercase text-sm tracking-tight text-center">"Great marketing isn’t built for the moment—it’s built to last."</p>
               </div>
             </motion.div>
+          </div>
+
+          {/* Abstract Desktop Element */}
+          <div className="absolute top-[20%] right-[-5%] text-[15vw] font-black text-primary/[0.02] uppercase tracking-tighter -z-10 pointer-events-none hidden xl:block select-none">
+            Strategy
           </div>
 
           {/* Milestone Gallery */}

@@ -75,24 +75,36 @@ const Contact = () => {
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-primary text-white pt-32 pb-12 overflow-hidden">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8 mb-24">
+    <footer className="bg-primary text-white pt-24 md:pt-32 pb-12 overflow-hidden relative">
+      <div className="container-custom relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8 mb-20 md:mb-24">
           {/* Brand Column */}
           <div className="md:col-span-5 relative group">
-            <Link to="/" className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase mb-8 block">
+            <Link to="/" className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase mb-6 md:mb-8 block">
               Hari <span className="text-accent">.</span>
             </Link>
-            <p className="text-sm md:text-lg text-white/50 leading-relaxed max-w-sm mb-12 italic border-l border-accent/30 pl-6">
+            <p className="text-sm md:text-lg text-white/50 leading-relaxed max-w-sm mb-10 md:mb-12 italic border-l border-accent/30 pl-6">
               Architecting scalable brand systems through high-velocity SEO, data-driven content, and human-centric growth engines.
             </p>
-            <div className="flex gap-4">
+            
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                {/* Digital Availability Badge */}
                <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(255,107,0,0.5)]" />
-                 <span className="text-[10px] font-black uppercase tracking-[2px] text-white/60">Currently Open for Consultation</span>
+                 <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-white/60">Open for Consultation</span>
                </div>
+               
+               <button 
+                onClick={scrollToTop}
+                className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[2px] text-white/40 hover:text-accent transition-colors group/top"
+               >
+                 Back to top <ArrowUpRight size={14} className="-rotate-45 group-hover/top:translate-y-[-2px] transition-transform" />
+               </button>
             </div>
           </div>
           
@@ -109,7 +121,7 @@ const Footer = () => {
                   { name: "Blog", path: "/blog" }
                 ].map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
+                    <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -120,7 +132,7 @@ const Footer = () => {
               <ul className="space-y-5">
                 {["SEO Strategy", "Market Research", "Content Audits", "Growth Hacking"].map((item) => (
                   <li key={item}>
-                    <a href="#" className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</a>
+                    <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</a>
                   </li>
                 ))}
               </ul>
@@ -147,6 +159,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      
+      {/* Background Graphic elements for visual weight */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
     </footer>
   );
 };
