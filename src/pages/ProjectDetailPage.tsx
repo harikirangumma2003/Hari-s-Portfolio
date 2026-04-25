@@ -92,7 +92,6 @@ const ProjectDetailPage = () => {
               loading="lazy"
               decoding="async"
               className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
           </motion.div>

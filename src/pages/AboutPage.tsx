@@ -77,7 +77,7 @@ const AboutPage = () => {
           </Link>
 
           {/* Hero Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -115,8 +115,7 @@ const AboutPage = () => {
                 alt="Professional portrait of G. Hari Kiran"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-all duration-700 hover:scale-[1.02]"
               />
               <div className="absolute bottom-8 left-8 right-8 bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-xl hidden md:block">
                 <p className="font-display font-black text-primary uppercase text-sm tracking-tight text-center">"Great marketing isn’t built for the moment—it’s built to last."</p>

@@ -88,7 +88,7 @@ const BlogPostPage = () => {
       <Navbar />
       
       <main className="flex-grow pt-32 pb-24">
-        <article className="container-custom max-w-4xl">
+        <article className="container-custom max-w-3xl">
           {/* Back Navigation */}
           <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group">
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
@@ -178,14 +178,9 @@ const BlogPostPage = () => {
           </div>
 
           {/* Post Content */}
-          <div className="prose prose-xl prose-primary mx-auto max-w-none">
+          <div className="mx-auto mt-16 px-4 sm:px-0">
             <div 
               className="markdown-content"
-              style={{
-                fontSize: '1.125rem',
-                lineHeight: '1.8',
-                color: 'var(--color-primary)',
-              }}
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>

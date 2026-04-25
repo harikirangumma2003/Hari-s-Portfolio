@@ -67,18 +67,17 @@ const HomePage = () => {
             <StatsCard value="98%" label="Client Retention" accent />
           </motion.div>
 
-          {/* Desktop Showcase Image */}
-          <motion.div variants={item} className="hidden lg:block lg:col-span-3 lg:row-span-5 rounded-[40px] overflow-hidden group relative">
+          {/* Desktop Showcase Image - Local Search Dominance */}
+          <motion.div variants={item} className="hidden md:block md:col-span-6 lg:col-span-3 md:row-span-5 rounded-[40px] overflow-hidden group relative border border-primary/5 shadow-xl">
             <img 
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200" 
-              alt="Strategic Planning" 
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-              referrerPolicy="no-referrer"
+              src="https://i.postimg.cc/d3R2wZtw/Screenshot-2026-04-19-131741.png" 
+              alt="Local Search Dominance Project" 
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60" />
             <div className="absolute bottom-8 left-8">
-              <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-2 block">Our Workspace</span>
-              <p className="text-white text-xs font-bold uppercase tracking-tight">Designing Scaleable<br/>Marketing Engines</p>
+              <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-2 block">Case Study</span>
+              <p className="text-white text-xs font-bold uppercase tracking-tight">Local Search<br/>Dominance</p>
             </div>
           </motion.div>
 
@@ -125,8 +124,7 @@ const HomePage = () => {
                   <img 
                     src={project.image} 
                     alt={project.title} 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" 
-                    referrerPolicy="no-referrer" 
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
                   
