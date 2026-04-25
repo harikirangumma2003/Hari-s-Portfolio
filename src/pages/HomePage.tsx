@@ -70,7 +70,7 @@ const HomePage = () => {
           {/* Desktop Showcase Image - Local Search Dominance */}
           <motion.div variants={item} className="hidden md:block md:col-span-6 lg:col-span-3 md:row-span-5 rounded-[40px] overflow-hidden group relative border border-primary/5 shadow-xl">
             <img 
-              src="https://i.postimg.cc/d3R2wZtw/Screenshot-2026-04-19-131741.png" 
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" 
               alt="Local Search Dominance Project" 
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             />
