@@ -111,7 +111,7 @@ const AboutPage = () => {
             >
               <div className="absolute inset-0 bg-radial-[circle_at_center,_var(--color-accent)_25%,_transparent_65%] opacity-10 mix-blend-overlay transition-opacity group-hover:opacity-20"></div>
               <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
+                src="https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png"
                 alt="Professional portrait of G. Hari Kiran"
                 loading="lazy"
                 decoding="async"
