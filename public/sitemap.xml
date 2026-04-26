@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Pages -->
+  <url>
+    <loc>https://harikiran.marketing/</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/work</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/about</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/experience</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/blog</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Projects -->
+  <url>
+    <loc>https://harikiran.marketing/work/local-search-dominance</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/work/sms-conversion-engine</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/work/viral-brand-campaign</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/work/b2b-lead-engine</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://harikiran.marketing/blog/sumeera-solutions-osha-compliance-software</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/blog/rank-higher-google-organically</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/blog/facebook-marketing-small-businesses</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://harikiran.marketing/blog/organic-seo-services</loc>
+    <lastmod>2026-04-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+</urlset>
