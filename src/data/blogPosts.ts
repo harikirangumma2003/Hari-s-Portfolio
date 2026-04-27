@@ -7,9 +7,121 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   keywords: string[];
+  author?: {
+    name: string;
+    role: string;
+    image?: string;
+  };
 }
 
+export const categories = [
+  "Digital Marketing",
+  "SEO",
+  "Email Marketing",
+  "Growth",
+  "Compliance",
+  "Retention"
+];
+
 export const blogPosts: BlogPost[] = [
+  {
+    title: "Why Workplace Compliance Software is Critical for Modern Business Growth",
+    slug: "workplace-compliance-software-modern-business",
+    category: "Compliance",
+    date: "Apr 27, 2026",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format,compress&q=80&w=1200&fm=webp",
+    excerpt: "Tired of tracking OSHA logs and safety audits in spreadsheets? Learn how workplace compliance software automates risks, saves time, and prevents costly fines.",
+    content: `
+      <h2>The Hidden Cost of Manual Compliance</h2>
+      <p>For many businesses, "compliance" is a dreaded word that involves dusty filing cabinets, complex spreadsheets, and the constant fear of a surprise audit. But in today’s high-stakes regulatory environment, manual tracking isn't just slow—it's dangerous.</p>
+      
+      <p>When you rely on manual entries, you're one human error away from a five-figure fine. This is where <strong>workplace compliance software</strong> transitions from a "nice-to-have" to a mission-critical asset.</p>
+
+      <blockquote>
+        Featured Snippet: <strong>Workplace compliance software</strong> is a digital platform designed to automate the tracking, reporting, and management of regulatory requirements (like OSHA, HIPAA, or ISO). By digitizing logs and incident reports, businesses reduce legal risk by up to 60% and save hundreds of administrative hours per year.
+      </blockquote>
+
+      <h2>What Exactly is Workplace Compliance Software?</h2>
+      <p>Think of it as the "Source of Truth" for your organization’s safety and legal standing. It replaces fragmented paper trails with a centralized, cloud-based dashboard. Whether you are managing <a href="/blog/sumeera-solutions-osha-compliance-software">OSHA logs</a> or tracking employee certifications, the software ensures everything is documented in real-time.</p>
+      
+      <h2>5 Benefits of Switching to Digital Compliance Management</h2>
+      
+      <h3>1. Instant Audit Readiness</h3>
+      <p>A surprise inspection shouldn't cause a panic. With the right software, every required document is just a few clicks away. You can generate reports in seconds, demonstrating transparency and control to any regulatory body.</p>
+
+      <h3>2. Automated Reporting (OSHA 300, 301, 300A)</h3>
+      <p>Manual reporting is the leading cause of "ghost violations"—penalties issued for clerical errors rather than actual safety issues. Software automates these forms, ensuring that every field is validated before submission.</p>
+
+      <h3>3. Real-Time Risk Identification</h3>
+      <p>Predictive analytics in <strong>workplace compliance software</strong> can identify patterns in incident reports. If a specific warehouse location shows a spike in minor injuries, the system alerts you to intervene before a major accident occurs.</p>
+
+      <h3>4. Centralized Data Architecture</h3>
+      <p>No more hunting through emails or local server folders. Every permit, log, and training record lives in one place, accessible from any device. This is especially critical for scaling businesses as we discussed in our <a href="/blog/organic-seo-services">brand scaling guide</a>.</p>
+
+      <h3>5. Significant ROI and Cost Savings</h3>
+      <p>The average OSHA fine for a "serious" violation is over $15,000. For "willful" or "repeated" violations, that number jumps to over $150,000. Compliance software pays for itself by preventing a single citation.</p>
+
+      <h2>Comparison: Manual vs. Software-Based Compliance</h2>
+      <div class="overflow-x-auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Manual Spreadsheets</th>
+              <th>Workplace Compliance Software</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Data Entry</strong></td>
+              <td>Human-dependent (slow)</td>
+              <td>Automated / Validated (fast)</td>
+            </tr>
+            <tr>
+              <td><strong>Audit Prep</strong></td>
+              <td>Days or Weeks</td>
+              <td>Minutes</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Alerts</strong></td>
+              <td>None</td>
+              <td>Predictive & Real-time</td>
+            </tr>
+            <tr>
+              <td><strong>Storage</strong></td>
+              <td>Physical/Fragmented</td>
+              <td>Cloud-based/Centralized</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>How to Choose the Right Software for Your Business</h2>
+      <p>Not all platforms are created equal. When evaluating a <strong>workplace compliance software</strong>, look for these three pillars:</p>
+      <ul>
+        <li><strong>Ease of Use:</strong> If your team finds it too complex, they won't use it, and your data will be incomplete.</li>
+        <li><strong>Mobile Accessibility:</strong> Safety happens on the floor, not in the back office. Look for mobile-first designs.</li>
+        <li><strong>Integration:</strong> It should talk to your existing HR and payroll systems to sync employee data automatically.</li>
+      </ul>
+
+      <p>Need help scaling your SaaS product or reaching more B2B clients? Check out my <a href="/work/b2b-lead-engine">B2B Lead Engine case study</a> to see how we drive high-intent traffic.</p>
+
+      <h2>FAQs for Workplace Compliance</h2>
+      <p><strong>❓ Is workplace compliance software expensive?</strong></p>
+      <p>Most platforms use a subscription model (SaaS). While there is a monthly cost, it is significantly cheaper than the legal fees and fines associated with non-compliance.</p>
+
+      <p><strong>❓ Can I migrate my existing spreadsheets?</strong></p>
+      <p>Yes, most modern solutions like <a href="/blog/sumeera-solutions-osha-compliance-software">Sumeera Solutions</a> allow for easy CSV or Excel imports to get you started quickly.</p>
+
+      <p><strong>❓ Does it work for small businesses?</strong></p>
+      <p>Absolutely. Small businesses are often more vulnerable to fines because they lack dedicated compliance officers. Software acts as a virtual compliance department.</p>
+    `,
+    keywords: ["Workplace compliance software", "OSHA log automation", "Safety compliance", "Regulatory reporting"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
+  },
   {
     title: "Sumeera Solutions: The Smart Way to Manage OSHA Compliance & Avoid Costly Fines",
     slug: "sumeera-solutions-osha-compliance-software",
@@ -133,7 +245,83 @@ export const blogPosts: BlogPost[] = [
       <p><strong>❓ How does Sumeera Solutions prevent OSHA fines?</strong></p>
       <p>By automating logs, detecting errors, and ensuring timely compliance.</p>
     `,
-    keywords: ["OSHA Compliance", "Sumeera Solutions", "Workplace Safety", "OSHA Logs", "Compliance Software"]
+    keywords: ["OSHA Compliance", "Sumeera Solutions", "Workplace Safety", "OSHA Logs", "Compliance Software"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
+  },
+  {
+    title: "Retention Marketing: The Secret Sauce to Sustainable Growth",
+    slug: "retention-marketing-sustainable-growth",
+    category: "Retention",
+    date: "Apr 24, 2026",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format,compress&q=80&w=1200&fm=webp",
+    excerpt: "Acquisition is expensive. Retention is profitable. Learn why focusing on your existing customers is the most effective growth strategy today.",
+    content: `
+      <h2>Why Retention is the New Acquisition</h2>
+      <p>In a world where CAC (Customer Acquisition Cost) is skyrocketing, businesses that rely solely on new customers are destined to struggle. Retention marketing is the practice of engaging existing customers to ensure they return, buy more, and become brand advocates.</p>
+      
+      <p>It's not just about keeping customers; it's about increasing their <strong>Lifetime Value (LTV)</strong>. As we discussed in our <a href="/blog/rank-higher-google-organically">SEO guide</a>, driving traffic is only the first step. Converting and keeping that traffic is where the real profit lies.</p>
+
+      <h3>The Economics of Retention</h3>
+      <ul>
+        <li>Increasing retention by 5% can increase profits by 25% to 95%.</li>
+        <li>It is 5-25x more expensive to acquire a new customer than to keep an existing one.</li>
+        <li>Existing customers are 50% more likely to try new products.</li>
+      </ul>
+
+      <h3>3 Retention Strategies You Can Implement Today</h3>
+      <h4>1. Personalized Win-back Campaigns</h4>
+      <p>Identify customers who haven't purchased in a while and send them a personalized offer. This is often done effectively through <a href="/blog/sumeera-solutions-osha-compliance-software">automated systems</a> that trigger based on user behavior.</p>
+
+      <h4>2. Loyalty Programs That Actually Add Value</h4>
+      <p>Don't just offer points. Offer exclusive access, early releases, or personalized features that make the user feel like a VIP.</p>
+
+      <h4>3. Exceptional Post-Purchase Experience</h4>
+      <p>The journey doesn't end at the "Buy" button. Clear communication, fast shipping updates, and helpful onboarding are critical.</p>
+
+      <p>Want to see how I scale retention for global brands? Check out my <a href="/work">Work portfolio</a>.</p>
+    `,
+    keywords: ["Retention Marketing", "LTV", "Growth Strategy", "Customer Loyalty"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
+  },
+  {
+    title: "How to Build a High-Converting Email Newsletter",
+    slug: "high-converting-email-newsletter-guide",
+    category: "Email Marketing",
+    date: "Apr 23, 2026",
+    image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format,compress&q=80&w=1200&fm=webp",
+    excerpt: "Email marketing isn't dead—it's evolving. Discover the framework for creating newsletters that your audience actually wants to read.",
+    content: `
+      <h2>The Anatomy of a Perfect Newsletter</h2>
+      <p>Despite the rise of social media, email remains the most direct and personal way to reach your audience. A well-crafted newsletter can drive consistent traffic and conversions without the volatility of search engine algorithms.</p>
+      
+      <p>However, most companies treat email as a megaphone rather than a conversation. To succeed, you must balance value with promotion.</p>
+
+      <h3>1. The "Hook" Subject Line</h3>
+      <p>If they don't open, nothing else matters. Use curiosity, urgency, or extreme benefit to get the click. Avoid "salesy" language that triggers spam filters.</p>
+
+      <h3>2. Value-First Content</h3>
+      <p>Follow the 80/20 rule: 80% education/entertainment, 20% promotion. If you consistently provide value (like our tips on <a href="/blog/rank-higher-google-organically">organic SEO</a>), your audience will forgive the occasional pitch.</p>
+
+      <h3>3. One Clear Call to Action (CTA)</h3>
+      <p>Don't confuse your readers with 10 different links. Tell them exactly what to do next. Whether it's reading a new blog post or checking out a <a href="/work/sms-conversion-engine">new case study</a>, keep it focused.</p>
+
+      <h3>Segment for Success</h3>
+      <p>The secret to high open rates is relevance. Segment your list based on demographics, behavior, or interests. A health center (similar to those using <a href="/blog/sumeera-solutions-osha-compliance-software">OSHA software</a>) shouldn't send the same email to a marathon runner and a yoga beginner.</p>
+
+      <h2>Final Thoughts</h2>
+      <p>Email is a marathon, not a sprint. Focus on building trust over time, and the conversions will follow naturally.</p>
+    `,
+    keywords: ["Email Marketing", "Newsletter Strategy", "Conversion Optimization", "Copywriting"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
   },
   {
     title: "9 Simple Steps How To Rank Higher On Google Organically",
@@ -173,46 +361,71 @@ export const blogPosts: BlogPost[] = [
       
       <p>Stay tuned for more deep dives into technical SEO and content strategy. For more details, you can visit our <a href="/about">About page</a> to see how we help brands grow.</p>
     `,
-    keywords: ["SEO", "Google Ranking", "Organic Growth", "Digital Marketing"]
+    keywords: ["SEO", "Google Ranking", "Organic Growth", "Digital Marketing"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
   },
   {
-    title: "09 Facebook Marketing Tips for Small Businesses",
+    title: "How Small Businesses Can Win Big on Facebook Marketing",
     slug: "facebook-marketing-small-businesses",
-    category: "Social Media",
-    date: "Dec 31, 2025",
-    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format,compress&q=80&w=1200&fm=webp",
-    excerpt: "Maximizing your reaching on Facebook doesn't require a massive budget. Here is how small businesses can win.",
+    category: "Digital Marketing",
+    date: "Apr 20, 2026",
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format,compress&q=80&w=1200&fm=webp",
+    excerpt: "You don't need a million-dollar budget to see results from Facebook. Learn the targeted strategies that drive real business growth.",
     content: `
-      <h2>Facebook for Growth</h2>
-      <p>Facebook remains one of the most powerful tools for local businesses. Here are 9 tips to help you scale your engagement.</p>
+      <h2>Facebook Marketing in 2026: The Strategy</h2>
+      <p>The days of 'post and pray' are over. Facebook is now a pay-to-play platform, but that doesn't mean it's only for the big players. For small businesses, the key is <strong>Hyper-Local Targeting</strong> and <strong>High-Engagement Content</strong>.</p>
       
-      <h3>Focus on Community</h3>
-      <p>People are on social media to be social. Focus on building a community around your brand rather than just broadcasting sales messages.</p>
-      
-      <h3>Use Video Content</h3>
-      <p>The Facebook algorithm heavily favors video content, especially short-form reels. Try to post at least two reels a week showing behind-the-scenes of your business.</p>
-      
-      <p>Marketing is about consistency and testing. What works today might change tomorrow, so stay agile.</p>
+      <p>In our <a href="/blog/rank-higher-google-organically">SEO guide</a>, we talked about search intent. On Facebook, it's about <em>creating</em> intent through discovery.</p>
+
+      <h3>1. Use Custom Audiences</h3>
+      <p>Upload your customer email list to Facebook and create a 'Lookalike Audience'. This allows the algorithm to find people similar to your best customers.</p>
+
+      <h3>2. Video is Non-Negotiable</h3>
+      <p>Short-form vertical video (Reels) currently receives the highest organic reach on the platform. Even a simple behind-the-scenes video can outperform a polished static ad.</p>
+
+      <h3>3. The Power of "Community"</h3>
+      <p>Don't just run ads. Engage in local groups and build a profile that provides value. A business that helps its community is a business that grows.</p>
+
+      <p>Curious about actual results? See my <a href="/work/viral-brand-campaign">Push Campaign case study</a> for high-engagement tactics.</p>
     `,
-    keywords: ["Facebook Marketing", "Social Media Strategy", "Small Business Growth"]
+    keywords: ["Facebook Ads", "Small Business", "Social Media Marketing", "Digital Growth"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
   },
   {
-    title: "Organic SEO Services for your Business",
+    title: "Why You Need Organic SEO Services to Scale Your Brand",
     slug: "organic-seo-services",
     category: "SEO",
-    date: "Dec 31, 2025",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format,compress&q=80&w=1200&fm=webp",
-    excerpt: "Why professional SEO services are the better long-term investment compared to temporary paid ads.",
+    date: "Apr 18, 2026",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=1200&fm=webp",
+    excerpt: "Is SEO still worth it? Absolutely. Discover why organic search is still the highest-ROI channel for long-term brand building.",
     content: `
-      <h2>Why Organic SEO?</h2>
-      <p>Paid ads stop the moment you stop paying. Organic SEO builds an asset that grows in value over time.</p>
+      <h2>The Long Game of Digital Marketing</h2>
+      <p>SEO isn't a quick fix; it's an investment. While ads stop working the second you stop paying, SEO continues to deliver traffic for years. This is the cornerstone of sustainable growth.</p>
       
-      <h3>Building Authority</h3>
-      <p>SEO services focus on building your brand's authority in its niche. This includes backlink building, technical site performance, and content clusters.</p>
-      
-      <h3>Cost Effectiveness</h3>
-      <p>While SEO takes time, the cost per lead over a 12-month period is often significantly lower than PPC when done correctly.</p>
+      <p>As I mentioned in my <a href="/blog/retention-marketing-sustainable-growth">retention marketing post</a>, keeping customers is key, but you need a steady stream of <em>new</em>, high-intent users to feed the top of your funnel.</p>
+
+      <h3>The SEO ROI Formula</h3>
+      <p>Organic search often has a higher conversion rate than paid search because users trust organic results more. When you rank on page one, you aren't just getting traffic; you're getting <strong>credibility</strong>.</p>
+
+      <h3>What Professional SEO Services Actually Do</h3>
+      <ul>
+        <li><strong>Structural Audit:</strong> Ensuring Google can crawl and index your site without errors.</li>
+        <li><strong>Semantic Content Creation:</strong> Writing content that answers questions, not just hits keywords.</li>
+        <li><strong>Authority Building:</strong> Earning mentions from reputable sites in your industry.</li>
+      </ul>
+
+      <p>Scaling a brand requires a multi-channel approach. See how I combined <a href="/work/local-search-dominance">Local SEO and content</a> to drive 300% growth.</p>
     `,
-    keywords: ["SEO Services", "Business Growth", "Inbound Marketing"]
+    keywords: ["SEO Services", "Organic Growth", "Brand Building", "Search Marketing"],
+    author: {
+      name: "G. Hari Kiran",
+      role: "Growth Strategist"
+    }
   }
 ];

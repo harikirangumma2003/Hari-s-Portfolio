@@ -1,16 +1,29 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight } from "lucide-react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Footer } from "../components/ContactFooter";
 import { blogPosts } from "../data/blogPosts";
-import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { SEO } from "../components/SEO";
+import { useState, useMemo } from "react";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
   const post = blogPosts.find((p) => p.slug === slug);
   const [isCopied, setIsCopied] = useState(false);
+
+  // Find related posts - same category first, then most recent
+  const relatedPosts = useMemo(() => {
+    if (!post) return [];
+    return blogPosts
+      .filter(p => p.slug !== slug)
+      .sort((a, b) => {
+        if (a.category === post.category && b.category !== post.category) return -1;
+        if (b.category === post.category && b.category !== post.category) return 1;
+        return 0;
+      })
+      .slice(0, 3);
+  }, [slug, post]);
 
   if (!post) {
     return <Navigate to="/blog" replace />;
@@ -50,40 +63,39 @@ const BlogPostPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Helmet>
-        <title>{post.title} | G. Hari Kiran Blog</title>
-        <meta name="description" content={post.excerpt} />
-        <meta name="keywords" content={post.keywords.join(", ")} />
-        {/* Open Graph */}
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={post.image} />
-        <meta property="og:type" content="article" />
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.excerpt} />
-        <meta name="twitter:image" content={post.image} />
-        {/* Article Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "headline": post.title,
-            "image": post.image,
-            "datePublished": post.date,
-            "author": {
-              "@type": "Person",
-              "name": "G. Hari Kiran"
-            },
-            "description": post.excerpt,
-            "mainEntityOfPage": {
-              "@type": "WebPage",
-              "@id": shareUrl
-            }
-          })}
-        </script>
-      </Helmet>
+      <SEO 
+        title={post.title}
+        description={post.excerpt}
+        image={post.image}
+        url={`/blog/${post.slug}`}
+        type="article"
+        articleData={{
+          publishedTime: post.date,
+          author: "G. Hari Kiran",
+          tags: post.keywords
+        }}
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "image": post.image,
+          "datePublished": post.date,
+          "author": {
+            "@type": "Person",
+            "name": "G. Hari Kiran",
+            "url": "https://harikiran.marketing/about"
+          },
+          "description": post.excerpt,
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": shareUrl
+          },
+          "publisher": {
+            "@type": "Person",
+            "name": "G. Hari Kiran"
+          }
+        }}
+      />
 
       <Navbar />
       
@@ -260,17 +272,17 @@ const BlogPostPage = () => {
         <section className="container-custom mt-32">
           <h3 className="text-3xl font-display font-black uppercase mb-12">More to <span className="text-accent">Read</span></h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.filter(p => p.slug !== slug).slice(0, 3).map((related, i) => (
+            {relatedPosts.map((related, i) => (
               <motion.div
                 key={related.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group bento-card border border-primary/5 hover:border-accent/30 transition-all overflow-hidden"
+                className="group flex flex-col h-full bento-card border border-primary/5 hover:border-accent/30 transition-all overflow-hidden"
               >
-                  <Link to={`/blog/${related.slug}`}>
-                    <div className="relative aspect-[16/9] mb-4 overflow-hidden rounded-2xl">
+                  <Link to={`/blog/${related.slug}`} className="flex flex-col h-full">
+                    <div className="relative aspect-[16/9] mb-6 overflow-hidden rounded-2xl">
                        <img 
                          src={related.image} 
                          alt={`Related post: ${related.title}`} 
@@ -279,10 +291,26 @@ const BlogPostPage = () => {
                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                          referrerPolicy="no-referrer" 
                        />
+                       <div className="absolute top-3 left-3 bg-accent text-white px-2 py-1 rounded-full text-[8px] font-black font-display uppercase tracking-widest z-10">
+                        {related.category}
+                      </div>
                     </div>
-                    <h4 className="text-lg font-display font-black uppercase leading-tight group-hover:text-accent transition-colors truncate">
-                      {related.title}
-                    </h4>
+                    <div className="flex flex-col flex-grow">
+                      <h4 className="text-lg font-display font-black uppercase leading-tight group-hover:text-accent transition-colors line-clamp-2 mb-4">
+                        {related.title}
+                      </h4>
+                      <p className="text-xs text-muted line-clamp-2 mb-6 flex-grow leading-relaxed">
+                        {related.excerpt}
+                      </p>
+                      <div className="flex items-center justify-between pt-4 border-t border-primary/5 mt-auto">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-muted italic">
+                          {related.date}
+                        </div>
+                        <div className="text-accent group-hover:translate-x-1 transition-transform">
+                          <ArrowRight size={14} />
+                        </div>
+                      </div>
+                    </div>
                   </Link>
               </motion.div>
             ))}
