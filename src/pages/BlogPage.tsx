@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Search, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Footer } from "../components/ContactFooter";
+import { Newsletter } from "../components/Newsletter";
 import { blogPosts, categories } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 
@@ -144,27 +145,7 @@ const BlogPage = () => {
           </div>
 
           {/* Newsletter / CTA */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-32 p-12 rounded-[40px] bg-[#faf9f6] border border-primary/5 flex flex-col md:flex-row justify-between items-center gap-12"
-          >
-            <div className="max-w-md">
-              <h3 className="text-3xl font-display font-black uppercase leading-tight mb-4">Get growth hacks in your inbox.</h3>
-              <p className="text-muted text-sm uppercase font-bold tracking-widest opacity-70">No spam. Only high-signal marketing insights.</p>
-            </div>
-            <div className="flex w-full md:w-auto gap-2">
-              <input 
-                type="email" 
-                placeholder="EMAIL ADDRESS" 
-                className="flex-grow md:w-64 px-6 py-4 rounded-full bg-white border border-primary/10 text-[10px] font-black uppercase tracking-widest focus:border-accent outline-none"
-              />
-              <button className="bg-primary text-white px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-accent transition-all shrink-0 shadow-lg">
-                Subscribe
-              </button>
-            </div>
-          </motion.div>
+          <Newsletter />
         </div>
       </main>
 

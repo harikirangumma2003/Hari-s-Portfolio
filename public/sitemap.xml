@@ -56,8 +56,13 @@
 
   <!-- Blog Posts -->
   <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/compliease-osha-log-management-software</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/workplace-compliance-software-modern-business</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-04-30</lastmod>
     <priority>0.7</priority>
   </url>
   <url>

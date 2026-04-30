@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as Linke
 import { Link, useParams, Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Footer } from "../components/ContactFooter";
+import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 import { useState, useMemo } from "react";
@@ -265,6 +266,8 @@ const BlogPostPage = () => {
                 </Link>
               </div>
             </div>
+
+            <Newsletter />
           </footer>
         </article>
 
