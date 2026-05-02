@@ -54,7 +54,7 @@ const BlogPage = () => {
               The <span className="text-accent">Growth</span> <br />Journal
             </h1>
             <p className="max-w-xl text-muted text-lg leading-relaxed">
-              Deep dives into SEO, brand positioning, and the data-driven strategies I use to scale global brands. No fluff, just results.
+              Deep dives into SEO, brand positioning, and the data-driven strategies I use to scale global brands.
             </p>
           </div>
 
