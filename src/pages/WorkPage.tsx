@@ -2,13 +2,11 @@ import { motion } from "motion/react";
 import { ArrowLeft, Tag, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import Navbar from "../components/Navbar";
-import { Footer } from "../components/ContactFooter";
 import { projects } from "../data/projects";
 
 const WorkPage = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="pt-32 pb-24">
       <Helmet>
         <title>Portfolio | G. Hari Kiran - Strategic Growth Projects</title>
         <meta name="description" content="Explore my selected work in growth marketing, SEO, and performance-driven campaigns." />
@@ -47,10 +45,8 @@ const WorkPage = () => {
           })}
         </script>
       </Helmet>
-      <Navbar />
       
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container-custom">
+      <div className="container-custom">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -128,11 +124,8 @@ const WorkPage = () => {
             ))}
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default WorkPage;

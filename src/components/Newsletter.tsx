@@ -22,13 +22,13 @@ export const Newsletter = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       id="newsletter-section"
-      className="w-full mt-32 p-8 md:p-16 rounded-[40px] bg-primary text-white overflow-hidden relative"
+      className="w-full mt-20 md:mt-32 p-6 md:p-16 rounded-[32px] md:rounded-[40px] bg-primary text-white overflow-hidden relative"
     >
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px] -translate-x-1/4 translate-y-1/4 pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-12">
+      <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10 lg:gap-12">
         <div className="max-w-xl text-center lg:text-left">
           <motion.span 
             initial={{ opacity: 0 }}
@@ -37,18 +37,18 @@ export const Newsletter = () => {
           >
             Stay Ahead of the Curve
           </motion.span>
-          <h3 className="text-3xl md:text-5xl font-display font-black uppercase leading-[0.9] mb-6">
+          <h3 className="text-2xl md:text-5xl font-display font-black uppercase leading-[1.1] md:leading-[0.9] mb-4 md:mb-6">
             Get Marketing Strategy <br className="hidden md:block" /> and <span className="text-accent italic">Consultation</span>.
           </h3>
-          <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest">
+          <p className="text-white/40 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">
             High-signal insights to scale your brand.
           </p>
         </div>
 
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-sm">
           <div 
             ref={kitContainerRef} 
-            className="min-h-[100px] kit-form-container"
+            className="min-h-[100px] kit-form-container w-full"
           >
             <div className="animate-pulse text-white/20 text-xs font-bold tracking-widest uppercase flex justify-center py-8">
               Loading form...

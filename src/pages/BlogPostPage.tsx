@@ -1,8 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight } from "lucide-react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { Footer } from "../components/ContactFooter";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
@@ -63,7 +61,7 @@ const BlogPostPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="pt-32 pb-24">
       <SEO 
         title={post.title}
         description={post.excerpt}
@@ -97,11 +95,8 @@ const BlogPostPage = () => {
           }
         }}
       />
-
-      <Navbar />
       
-      <main className="flex-grow pt-32 pb-24">
-        <article className="container-custom max-w-3xl">
+      <article className="container-custom max-w-3xl">
           {/* Back Navigation */}
           <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group">
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
@@ -319,11 +314,8 @@ const BlogPostPage = () => {
             ))}
           </div>
         </section>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default BlogPostPage;

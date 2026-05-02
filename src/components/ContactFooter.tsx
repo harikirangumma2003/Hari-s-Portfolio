@@ -53,15 +53,12 @@ const Contact = () => {
 
         <div className="mt-20 text-center pb-8 border-b border-primary/5 relative z-10">
           <p className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6">Inquiries & Partnerships</p>
-          <motion.a
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            href="mailto:harikirangumma2003@gmail.com"
+          <Link
+            to="/contact"
             className="text-2xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter hover:text-accent transition-colors block break-words leading-[0.9]"
           >
             harikirangumma2003<span className="text-accent">@</span>gmail.com
-          </motion.a>
+          </Link>
         </div>
         
         {/* Abstract Background Elements */}
@@ -118,7 +115,8 @@ const Footer = () => {
                   { name: "About", path: "/about" },
                   { name: "Experience", path: "/experience" },
                   { name: "Work", path: "/work" },
-                  { name: "Blog", path: "/blog" }
+                  { name: "Blog", path: "/blog" },
+                  { name: "Contact", path: "/contact" }
                 ].map((link) => (
                   <li key={link.name}>
                     <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>

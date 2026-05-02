@@ -1,8 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowLeft, Briefcase, Calendar, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { Footer } from "../components/ContactFooter";
 
 const experiences = [
   {
@@ -83,11 +81,8 @@ const experiences = [
 
 const ExperiencePage = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container-custom">
+    <div className="pt-32 pb-24">
+      <div className="container-custom">
           {/* Header */}
           <div className="mb-16">
             <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group">
@@ -170,11 +165,8 @@ const ExperiencePage = () => {
             <div className="absolute -left-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-[100px]"></div>
           </motion.div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default ExperiencePage;

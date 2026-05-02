@@ -2,8 +2,6 @@ import { useState, useMemo } from "react";
 import { motion } from "motion/react";
 import { ArrowLeft, Calendar, Search, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { Footer } from "../components/ContactFooter";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts, categories } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
@@ -22,7 +20,7 @@ const BlogPage = () => {
   }, [activeCategory, searchQuery]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="pt-32 pb-24">
       <SEO 
         title="Blog | Digital Marketing & Growth Insights"
         description="Read the latest insights on SEO, digital marketing, and growth strategies from G. Hari Kiran. Practical tips to scale your brand."
@@ -38,11 +36,8 @@ const BlogPage = () => {
           }
         }}
       />
-
-      <Navbar />
       
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container-custom">
+      <div className="container-custom">
           {/* Header */}
           <div className="mb-16">
             <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group">
@@ -147,11 +142,8 @@ const BlogPage = () => {
           {/* Newsletter / CTA */}
           <Newsletter />
         </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default BlogPage;

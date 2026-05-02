@@ -1,8 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowLeft, ExternalLink, Calendar, User, Briefcase, ChevronRight, Sparkles, TrendingUp, Target } from "lucide-react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { Footer } from "../components/ContactFooter";
 import { projects } from "../data/projects";
 import { Helmet } from "react-helmet-async";
 
@@ -15,7 +13,7 @@ const ProjectDetailPage = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="pt-32 pb-24">
       <Helmet>
         <title>{project.title} | Case Study - G. Hari Kiran</title>
         <meta name="description" content={project.description} />
@@ -50,11 +48,8 @@ const ProjectDetailPage = () => {
           })}
         </script>
       </Helmet>
-
-      <Navbar />
       
-      <main className="flex-grow pt-32 pb-24">
-        <div className="container-custom">
+      <div className="container-custom">
           {/* Header */}
           <div className="mb-16">
             <Link to="/work" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group">
@@ -167,11 +162,8 @@ const ProjectDetailPage = () => {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
           </motion.div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default ProjectDetailPage;

@@ -14,6 +14,8 @@ import ExperiencePage from "./pages/ExperiencePage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import ContactPage from "./pages/ContactPage";
+import { Layout } from "./components/Layout";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -46,17 +48,20 @@ export default function App() {
       <Router>
         <div className="noise-overlay" />
         <ScrollToTop />
-        <PageTransition>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/work/:slug" element={<ProjectDetailPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/experience" element={<ExperiencePage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-          </Routes>
-        </PageTransition>
+        <Layout>
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/work/:slug" element={<ProjectDetailPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/experience" element={<ExperiencePage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </PageTransition>
+        </Layout>
       </Router>
     </HelmetProvider>
   );

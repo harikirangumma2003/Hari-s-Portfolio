@@ -153,6 +153,7 @@
   padding: 0 !important;
   margin: 0 !important;
   max-width: 100% !important;
+  width: 100% !important;
 }
 
 .kit-form-container .form kit-form {
@@ -164,7 +165,16 @@
   background: rgba(255, 255, 255, 0.05) !important;
   color: white !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 12px 16px !important;
+  padding: 14px 16px !important;
+  width: 100% !important;
+  font-size: 14px !important;
+  transition: all 0.3s ease !important;
+}
+
+.kit-form-container input:focus {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #ff6b00 !important;
+  outline: none !important;
 }
 
 .kit-form-container button {
@@ -174,9 +184,26 @@
   text-transform: uppercase !important;
   letter-spacing: 2px !important;
   color: white !important;
+  padding: 14px 24px !important;
+  width: 100% !important;
+  margin-top: 10px !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+}
+
+.kit-form-container button:hover {
+  background-color: white !important;
+  color: #000 !important;
+  transform: translateY(-2px) !important;
 }
 
 .kit-form-container .formkit-powered-by {
   display: none !important;
 }
+
+/* Ensure the form loads centered on mobile */
+.kit-form-container > div {
+  margin: 0 auto !important;
+}
+
 
