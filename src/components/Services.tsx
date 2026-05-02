@@ -70,8 +70,8 @@ const Services = () => {
   };
 
   return (
-    <div className="h-full flex flex-col pt-4 md:pt-0">
-      <span className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block font-sans">Specialized Services</span>
+    <div className="h-full flex flex-col pt-4 lg:pt-0">
+      <span className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block font-sans text-center lg:text-left">Specialized Services</span>
       <motion.div 
         variants={container}
         initial="hidden"

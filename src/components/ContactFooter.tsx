@@ -55,7 +55,7 @@ const Contact = () => {
           <p className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6">Inquiries & Partnerships</p>
           <Link
             to="/contact"
-            className="text-2xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter hover:text-accent transition-colors block break-words leading-[0.9]"
+            className="text-xl sm:text-2xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter hover:text-accent transition-colors block break-words leading-[1] md:leading-[0.9]"
           >
             harikirangumma2003<span className="text-accent">@</span>gmail.com
           </Link>

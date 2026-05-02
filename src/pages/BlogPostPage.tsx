@@ -98,14 +98,14 @@ const BlogPostPage = () => {
       
       <article className="container-custom max-w-3xl">
           {/* Back Navigation */}
-          <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group justify-center md:justify-start">
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             Back to Journal
           </Link>
 
           {/* Post Header */}
-          <header className="mb-12">
-            <div className="flex gap-3 mb-6">
+          <header className="mb-12 text-center md:text-left">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
               <span className="bg-accent text-white px-3 py-1.5 rounded-full text-[10px] font-black font-display uppercase tracking-widest">
                 {post.category}
               </span>
@@ -115,12 +115,12 @@ const BlogPostPage = () => {
               </div>
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase leading-[0.9] mb-8">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.9] mb-8">
               {post.title}
             </h1>
             
-            <div className="flex flex-wrap items-center justify-between gap-6 py-8 border-y border-primary/5">
-              <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 py-8 border-y border-primary/5">
+              <div className="flex items-center gap-4 text-left">
                 <div className="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center border border-primary/10 overflow-hidden">
                   <User size={24} className="text-muted" />
                 </div>
@@ -131,7 +131,7 @@ const BlogPostPage = () => {
               </div>
               
               <div className="flex items-center gap-4">
-                <p className="text-[10px] font-black uppercase tracking-widest text-muted">Share</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted hidden sm:block">Share</p>
                 <div className="flex gap-2">
                   <button 
                     onClick={() => handleShare('linkedin')}
@@ -174,7 +174,7 @@ const BlogPostPage = () => {
           </header>
 
           {/* Featured Image */}
-          <div className="relative aspect-video mb-16 rounded-[40px] overflow-hidden border border-primary/5 shadow-2xl">
+          <div className="relative aspect-square sm:aspect-video mb-16 rounded-[32px] md:rounded-[40px] overflow-hidden border border-primary/5 shadow-2xl">
             <img 
               src={post.image} 
               alt={`Featured image for blog post: ${post.title}`}

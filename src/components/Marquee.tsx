@@ -14,7 +14,7 @@ const Marquee = () => {
   ];
 
   return (
-    <div className="bg-primary py-4 px-8 flex items-center h-full">
+    <div className="bg-primary py-6 px-8 flex items-center h-full">
       <motion.div
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: 20, ease: "linear" }}

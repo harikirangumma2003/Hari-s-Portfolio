@@ -51,20 +51,20 @@ const ProjectDetailPage = () => {
       
       <div className="container-custom">
           {/* Header */}
-          <div className="mb-16">
-            <Link to="/work" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group">
+          <div className="mb-16 text-center lg:text-left">
+            <Link to="/work" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group justify-center lg:justify-start">
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Selected Works
             </Link>
             
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
+            <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end gap-8 mb-12">
               <div className="max-w-3xl">
                 <span className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-4 block">Case Study</span>
-                <h1 className="text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[0.85]">
+                <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.85]">
                   {project.title}
                 </h1>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap justify-center lg:justify-end gap-3">
                  {project.tags.map(tag => (
                    <span key={tag} className="px-4 py-2 rounded-full border border-primary/10 text-[10px] font-black uppercase tracking-widest text-muted">
                      {tag}
@@ -79,7 +79,7 @@ const ProjectDetailPage = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative aspect-[21/9] rounded-[40px] overflow-hidden mb-24 border border-primary/5 shadow-2xl"
+            className="relative aspect-[16/9] md:aspect-[21/9] rounded-[32px] md:rounded-[40px] overflow-hidden mb-24 border border-primary/5 shadow-2xl"
           >
             <img 
               src={project.image} 
@@ -145,7 +145,7 @@ const ProjectDetailPage = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="p-16 rounded-[60px] bg-[#faf9f6]/50 border border-primary/5 text-center relative overflow-hidden"
+            className="p-8 sm:p-16 rounded-[40px] md:rounded-[60px] bg-[#faf9f6]/50 border border-primary/5 text-center relative overflow-hidden"
           >
             <div className="relative z-10 max-w-2xl mx-auto">
               <h3 className="text-3xl md:text-5xl font-display font-black uppercase mb-8 leading-none tracking-tighter">

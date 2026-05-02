@@ -114,47 +114,47 @@ const ContactPage = () => {
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           
           {/* Left Side: Contact Info */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="text-accent font-black uppercase tracking-[0.3em] text-xs mb-4 block">
+              <span className="text-accent font-black uppercase tracking-[0.3em] text-[10px] sm:text-xs mb-4 block">
                 Let's Collaborate
               </span>
-              <h1 className="text-6xl md:text-8xl font-display font-black uppercase leading-[0.85] mb-8">
+              <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black uppercase leading-[1] md:leading-[0.85] mb-8">
                 Get <br /> <span className="text-accent italic">In Touch</span>
               </h1>
-              <p className="text-muted text-lg max-w-md mb-12">
+              <p className="text-muted text-lg max-w-md mx-auto lg:mx-0 mb-12">
                 Have a project in mind? Looking to scale your brand? Or just want to say hi? Drop me a message and I'll get back to you within 24 hours.
               </p>
 
-              <div className="space-y-8">
-                <div className="flex items-center gap-6 group">
-                  <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors">
+              <div className="space-y-8 flex flex-col items-center lg:items-start">
+                <div className="flex flex-col sm:flex-row items-center lg:items-center gap-6 group text-center sm:text-left">
+                  <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors shrink-0">
                     <Mail size={20} />
                   </div>
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-1">Email Me</span>
-                    <a href="mailto:harikirangumma2003@gmail.com" className="text-lg font-bold hover:text-accent transition-colors">
+                    <a href="mailto:harikirangumma2003@gmail.com" className="text-base sm:text-xl font-bold hover:text-accent transition-colors break-all">
                       harikirangumma2003@gmail.com
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6 group">
-                  <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors">
+                <div className="flex flex-col sm:flex-row items-center lg:items-center gap-6 group text-center sm:text-left">
+                  <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors shrink-0">
                     <MapPin size={20} />
                   </div>
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-1">Location</span>
-                    <span className="text-lg font-bold">Jamshedpur, India</span>
+                    <span className="text-base sm:text-xl font-bold">Jamshedpur, India</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-16 pt-16 border-t border-black/5">
+              <div className="mt-16 pt-16 border-t border-black/5 flex flex-col items-center lg:items-start">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-muted block mb-6">Socials</span>
                 <div className="flex gap-4">
                   {[

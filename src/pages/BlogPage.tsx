@@ -39,16 +39,16 @@ const BlogPage = () => {
       
       <div className="container-custom">
           {/* Header */}
-          <div className="mb-16">
-            <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group">
+          <div className="mb-16 text-center md:text-left">
+            <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group justify-center md:justify-start">
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Home
             </Link>
             
-            <h1 className="text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[0.85] mb-8">
-              The <span className="text-accent">Growth</span> <br />Journal
+            <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.85] mb-8">
+              The <span className="text-accent">Growth</span> <br className="hidden md:block" />Journal
             </h1>
-            <p className="max-w-xl text-muted text-lg leading-relaxed">
+            <p className="max-w-xl mx-auto md:mx-0 text-muted text-lg leading-relaxed">
               Deep dives into SEO, brand positioning, and the data-driven strategies I use to scale global brands.
             </p>
           </div>

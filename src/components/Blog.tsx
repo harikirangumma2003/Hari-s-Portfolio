@@ -8,12 +8,12 @@ const Blog = () => {
 
   return (
     <section id="blog" className="py-12">
-      <div className="flex justify-between items-end mb-12">
+      <div className="flex flex-col md:flex-row justify-between items-center md:items-end text-center md:text-left mb-12 gap-8">
         <div>
           <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-4 block">Insights</span>
-          <h2 className="text-3xl md:text-5xl">Latest From The Studio</h2>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight">Latest From The Studio</h2>
         </div>
-        <Link to="/blog" className="btn-primary hidden md:flex items-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
+        <Link to="/blog" className="w-full sm:w-auto btn-primary flex items-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
           Browse All <ArrowRight className="ml-2" size={16}/>
         </Link>
       </div>

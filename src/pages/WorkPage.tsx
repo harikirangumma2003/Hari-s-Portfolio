@@ -47,18 +47,18 @@ const WorkPage = () => {
       </Helmet>
       
       <div className="container-custom">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12 text-center md:text-left">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="max-w-2xl px-2"
+              className="max-w-2xl px-2 mx-auto md:mx-0"
             >
               <span className="text-xs font-black uppercase tracking-[3px] text-accent mb-6 block">Strategic Impact</span>
               <h1 className="text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[0.85] mb-8">
                 Selected <br className="hidden md:block" /> <span className="text-accent">Results</span>
               </h1>
-              <p className="text-lg md:text-xl text-muted font-medium italic opacity-70 leading-relaxed border-l-2 border-accent/20 pl-6">
+              <p className="text-lg md:text-xl text-muted font-medium italic opacity-70 leading-relaxed border-l-2 border-accent/20 pl-6 text-left max-w-xl mx-auto md:mx-0">
                 Real metrics for real brands. Every case study below represents a journey from conceptual vision to measurable digital scale.
               </p>
             </motion.div>

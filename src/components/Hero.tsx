@@ -26,29 +26,29 @@ const Hero = () => {
       animate="show"
       className="h-full flex flex-col justify-center py-10 md:py-0"
     >
-      <div className="relative z-10 text-center md:text-left">
-        <motion.div variants={item} className="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full">
+      <div className="relative z-10 text-center lg:text-left">
+        <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 bg-accent/10 border border-accent/20 rounded-full">
           <Sparkles size={12} className="text-accent ring-accent/20 animate-pulse" />
           <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-accent">A Digital Marketer & Growth Strategist</span>
         </motion.div>
         
         <motion.h1
           variants={item}
-          className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-display font-black leading-[1.1] md:leading-[0.85] tracking-tighter mb-8 uppercase"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-display font-black leading-[1.05] md:leading-[0.85] tracking-tighter mb-8 uppercase"
         >
           Passionate about<br className="hidden sm:block" /> <span className="text-accent underline decoration-accent/20 decoration-8 underline-offset-4">building</span> brands
         </motion.h1>
 
         <motion.p 
           variants={item}
-          className="text-sm md:text-base font-medium text-muted max-w-md mx-auto md:mx-0 mb-10 leading-relaxed opacity-80"
+          className="text-sm md:text-base font-medium text-muted max-w-md mx-auto lg:mx-0 mb-10 leading-relaxed opacity-80"
         >
           Helping modern brands scale with data-driven SEO, viral content strategies, and precision-targeted paid media campaigns.
         </motion.p>
 
         <motion.div 
           variants={item}
-          className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
         >
           <Link
             to="/work"

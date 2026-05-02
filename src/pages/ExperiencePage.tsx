@@ -84,16 +84,16 @@ const ExperiencePage = () => {
     <div className="pt-32 pb-24">
       <div className="container-custom">
           {/* Header */}
-          <div className="mb-16">
-            <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group">
+          <div className="mb-16 text-center md:text-left">
+            <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group justify-center md:justify-start">
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Home
             </Link>
             
-            <h1 className="text-5xl md:text-7xl font-display font-black tracking-tighter uppercase leading-[0.9] mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.9] mb-6">
               Professional <span className="text-accent">Experience</span>
             </h1>
-            <p className="max-w-xl text-muted text-lg">
+            <p className="max-w-xl mx-auto md:mx-0 text-muted text-lg">
               A journey defined by growth, strategy, and measurable marketing impact.
             </p>
           </div>

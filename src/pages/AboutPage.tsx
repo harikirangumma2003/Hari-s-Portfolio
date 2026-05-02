@@ -73,7 +73,7 @@ const AboutPage = () => {
         </Link>
 
         {/* Hero Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32 text-center md:text-left">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ const AboutPage = () => {
             <h1 className="text-5xl md:text-7xl font-display font-black tracking-tighter uppercase leading-[0.9] mb-8">
               G. Hari <span className="text-accent">Kiran</span>
             </h1>
-            <div className="space-y-6 text-lg text-muted leading-relaxed">
+            <div className="space-y-6 text-lg text-muted leading-relaxed max-w-xl mx-auto md:mx-0">
               <p>
                 I’m a Digital Marketer and Growth Strategist passionate about building brands that stand out and scale.
               </p>

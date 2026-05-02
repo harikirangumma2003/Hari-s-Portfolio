@@ -92,19 +92,19 @@ const HomePage = () => {
         </motion.div>
 
         {/* Featured Projects Grid for Mobile/Tablet or Desktop Lower Section */}
-        <section className="mt-40">
+        <section className="mt-20 md:mt-40">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8"
+            className="flex flex-col lg:flex-row justify-between items-center lg:items-end text-center lg:text-left mb-12 md:mb-16 gap-8"
           >
             <div className="max-w-xl">
               <span className="text-[10px] font-black uppercase tracking-[4px] text-accent mb-4 block">Selected Works</span>
-              <h2 className="text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[0.85]">Selected <br className="hidden md:block"/> Solutions</h2>
+              <h2 className="text-4xl sm:text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.85]">Selected <br className="hidden md:block"/> Solutions</h2>
             </div>
-            <Link to="/work" className="btn-primary group">
+            <Link to="/work" className="w-full sm:w-auto btn-primary group">
               Explore All <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
