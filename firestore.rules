@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 0.1 Helpers
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    function isSignedIn() { return request.auth != null; }
+
+    // 1. Validation Blueprints
+    function isValidContactSubmission(data) {
+      return data.keys().hasAll(['name', 'email', 'subject', 'message', 'createdAt'])
+        && data.keys().size() == 5
+        && data.name is string && data.name.size() >= 2 && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 100 && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && data.subject is string && data.subject in ['Growth Strategy', 'Consultation', 'Project Inquiry', 'Other']
+        && data.message is string && data.message.size() >= 10 && data.message.size() <= 2000
+        && data.createdAt == request.time;
+    }
+
+    // 2. Collection Rules
+    match /contacts/{submissionId} {
+      // Public can create submissions through the contact form
+      allow create: if isValidContactSubmission(incoming());
+      
+      // No one can read, update, or delete submissions via the client
+      allow read, update, delete: if false;
+    }
+  }
+}

@@ -1,7 +1,56 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, MapPin, Phone, Linkedin } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, MapPin, Linkedin } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { db, auth } from '@/src/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
+enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+    emailVerified?: boolean | null;
+    isAnonymous?: boolean | null;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId?: string | null;
+      email?: string | null;
+    }[];
+  }
+}
+
+function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo: auth.currentUser?.providerData?.map(provider => ({
+        providerId: provider.providerId,
+        email: provider.email,
+      })) || []
+    },
+    operationType,
+    path
+  }
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -73,31 +122,21 @@ const ContactPage = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    const form = new FormData();
-    form.append("name", formData.name);
-    form.append("email", formData.email);
-    form.append("subject", formData.subject);
-    form.append("message", formData.message);
-    form.append("access_key", "5595561a-0518-4796-9f4a-8531e2be3005"); 
-
+    const pathForWrite = 'contacts';
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: form
+      await addDoc(collection(db, pathForWrite), {
+        ...formData,
+        createdAt: serverTimestamp()
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: 'Growth Strategy', message: '' });
-        setTouched({});
-        setErrors({});
-      } else {
-        setSubmitStatus('error');
-      }
+      
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', subject: 'Growth Strategy', message: '' });
+      setTouched({});
+      setErrors({});
     } catch (error) {
       setSubmitStatus('error');
+      // Always include this error handler for Firestore operations
+      handleFirestoreError(error, OperationType.WRITE, pathForWrite);
     } finally {
       setIsSubmitting(false);
     }
