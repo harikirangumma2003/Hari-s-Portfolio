@@ -119,7 +119,7 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: i * 0.1 }}
                 className="group bento-card p-0 h-[450px] relative cursor-pointer border-none"
               >
-                <Link to="/work" className="block h-full w-full relative overflow-hidden rounded-[40px]">
+                <Link to={`/work/${project.slug}`} className="block h-full w-full relative overflow-hidden rounded-[40px]">
                   <img 
                     src={project.image} 
                     alt={project.title} 
