@@ -124,15 +124,41 @@ const ContactPage = () => {
 
     const pathForWrite = 'contacts';
     try {
+      // 1. Save to Firebase Firestore (Durable backup)
       await addDoc(collection(db, pathForWrite), {
         ...formData,
         createdAt: serverTimestamp()
       });
       
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: 'Growth Strategy', message: '' });
-      setTouched({});
-      setErrors({});
+      // 2. Transmit notification email via Web3Forms directly to Gmail
+      const form = new FormData();
+      form.append("name", formData.name);
+      form.append("email", formData.email);
+      form.append("subject", `New Inquiry: ${formData.subject}`);
+      form.append("message", formData.message);
+      form.append("access_key", "5595561a-0518-4796-9f4a-8531e2be3005");
+      form.append("from_name", "G. Hari Kiran Portfolio Website");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: form
+      });
+
+      const responseData = await response.json();
+      
+      if (responseData.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: 'Growth Strategy', message: '' });
+        setTouched({});
+        setErrors({});
+      } else {
+        console.warn("Web3Forms API message forwarding failed, but inquiry saved to Firestore log:", responseData);
+        // Fallback: Since it's saved in Firestore, we still show success
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: 'Growth Strategy', message: '' });
+        setTouched({});
+        setErrors({});
+      }
     } catch (error) {
       setSubmitStatus('error');
       // Always include this error handler for Firestore operations
