@@ -136,7 +136,9 @@ const ContactPage = () => {
       form.append("email", formData.email);
       form.append("subject", `New Inquiry: ${formData.subject}`);
       form.append("message", formData.message);
-      form.append("access_key", "5595561a-0518-4796-9f4a-8531e2be3005");
+      
+      const accessKey = ((import.meta as any).env?.VITE_WEB3FORMS_ACCESS_KEY) || "5595561a-0518-4796-9f4a-8531e2be3005";
+      form.append("access_key", accessKey);
       form.append("from_name", "G. Hari Kiran Portfolio Website");
 
       const response = await fetch("https://api.web3forms.com/submit", {
