@@ -53,7 +53,7 @@ const AboutPage = () => {
             "jobTitle": "Digital Marketer & Growth Strategist",
             "url": typeof window !== 'undefined' ? window.location.origin : '',
             "sameAs": [
-              "http://www.linkedin.com/in/hari-kiran-gumma",
+              "https://www.linkedin.com/in/hari-kiran-gumma",
               "https://discord.com/users/1431285511363760149"
             ],
             "description": "Digital Marketer and Growth Strategist passionate about building brands that stand out and scale.",

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Contact = () => {
   const socials = [
     { name: "Discord", link: "https://discord.com/users/1431285511363760149", handle: "@hari_kiran" },
-    { name: "LinkedIn", link: "http://www.linkedin.com/in/hari-kiran-gumma", handle: "G. Hari Kiran" },
+    { name: "LinkedIn", link: "https://www.linkedin.com/in/hari-kiran-gumma", handle: "G. Hari Kiran" },
   ];
 
   return (
