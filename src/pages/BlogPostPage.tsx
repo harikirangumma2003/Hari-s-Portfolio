@@ -1,15 +1,28 @@
 import { motion } from "motion/react";
 import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight } from "lucide-react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const post = blogPosts.find((p) => p.slug === slug);
   const [isCopied, setIsCopied] = useState(false);
+
+  const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    const anchor = target.closest("a");
+    if (anchor) {
+      const href = anchor.getAttribute("href");
+      if (href && href.startsWith("/")) {
+        e.preventDefault();
+        navigate(href);
+      }
+    }
+  };
 
   // Find related posts - same category first, then most recent
   const relatedPosts = useMemo(() => {
@@ -191,6 +204,7 @@ const BlogPostPage = () => {
             <div 
               className="markdown-content"
               dangerouslySetInnerHTML={{ __html: post.content }}
+              onClick={handleContentClick}
             />
           </div>
 
