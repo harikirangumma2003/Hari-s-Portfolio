@@ -28,7 +28,8 @@ const BlogPostPage = () => {
     return <Navigate to="/blog" replace />;
   }
 
-  const shareUrl = window.location.href;
+  const siteUrl = "https://harikiran-portfolio.netlify.app";
+  const shareUrl = `${siteUrl}/blog/${post.slug}`;
 
   const handleShare = (platform: string) => {
     const url = encodeURIComponent(shareUrl);
