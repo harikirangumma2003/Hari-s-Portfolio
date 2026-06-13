@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, ExternalLink, Calendar, User, Briefcase, ChevronRight, Sparkles, TrendingUp, Target } from "lucide-react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { projects } from "../data/projects";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "../components/SEO";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
@@ -12,42 +12,30 @@ const ProjectDetailPage = () => {
     return <Navigate to="/work" replace />;
   }
 
+  const seoTitle = `${project.title} Case Study`.slice(0, 43);
+  const seoDescription = project.description.length > 150 ? project.description.slice(0, 150) + "..." : project.description;
+
   return (
     <div className="pt-32 pb-24">
-      <Helmet>
-        <title>{project.title} | Case Study - G. Hari Kiran</title>
-        <meta name="description" content={project.description} />
-        <meta name="keywords" content={project.tags.join(", ")} />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={`${project.title} | Case Study - G. Hari Kiran`} />
-        <meta property="og:description" content={project.description} />
-        <meta property="og:image" content={project.image} />
-        
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content={`${project.title} | Case Study - G. Hari Kiran`} />
-        <meta property="twitter:description" content={project.description} />
-        <meta property="twitter:image" content={project.image} />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "name": project.title,
-            "description": project.description,
-            "image": project.image,
-            "author": {
-              "@type": "Person",
-              "name": "G. Hari Kiran"
-            },
-            "genre": project.category,
-            "keywords": project.tags.join(", "),
-            "about": project.longDescription
-          })}
-        </script>
-      </Helmet>
+      <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        url={`/work/${project.slug}`}
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": project.title,
+          "description": project.description,
+          "image": project.image,
+          "author": {
+            "@type": "Person",
+            "name": "G. Hari Kiran"
+          },
+          "genre": project.category,
+          "keywords": project.tags.join(", "),
+          "about": project.longDescription
+        }}
+      />
       
       <div className="container-custom">
           {/* Header */}

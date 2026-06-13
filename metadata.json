@@ -2,5 +2,5 @@
   "name": "G. Hari Kiran Portfolio",
   "description": "A bold, modern, and minimal personal portfolio for a Digital Marketing Expert, focused on conversion and authority positioning.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

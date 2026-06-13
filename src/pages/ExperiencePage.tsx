@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowLeft, Briefcase, Calendar, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SEO } from "../components/SEO";
 
 const experiences = [
   {
@@ -82,6 +83,11 @@ const experiences = [
 const ExperiencePage = () => {
   return (
     <div className="pt-32 pb-24">
+      <SEO 
+        title="SEO Consultant Jamshedpur | G. Hari Kiran Experience"
+        description="Explore G. Hari Kiran's achievements as an SEO consultant in Jamshedpur, scaling web traffic, automated email flows, and digital ads for global brands."
+        url="/experience"
+      />
       <div className="container-custom">
           {/* Header */}
           <div className="mb-16 text-center md:text-left">

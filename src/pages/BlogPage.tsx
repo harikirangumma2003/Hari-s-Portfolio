@@ -22,8 +22,8 @@ const BlogPage = () => {
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title="Blog | Digital Marketing & Growth Insights"
-        description="Read the latest insights on SEO, digital marketing, and growth strategies from G. Hari Kiran. Practical tips to scale your brand."
+        title="Digital Marketing & SEO Blog | G. Hari Kiran"
+        description="Actionable SEO guides, retention marketing frameworks, and digital marketing insights from G. Hari Kiran, local SEO consultant in Jamshedpur."
         url="/blog"
         schemaData={{
           "@context": "https://schema.org",

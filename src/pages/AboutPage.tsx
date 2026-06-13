@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowLeft, User, Target, Award, Globe, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "../components/SEO";
 
 const milestones = [
   {
@@ -29,41 +29,28 @@ const milestones = [
 const AboutPage = () => {
   return (
     <div className="pt-32 pb-24">
-      <Helmet>
-        <title>About | G. Hari Kiran - Digital Consultant</title>
-        <meta name="description" content="Learn more about G. Hari Kiran, a performance-driven marketing strategist helping brands bridge the gap between vision and potential." />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="profile" />
-        <meta property="og:title" content="About | G. Hari Kiran - Digital Consultant" />
-        <meta property="og:description" content="Meet G. Hari Kiran, a Digital Marketer and Growth Strategist focused on building scaleable brands." />
-        <meta property="og:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
-        
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary" />
-        <meta property="twitter:title" content="About | G. Hari Kiran - Digital Consultant" />
-        <meta property="twitter:description" content="Meet G. Hari Kiran, a Digital Marketer and Growth Strategist focused on building scaleable brands." />
-        <meta property="twitter:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "G. Hari Kiran",
-            "jobTitle": "Digital Marketer & Growth Strategist",
-            "url": typeof window !== 'undefined' ? window.location.origin : '',
-            "sameAs": [
-              "https://www.linkedin.com/in/hari-kiran-gumma",
-              "https://discord.com/users/1431285511363760149"
-            ],
-            "description": "Digital Marketer and Growth Strategist passionate about building brands that stand out and scale.",
-            "worksFor": {
-              "@type": "Organization",
-              "name": "SuMeera Solutions"
-            }
-          })}
-        </script>
-      </Helmet>
+      <SEO 
+        title="SEO Expert in Jamshedpur | About G. Hari Kiran"
+        description="Learn about G. Hari Kiran, a recognized search engine optimization and digital marketing consultant in Jamshedpur, scaling brands like SuMeera Solutions."
+        url="/about"
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "G. Hari Kiran",
+          "jobTitle": "SEO Expert & Digital Marketing Consultant",
+          "url": "https://harikiran-portfolio.netlify.app/about",
+          "sameAs": [
+            "https://www.linkedin.com/in/hari-kiran-gumma",
+            "https://discord.com/users/1431285511363760149"
+          ],
+          "description": "Professional search engine optimization consultant and digital strategist based in Jamshedpur, Jharkhand, India.",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "SuMeera Solutions",
+            "url": "https://sumeerasolutions.com"
+          }
+        }}
+      />
       
       <div className="container-custom">
         {/* Back Navigation */}

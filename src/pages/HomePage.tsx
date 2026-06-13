@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEO } from "../components/SEO";
 import { motion } from "motion/react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -8,6 +8,7 @@ import Services from "../components/Services";
 import WorkingProcess from "../components/WorkingProcess";
 import { TestimonialCard } from "../components/BrandsAndTestimonials";
 import Blog from "../components/Blog";
+import FAQ from "../components/FAQ";
 import { Contact, Footer } from "../components/ContactFooter";
 
 import { ArrowRight } from "lucide-react";
@@ -32,12 +33,105 @@ const HomePage = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
   };
 
+  const localSchemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://harikiran-portfolio.netlify.app/#person",
+        "name": "G. Hari Kiran",
+        "jobTitle": "Digital Marketing Expert & Local SEO Consultant",
+        "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
+        "url": "https://harikiran-portfolio.netlify.app",
+        "sameAs": [
+          "https://www.linkedin.com/in/hari-kiran-gumma",
+          "https://discord.com/users/1431285511363760149"
+        ],
+        "description": "Certified Digital Marketing Expert and Local SEO Consultant in Jamshedpur, Jharkhand. Specialist in content strategies and high-ROI automated retention email campaigns.",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "SuMeera Solutions",
+          "url": "https://sumeerasolutions.com"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://harikiran-portfolio.netlify.app/#website",
+        "url": "https://harikiran-portfolio.netlify.app",
+        "name": "G. Hari Kiran | Digital Marketing Expert & SEO Consultant Jamshedpur",
+        "description": "Professional growth consulting, advanced search engine optimization, and high-conversion client acquisition strategies.",
+        "publisher": {
+          "@id": "https://harikiran-portfolio.netlify.app/#person"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://harikiran-portfolio.netlify.app/#service",
+        "name": "G. Hari Kiran - Digital Marketing Consultant & SEO Expert",
+        "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
+        "url": "https://harikiran-portfolio.netlify.app",
+        "telephone": "+91-XXXXXXXXXX",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Bistupur",
+          "addressLocality": "Jamshedpur",
+          "addressRegion": "Jharkhand",
+          "postalCode": "831001",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 22.8046,
+          "longitude": 86.2029
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        "areaServed": [
+          {
+            "@type": "AdministrativeArea",
+            "name": "Jamshedpur"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Jharkhand"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "India"
+          }
+        ],
+        "knowsAbout": [
+          "Digital Marketing",
+          "Search Engine Optimization",
+          "Local SEO Specialist",
+          "Email Campaign Automation",
+          "Google Analytics Consultant",
+          "SaaS Growth Hacking",
+          "Lead Generation"
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="pt-24 pb-12 bg-bg-light">
-      <Helmet>
-        <title>G. Hari Kiran | Digital Marketing Expert & Growth Strategist</title>
-        <meta name="description" content="G. Hari Kiran is a leading Digital Marketing Expert and Growth Strategist at SuMeera Solutions." />
-      </Helmet>
+      <SEO 
+        title="Digital Marketing Expert in Jamshedpur"
+        description="Need a certified digital marketing expert in Jamshedpur, Jharkhand? Grow traffic & revenue with G. Hari Kiran, specialist in SEO & email retention."
+        url=""
+        schemaData={localSchemaGraph}
+      />
       
       <main className="container-custom">
         <motion.div 
@@ -71,6 +165,8 @@ const HomePage = () => {
             <img 
               src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" 
               alt="Local Search Dominance Project" 
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60" />
@@ -123,6 +219,8 @@ const HomePage = () => {
                   <img 
                     src={project.image} 
                     alt={project.title} 
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
@@ -141,6 +239,7 @@ const HomePage = () => {
         <div className="mt-40 space-y-40 mb-20 lg:mb-40">
           <WorkingProcess />
           <Blog />
+          <FAQ />
           <Contact />
         </div>
       </main>

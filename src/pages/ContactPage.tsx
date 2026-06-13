@@ -173,8 +173,8 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-white pt-24 pb-20">
       <SEO 
-        title="Contact" 
-        description="Get in touch with G. Hari Kiran for marketing consulting, growth strategy, or project inquiries."
+        title="Digital Marketing Consultant | Contact G. Hari Kiran" 
+        description="Get a free growth consultation. Contact G. Hari Kiran, your trusted digital marketing and Local SEO Expert in Jamshedpur. Scale your brand today."
       />
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12">

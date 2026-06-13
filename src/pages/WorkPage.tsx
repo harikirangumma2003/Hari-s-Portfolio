@@ -1,50 +1,36 @@
 import { motion } from "motion/react";
 import { ArrowLeft, Tag, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { SEO } from "../components/SEO";
 import { projects } from "../data/projects";
 
 const WorkPage = () => {
   return (
     <div className="pt-32 pb-24">
-      <Helmet>
-        <title>Portfolio | G. Hari Kiran - Strategic Growth Projects</title>
-        <meta name="description" content="Explore my selected work in growth marketing, SEO, and performance-driven campaigns." />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Portfolio | G. Hari Kiran - Strategic Growth Projects" />
-        <meta property="og:description" content="Explore my selected work in growth marketing, SEO, and performance-driven campaigns." />
-        <meta property="og:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
-        
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="Portfolio | G. Hari Kiran - Strategic Growth Projects" />
-        <meta property="twitter:description" content="Explore my selected work in growth marketing, SEO, and performance-driven campaigns." />
-        <meta property="twitter:image" content="https://i.postimg.cc/59rp3LDd/Hari-Portfolio.png" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "name": "Project Portfolio of G. Hari Kiran",
-            "description": "A collection of growth marketing, SEO, and digital strategy projects.",
-            "itemListElement": projects.map((project, index) => ({
-              "@type": "ListItem",
-              "position": index + 1,
-              "item": {
-                "@type": "CreativeWork",
-                "name": project.title,
-                "description": project.description,
-                "image": project.image,
-                "url": `${window.location.origin}/work/${project.slug}`,
-                "genre": project.category,
-                "keywords": project.tags.join(", ")
-              }
-            }))
-          })}
-        </script>
-      </Helmet>
+      <SEO 
+        title="SEO & Growth Portfolio | G. Hari Kiran Jamshedpur"
+        description="Case studies in search marketing, email workflows, and paid ads by G. Hari Kiran, Local SEO Specialist in Jamshedpur. See real growth results."
+        url="/work"
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Project Portfolio of G. Hari Kiran",
+          "description": "A collection of growth marketing, SEO, and digital strategy projects.",
+          "itemListElement": projects.map((project, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+              "@type": "CreativeWork",
+              "name": project.title,
+              "description": project.description,
+              "image": project.image,
+              "url": `https://harikiran-portfolio.netlify.app/work/${project.slug}`,
+              "genre": project.category,
+              "keywords": project.tags.join(", ")
+            }
+          }))
+        }}
+      />
       
       <div className="container-custom">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12 text-center md:text-left">

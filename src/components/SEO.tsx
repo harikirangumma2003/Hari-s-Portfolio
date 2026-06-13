@@ -25,8 +25,8 @@ export const SEO: React.FC<SEOProps> = ({
   articleData,
   schemaData
 }) => {
-  const siteName = "G. Hari Kiran | Digital Marketing Expert";
-  const fullTitle = `${title} | ${siteName}`;
+  const siteName = "G. Hari Kiran";
+  const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | ${siteName}`;
   const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg"; // Placeholder
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 

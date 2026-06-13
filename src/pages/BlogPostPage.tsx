@@ -74,11 +74,14 @@ const BlogPostPage = () => {
     }
   };
 
+  const postTitle = post.title.length > 43 ? post.title.slice(0, 40) + "..." : post.title;
+  const postExcerpt = post.excerpt.length > 152 ? post.excerpt.slice(0, 149) + "..." : post.excerpt;
+
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title={post.title}
-        description={post.excerpt}
+        title={postTitle}
+        description={postExcerpt}
         image={post.image}
         url={`/blog/${post.slug}`}
         type="article"

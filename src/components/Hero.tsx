@@ -32,18 +32,18 @@ const Hero = () => {
           <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-accent">A Digital Marketer & Growth Strategist</span>
         </motion.div>
         
-        <motion.h1
+         <motion.h1
           variants={item}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-display font-black leading-[1.05] md:leading-[0.85] tracking-tighter mb-8 uppercase"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] md:leading-[0.85] tracking-tighter mb-8 uppercase"
         >
-          Passionate about<br className="hidden sm:block" /> <span className="text-accent underline decoration-accent/20 decoration-8 underline-offset-4">building</span> brands
+          Digital Marketing<br className="hidden sm:block" /> Expert In <span className="text-accent underline decoration-accent/20 decoration-8 underline-offset-4 animate-pulse">Jamshedpur</span>
         </motion.h1>
 
         <motion.p 
           variants={item}
-          className="text-sm md:text-base font-medium text-muted max-w-md mx-auto lg:mx-0 mb-10 leading-relaxed opacity-80"
+          className="text-sm md:text-base font-medium text-muted max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed opacity-90"
         >
-          Helping modern brands scale with data-driven SEO, viral content strategies, and precision-targeted paid media campaigns.
+          Hi, I'm G. Hari Kiran—a results-driven Local SEO Specialist and Digital Marketing Consultant in Jamshedpur, Jharkhand. I build sustainable search authority and scale conversions using advanced semantic SEO, Google Analytics insights, and automated retention systems.
         </motion.p>
 
         <motion.div 
