@@ -6,6 +6,7 @@ const Contact = () => {
   const socials = [
     { name: "Discord", link: "https://discord.com/users/1431285511363760149", handle: "@hari_kiran" },
     { name: "LinkedIn", link: "https://www.linkedin.com/in/hari-kiran-gumma", handle: "G. Hari Kiran" },
+    { name: "Medium", link: "https://medium.com/@harikirangumma2003", handle: "@harikirangumma2003" },
   ];
 
   return (
@@ -23,7 +24,7 @@ const Contact = () => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
           {socials.map((social, i) => (
             <motion.a
               key={social.name}

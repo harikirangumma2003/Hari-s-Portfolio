@@ -147,58 +147,156 @@
 }
 
 /* ConvertKit Kit Form Overrides */
-.kit-form-container form {
+.kit-form-container {
+  width: 100% !important;
+}
+
+.kit-form-container .formkit-form,
+.kit-form-container form[data-uid],
+.kit-form-container .formkit-form[data-uid] {
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
   margin: 0 !important;
+  box-shadow: none !important;
   max-width: 100% !important;
   width: 100% !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
-.kit-form-container .form kit-form {
-  background-color: transparent !important;
+/* Hide double headings or default unstyled texts from ConvertKit creator */
+.kit-form-container .formkit-header,
+.kit-form-container .formkit-subheader,
+.kit-form-container [data-element="header"],
+.kit-form-container [data-element="subheader"],
+.kit-form-container .formkit-caption,
+.kit-form-container .formkit-powered-by-box,
+.kit-form-container .formkit-powered-by,
+.kit-form-container a.formkit-powered-by {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-.kit-form-container input {
-  border-radius: 12px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 14px 16px !important;
+/* Form structure adjustments - stack on mobile, flexible on desktop */
+.kit-form-container .formkit-fields {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
   width: 100% !important;
-  font-size: 14px !important;
-  transition: all 0.3s ease !important;
 }
 
-.kit-form-container input:focus {
-  background: rgba(255, 255, 255, 0.1) !important;
+/* Inputs styling */
+.kit-form-container input.formkit-input,
+.kit-form-container .formkit-input,
+.kit-form-container .formkit-field input {
+  font-family: 'Inter', sans-serif !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 16px !important; /* Elegant modern rounded shape */
+  padding: 16px 20px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  width: 100% !important;
+  height: auto !important;
+  box-shadow: none !important;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.kit-form-container input.formkit-input::placeholder,
+.kit-form-container .formkit-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-weight: 400 !important;
+}
+
+.kit-form-container input.formkit-input:focus,
+.kit-form-container .formkit-input:focus,
+.kit-form-container .formkit-field input:focus {
+  background-color: rgba(255, 255, 255, 0.08) !important;
   border-color: #ff6b00 !important;
+  box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.15) !important;
   outline: none !important;
 }
 
-.kit-form-container button {
+/* Button override */
+.kit-form-container button.formkit-submit,
+.kit-form-container .formkit-submit,
+.kit-form-container [data-element="submit"] {
+  font-family: 'Inter', sans-serif !important;
   background-color: #ff6b00 !important;
-  border-radius: 12px !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 16px !important; /* Elegant matching shape */
+  padding: 16px 32px !important;
+  font-size: 11px !important;
   font-weight: 900 !important;
   text-transform: uppercase !important;
   letter-spacing: 2px !important;
-  color: white !important;
-  padding: 14px 24px !important;
   width: 100% !important;
-  margin-top: 10px !important;
-  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   cursor: pointer !important;
+  box-shadow: 0 8px 30px rgba(255, 107, 0, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  margin: 6px 0 0 0 !important;
 }
 
-.kit-form-container button:hover {
-  background-color: white !important;
-  color: #000 !important;
+.kit-form-container button.formkit-submit:hover,
+.kit-form-container .formkit-submit:hover {
+  background-color: #ffffff !important;
+  color: #0d0d0d !important;
   transform: translateY(-2px) !important;
+  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.25) !important;
 }
 
-.kit-form-container .formkit-powered-by {
-  display: none !important;
+.kit-form-container button.formkit-submit:active,
+.kit-form-container .formkit-submit:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2) !important;
+}
+
+/* Success or Error Alert Overrides */
+.kit-form-container .formkit-alert,
+.kit-form-container .formkit-alert-success {
+  background: rgba(34, 197, 94, 0.1) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
+  color: #4ade80 !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  margin-top: 15px !important;
+}
+
+.kit-form-container .formkit-alert-error {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  margin-top: 15px !important;
+}
+
+/* Labels and privacy text adaptation */
+.kit-form-container .formkit-guarantee,
+.kit-form-container [data-element="guarantee"] {
+  font-family: 'Inter', sans-serif !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  text-align: center !important;
+  margin-top: 12px !important;
+  line-height: 1.5 !important;
 }
 
 /* Ensure the form loads centered on mobile */

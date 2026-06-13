@@ -45,7 +45,8 @@ const HomePage = () => {
         "url": "https://harikiran-portfolio.netlify.app",
         "sameAs": [
           "https://www.linkedin.com/in/hari-kiran-gumma",
-          "https://discord.com/users/1431285511363760149"
+          "https://discord.com/users/1431285511363760149",
+          "https://medium.com/@harikirangumma2003"
         ],
         "description": "Certified Digital Marketing Expert and Local SEO Consultant in Jamshedpur, Jharkhand. Specialist in content strategies and high-ROI automated retention email campaigns.",
         "worksFor": {

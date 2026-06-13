@@ -45,7 +45,7 @@ export const Newsletter = () => {
           </p>
         </div>
 
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-md">
           <div 
             ref={kitContainerRef} 
             className="min-h-[100px] kit-form-container w-full"

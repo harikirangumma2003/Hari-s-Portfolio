@@ -41,7 +41,8 @@ const AboutPage = () => {
           "url": "https://harikiran-portfolio.netlify.app/about",
           "sameAs": [
             "https://www.linkedin.com/in/hari-kiran-gumma",
-            "https://discord.com/users/1431285511363760149"
+            "https://discord.com/users/1431285511363760149",
+            "https://medium.com/@harikirangumma2003"
           ],
           "description": "Professional search engine optimization consultant and digital strategist based in Jamshedpur, Jharkhand, India.",
           "worksFor": {
