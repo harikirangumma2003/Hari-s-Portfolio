@@ -24,12 +24,32 @@ service cloud.firestore {
         && data.createdAt == request.time;
     }
 
+    function isValidPartnerSubmission(data) {
+      return data.keys().hasAll(['name', 'email', 'website', 'tier', 'budget', 'message', 'createdAt'])
+        && data.keys().size() == 7
+        && data.name is string && data.name.size() >= 2 && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 100 && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && data.website is string && data.website.size() >= 4 && data.website.size() <= 200
+        && data.tier is string && data.tier.size() <= 50
+        && data.budget is string && data.budget.size() <= 100
+        && data.message is string && data.message.size() <= 2000
+        && data.createdAt == request.time;
+    }
+
     // 2. Collection Rules
     match /contacts/{submissionId} {
       // Public can create submissions through the contact form
       allow create: if isValidContactSubmission(incoming());
       
       // No one can read, update, or delete submissions via the client
+      allow read, update, delete: if false;
+    }
+
+    match /partners_submissions/{submissionId} {
+      // Public can submit partner applications
+      allow create: if isValidPartnerSubmission(incoming());
+      
+      // No one can read, update, or delete applications via the client
       allow read, update, delete: if false;
     }
   }

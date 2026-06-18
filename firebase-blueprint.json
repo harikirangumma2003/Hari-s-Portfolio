@@ -29,12 +29,54 @@
         }
       },
       "required": ["name", "email", "subject", "message", "createdAt"]
+    },
+    "PartnerSubmission": {
+      "title": "Partner Submission",
+      "description": "Details from a partner page sign-up/application.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The full name of the applying partner."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The corporate email address."
+        },
+        "website": {
+          "type": "string",
+          "description": "The company website URL."
+        },
+        "tier": {
+          "type": "string",
+          "description": "The preferred partnership tier package."
+        },
+        "budget": {
+          "type": "string",
+          "description": "Monthly budget tier for the collaboration."
+        },
+        "message": {
+          "type": "string",
+          "description": "The business outline message."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time the application was received."
+        }
+      },
+      "required": ["name", "email", "website", "tier", "budget", "message", "createdAt"]
     }
   },
   "firestore": {
     "contacts/{submissionId}": {
       "schema": "ContactSubmission",
       "description": "Submissions from the contact form."
+    },
+    "partners_submissions/{submissionId}": {
+      "schema": "PartnerSubmission",
+      "description": "Applications submitted through the Become a Partner form."
     }
   }
 }

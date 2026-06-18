@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SEO } from "../components/SEO";
 import { partnersData } from "../data/partners";
+import { db, auth } from "../lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { 
   ArrowUpRight, 
   Search, 
@@ -27,6 +29,7 @@ export default function PartnersPage() {
   
   // Application Form States
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -56,15 +59,101 @@ export default function PartnersPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.website) {
       setFormError("Please fill out your Name, Email, and Website address to apply.");
       return;
     }
+    
     setFormError("");
-    setFormSubmitted(true);
-    console.log("Partner Application Submitted Successfully:", formData);
+    setIsSubmitting(true);
+
+    const pathForWrite = "partners_submissions";
+    try {
+      // 1. Write the backup log inside Firestore securely
+      await addDoc(collection(db, pathForWrite), {
+        name: formData.name,
+        email: formData.email,
+        website: formData.website,
+        tier: formData.tier,
+        budget: formData.budget,
+        message: formData.message || "",
+        createdAt: serverTimestamp()
+      });
+
+      // 2. Dispatch the real-time email notification via web3forms
+      const form = new FormData();
+      form.append("name", formData.name);
+      form.append("email", formData.email);
+      form.append("subject", `New Partnership Proposal from ${formData.name}`);
+      form.append("message", `
+A new partner application has been received:
+
+• Name: ${formData.name}
+• Corporate Email: ${formData.email}
+• Company Website: ${formData.website}
+• Target Tier: ${formData.tier}
+• Proposed Budget: ${formData.budget}
+• Business Summary:
+${formData.message || "N/A"}
+      `.trim());
+
+      const accessKey = ((import.meta as any).env?.VITE_WEB3FORMS_ACCESS_KEY) || "c6af2c9e-9a52-4d5f-af99-72cd9707d7dd";
+      form.append("access_key", accessKey);
+      form.append("from_name", "G. Hari Kiran Partner Program");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: form
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        setFormSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          website: "",
+          tier: "tier-2",
+          budget: "₹2,000 - ₹5,000 / month",
+          message: ""
+        });
+      } else {
+        console.warn("Web3Forms email delivery failed, but submission has been successfully logged to Firestore database:", responseData);
+        // Display success because persistent logging in Firestore worked
+        setFormSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          website: "",
+          tier: "tier-2",
+          budget: "₹2,000 - ₹5,000 / month",
+          message: ""
+        });
+      }
+    } catch (error: any) {
+      console.error("Firestore Partner Submission Error:", error);
+      
+      const errInfo = {
+        error: error instanceof Error ? error.message : String(error),
+        authInfo: {
+          userId: auth.currentUser?.uid,
+          email: auth.currentUser?.email,
+          emailVerified: auth.currentUser?.emailVerified,
+          isAnonymous: auth.currentUser?.isAnonymous,
+          tenantId: auth.currentUser?.tenantId,
+        },
+        operationType: "write" as const,
+        path: pathForWrite
+      };
+      
+      console.error("Firestore Error Logging Payload:", JSON.stringify(errInfo));
+      setFormError("We encountered a small communication issue. Please review your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Structured Data Schema for Local Search Optimization
@@ -721,7 +810,8 @@ export default function PartnersPage() {
                             placeholder="e.g. Rahul Sharma"
                             value={formData.name}
                             onChange={handleInputChange}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white"
+                            disabled={isSubmitting}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white disabled:opacity-50"
                           />
                         </div>
 
@@ -734,7 +824,8 @@ export default function PartnersPage() {
                             placeholder="e.g. rahul@yourcompany.com"
                             value={formData.email}
                             onChange={handleInputChange}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white"
+                            disabled={isSubmitting}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white disabled:opacity-50"
                           />
                         </div>
                       </div>
@@ -749,7 +840,8 @@ export default function PartnersPage() {
                             placeholder="e.g. https://yourcompany.com"
                             value={formData.website}
                             onChange={handleInputChange}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white"
+                            disabled={isSubmitting}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white disabled:opacity-50"
                           />
                         </div>
 
@@ -760,7 +852,8 @@ export default function PartnersPage() {
                             name="tier"
                             value={formData.tier}
                             onChange={handleInputChange}
-                            className="aria-label-select w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-neutral-800 transition-all text-white"
+                            disabled={isSubmitting}
+                            className="aria-label-select w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-neutral-800 transition-all text-white disabled:opacity-50"
                           >
                             <option value="tier-1">Featured Logo (₹999/mo)</option>
                             <option value="tier-2">Featured Brand (₹2,999/mo)</option>
@@ -777,7 +870,8 @@ export default function PartnersPage() {
                           name="budget"
                           value={formData.budget}
                           onChange={handleInputChange}
-                          className="aria-label-select w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-neutral-800 transition-all text-white"
+                          disabled={isSubmitting}
+                          className="aria-label-select w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-neutral-800 transition-all text-white disabled:opacity-50"
                         >
                           <option value="<₹1,000 / month">Under ₹1,000 / month</option>
                           <option value="₹1,000 - ₹3,000 / month">₹1,000 - ₹3,000 / month</option>
@@ -795,7 +889,8 @@ export default function PartnersPage() {
                           placeholder="Tell us what your company does and who you want to reach..."
                           value={formData.message}
                           onChange={handleInputChange}
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white resize-none"
+                          disabled={isSubmitting}
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-accent focus:bg-white/10 transition-all text-white resize-none disabled:opacity-50"
                         />
                       </div>
 
@@ -805,9 +900,14 @@ export default function PartnersPage() {
 
                       <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-3 bg-accent hover:bg-white hover:text-black text-white py-4 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-[0_8px_25px_rgba(255,107,0,0.3)] active:scale-95 group font-mono"
+                        disabled={isSubmitting}
+                        className="w-full flex items-center justify-center gap-3 bg-accent hover:bg-white hover:text-black text-white py-4 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all shadow-[0_8px_25px_rgba(255,107,0,0.3)] active:scale-95 group font-mono disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Submit Partner Application <Send size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        {isSubmitting ? (
+                          <>Submitting application... <span className="animate-spin inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full ml-1" /></>
+                        ) : (
+                          <>Submit Partner Application <Send size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" /></>
+                        )}
                       </button>
                     </motion.form>
                   ) : (
