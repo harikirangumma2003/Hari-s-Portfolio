@@ -17,22 +17,22 @@ service cloud.firestore {
     function isValidContactSubmission(data) {
       return data.keys().hasAll(['name', 'email', 'subject', 'message', 'createdAt'])
         && data.keys().size() == 5
-        && data.name is string && data.name.size() >= 2 && data.name.size() <= 100
-        && data.email is string && data.email.size() <= 100 && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
-        && data.subject is string && data.subject in ['Growth Strategy', 'Consultation', 'Project Inquiry', 'Other']
-        && data.message is string && data.message.size() >= 10 && data.message.size() <= 2000
+        && data.name is string && data.name.size() >= 2 && data.name.size() <= 200
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 200
+        && data.subject is string
+        && data.message is string && data.message.size() >= 5 && data.message.size() <= 5000
         && data.createdAt == request.time;
     }
 
     function isValidPartnerSubmission(data) {
       return data.keys().hasAll(['name', 'email', 'website', 'tier', 'budget', 'message', 'createdAt'])
         && data.keys().size() == 7
-        && data.name is string && data.name.size() >= 2 && data.name.size() <= 100
-        && data.email is string && data.email.size() <= 100 && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
-        && data.website is string && data.website.size() >= 4 && data.website.size() <= 200
-        && data.tier is string && data.tier.size() <= 50
-        && data.budget is string && data.budget.size() <= 100
-        && data.message is string && data.message.size() <= 2000
+        && data.name is string && data.name.size() >= 1 && data.name.size() <= 200
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 200
+        && data.website is string && data.website.size() >= 3 && data.website.size() <= 300
+        && data.tier is string && data.tier.size() <= 100
+        && data.budget is string && data.budget.size() <= 200
+        && data.message is string && data.message.size() <= 5000
         && data.createdAt == request.time;
     }
 

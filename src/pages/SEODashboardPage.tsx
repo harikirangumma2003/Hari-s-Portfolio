@@ -10,6 +10,23 @@ const SEODashboardPage = () => {
   const [indexUrl, setIndexUrl] = useState("");
   const [indexStatus, setIndexStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [passcodeInput, setPasscodeInput] = useState("");
+  const [isUnlocked, setIsUnlocked] = useState(() => {
+    return localStorage.getItem("seo_dashboard_unlocked") === "true";
+  });
+  const [passcodeError, setPasscodeError] = useState("");
+
+  const handleUnlockSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const correctPasscodes = ["hk-seo-audit", "harikiran-seo", "audit2026", "hk-audit-360"];
+    if (correctPasscodes.includes(passcodeInput.trim().toLowerCase())) {
+      setIsUnlocked(true);
+      setPasscodeError("");
+      localStorage.setItem("seo_dashboard_unlocked", "true");
+    } else {
+      setPasscodeError("Invalid validation credential key. Please try again.");
+    }
+  };
 
   const handleIndexSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,149 +142,197 @@ const SEODashboardPage = () => {
           </p>
         </div>
 
-        {/* Live Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {siteScores.map((score, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              className="bento-card p-8 bg-white flex flex-col justify-between"
-            >
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted/85 mb-2 block">{score.title}</span>
-                <p className={`text-4xl sm:text-5xl font-display font-black uppercase tracking-tight ${score.color}`}>
-                  {score.value}
-                </p>
+        {!isUnlocked ? (
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-md mx-auto bg-white border border-primary/5 rounded-[32px] p-8 md:p-10 shadow-xl text-center my-12"
+          >
+            <div className="w-16 h-16 bg-neutral-900 border border-neutral-800 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
+              <ShieldAlert size={28} className="animate-pulse text-accent" />
+            </div>
+            
+            <h2 className="text-2xl font-display font-black uppercase text-neutral-950 mb-3">Audit Board Locked</h2>
+            <p className="text-neutral-500 text-xs leading-relaxed mb-6 font-sans">
+              To guarantee competitive security, G. Hari Kiran's live IndexNow crawlers and system health metrics are closed to the public. Enter the authorized access key to proceed.
+            </p>
+
+            <form onSubmit={handleUnlockSubmit} className="space-y-4">
+              <div className="space-y-1.5 text-left">
+                <label htmlFor="passcode" className="text-[9px] font-black uppercase tracking-wider text-neutral-400 font-mono">Verification Passkey</label>
+                <input 
+                  id="passcode"
+                  type="password" 
+                  placeholder="Enter validation key..." 
+                  value={passcodeInput}
+                  onChange={(e) => setPasscodeInput(e.target.value)}
+                  className="w-full bg-neutral-50 text-neutral-950 font-mono text-xs px-4 py-3.5 border border-primary/10 rounded-xl focus:outline-none focus:border-accent"
+                />
               </div>
-              <p className="text-xs font-mono uppercase tracking-widest text-muted mt-6 border-t border-primary/5 pt-4">
-                {score.label}
-              </p>
-            </motion.div>
-          ))}
-        </div>
 
-        {/* Detail Audit Fix List */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
-          {/* Main Resolution Logs */}
-          <div className="lg:col-span-8 space-y-6">
-            <h2 className="text-2xl font-display font-black uppercase tracking-tight text-primary flex items-center gap-2">
-              <BarChart2 size={20} className="text-accent" /> Ahrefs Site Audit Resolutions
-            </h2>
+              {passcodeError && (
+                <p className="text-xs text-red-500 font-semibold">{passcodeError}</p>
+              )}
 
-            <div className="space-y-4">
-              {auditFixes.map((item, index) => (
+              <button 
+                type="submit"
+                className="w-full bg-neutral-950 text-white hover:bg-accent hover:shadow-[0_8px_20px_rgba(255,107,0,0.25)] py-4 rounded-xl text-[10px] uppercase font-black tracking-widest font-mono transition-all"
+              >
+                Access Diagnostics Dashboard
+              </button>
+            </form>
+
+            <div className="mt-6 pt-6 border-t border-neutral-100 text-[10px] text-neutral-400 font-mono">
+              Demo Key: <span className="font-semibold text-neutral-600">hk-seo-audit</span>
+            </div>
+          </motion.div>
+        ) : (
+          <>
+            {/* Live Metrics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              {siteScores.map((score, idx) => (
                 <motion.div
-                  key={index}
-                  className="bento-card p-6 bg-white border border-primary/5 hover:border-accent/10 transition-all duration-300"
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bento-card p-8 bg-white flex flex-col justify-between"
                 >
-                  <div className="flex flex-wrap justify-between items-start gap-3 mb-3">
-                    <div>
-                      <span className="text-[9px] font-mono uppercase tracking-wider text-muted mr-3 mb-1 block">Audit Code: {item.id}</span>
-                      <h3 className="text-base font-display font-black uppercase tracking-tight text-primary">
-                        {item.issue}
-                      </h3>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-mono uppercase tracking-widest text-orange-600 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-full font-black">
-                        {item.impact}
-                      </span>
-                      <span className="text-[9px] font-mono uppercase tracking-widest text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
-                        <CheckCircle size={10} /> {item.status}
-                      </span>
-                    </div>
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted/85 mb-2 block">{score.title}</span>
+                    <p className={`text-4xl sm:text-5xl font-display font-black uppercase tracking-tight ${score.color}`}>
+                      {score.value}
+                    </p>
                   </div>
-                  <p className="text-muted text-xs sm:text-sm leading-relaxed">
-                    {item.explanation}
+                  <p className="text-xs font-mono uppercase tracking-widest text-muted mt-6 border-t border-primary/5 pt-4">
+                    {score.label}
                   </p>
                 </motion.div>
               ))}
             </div>
-          </div>
 
-          {/* Crawl Control Panels */}
-          <div className="lg:col-span-4 space-y-8">
-            <h2 className="text-2xl font-display font-black uppercase tracking-tight text-primary flex items-center gap-2">
-              <Cpu size={20} className="text-accent" /> Crawl Controller
-            </h2>
+            {/* Detail Audit Fix List */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
+              {/* Main Resolution Logs */}
+              <div className="lg:col-span-8 space-y-6">
+                <h2 className="text-2xl font-display font-black uppercase tracking-tight text-primary flex items-center gap-2">
+                  <BarChart2 size={20} className="text-accent" /> Ahrefs Site Audit Resolutions
+                </h2>
 
-            {/* Verification Config Nodes */}
-            <div className="bento-card p-6 bg-black text-white space-y-6">
-              <span className="text-[9px] font-black uppercase tracking-[3px] text-accent block">Metadata Node</span>
-              <h3 className="text-base font-display font-black uppercase text-white tracking-tight">Robot & Sitemap Files</h3>
-              
-              <p className="text-white/70 text-xs leading-relaxed">
-                We've established physical directives directly matching Google standards. View dynamic indexing files live:
-              </p>
+                <div className="space-y-4">
+                  {auditFixes.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      className="bento-card p-6 bg-white border border-primary/5 hover:border-accent/10 transition-all duration-300"
+                    >
+                      <div className="flex flex-wrap justify-between items-start gap-3 mb-3">
+                        <div>
+                          <span className="text-[9px] font-mono uppercase tracking-wider text-muted mr-3 mb-1 block">Audit Code: {item.id}</span>
+                          <h3 className="text-base font-display font-black uppercase tracking-tight text-primary">
+                            {item.issue}
+                          </h3>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[9px] font-mono uppercase tracking-widest text-orange-600 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-full font-black">
+                            {item.impact}
+                          </span>
+                          <span className="text-[9px] font-mono uppercase tracking-widest text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
+                            <CheckCircle size={10} /> {item.status}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-muted text-xs sm:text-sm leading-relaxed">
+                        {item.explanation}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
 
-              <div className="space-y-3">
-                <a 
-                  href="/robots.txt" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="w-full flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-accent/15 hover:text-accent border border-white/10 transition-all text-xs font-mono"
-                >
-                  <span>🤖 robots.txt</span>
-                  <ArrowRight size={12} />
-                </a>
-                <a 
-                  href="/sitemap.xml" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="w-full flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-accent/15 hover:text-accent border border-white/10 transition-all text-xs font-mono"
-                >
-                  <span>🗺️ sitemap.xml</span>
-                  <ArrowRight size={12} />
-                </a>
-                <a 
-                  href="/820713be2f874bcab48c2635905cddec.txt" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="w-full flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-accent/15 hover:text-accent border border-white/10 transition-all text-xs font-mono"
-                >
-                  <span>🔑 IndexNow Token</span>
-                  <ArrowRight size={12} />
-                </a>
+              {/* Crawl Control Panels */}
+              <div className="lg:col-span-4 space-y-8">
+                <h2 className="text-2xl font-display font-black uppercase tracking-tight text-primary flex items-center gap-2">
+                  <Cpu size={20} className="text-accent" /> Crawl Controller
+                </h2>
+
+                {/* Verification Config Nodes */}
+                <div className="bento-card p-6 bg-black text-white space-y-6">
+                  <span className="text-[9px] font-black uppercase tracking-[3px] text-accent block">Metadata Node</span>
+                  <h3 className="text-base font-display font-black uppercase text-white tracking-tight">Robot & Sitemap Files</h3>
+                  
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    We've established physical directives directly matching Google standards. View dynamic indexing files live:
+                  </p>
+
+                  <div className="space-y-3">
+                    <a 
+                      href="/robots.txt" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="w-full flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-accent/15 hover:text-accent border border-white/10 transition-all text-xs font-mono"
+                    >
+                      <span>🤖 robots.txt</span>
+                      <ArrowRight size={12} />
+                    </a>
+                    <a 
+                      href="/sitemap.xml" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="w-full flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-accent/15 hover:text-accent border border-white/10 transition-all text-xs font-mono"
+                    >
+                      <span>🗺️ sitemap.xml</span>
+                      <ArrowRight size={12} />
+                    </a>
+                    <a 
+                      href="/820713be2f874bcab48c2635905cddec.txt" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="w-full flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-accent/15 hover:text-accent border border-white/10 transition-all text-xs font-mono"
+                    >
+                      <span>🔑 IndexNow Token</span>
+                      <ArrowRight size={12} />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Interactive IndexNow Trigger Console */}
+                <div className="bento-card p-6 bg-white border border-primary/10">
+                  <span className="text-[9px] font-black uppercase tracking-[3px] text-accent block mb-2">Live Integration</span>
+                  <h3 className="text-base font-display font-black uppercase text-primary mb-3">IndexNow Crawler API</h3>
+                  <p className="text-muted text-xs leading-relaxed mb-4">
+                    Fast-track indexation by submitting URL streams to search bots.
+                  </p>
+
+                  <form onSubmit={handleIndexSubmit} className="space-y-3">
+                    <input 
+                      type="url" 
+                      placeholder="Paste URL to index" 
+                      required
+                      value={indexUrl}
+                      onChange={(e) => setIndexUrl(e.target.value)}
+                      className="w-full px-3 py-2 bg-neutral-50 rounded-lg text-xs font-mono border border-primary/10 focus:outline-none focus:border-accent"
+                    />
+                    <button 
+                      type="submit" 
+                      disabled={isLoading}
+                      className="w-full btn-accent text-[9px] uppercase tracking-widest font-black py-3 rounded-lg text-center justify-center flex items-center gap-1"
+                    >
+                      {isLoading ? <RefreshCw size={12} className="animate-spin" /> : <Send size={10} />}
+                      {isLoading ? "Dispatching..." : "Submit to Bing & Partners"}
+                    </button>
+                  </form>
+
+                  {indexStatus && (
+                    <div className="mt-3 p-3 rounded-lg bg-neutral-50 border border-primary/5 text-[10px] font-mono text-primary leading-relaxed break-all">
+                      {indexStatus}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-
-            {/* Interactive IndexNow Trigger Console */}
-            <div className="bento-card p-6 bg-white border border-primary/10">
-              <span className="text-[9px] font-black uppercase tracking-[3px] text-accent block mb-2">Live Integration</span>
-              <h3 className="text-base font-display font-black uppercase text-primary mb-3">IndexNow Crawler API</h3>
-              <p className="text-muted text-xs leading-relaxed mb-4">
-                Fast-track indexation by submitting URL streams to search bots.
-              </p>
-
-              <form onSubmit={handleIndexSubmit} className="space-y-3">
-                <input 
-                  type="url" 
-                  placeholder="Paste URL to index" 
-                  required
-                  value={indexUrl}
-                  onChange={(e) => setIndexUrl(e.target.value)}
-                  className="w-full px-3 py-2 bg-neutral-50 rounded-lg text-xs font-mono border border-primary/10 focus:outline-none focus:border-accent"
-                />
-                <button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="w-full btn-accent text-[9px] uppercase tracking-widest font-black py-3 rounded-lg text-center justify-center flex items-center gap-1"
-                >
-                  {isLoading ? <RefreshCw size={12} className="animate-spin" /> : <Send size={10} />}
-                  {isLoading ? "Dispatching..." : "Submit to Bing & Partners"}
-                </button>
-              </form>
-
-              {indexStatus && (
-                <div className="mt-3 p-3 rounded-lg bg-neutral-50 border border-primary/5 text-[10px] font-mono text-primary leading-relaxed break-all">
-                  {indexStatus}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
