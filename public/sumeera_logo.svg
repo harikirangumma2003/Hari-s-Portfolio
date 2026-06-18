@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" width="100%" height="100%">
+  <!-- Central SS Icon and Concentric Orbits -->
+  <g transform="translate(210, 160)">
+    <!-- Concentric broken orbits -->
+    <!-- Orbit 1 (Inner) -->
+    <circle cx="0" cy="0" r="45" fill="none" stroke="#0046be" stroke-width="4" stroke-dasharray="110 20 110 20" transform="rotate(45)"/>
+    <!-- Orbit 2 (Middle) -->
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#0046be" stroke-width="4.5" stroke-dasharray="160 30 160 30" transform="rotate(-30)"/>
+    <!-- Orbit 3 (Outer) -->
+    <circle cx="0" cy="0" r="105" fill="none" stroke="#0046be" stroke-width="5" stroke-dasharray="240 40 240 40" transform="rotate(15)"/>
+    
+    <!-- Horizontal dividing bars with nodes -->
+    <line x1="-165" y1="-32" x2="-80" y2="-32" stroke="#0046be" stroke-width="5.5" />
+    <line x1="-165" y1="32" x2="-80" y2="32" stroke="#0046be" stroke-width="5.5" />
+    <line x1="80" y1="-32" x2="165" y2="-32" stroke="#0046be" stroke-width="5.5" />
+    <line x1="80" y1="32" x2="165" y2="32" stroke="#0046be" stroke-width="5.5" />
+    
+    <!-- Orbit outer connections and small nodes -->
+    <circle cx="-175" cy="0" r="9" fill="none" stroke="#0046be" stroke-width="5" />
+    <circle cx="-175" cy="65" r="10" fill="#0046be" />
+    <circle cx="175" cy="0" r="10" fill="#0046be" />
+    <circle cx="175" cy="65" r="9" fill="none" stroke="#0046be" stroke-width="5" />
+    
+    <!-- Top and bottom anchor dots -->
+    <circle cx="0" cy="-105" r="11" fill="#0046be" />
+    <circle cx="0" cy="105" r="11" fill="#0046be" />
+    <circle cx="0" cy="-105" r="5" fill="#ffffff" />
+    <circle cx="0" cy="105" r="5" fill="#ffffff" />
+    
+    <!-- Central interlocking SS monogram -->
+    <g transform="translate(-25, -25)">
+      <!-- Left S-shape -->
+      <path d="M 12 5 C 6 5 2 9 2 15 C 2 21 6 25 12 25 L 38 25 C 44 25 48 29 48 35 C 48 41 44 45 38 45" fill="none" stroke="#0046be" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Right S-shape -->
+      <path d="M 38 45 C 44 45 48 41 48 35 C 48 29 44 25 38 25 L 12 25 C 6 25 2 21 2 15 C 2 9 6 5 12 5" fill="none" stroke="#0046be" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  
+  <!-- Text Elements on left and right -->
+  <text x="125" y="170" font-family="'Outfit', 'Inter', sans-serif" font-size="23" font-weight="900" fill="#0046be" text-anchor="end" letter-spacing="-0.5">SuMeera</text>
+  <text x="295" y="170" font-family="'Outfit', 'Inter', sans-serif" font-size="23" font-weight="900" fill="#0046be" text-anchor="start" letter-spacing="-0.5">Solutions</text>
+</svg>

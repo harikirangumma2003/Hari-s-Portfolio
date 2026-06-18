@@ -112,8 +112,8 @@ const AboutPage = () => {
           Strategy
         </div>
 
-        {/* Milestone Gallery */}
-        <div>
+         {/* Milestone Gallery */}
+        <div className="mb-24">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter">Small Details, <span className="text-accent">Big Impact</span></h2>
           </div>
@@ -138,18 +138,30 @@ const AboutPage = () => {
           </div>
         </div>
 
+        {/* Dynamic Contextual Crawl Links */}
+        <div className="my-16 p-8 border border-primary/5 rounded-3xl bg-neutral-50/50 text-center font-sans">
+          <p className="text-sm text-muted leading-relaxed">
+            Interested in scaling traffic or streamlining regulatory pipelines? Explore G. Hari Kiran's <Link to="/work" className="text-accent font-bold hover:underline">performance campaigns</Link>, view our <Link to="/partners" className="text-accent font-bold hover:underline">growth sponsor tiers</Link>, or check the <Link to="/experience" className="text-accent font-bold hover:underline">service milestones</Link>.
+          </p>
+        </div>
+
         {/* Call to Action */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-32 p-12 rounded-[40px] bg-primary text-white text-center relative overflow-hidden"
+          className="mt-16 p-12 rounded-[40px] bg-primary text-white text-center relative overflow-hidden"
         >
           <div className="relative z-10">
             <h3 className="text-3xl md:text-5xl font-display font-black uppercase mb-8 leading-none tracking-tighter">Ready to fuel your next <span className="text-accent underline underline-offset-8">Growth Sprints?</span></h3>
-            <a href="mailto:harikirangumma2003@gmail.com" className="inline-flex items-center gap-2 bg-accent text-white font-black px-10 py-4 rounded-full uppercase tracking-widest text-xs hover:bg-white hover:text-primary transition-all">
-              Send an Email
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <a href="mailto:harikirangumma2003@gmail.com" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent text-white font-black px-10 py-4 rounded-full uppercase tracking-widest text-xs hover:bg-white hover:text-primary transition-all">
+                Send an Email
+              </a>
+              <Link to="/contact" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/20 bg-white/5 hover:bg-white hover:text-primary text-white font-black px-10 py-4 rounded-full uppercase tracking-widest text-xs transition-all">
+                Direct Inquiry
+              </Link>
+            </div>
           </div>
           <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-accent/20 rounded-full blur-[100px]"></div>
         </motion.div>

@@ -110,13 +110,14 @@ const Footer = () => {
           <div className="md:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-12 pt-4">
             <div className="space-y-8">
               <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Navigation</p>
-              <ul className="space-y-5">
+              <ul className="space-y-3">
                 {[
                   { name: "Home", path: "/" },
                   { name: "About", path: "/about" },
                   { name: "Experience", path: "/experience" },
                   { name: "Work", path: "/work" },
                   { name: "Blog", path: "/blog" },
+                  { name: "Partners", path: "/partners" },
                   { name: "Contact", path: "/contact" }
                 ].map((link) => (
                   <li key={link.name}>
@@ -131,7 +132,7 @@ const Footer = () => {
               <ul className="space-y-5">
                 {["SEO Strategy", "Market Research", "Content Audits", "Growth Hacking"].map((item) => (
                   <li key={item}>
-                    <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</a>
+                    <Link to={`/contact?interest=${encodeURIComponent(item)}`} className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</Link>
                   </li>
                 ))}
               </ul>
@@ -152,9 +153,9 @@ const Footer = () => {
             &copy; {currentYear} G. Hari Kiran. All Architecture & Intellectual Reserved.
           </p>
           <div className="flex gap-12">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Attributions</a>
+            <Link to="/contact" className="hover:text-white transition-colors">Privacy Information</Link>
+            <Link to="/contact" className="hover:text-white transition-colors">Service Terms</Link>
+            <Link to="/about" className="hover:text-white transition-colors">Attributions & Credentials</Link>
           </div>
         </div>
       </div>

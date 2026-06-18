@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 300" width="100%" height="100%">
+  <!-- Definitions for Gradients and Rounded/Shadow Effects -->
+  <defs>
+    <!-- Bag Golden Gradient -->
+    <linearGradient id="bagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b68f3a" />
+      <stop offset="50%" stop-color="#9d7629" />
+      <stop offset="100%" stop-color="#735213" />
+    </linearGradient>
+    
+    <!-- Handle Dark Brown Gradient -->
+    <linearGradient id="handleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3d220f" />
+      <stop offset="100%" stop-color="#241205" />
+    </linearGradient>
+
+    <!-- Subtle Drop Shadow for Bag -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Handles (Behind the bag body) -->
+  <g filter="url(#shadow)">
+    <!-- Left Handle Loop -->
+    <path d="M 185 85 C 185 45, 215 40, 215 85" fill="none" stroke="url(#handleGrad)" stroke-width="10" stroke-linecap="round" />
+    <!-- Right Handle Loop -->
+    <path d="M 235 85 C 235 45, 265 40, 265 85" fill="none" stroke="url(#handleGrad)" stroke-width="10" stroke-linecap="round" />
+    <!-- Outer Handle Wraps -->
+    <path d="M 210 85 C 210 32, 240 32, 240 85" fill="none" stroke="url(#handleGrad)" stroke-width="12" stroke-linecap="round" />
+  </g>
+
+  <!-- Bag Body -->
+  <path d="M 160 85 
+           L 290 85 
+           C 298 85, 305 91, 303 98
+           L 283 182
+           C 281 189, 274 195, 267 195
+           L 183 195
+           C 176 195, 169 189, 167 182
+           L 147 98
+           C 145 91, 152 85, 160 85 Z" 
+        fill="url(#bagGrad)" 
+        filter="url(#shadow)" />
+
+  <!-- White Shopping Cart Icon inside the Bag -->
+  <g transform="translate(162, 105)" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Handle/Chassis line -->
+    <path d="M 5 10 L 15 10 L 25 35 L 75 35 L 85 10 L 25 10" />
+    <!-- Wheels -->
+    <circle cx="32" cy="44" r="4.5" fill="#ffffff" stroke="none" />
+    <circle cx="68" cy="44" r="4.5" fill="#ffffff" stroke="none" />
+    
+    <!-- Letter Y inside the Basket -->
+    <text x="49" y="27" font-family="'Outfit', 'Inter', sans-serif" font-size="18" font-weight="950" fill="#ffffff" stroke="none" text-anchor="middle">Y</text>
+  </g>
+
+  <!-- Title Text 'Yuvakart' below the Bag -->
+  <text x="225" y="248" font-family="'Outfit', 'Inter', sans-serif" font-size="36" font-weight="900" fill="#4d3214" text-anchor="middle" letter-spacing="-0.5">Yuvakart</text>
+</svg>

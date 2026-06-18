@@ -153,11 +153,17 @@ const ExperiencePage = () => {
           </div>
 
           {/* CTA */}
+          <div className="my-16 p-8 border border-accent/25 rounded-3xl bg-orange-50/20 text-center font-sans">
+            <p className="text-sm text-muted leading-relaxed">
+              Looking to align your B2B model or optimize local search parameters (like Jamshedpur or Ranchi local maps)? View G. Hari Kiran's <Link to="/work" className="text-accent font-bold hover:underline">case study portfolio</Link>, review the <Link to="/blog" className="text-accent font-bold hover:underline">growth notebook articles</Link>, or contact us directly.
+            </p>
+          </div>
+
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-32 p-12 rounded-[40px] bg-accent text-white flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden"
+            className="mt-16 p-12 rounded-[40px] bg-accent text-white flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden"
           >
             <div className="relative z-10 max-w-xl text-center md:text-left">
               <h3 className="text-3xl md:text-4xl font-display font-black uppercase mb-4 leading-none tracking-tighter">
@@ -165,9 +171,14 @@ const ExperiencePage = () => {
               </h3>
               <p className="text-white/80 uppercase text-[10px] font-black tracking-widest">Let's discuss how we can scale your specific metrics.</p>
             </div>
-            <a href="mailto:harikirangumma2003@gmail.com" className="relative z-10 bg-white text-accent font-black px-10 py-4 rounded-full uppercase tracking-widest text-xs hover:bg-primary hover:text-white transition-all shadow-xl">
-              Get Started
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center relative z-10 w-full sm:w-auto">
+              <a href="mailto:harikirangumma2003@gmail.com" className="w-full sm:w-auto bg-white text-accent font-black px-10 py-4 rounded-full uppercase tracking-widest text-[10px] hover:bg-primary hover:text-white transition-all shadow-xl text-center">
+                Get Started
+              </a>
+              <Link to="/contact" className="w-full sm:w-auto border border-white/30 bg-accent hover:bg-white hover:text-accent text-white font-black px-10 py-4 rounded-full uppercase tracking-widest text-[10px] transition-all text-center">
+                Inquire Directly
+              </Link>
+            </div>
             <div className="absolute -left-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-[100px]"></div>
           </motion.div>
         </div>

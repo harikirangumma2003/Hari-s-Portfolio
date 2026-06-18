@@ -1,4 +1,14 @@
+# https://harikiran-portfolio.netlify.app/robots.txt
+# Technical SEO Directive Configuration for Googlebot, Bingbot, and modern scrapers
+
 User-agent: *
 Allow: /
+Disallow: /*?*             # Disallow tracking links, UTM queries to prevent duplicates
+Disallow: /private/        # Safe staging directories
+Disallow: /admin           # Avoid administrative noise crawling
 
+User-agent: GPTBot
+Disallow: /                # Conserve server bandwidth from standard AI crawlers
+
+# Dynamic Crawl Map Index URL
 Sitemap: https://harikiran-portfolio.netlify.app/sitemap.xml

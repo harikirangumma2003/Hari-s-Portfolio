@@ -15,6 +15,9 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ContactPage from "./pages/ContactPage";
+import PartnersPage from "./pages/PartnersPage";
+import SEODashboardPage from "./pages/SEODashboardPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import { Layout } from "./components/Layout";
 
 const ScrollToTop = () => {
@@ -59,6 +62,9 @@ export default function App() {
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/partners" element={<PartnersPage />} />
+              <Route path="/seo-audit" element={<SEODashboardPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </PageTransition>
         </Layout>

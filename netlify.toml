@@ -1,4 +1,26 @@
+# https://harikiran-portfolio.netlify.app/netlify.toml
+# Advanced Technical SEO Redirect & Header Directives
+
+# 1. Enforce HTTPS and Single Canonical Host (Avoid Duplicate Crawler Indexing)
+[[redirects]]
+  from = "https://www.harikiran-portfolio.netlify.app/*"
+  to = "https://harikiran-portfolio.netlify.app/:splat"
+  status = 301
+  force = true
+
+# 2. Support standard React SPA Routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# 3. Inject Security and Optimization Rules
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    Content-Security-Policy = "upgrade-insecure-requests"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

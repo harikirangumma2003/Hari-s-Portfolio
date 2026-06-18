@@ -10,6 +10,7 @@ import { TestimonialCard } from "../components/BrandsAndTestimonials";
 import Blog from "../components/Blog";
 import FAQ from "../components/FAQ";
 import { Contact, Footer } from "../components/ContactFooter";
+import { GrowthPartners } from "../components/GrowthPartners";
 
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -238,6 +239,7 @@ const HomePage = () => {
 
         {/* Supporting Sections */}
         <div className="mt-40 space-y-40 mb-20 lg:mb-40">
+          <GrowthPartners />
           <WorkingProcess />
           <Blog />
           <FAQ />
