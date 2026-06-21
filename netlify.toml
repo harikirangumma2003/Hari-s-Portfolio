@@ -1,41 +1,9 @@
-# https://harikiran-portfolio.netlify.app/netlify.toml
-# Advanced Technical SEO Redirect & Header Directives
+# Compile settings and static directories configuration for Netlify
+[build]
+  publish = "dist"
+  command = "npm run build"
 
-# 1. Enforce HTTPS and Single Canonical Host (Avoid Duplicate Crawler Indexing)
-[[redirects]]
-  from = "https://www.harikiran-portfolio.netlify.app/*"
-  to = "https://harikiran-portfolio.netlify.app/:splat"
-  status = 301
-  force = true
-
-# 2. Prevent Soft 404s for common crawler assets
-[[redirects]]
-  from = "/favicon.ico"
-  to = "/favicon.svg"
-  status = 301
-
-[[redirects]]
-  from = "/apple-touch-icon.png"
-  to = "/favicon.svg"
-  status = 301
-
-[[redirects]]
-  from = "/apple-touch-icon-precomposed.png"
-  to = "/favicon.svg"
-  status = 301
-
-[[redirects]]
-  from = "/browserconfig.xml"
-  to = "/favicon.svg"
-  status = 301
-
-# 3. Support standard React SPA Routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# 3. Inject Security and Optimization Rules
+# Dynamic HTTP Response Headers for Security & Optimization
 [[headers]]
   for = "/*"
   [headers.values]
@@ -45,3 +13,10 @@
     Referrer-Policy = "no-referrer-when-downgrade"
     Content-Security-Policy = "upgrade-insecure-requests"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Configure aggressive caching for compiled CSS & JS static bundles
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

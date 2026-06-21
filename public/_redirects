@@ -1,5 +1,11 @@
+# Forcing www to non-www canonical apex redirects (HTTP 301)
+https://www.harikiran-portfolio.netlify.app/* https://harikiran-portfolio.netlify.app/:splat 301!
+
+# Preventing Soft 404 crawler requests for legacy browser configurations (HTTP 301)
 /favicon.ico                    /favicon.svg                     301
 /apple-touch-icon.png           /favicon.svg                     301
 /apple-touch-icon-precomposed.png /favicon.svg                   301
 /browserconfig.xml              /favicon.svg                     301
-/*    /index.html   200
+
+# SPA fallback router to support direct deep linking on static hostings (HTTP 200)
+/*                              /index.html                      200

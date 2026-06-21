@@ -38,6 +38,7 @@ const NotFoundPage = () => {
         title="404 Page Not Found - SEO Audit Diagnostic | G. Hari Kiran"
         description="The requested page could not be located. Access G. Hari Kiran's digital marketing, SEO strategy, and high-ROI conversion solutions here."
         url="/404"
+        noindex={true}
       />
 
       <div className="container-custom max-w-4xl">
