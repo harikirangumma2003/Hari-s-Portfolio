@@ -46,6 +46,7 @@ const HomePage = () => {
         "url": "https://harikiran-portfolio.netlify.app",
         "sameAs": [
           "https://www.linkedin.com/in/hari-kiran-gumma",
+          "https://x.com/GHariKiran29",
           "https://discord.com/users/1431285511363760149",
           "https://medium.com/@harikirangumma2003"
         ],

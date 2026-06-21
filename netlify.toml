@@ -8,7 +8,28 @@
   status = 301
   force = true
 
-# 2. Support standard React SPA Routing
+# 2. Prevent Soft 404s for common crawler assets
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/favicon.svg"
+  status = 301
+
+[[redirects]]
+  from = "/apple-touch-icon.png"
+  to = "/favicon.svg"
+  status = 301
+
+[[redirects]]
+  from = "/apple-touch-icon-precomposed.png"
+  to = "/favicon.svg"
+  status = 301
+
+[[redirects]]
+  from = "/browserconfig.xml"
+  to = "/favicon.svg"
+  status = 301
+
+# 3. Support standard React SPA Routing
 [[redirects]]
   from = "/*"
   to = "/index.html"

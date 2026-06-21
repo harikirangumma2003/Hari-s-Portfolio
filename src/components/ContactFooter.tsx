@@ -1,12 +1,45 @@
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Contact = () => {
   const socials = [
-    { name: "Discord", link: "https://discord.com/users/1431285511363760149", handle: "@hari_kiran" },
-    { name: "LinkedIn", link: "https://www.linkedin.com/in/hari-kiran-gumma", handle: "G. Hari Kiran" },
-    { name: "Medium", link: "https://medium.com/@harikirangumma2003", handle: "@harikirangumma2003" },
+    { 
+      name: "Discord", 
+      link: "https://discord.com/users/1431285511363760149", 
+      handle: "@hari_kiran",
+      icon: (props: any) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+          <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1971.3728.2914a.077.077 0 01-.0066.1277 12.2986 12.2986 0 01-1.8722.8923.0766.0766 0 00-.0416.1061c.3628.6912.7663 1.3561 1.226 1.9942a.0775.0775 0 00.0842.028c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/>
+        </svg>
+      )
+    },
+    { 
+      name: "LinkedIn", 
+      link: "https://www.linkedin.com/in/hari-kiran-gumma", 
+      handle: "G. Hari Kiran",
+      icon: Linkedin
+    },
+    { 
+      name: "Medium", 
+      link: "https://medium.com/@harikirangumma2003", 
+      handle: "@harikirangumma2003",
+      icon: (props: any) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+          <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+        </svg>
+      )
+    },
+    { 
+      name: "Twitter / X", 
+      link: "https://x.com/GHariKiran29", 
+      handle: "@GHariKiran29",
+      icon: (props: any) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      )
+    },
   ];
 
   return (
@@ -24,7 +57,7 @@ const Contact = () => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
           {socials.map((social, i) => (
             <motion.a
               key={social.name}
@@ -35,17 +68,29 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="flex flex-col p-8 rounded-[32px] bg-[#fafafa] border border-primary/5 group transition-all hover:border-accent/40 hover:bg-white hover:shadow-xl"
+              className="flex flex-col p-8 rounded-[32px] bg-[#fafafa] border border-primary/5 group transition-all hover:border-accent/40 hover:bg-white hover:shadow-xl w-full min-w-0"
             >
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-[10px] font-black uppercase tracking-widest text-accent">
-                  {social.name}
-                </span>
-                <div className="w-10 h-10 rounded-full border border-primary/10 flex items-center justify-center group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-300">
-                  <ArrowUpRight size={20} />
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                    <social.icon className="w-4 h-4" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#444] truncate">
+                    {social.name}
+                  </span>
+                </div>
+                <div className="w-8 h-8 rounded-full border border-primary/10 flex items-center justify-center group-hover:bg-accent group-hover:text-white group-hover:border-accent transition-all duration-300 shrink-0">
+                  <ArrowUpRight size={16} />
                 </div>
               </div>
-              <span className="text-xl font-display font-black uppercase tracking-tight text-primary">
+              <span 
+                className={`font-display font-black uppercase tracking-tight text-primary truncate block w-full transition-colors group-hover:text-accent ${
+                  social.handle.length > 15 
+                    ? "text-base sm:text-lg lg:text-sm xl:text-base min-[1400px]:text-lg" 
+                    : "text-lg sm:text-xl lg:text-base xl:text-lg min-[1400px]:text-xl"
+                }`}
+                title={social.handle}
+              >
                 {social.handle}
               </span>
             </motion.a>
@@ -118,7 +163,8 @@ const Footer = () => {
                   { name: "Work", path: "/work" },
                   { name: "Blog", path: "/blog" },
                   { name: "Partners", path: "/partners" },
-                  { name: "Contact", path: "/contact" }
+                  { name: "Contact", path: "/contact" },
+                  { name: "SEO Audit", path: "/seo-audit" }
                 ].map((link) => (
                   <li key={link.name}>
                     <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>

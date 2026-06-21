@@ -175,6 +175,29 @@ const ContactPage = () => {
       <SEO 
         title="Digital Marketing Consultant | Contact G. Hari Kiran" 
         description="Get a free growth consultation. Contact G. Hari Kiran, your trusted digital marketing and Local SEO Expert in Jamshedpur. Scale your brand today."
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "@id": "https://harikiran-portfolio.netlify.app/contact/#webpage",
+          "url": "https://harikiran-portfolio.netlify.app/contact",
+          "name": "Contact G. Hari Kiran | Leading Jamshedpur SEO Consultant",
+          "description": "Secure, highly targeted strategy intake form to book an expert SEO or digital growth consultation with G. Hari Kiran in Jamshedpur, Jharkhand.",
+          "mainEntity": {
+            "@type": "ProfessionalService",
+            "name": "G. Hari Kiran - Digital Marketing Consultant & SEO Expert",
+            "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
+            "telephone": "+91-XXXXXXXXXX",
+            "email": "harikirangumma2003@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Bistupur",
+              "addressLocality": "Jamshedpur",
+              "addressRegion": "Jharkhand",
+              "postalCode": "831001",
+              "addressCountry": "IN"
+            }
+          }
+        }}
       />
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -226,6 +249,14 @@ const ContactPage = () => {
                 <div className="flex gap-4">
                   {[
                     { icon: Linkedin, href: "https://www.linkedin.com/in/hari-kiran-gumma" },
+                    {
+                      icon: () => (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                      ),
+                      href: "https://x.com/GHariKiran29"
+                    },
                     { 
                       icon: () => (
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

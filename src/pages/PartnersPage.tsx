@@ -180,6 +180,7 @@ ${formData.message || "N/A"}
         "logo": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
         "sameAs": [
           "https://www.linkedin.com/in/hari-kiran-gumma",
+          "https://x.com/GHariKiran29",
           "https://medium.com/@harikirangumma2003"
         ],
         "sponsor": partnersData.map(p => ({

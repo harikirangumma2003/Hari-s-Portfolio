@@ -87,6 +87,20 @@ const ExperiencePage = () => {
         title="SEO Consultant Jamshedpur | G. Hari Kiran Experience"
         description="Explore G. Hari Kiran's achievements as an SEO consultant in Jamshedpur, scaling web traffic, automated email flows, and digital ads for global brands."
         url="/experience"
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          "@id": "https://harikiran-portfolio.netlify.app/experience/#profile",
+          "url": "https://harikiran-portfolio.netlify.app/experience",
+          "name": "G. Hari Kiran | Professional Marketing Experience Registry",
+          "description": "Historical timeline detailing G. Hari Kiran's professional career milestones in search engine optimization, email delivery automations, conversion-focused strategy, and local search visibility growth.",
+          "mainEntity": {
+            "@type": "Person",
+            "name": "G. Hari Kiran",
+            "jobTitle": "SEO & Digital Marketing Consultant",
+            "knowsAbout": ["On-Page SEO", "Technical SEO Audits", "Email Marketing Automation", "Conversion Optimization", "Local Citation Building"]
+          }
+        }}
       />
       <div className="container-custom">
           {/* Header */}

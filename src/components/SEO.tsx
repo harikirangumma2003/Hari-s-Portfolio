@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
   title: string;
@@ -25,24 +26,48 @@ export const SEO: React.FC<SEOProps> = ({
   articleData,
   schemaData
 }) => {
+  const location = useLocation();
   const siteName = "G. Hari Kiran";
   const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | ${siteName}`;
   const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg"; // Placeholder
   const siteUrl = "https://harikiran-portfolio.netlify.app";
+
+  // Determine precise canonical URL dynamically and strip trailing slashes (except apex /) to ensure sitemap matches
+  const path = url !== undefined ? url : location.pathname;
+  let cleanPath = path.startsWith('/') ? path : `/${path}`;
+  if (cleanPath.endsWith('/') && cleanPath.length > 1) {
+    cleanPath = cleanPath.slice(0, -1);
+  }
+  const canonicalUrl = cleanPath === '/' ? siteUrl : `${siteUrl}${cleanPath}`;
 
   return (
     <Helmet>
       {/* Basic Metadata */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url ? `${siteUrl}${url}` : siteUrl} />
+      <meta name="author" content="G. Hari Kiran" />
+      <link rel="canonical" href={canonicalUrl} />
+
+      {/* Geotagging / GEO & Local SEO Visibility */}
+      <meta name="geo.region" content="IN-JH" />
+      <meta name="geo.placename" content="Jamshedpur, Jharkhand, India" />
+      <meta name="geo.position" content="22.804566;86.202875" />
+      <meta name="ICBM" content="22.804566, 86.202875" />
+
+      {/* Dublin Core Metadata */}
+      <meta name="DC.title" content={fullTitle} />
+      <meta name="DC.creator" content="G. Hari Kiran" />
+      <meta name="DC.description" content={description} />
+      <meta name="DC.publisher" content="G. Hari Kiran" />
+      <meta name="DC.language" content="en" />
+      <meta name="DC.coverage" content="Jamshedpur, Jharkhand, India" />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image || defaultImage} />
-      <meta property="og:url" content={url ? `${siteUrl}${url}` : siteUrl} />
+      <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteName} />
 
       {/* Twitter */}

@@ -1,14 +1,39 @@
 # https://harikiran-portfolio.netlify.app/robots.txt
-# Technical SEO Directive Configuration for Googlebot, Bingbot, and modern scrapers
+# Technical SEO & AI Engine Optimization (AIO) Directives
 
+# 1. Allow and prioritize general crawler rules
 User-agent: *
 Allow: /
+Allow: /llms.txt
 Disallow: /*?*             # Disallow tracking links, UTM queries to prevent duplicates
 Disallow: /private/        # Safe staging directories
 Disallow: /admin           # Avoid administrative noise crawling
 
+# 2. Allow AI/LLM Web Scrapers to index materials for AI Search Engine Retrieval (GEO/AIO)
 User-agent: GPTBot
-Disallow: /                # Conserve server bandwidth from standard AI crawlers
+Allow: /
+Allow: /llms.txt
 
-# Dynamic Crawl Map Index URL
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+
+User-agent: Claude-Web
+Allow: /
+Allow: /llms.txt
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+# Dynamic XML and LLM Text Indexes
 Sitemap: https://harikiran-portfolio.netlify.app/sitemap.xml
+Sitemap: https://harikiran-portfolio.netlify.app/llms.txt
