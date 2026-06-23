@@ -3,6 +3,7 @@ import { ArrowLeft, ExternalLink, Calendar, User, Briefcase, ChevronRight, Spark
 import { Link, useParams, Navigate } from "react-router-dom";
 import { projects } from "../data/projects";
 import { SEO } from "../components/SEO";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
@@ -38,6 +39,9 @@ const ProjectDetailPage = () => {
       />
       
       <div className="container-custom">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumbs items={[{ name: "Portfolio", path: "/work" }, { name: project.title }]} />
+
           {/* Header */}
           <div className="mb-16 text-center lg:text-left">
             <Link to="/work" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group justify-center lg:justify-start">

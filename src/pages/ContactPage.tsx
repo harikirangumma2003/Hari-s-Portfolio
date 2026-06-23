@@ -4,6 +4,7 @@ import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, MapPin, 
 import { SEO } from '../components/SEO';
 import { db, auth } from '@/src/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 
 enum OperationType {
   CREATE = 'create',
@@ -173,18 +174,18 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-white pt-24 pb-20">
       <SEO 
-        title="Digital Marketing Consultant | Contact G. Hari Kiran" 
-        description="Get a free growth consultation. Contact G. Hari Kiran, your trusted digital marketing and Local SEO Expert in Jamshedpur. Scale your brand today."
+        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | Contact" 
+        description="Book a free consultation with G. Hari Kiran, the premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Grow your business authority."
         schemaData={{
           "@context": "https://schema.org",
           "@type": "ContactPage",
           "@id": "https://harikiran-portfolio.netlify.app/contact/#webpage",
           "url": "https://harikiran-portfolio.netlify.app/contact",
-          "name": "Contact G. Hari Kiran | Leading Jamshedpur SEO Consultant",
-          "description": "Secure, highly targeted strategy intake form to book an expert SEO or digital growth consultation with G. Hari Kiran in Jamshedpur, Jharkhand.",
+          "name": "Contact G. Hari Kiran | SEO Expert & Digital Marketing Consultant in Jamshedpur",
+          "description": "Secure strategy intake form to book an expert SEO or digital growth consultation with G. Hari Kiran in Jamshedpur, Jharkhand.",
           "mainEntity": {
             "@type": "ProfessionalService",
-            "name": "G. Hari Kiran - Digital Marketing Consultant & SEO Expert",
+            "name": "G. Hari Kiran - SEO Expert & Digital Marketing Consultant",
             "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
             "telephone": "+91-XXXXXXXXXX",
             "email": "harikirangumma2003@gmail.com",
@@ -201,6 +202,11 @@ const ContactPage = () => {
       />
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumbs items={[{ name: "Contact", path: "/contact" }]} />
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           
           {/* Left Side: Contact Info */}

@@ -41,7 +41,7 @@ const HomePage = () => {
         "@type": "Person",
         "@id": "https://harikiran-portfolio.netlify.app/#person",
         "name": "G. Hari Kiran",
-        "jobTitle": "Digital Marketing Expert & Local SEO Consultant",
+        "jobTitle": "SEO Expert & Digital Marketing Consultant in Jamshedpur",
         "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
         "url": "https://harikiran-portfolio.netlify.app",
         "sameAs": [
@@ -50,19 +50,30 @@ const HomePage = () => {
           "https://discord.com/users/1431285511363760149",
           "https://medium.com/@harikirangumma2003"
         ],
-        "description": "Certified Digital Marketing Expert and Local SEO Consultant in Jamshedpur, Jharkhand. Specialist in content strategies and high-ROI automated retention email campaigns.",
+        "description": "Leading SEO Expert and professional Digital Marketing Consultant in Jamshedpur, Jharkhand. Specialist in advanced rank acceleration, conversion rate optimization, and automated retention systems.",
         "worksFor": {
-          "@type": "Organization",
-          "name": "SuMeera Solutions",
-          "url": "https://sumeerasolutions.com"
+          "@id": "https://harikiran-portfolio.netlify.app/#organization"
         }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://harikiran-portfolio.netlify.app/#organization",
+        "name": "SuMeera Solutions",
+        "url": "https://sumeerasolutions.com",
+        "logo": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
+        "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
+        "description": "High-growth digital consulting and technical search marketing agency serving local and global markets.",
+        "sameAs": [
+          "https://www.linkedin.com/in/hari-kiran-gumma",
+          "https://x.com/GHariKiran29"
+        ]
       },
       {
         "@type": "WebSite",
         "@id": "https://harikiran-portfolio.netlify.app/#website",
         "url": "https://harikiran-portfolio.netlify.app",
-        "name": "G. Hari Kiran | Digital Marketing Expert & SEO Consultant Jamshedpur",
-        "description": "Professional growth consulting, advanced search engine optimization, and high-conversion client acquisition strategies.",
+        "name": "G. Hari Kiran | SEO Expert & Digital Marketing Consultant in Jamshedpur",
+        "description": "High-ROI digital growth strategies, conversion-rate optimization, advanced search engine positioning, and business scale consultancy in Jamshedpur.",
         "publisher": {
           "@id": "https://harikiran-portfolio.netlify.app/#person"
         }
@@ -70,7 +81,7 @@ const HomePage = () => {
       {
         "@type": "ProfessionalService",
         "@id": "https://harikiran-portfolio.netlify.app/#service",
-        "name": "G. Hari Kiran - Digital Marketing Consultant & SEO Expert",
+        "name": "G. Hari Kiran - SEO Expert & Digital Marketing Consultant",
         "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
         "url": "https://harikiran-portfolio.netlify.app",
         "telephone": "+91-XXXXXXXXXX",
@@ -115,13 +126,26 @@ const HomePage = () => {
           }
         ],
         "knowsAbout": [
-          "Digital Marketing",
+          "SEO Expert in Jamshedpur",
+          "Digital Marketing Consultant in Jamshedpur",
           "Search Engine Optimization",
           "Local SEO Specialist",
           "Email Campaign Automation",
           "Google Analytics Consultant",
           "SaaS Growth Hacking",
           "Lead Generation"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://harikiran-portfolio.netlify.app/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://harikiran-portfolio.netlify.app"
+          }
         ]
       }
     ]
@@ -130,8 +154,8 @@ const HomePage = () => {
   return (
     <div className="pt-24 pb-12 bg-bg-light">
       <SEO 
-        title="Digital Marketing Expert in Jamshedpur"
-        description="Need a certified digital marketing expert in Jamshedpur, Jharkhand? Grow traffic & revenue with G. Hari Kiran, specialist in SEO & email retention."
+        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | G. Hari Kiran"
+        description="Rank higher and grow your revenue with G. Hari Kiran, the premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Start with a free audit."
         url=""
         schemaData={localSchemaGraph}
       />

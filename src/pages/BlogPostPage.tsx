@@ -5,6 +5,7 @@ import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 import React, { useState, useMemo } from "react";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -114,6 +115,11 @@ const BlogPostPage = () => {
       />
       
       <article className="container-custom max-w-3xl">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6">
+            <Breadcrumbs items={[{ name: "Blog", path: "/blog" }, { name: post.title }]} />
+          </div>
+
           {/* Back Navigation */}
           <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group justify-center md:justify-start">
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />

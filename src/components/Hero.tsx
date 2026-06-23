@@ -43,7 +43,7 @@ const Hero = () => {
           variants={item}
           className="text-sm md:text-base font-medium text-muted max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed opacity-90"
         >
-          Hi, I'm G. Hari Kiran—a results-driven Local SEO Specialist and Digital Marketing Consultant in Jamshedpur, Jharkhand. I build sustainable search authority and scale conversions using advanced semantic SEO, Google Analytics insights, and automated retention systems.
+          Hi, I'm G. Hari Kiran—the leading SEO Expert in Jamshedpur and certified Digital Marketing Consultant in Jamshedpur, Jharkhand. I build sustainable search authority and scale conversions using advanced semantic SEO, Google Analytics insights, and automated retention systems.
         </motion.p>
 
         <motion.div 

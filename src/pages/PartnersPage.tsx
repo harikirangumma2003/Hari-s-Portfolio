@@ -4,6 +4,7 @@ import { SEO } from "../components/SEO";
 import { partnersData } from "../data/partners";
 import { db, auth } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 import { 
   ArrowUpRight, 
   Search, 
@@ -195,13 +196,16 @@ ${formData.message || "N/A"}
   return (
     <div className="pt-32 pb-24 bg-bg-light min-h-screen">
       <SEO 
-        title="Business Partnerships & Brand Collaboration | G. Hari Kiran"
-        description="Join G. Hari Kiran's trusted business network. Build reliable brand visibility, grow organic website traffic, and collaborate to reach active decision-makers."
+        title="SEO & Digital Marketing Partnerships | G. Hari Kiran"
+        description="Partner with the top SEO Expert and Digital Marketing Consultant in Jamshedpur. Build strategic brand authority and scale local presence."
         url="/partners"
         schemaData={schemaData}
       />
 
       <div className="container-custom">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumbs items={[{ name: "Partners", path: "/partners" }]} />
+
         {/* HERO SECTION */}
         <div className="max-w-4xl mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-accent mb-6">

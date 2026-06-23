@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, Briefcase, Calendar, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const experiences = [
   {
@@ -84,8 +85,8 @@ const ExperiencePage = () => {
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title="SEO Consultant Jamshedpur | G. Hari Kiran Experience"
-        description="Explore G. Hari Kiran's achievements as an SEO consultant in Jamshedpur, scaling web traffic, automated email flows, and digital ads for global brands."
+        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | Experience"
+        description="View my professional timeline as a leading SEO Expert and Digital Marketing Consultant in Jamshedpur. Proven record of scaling revenue and search traffic."
         url="/experience"
         schemaData={{
           "@context": "https://schema.org",
@@ -97,12 +98,23 @@ const ExperiencePage = () => {
           "mainEntity": {
             "@type": "Person",
             "name": "G. Hari Kiran",
-            "jobTitle": "SEO & Digital Marketing Consultant",
-            "knowsAbout": ["On-Page SEO", "Technical SEO Audits", "Email Marketing Automation", "Conversion Optimization", "Local Citation Building"]
+            "jobTitle": "SEO Expert & Digital Marketing Consultant in Jamshedpur",
+            "knowsAbout": [
+              "SEO Expert in Jamshedpur",
+              "Digital Marketing Consultant in Jamshedpur",
+              "On-Page SEO",
+              "Technical SEO Audits",
+              "Email Marketing Automation",
+              "Conversion Optimization",
+              "Local Citation Building"
+            ]
           }
         }}
       />
       <div className="container-custom">
+          {/* Breadcrumbs Navigation */}
+          <Breadcrumbs items={[{ name: "Experience", path: "/experience" }]} />
+
           {/* Header */}
           <div className="mb-16 text-center md:text-left">
             <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group justify-center md:justify-start">

@@ -3,13 +3,14 @@ import { ArrowLeft, Tag, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
 import { projects } from "../data/projects";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const WorkPage = () => {
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title="SEO & Growth Portfolio | G. Hari Kiran Jamshedpur"
-        description="Case studies in search marketing, email workflows, and paid ads by G. Hari Kiran, Local SEO Specialist in Jamshedpur. See real growth results."
+        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | Portfolio"
+        description="Explore high-impact search marketing and growth case studies by G. Hari Kiran, the premier SEO Expert & Digital Marketing Consultant in Jamshedpur."
         url="/work"
         schemaData={{
           "@context": "https://schema.org",
@@ -33,6 +34,9 @@ const WorkPage = () => {
       />
       
       <div className="container-custom">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumbs items={[{ name: "Portfolio", path: "/work" }]} />
+
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12 text-center md:text-left">
             <motion.div
               initial={{ opacity: 0, x: -30 }}

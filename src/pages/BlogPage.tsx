@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts, categories } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const BlogPage = () => {
   const [activeCategory, setActiveCategory] = useState("All Posts");
@@ -22,8 +23,8 @@ const BlogPage = () => {
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title="Digital Marketing & SEO Blog | G. Hari Kiran"
-        description="Actionable SEO guides, retention marketing frameworks, and digital marketing insights from G. Hari Kiran, local SEO consultant in Jamshedpur."
+        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | Blog"
+        description="Actionable organic search marketing tutorials, automated retention maps, and growth articles from the top SEO Expert and Digital Marketing Consultant in Jamshedpur."
         url="/blog"
         schemaData={{
           "@context": "https://schema.org",
@@ -32,12 +33,16 @@ const BlogPage = () => {
           "description": "Deep dives into SEO, brand positioning, and data-driven growth strategies.",
           "publisher": {
             "@type": "Person",
-            "name": "G. Hari Kiran"
+            "name": "G. Hari Kiran",
+            "jobTitle": "SEO Expert & Digital Marketing Consultant in Jamshedpur"
           }
         }}
       />
       
       <div className="container-custom">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumbs items={[{ name: "Blog", path: "/blog" }]} />
+
           {/* Header */}
           <div className="mb-16 text-center md:text-left">
             <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-8 group justify-center md:justify-start">

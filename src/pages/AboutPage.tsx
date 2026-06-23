@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, User, Target, Award, Globe, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const milestones = [
   {
@@ -30,14 +31,14 @@ const AboutPage = () => {
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title="SEO Expert in Jamshedpur | About G. Hari Kiran"
-        description="Learn about G. Hari Kiran, a recognized search engine optimization and digital marketing consultant in Jamshedpur, scaling brands like SuMeera Solutions."
+        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | About"
+        description="Meet G. Hari Kiran, the leading SEO Expert and dedicated Digital Marketing Consultant in Jamshedpur, Jharkhand. Learn how I grow organic authority and drive business revenue."
         url="/about"
         schemaData={{
           "@context": "https://schema.org",
           "@type": "Person",
           "name": "G. Hari Kiran",
-          "jobTitle": "SEO Expert & Digital Marketing Consultant",
+          "jobTitle": "SEO Expert & Digital Marketing Consultant in Jamshedpur",
           "url": "https://harikiran-portfolio.netlify.app/about",
           "sameAs": [
             "https://www.linkedin.com/in/hari-kiran-gumma",
@@ -45,7 +46,7 @@ const AboutPage = () => {
             "https://discord.com/users/1431285511363760149",
             "https://medium.com/@harikirangumma2003"
           ],
-          "description": "Professional search engine optimization consultant and digital strategist based in Jamshedpur, Jharkhand, India.",
+          "description": "Leading SEO Expert and professional Digital Marketing Consultant based in Jamshedpur, Jharkhand. Specialist in ROI-focused automated marketing, audience acquisition and organic search dominance.",
           "worksFor": {
             "@type": "Organization",
             "name": "SuMeera Solutions",
@@ -55,6 +56,9 @@ const AboutPage = () => {
       />
       
       <div className="container-custom">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumbs items={[{ name: "About", path: "/about" }]} />
+
         {/* Back Navigation */}
         <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted hover:text-accent transition-colors mb-12 group">
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
