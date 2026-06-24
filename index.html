@@ -10,6 +10,26 @@
 
       gtag('config', 'G-QHKHCEE1WW');
     </script>
+    <script>
+      (function() {
+        var siteUrl = "https://harikiran-portfolio.netlify.app";
+        var path = window.location.pathname;
+        var cleanPath = path.toLowerCase();
+        if (cleanPath.endsWith('/') && cleanPath.length > 1) {
+          cleanPath = cleanPath.slice(0, -1);
+        }
+        if (!cleanPath.startsWith('/')) {
+          cleanPath = '/' + cleanPath;
+        }
+        var canonicalUrl = cleanPath === '/' ? siteUrl : (siteUrl + cleanPath);
+        var link = document.querySelector("link[rel='canonical']") || document.createElement("link");
+        link.setAttribute("rel", "canonical");
+        link.setAttribute("href", canonicalUrl);
+        if (!link.parentNode) {
+          document.head.appendChild(link);
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="I3Tah_rfMBS0hupAv27ZsGwwJLhHUNVdydelST9jCLc" />

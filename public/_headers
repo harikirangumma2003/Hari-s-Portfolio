@@ -7,3 +7,64 @@
 
 /llms.txt
   Content-Type: text/plain; charset=utf-8
+
+# Canonical HTTP Link Headers for SEO Duplicate URL prevention
+/
+  Link: <https://harikiran-portfolio.netlify.app/>; rel="canonical"
+
+/work
+  Link: <https://harikiran-portfolio.netlify.app/work>; rel="canonical"
+
+/about
+  Link: <https://harikiran-portfolio.netlify.app/about>; rel="canonical"
+
+/experience
+  Link: <https://harikiran-portfolio.netlify.app/experience>; rel="canonical"
+
+/blog
+  Link: <https://harikiran-portfolio.netlify.app/blog>; rel="canonical"
+
+/partners
+  Link: <https://harikiran-portfolio.netlify.app/partners>; rel="canonical"
+
+/contact
+  Link: <https://harikiran-portfolio.netlify.app/contact>; rel="canonical"
+
+/seo-audit
+  Link: <https://harikiran-portfolio.netlify.app/seo-audit>; rel="canonical"
+
+/work/local-search-dominance
+  Link: <https://harikiran-portfolio.netlify.app/work/local-search-dominance>; rel="canonical"
+
+/work/sms-conversion-engine
+  Link: <https://harikiran-portfolio.netlify.app/work/sms-conversion-engine>; rel="canonical"
+
+/work/viral-brand-campaign
+  Link: <https://harikiran-portfolio.netlify.app/work/viral-brand-campaign>; rel="canonical"
+
+/work/b2b-lead-engine
+  Link: <https://harikiran-portfolio.netlify.app/work/b2b-lead-engine>; rel="canonical"
+
+/blog/compliease-osha-log-management-software
+  Link: <https://harikiran-portfolio.netlify.app/blog/compliease-osha-log-management-software>; rel="canonical"
+
+/blog/workplace-compliance-software-modern-business
+  Link: <https://harikiran-portfolio.netlify.app/blog/workplace-compliance-software-modern-business>; rel="canonical"
+
+/blog/retention-marketing-sustainable-growth
+  Link: <https://harikiran-portfolio.netlify.app/blog/retention-marketing-sustainable-growth>; rel="canonical"
+
+/blog/high-converting-email-newsletter-guide
+  Link: <https://harikiran-portfolio.netlify.app/blog/high-converting-email-newsletter-guide>; rel="canonical"
+
+/blog/sumeera-solutions-osha-compliance-software
+  Link: <https://harikiran-portfolio.netlify.app/blog/sumeera-solutions-osha-compliance-software>; rel="canonical"
+
+/blog/rank-higher-google-organically
+  Link: <https://harikiran-portfolio.netlify.app/blog/rank-higher-google-organically>; rel="canonical"
+
+/blog/facebook-marketing-small-businesses
+  Link: <https://harikiran-portfolio.netlify.app/blog/facebook-marketing-small-businesses>; rel="canonical"
+
+/blog/organic-seo-services
+  Link: <https://harikiran-portfolio.netlify.app/blog/organic-seo-services>; rel="canonical"

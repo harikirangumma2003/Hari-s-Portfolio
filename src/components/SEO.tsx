@@ -34,9 +34,12 @@ export const SEO: React.FC<SEOProps> = ({
   const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg"; // Placeholder
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 
-  // Determine precise canonical URL dynamically and strip trailing slashes (except apex /) to ensure sitemap matches
+  // Determine precise canonical URL dynamically, force lowercase, and strip trailing slashes (except apex /) to ensure sitemap matches
   const path = url !== undefined ? url : location.pathname;
-  let cleanPath = path.startsWith('/') ? path : `/${path}`;
+  let cleanPath = path.toLowerCase();
+  if (!cleanPath.startsWith('/')) {
+    cleanPath = `/${cleanPath}`;
+  }
   if (cleanPath.endsWith('/') && cleanPath.length > 1) {
     cleanPath = cleanPath.slice(0, -1);
   }
