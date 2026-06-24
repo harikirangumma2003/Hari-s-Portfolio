@@ -9,7 +9,7 @@ const WorkPage = () => {
   return (
     <div className="pt-32 pb-24">
       <SEO 
-        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | Portfolio"
+        title="Selected SEO Portfolio & Case Studies | G. Hari Kiran"
         description="Explore high-impact search marketing and growth case studies by G. Hari Kiran, the premier SEO Expert & Digital Marketing Consultant in Jamshedpur."
         url="/work"
         schemaData={{

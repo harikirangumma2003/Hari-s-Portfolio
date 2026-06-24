@@ -174,7 +174,7 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-white pt-24 pb-20">
       <SEO 
-        title="SEO Expert & Digital Marketing Consultant in Jamshedpur | Contact" 
+        title="Hire SEO Expert G. Hari Kiran | Free Website Audit" 
         description="Book a free consultation with G. Hari Kiran, the premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Grow your business authority."
         schemaData={{
           "@context": "https://schema.org",

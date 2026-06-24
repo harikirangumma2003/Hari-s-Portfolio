@@ -117,7 +117,7 @@ const SEODashboardPage = () => {
   return (
     <div className="pt-32 pb-24 bg-bg-light">
       <SEO 
-        title="Technical SEO Audit & Health Dashboard"
+        title="Technical SEO Audit & Diagnostics | G. Hari Kiran"
         description="Experience the real-time technical SEO health of Jamshedpur's top SEO Expert and Digital Marketing Consultant portfolio, G. Hari Kiran, resolving all 13 core Ahrefs audit points."
         url="/seo-audit"
         schemaData={{

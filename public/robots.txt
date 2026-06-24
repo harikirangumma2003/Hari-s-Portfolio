@@ -36,4 +36,3 @@ Allow: /llms.txt
 
 # Dynamic XML and LLM Text Indexes
 Sitemap: https://harikiran-portfolio.netlify.app/sitemap.xml
-Sitemap: https://harikiran-portfolio.netlify.app/llms.txt
