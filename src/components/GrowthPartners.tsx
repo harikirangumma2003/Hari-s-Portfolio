@@ -73,7 +73,7 @@ export const GrowthPartners = () => {
               <div className="relative z-10 mb-6">
                 {partner.logo.startsWith('/') ? (
                   <div className="bg-white/10 px-4 py-2 rounded-2xl inline-flex items-center justify-center max-h-14 mb-4">
-                    <img src={partner.logo} alt={partner.name} className="h-8 object-contain" />
+                    <img src={partner.logo} alt={partner.name} width="128" height="32" className="h-8 object-contain" />
                   </div>
                 ) : (
                   <span className="font-display font-black text-2xl tracking-tight text-accent block mb-2 uppercase">
@@ -121,6 +121,8 @@ export const GrowthPartners = () => {
                     src={partner.brandStory?.videoPlaceholderImg}
                     alt={`${partner.name} Video Case Study`}
                     loading="lazy"
+                    width="640"
+                    height="360"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 flex items-center justify-center">
@@ -151,7 +153,7 @@ export const GrowthPartners = () => {
                 <div className="flex justify-between items-start mb-6">
                   {partner.logo.startsWith('/') ? (
                     <div className="bg-neutral-50 border border-neutral-100 px-3 py-1.5 rounded-2xl flex items-center justify-center max-h-12 max-w-[150px]">
-                      <img src={partner.logo} alt={partner.name} className="h-6 object-contain" />
+                      <img src={partner.logo} alt={partner.name} width="96" height="24" className="h-6 object-contain" />
                     </div>
                   ) : (
                     <span className="font-display font-black text-lg tracking-tight text-primary uppercase">

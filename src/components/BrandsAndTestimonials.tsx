@@ -26,6 +26,8 @@ export const TestimonialCard = () => {
             alt={testimonial.name}
             loading="lazy"
             decoding="async"
+            width="40"
+            height="40"
             className="w-full h-full object-cover grayscale transition-all group-hover:grayscale-0"
             referrerPolicy="no-referrer"
           />

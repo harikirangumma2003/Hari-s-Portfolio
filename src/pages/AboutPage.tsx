@@ -104,6 +104,8 @@ const AboutPage = () => {
               alt="Professional portrait of G. Hari Kiran"
               loading="lazy"
               decoding="async"
+              width="600"
+              height="600"
               className="w-full h-full object-cover transition-all duration-700 hover:scale-[1.02]"
             />
             <div className="absolute bottom-8 left-8 right-8 bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-xl hidden md:block">

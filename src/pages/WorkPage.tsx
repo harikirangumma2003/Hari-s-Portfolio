@@ -72,6 +72,8 @@ const WorkPage = () => {
                         alt={`Project thumbnail for ${project.title}`}
                         loading="lazy"
                         decoding="async"
+                        width="800"
+                        height="500"
                         className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover/card:scale-110"
                       />
                     <div className="absolute inset-0 bg-primary/40 opacity-0 group-hover/card:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">

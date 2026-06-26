@@ -3,22 +3,31 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { HelmetProvider } from "react-helmet-async";
-import HomePage from "./pages/HomePage";
-import WorkPage from "./pages/WorkPage";
-import AboutPage from "./pages/AboutPage";
-import ExperiencePage from "./pages/ExperiencePage";
-import BlogPage from "./pages/BlogPage";
-import BlogPostPage from "./pages/BlogPostPage";
-import ProjectDetailPage from "./pages/ProjectDetailPage";
-import ContactPage from "./pages/ContactPage";
-import PartnersPage from "./pages/PartnersPage";
-import SEODashboardPage from "./pages/SEODashboardPage";
-import NotFoundPage from "./pages/NotFoundPage";
 import { Layout } from "./components/Layout";
+
+// Lazily load pages for code-splitting and drastically reduced initial JS bundle size
+const HomePage = React.lazy(() => import("./pages/HomePage"));
+const WorkPage = React.lazy(() => import("./pages/WorkPage"));
+const AboutPage = React.lazy(() => import("./pages/AboutPage"));
+const ExperiencePage = React.lazy(() => import("./pages/ExperiencePage"));
+const BlogPage = React.lazy(() => import("./pages/BlogPage"));
+const BlogPostPage = React.lazy(() => import("./pages/BlogPostPage"));
+const ProjectDetailPage = React.lazy(() => import("./pages/ProjectDetailPage"));
+const ContactPage = React.lazy(() => import("./pages/ContactPage"));
+const PartnersPage = React.lazy(() => import("./pages/PartnersPage"));
+const SEODashboardPage = React.lazy(() => import("./pages/SEODashboardPage"));
+const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
+
+// Ultra-lightweight loading skeleton/spinner to minimize main-thread work during loads
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-[60vh]" id="page-loader">
+    <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+  </div>
+);
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -53,19 +62,21 @@ export default function App() {
         <ScrollToTop />
         <Layout>
           <PageTransition>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/work" element={<WorkPage />} />
-              <Route path="/work/:slug" element={<ProjectDetailPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/experience" element={<ExperiencePage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogPostPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/partners" element={<PartnersPage />} />
-              <Route path="/seo-audit" element={<SEODashboardPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/work" element={<WorkPage />} />
+                <Route path="/work/:slug" element={<ProjectDetailPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/experience" element={<ExperiencePage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/partners" element={<PartnersPage />} />
+                <Route path="/seo-audit" element={<SEODashboardPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
           </PageTransition>
         </Layout>
       </Router>

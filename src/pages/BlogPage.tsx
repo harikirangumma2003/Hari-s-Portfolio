@@ -271,6 +271,8 @@ const BlogPage = () => {
                           alt={`Illustration for blog post: ${post.title}`}
                           loading="lazy"
                           decoding="async"
+                          width="480"
+                          height="300"
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           referrerPolicy="no-referrer"
                         />
@@ -315,6 +317,8 @@ const BlogPage = () => {
                           alt={`Illustration for blog post: ${post.title}`}
                           loading="lazy"
                           decoding="async"
+                          width="480"
+                          height="300"
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           referrerPolicy="no-referrer"
                         />

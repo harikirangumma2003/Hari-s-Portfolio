@@ -194,6 +194,8 @@ const HomePage = () => {
               alt="Local Search Dominance Project" 
               loading="lazy"
               decoding="async"
+              width="400"
+              height="800"
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60" />
@@ -248,6 +250,8 @@ const HomePage = () => {
                     alt={project.title} 
                     loading="lazy"
                     decoding="async"
+                    width="600"
+                    height="450"
                     className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />

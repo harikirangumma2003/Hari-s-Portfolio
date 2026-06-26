@@ -78,6 +78,8 @@ const ProjectDetailPage = () => {
               alt={`Featured hero image for ${project.title} case study`} 
               loading="lazy"
               decoding="async"
+              width="1600"
+              height="900"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>

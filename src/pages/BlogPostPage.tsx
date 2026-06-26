@@ -203,6 +203,8 @@ const BlogPostPage = () => {
               alt={`Featured image for blog post: ${post.title}`}
               loading="lazy"
               decoding="async"
+              width="1200"
+              height="675"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -310,6 +312,8 @@ const BlogPostPage = () => {
                          alt={`Related post: ${related.title}`} 
                          loading="lazy"
                          decoding="async"
+                         width="480"
+                         height="270"
                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                          referrerPolicy="no-referrer" 
                        />
