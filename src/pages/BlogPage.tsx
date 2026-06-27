@@ -49,6 +49,14 @@ const safeToISOString = (dateStr?: string): string => {
   }
 };
 
+const generateSlug = (title: string): string => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "")
+    .substring(0, 100);
+};
+
 const BlogPage = () => {
   const [activeCategory, setActiveCategory] = useState("All Posts");
   const [searchQuery, setSearchQuery] = useState("");
@@ -81,12 +89,14 @@ const BlogPage = () => {
           if (Array.isArray(parsed)) {
             cachedMedium = parsed.map((item: any) => ({
               title: item.title || "",
+              slug: item.slug || generateSlug(item.title || ""),
               category: item.category || "Medium Articles",
               date: item.date || "Recent Post",
               image: item.image || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=800&fm=webp",
               excerpt: item.excerpt || "",
+              content: item.content || "",
               keywords: item.keywords || [],
-              isExternal: true,
+              isExternal: false,
               externalUrl: item.externalUrl || "",
               readingTime: item.readingTime || "3 min read",
               rawDate: item.rawDate || new Date().toISOString()
@@ -147,12 +157,14 @@ const BlogPage = () => {
 
               return {
                 title: item.title,
+                slug: generateSlug(item.title),
                 category: "Medium Articles",
                 date: formatDate(item.pubDate),
                 image: img,
                 excerpt: excerpt,
+                content: content,
                 keywords: Array.isArray(item.categories) ? item.categories : [],
-                isExternal: true,
+                isExternal: false,
                 externalUrl: item.link,
                 readingTime: readingTime,
                 rawDate: safeToISOString(item.pubDate)

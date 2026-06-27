@@ -18,7 +18,7 @@ const SEODashboardPage = () => {
 
   const handleUnlockSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const correctPasscodes = ["hk-seo-audit", "harikiran-seo", "audit2026", "hk-audit-360"];
+    const correctPasscodes = ["hk-seo-audit", "harikiran-seo", "audit2026", "hk-audit-360", "yuvakart", "yuvakart-seo"];
     if (correctPasscodes.includes(passcodeInput.trim().toLowerCase())) {
       setIsUnlocked(true);
       setPasscodeError("");

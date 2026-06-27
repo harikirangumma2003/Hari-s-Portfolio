@@ -16,6 +16,7 @@ interface SEOProps {
   };
   schemaData?: object;
   noindex?: boolean;
+  canonical?: string;
 }
 
 export const SEO: React.FC<SEOProps> = ({ 
@@ -26,7 +27,8 @@ export const SEO: React.FC<SEOProps> = ({
   type = 'website',
   articleData,
   schemaData,
-  noindex = false
+  noindex = false,
+  canonical
 }) => {
   const location = useLocation();
   const siteName = "G. Hari Kiran";
@@ -43,7 +45,7 @@ export const SEO: React.FC<SEOProps> = ({
   if (cleanPath.endsWith('/') && cleanPath.length > 1) {
     cleanPath = cleanPath.slice(0, -1);
   }
-  const canonicalUrl = cleanPath === '/' ? siteUrl : `${siteUrl}${cleanPath}`;
+  const canonicalUrl = canonical || (cleanPath === '/' ? siteUrl : `${siteUrl}${cleanPath}`);
 
   return (
     <Helmet>

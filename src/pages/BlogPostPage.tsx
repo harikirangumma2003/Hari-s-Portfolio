@@ -1,17 +1,119 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const post = blogPosts.find((p) => p.slug === slug);
   const [isCopied, setIsCopied] = useState(false);
+  
+  const [posts, setPosts] = useState<any[]>(() => {
+    const staticPosts = blogPosts;
+    const cached = localStorage.getItem("g_hari_kiran_medium_feed");
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) {
+          return [...staticPosts, ...parsed];
+        }
+      } catch (e) {
+        console.error("Error parsing cached medium posts inside BlogPostPage", e);
+      }
+    }
+    return staticPosts;
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const post = useMemo(() => {
+    return posts.find((p) => p.slug === slug);
+  }, [posts, slug]);
+
+  useEffect(() => {
+    if (post) return;
+
+    const fetchFreshMedium = async () => {
+      setIsLoading(true);
+      try {
+        const feedUrl = "https://medium.com/feed/@harikirangumma2003";
+        const targetUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+        const res = await fetch(targetUrl);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.status === "ok" && Array.isArray(data.items)) {
+            const generateSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "").substring(0, 100);
+            
+            const freshMedium = data.items.map((item: any) => {
+              const content = item.content || item.description || "";
+              
+              let img = item.thumbnail;
+              if (!img || img.includes("stat?event=") || img.includes("avatar")) {
+                const imgRegex = /<img[^>]+src="([^">]+)"/i;
+                const match = content.match(imgRegex);
+                if (match && match[1] && !match[1].includes("stat?event=") && !match[1].includes("avatar")) {
+                  img = match[1];
+                } else {
+                  img = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=800&fm=webp";
+                }
+              }
+
+              let clean = content.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, "").replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, "");
+              clean = clean.replace(/<\/?[^>]+(>|$)/g, " ");
+              clean = clean.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+              clean = clean.replace(/\s+/g, " ").trim();
+              const excerpt = clean.length > 150 ? clean.substring(0, 150) + "..." : clean;
+
+              const wordCount = clean.split(/\s+/).filter(Boolean).length;
+              const minutes = Math.ceil(wordCount / 225);
+              const readingTime = `${Math.max(2, minutes)} min read`;
+
+              const formatDate = (dateStr: string): string => {
+                try {
+                  const d = new Date(dateStr.replace(/-/g, "/"));
+                  if (isNaN(d.getTime())) return "Recent Post";
+                  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                } catch { return "Recent Post"; }
+              };
+
+              return {
+                title: item.title,
+                slug: generateSlug(item.title),
+                category: "Medium Articles",
+                date: formatDate(item.pubDate),
+                image: img,
+                excerpt: excerpt,
+                content: content,
+                keywords: Array.isArray(item.categories) ? item.categories : [],
+                isExternal: false,
+                externalUrl: item.link,
+                readingTime: readingTime,
+                rawDate: new Date(item.pubDate).toISOString()
+              };
+            });
+
+            if (freshMedium.length > 0) {
+              localStorage.setItem("g_hari_kiran_medium_feed", JSON.stringify(freshMedium));
+              setPosts(prev => {
+                const base = prev.filter(p => !freshMedium.some(f => f.slug === p.slug));
+                return [...base, ...freshMedium];
+              });
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch fresh Medium articles inside BlogPostPage", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFreshMedium();
+  }, [slug, post]);
 
   const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
@@ -28,7 +130,7 @@ const BlogPostPage = () => {
   // Find related posts - same category first, then most recent
   const relatedPosts = useMemo(() => {
     if (!post) return [];
-    return blogPosts
+    return posts
       .filter(p => p.slug !== slug)
       .sort((a, b) => {
         if (a.category === post.category && b.category !== post.category) return -1;
@@ -36,7 +138,16 @@ const BlogPostPage = () => {
         return 0;
       })
       .slice(0, 3);
-  }, [slug, post]);
+  }, [slug, post, posts]);
+
+  if (!post && isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" id="post-loading">
+        <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+        <p className="text-xs font-black uppercase tracking-widest text-muted">Fetching original article...</p>
+      </div>
+    );
+  }
 
   if (!post) {
     return <Navigate to="/blog" replace />;
@@ -86,6 +197,7 @@ const BlogPostPage = () => {
         image={post.image}
         url={`/blog/${post.slug}`}
         type="article"
+        canonical={post.externalUrl}
         articleData={{
           publishedTime: post.date,
           author: "G. Hari Kiran",
@@ -134,7 +246,7 @@ const BlogPostPage = () => {
               </span>
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted">
                 <Clock size={12} className="text-accent" />
-                5 min read
+                {post.readingTime || "5 min read"}
               </div>
             </div>
             
@@ -212,6 +324,26 @@ const BlogPostPage = () => {
 
           {/* Post Content */}
           <div className="mx-auto mt-16 px-4 sm:px-0">
+            {post.externalUrl && (
+              <div className="mb-12 p-6 rounded-3xl bg-[#faf9f6] border border-primary/5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm" id="medium-original-notice">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center text-primary font-display font-black text-lg">M</div>
+                  <div>
+                    <h4 className="text-sm font-black uppercase tracking-tight text-primary">Originally Published on Medium</h4>
+                    <p className="text-[11px] text-muted uppercase font-bold tracking-widest">Syndicated for search performance optimization</p>
+                  </div>
+                </div>
+                <a 
+                  href={post.externalUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-[10px] font-black uppercase tracking-widest hover:bg-accent hover:text-white transition-all shadow-md shadow-primary/10"
+                >
+                  Read original <ArrowUpRight size={12} />
+                </a>
+              </div>
+            )}
+            
             <div 
               className="markdown-content"
               dangerouslySetInnerHTML={{ __html: post.content }}
