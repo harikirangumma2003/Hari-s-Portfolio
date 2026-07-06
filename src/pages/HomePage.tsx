@@ -64,7 +64,7 @@ const HomePage = () => {
         "url": "https://sumeerasolutions.com",
         "logo": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
         "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
-        "description": "High-growth digital consulting and technical search marketing agency serving local and global markets.",
+        "description": "An international OSHA compliance software company offering automated safety log management and workplace compliance SaaS platforms.",
         "sameAs": [
           "https://www.linkedin.com/in/hari-kiran-gumma",
           "https://x.com/GHariKiran29"

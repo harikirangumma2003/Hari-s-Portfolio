@@ -406,28 +406,34 @@ const ContentHubPage = () => {
         <div className="sticky top-[80px] z-30 py-4 mt-8 bg-[#070708]/95 border-b border-white/5 backdrop-blur-md" id="sticky-filter-bar">
           <div className="flex flex-col gap-4">
             {/* Quick Filters - Beautiful Pill Select */}
-            <div className="overflow-x-auto scrollbar-none py-1 flex items-center gap-2" id="quick-filters-scroll">
-              <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500 mr-2 flex items-center gap-1">
+            <div className="flex items-center gap-3 w-full" id="quick-filters-container">
+              <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500 flex items-center gap-1 shrink-0">
                 <Filter size={10} /> Filters:
               </span>
-              <div className="flex items-center gap-2">
-                {filterPills.map((pill) => (
-                  <button
-                    key={pill}
-                    onClick={() => {
-                      setActiveFilter(pill);
-                      setVisibleCount(6); // reset pagination on filter change
-                    }}
-                    className={cn(
-                      "text-[10px] font-black uppercase tracking-wider px-4 py-2 rounded-full border transition-all whitespace-nowrap focus:outline-none relative",
-                      activeFilter === pill 
-                        ? "bg-white text-black border-white" 
-                        : "bg-zinc-950/40 text-zinc-400 border-white/5 hover:text-white hover:border-white/15"
-                    )}
-                  >
-                    <span>{pill}</span>
-                  </button>
-                ))}
+              <div 
+                className="overflow-x-auto scrollbar-none flex items-center gap-2 flex-grow -mr-6 pr-6 md:mr-0 md:pr-0 scroll-smooth touch-pan-x" 
+                id="quick-filters-scroll"
+                style={{ WebkitOverflowScrolling: "touch" }}
+              >
+                <div className="flex items-center gap-2 flex-nowrap shrink-0 pr-12 pb-1">
+                  {filterPills.map((pill) => (
+                    <button
+                      key={pill}
+                      onClick={() => {
+                        setActiveFilter(pill);
+                        setVisibleCount(6); // reset pagination on filter change
+                      }}
+                      className={cn(
+                        "text-[10px] font-black uppercase tracking-wider px-4 py-2 rounded-full border transition-all whitespace-nowrap focus:outline-none relative shrink-0",
+                        activeFilter === pill 
+                          ? "bg-white text-black border-white" 
+                          : "bg-zinc-950/40 text-zinc-400 border-white/5 hover:text-white hover:border-white/15"
+                      )}
+                    >
+                      <span>{pill}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -557,15 +563,12 @@ const ContentHubPage = () => {
                   ? "grid grid-cols-1 md:grid-cols-2 gap-6" 
                   : "flex flex-col gap-5"
               )}>
-                <AnimatePresence mode="popLayout">
-                  {visibleItems.map((item, index) => (
-                    <motion.article
-                      key={item.id}
-                      layout
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.5, delay: index * 0.05 }}
+                {visibleItems.map((item) => (
+                  <motion.article
+                    key={item.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
                       className={cn(
                         "group rounded-[32px] bg-[#0c0c0e] border border-white/5 overflow-hidden shadow-2xl relative flex flex-col transition-all duration-500",
                         "hover:border-accent/40 hover:shadow-[0_20px_50px_rgba(255,107,0,0.08)] hover:-translate-y-1.5",
@@ -701,7 +704,6 @@ const ContentHubPage = () => {
                       </div>
                     </motion.article>
                   ))}
-                </AnimatePresence>
               </div>
             )}
 

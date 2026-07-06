@@ -123,7 +123,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="absolute top-full left-4 right-4 mt-2 bg-white rounded-[32px] shadow-2xl border border-black/5 overflow-hidden md:hidden z-50 p-6 sm:p-10"
+                className="absolute top-full left-4 right-4 mt-2 bg-white rounded-[32px] shadow-2xl border border-black/5 overflow-y-auto max-h-[calc(100vh-110px)] md:hidden z-50 p-6 sm:p-10 touch-pan-y scrollbar-none"
               >
                 <div className="flex flex-col gap-5">
                   <span className="text-[9px] font-black uppercase tracking-[3px] text-accent opacity-50 mb-1 italic">Explore Section</span>

@@ -412,21 +412,21 @@ ${formData.message || "N/A"}
                   </div>
                 </div>
                 <h3 className="text-2.5xl sm:text-4xl font-display font-black uppercase leading-tight mb-4">
-                  Boosting Enterprise Software Inquiries
+                  Scaling SaaS Leads via Semantic SEO
                 </h3>
                 <p className="text-xs sm:text-sm text-white/75 leading-relaxed font-sans mb-8">
-                  We built custom high-speed landing pages and developed a focused local marketing strategy for SuMeera Solutions. By simplifying their online layout and directly highlighting their core consulting strengths, we made it incredibly easy for enterprise clients to discover their services and request direct quotes.
+                  We partnered with SuMeera Solutions, an OSHA compliance SaaS provider, to design and execute a high-impact semantic SEO roadmap and optimize their automated email lead flows. By mapping high-intent compliance keywords and deploying dedicated resource directories, we helped them rank for critical compliance terms and drive active software subscriptions.
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-8 items-center border-t border-white/10 pt-8 relative z-10">
                 <div>
-                  <p className="text-3xl font-display font-black text-accent">5.2x</p>
-                  <p className="text-[9px] font-mono text-white/50 uppercase tracking-widest">More Business Leads</p>
+                  <p className="text-3xl font-display font-black text-accent">+245%</p>
+                  <p className="text-[9px] font-mono text-white/50 uppercase tracking-widest">Organic Traffic Growth</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-display font-black text-white">98.4%</p>
-                  <p className="text-[9px] font-mono text-white/50 uppercase tracking-widest">Customer Retention</p>
+                  <p className="text-3xl font-display font-black text-white">5.2x</p>
+                  <p className="text-[9px] font-mono text-white/50 uppercase tracking-widest">More Qualified Leads</p>
                 </div>
               </div>
             </div>
