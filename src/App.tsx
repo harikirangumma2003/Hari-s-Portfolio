@@ -16,10 +16,12 @@ const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const ExperiencePage = React.lazy(() => import("./pages/ExperiencePage"));
 const BlogPage = React.lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = React.lazy(() => import("./pages/BlogPostPage"));
+const ContentHubPage = React.lazy(() => import("./pages/ContentHubPage"));
 const ProjectDetailPage = React.lazy(() => import("./pages/ProjectDetailPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
 const PartnersPage = React.lazy(() => import("./pages/PartnersPage"));
 const SEODashboardPage = React.lazy(() => import("./pages/SEODashboardPage"));
+const AdminCMSPage = React.lazy(() => import("./pages/AdminCMSPage"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 
 // Ultra-lightweight loading skeleton/spinner to minimize main-thread work during loads
@@ -71,9 +73,11 @@ export default function App() {
                 <Route path="/experience" element={<ExperiencePage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/blog/:slug" element={<BlogPostPage />} />
+                <Route path="/content-hub" element={<ContentHubPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/partners" element={<PartnersPage />} />
                 <Route path="/seo-audit" element={<SEODashboardPage />} />
+                <Route path="/admin/*" element={<AdminCMSPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>

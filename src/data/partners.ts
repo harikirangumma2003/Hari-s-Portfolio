@@ -40,18 +40,5 @@ export const partnersData: Partner[] = [
       videoPlaceholderImg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
       videoUrl: "https://www.youtube.com/embed/c-vevPRIsWo"
     }
-  },
-  {
-    id: "partner-yuvakart",
-    name: "Yuvakart Retail",
-    logo: "/yuvakart_logo.svg",
-    url: "https://yuvakart.com/",
-    tier: 2,
-    category: "Modern Retail & E-Commerce",
-    description: "Accelerating consumer retail channels with localized supply logistics and digital storefront excellence.",
-    stats: {
-      label: "Sustained Digital Growth",
-      value: "+300%"
-    }
   }
 ];

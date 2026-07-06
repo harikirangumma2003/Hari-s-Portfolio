@@ -430,36 +430,6 @@ ${formData.message || "N/A"}
                 </div>
               </div>
             </div>
-
-            {/* Yuvakart Retail */}
-            <div className="bg-neutral-950 text-white rounded-[40px] p-8 sm:p-12 relative overflow-hidden flex flex-col justify-between border border-white/5 shadow-2xl min-h-[450px]">
-              <div className="absolute bottom-0 right-0 w-[200px] h-[200px] bg-white/[0.02] rounded-full blur-[60px]" />
-              <div>
-                <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="text-[9px] font-black uppercase tracking-widest bg-neutral-800 text-neutral-300 px-3 py-1 rounded-full inline-block font-mono">E-Commerce Strategy</span>
-                  <div className="bg-white px-3 py-1.5 rounded-xl inline-flex items-center justify-center max-h-10">
-                    <img src="/yuvakart_logo.svg" alt="Yuvakart Retail" className="h-5 object-contain" />
-                  </div>
-                </div>
-                <h3 className="text-2.5xl sm:text-4xl font-display font-black uppercase leading-tight mb-4">
-                  Streamlining Online Stores & Sales Setup
-                </h3>
-                <p className="text-xs sm:text-sm text-white/75 leading-relaxed font-sans mb-8">
-                  We simplified Yuvakart's mobile shopping layout and optimized their website structure to capture local delivery interest. This cleaner, faster experience led to a dramatic decrease in abandoned carts and brought in a steady, predictable flow of local direct-to-consumer orders.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-8 items-center border-t border-white/10 pt-8 relative z-10">
-                <div>
-                  <p className="text-3xl font-display font-black text-accent">+300%</p>
-                  <p className="text-[9px] font-mono text-white/50 uppercase tracking-widest">Web Sales Growth</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-display font-black text-white">-40%</p>
-                  <p className="text-[9px] font-mono text-white/50 uppercase tracking-widest">Customer Ad Cost</p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 

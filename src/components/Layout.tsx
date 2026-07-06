@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Footer } from "./ContactFooter";
 import { BackToTop } from "./BackToTop";
@@ -8,6 +9,19 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  if (isAdminRoute) {
+    return (
+      <div className="flex flex-col min-h-screen bg-[#070708]">
+        <main id="main-content" className="flex-grow">
+          {children}
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <a 

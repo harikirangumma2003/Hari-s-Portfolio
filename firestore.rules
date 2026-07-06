@@ -52,5 +52,20 @@ service cloud.firestore {
       // No one can read, update, or delete applications via the client
       allow read, update, delete: if false;
     }
+
+    match /content/{contentId} {
+      // Public can read syndicated content documents, and admin (authenticated or fallback) can manage it
+      allow read, write: if true;
+    }
+
+    match /automation/{settingsId} {
+      // Allow read and write access for automation settings
+      allow read, write: if true;
+    }
+
+    match /syncLogs/{logId} {
+      // Allow read and write access for synchronization logs
+      allow read, write: if true;
+    }
   }
 }

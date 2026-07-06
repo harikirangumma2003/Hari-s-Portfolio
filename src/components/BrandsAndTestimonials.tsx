@@ -4,7 +4,7 @@ import { ArrowRight, Star } from "lucide-react";
 export const TestimonialCard = () => {
   const testimonial = {
     name: "Gourav Panda",
-    role: "E-commerce Manager, Yuvakart",
+    role: "E-commerce Manager",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
     text: "Hari demonstrates an excellent understanding of brand growth and his marketing strategies are both creative and results-driven. He is highly strategic and handles feedback with great professionalism.",
     rating: 5.0

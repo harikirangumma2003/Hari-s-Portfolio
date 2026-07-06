@@ -20,18 +20,6 @@ const experiences = [
     ]
   },
   {
-    company: "Yuvakart",
-    role: "Digital Marketing Specialist",
-    period: "2025 - Present",
-    location: "Remote / India",
-    description: "Driving measurable growth through integrated SEO strategies, high-performing paid ad campaigns, and conversion-focused content marketing.",
-    achievements: [
-      "Executing SEO strategies including keyword research, on-page optimization, and content planning",
-      "Managing and optimizing paid ad campaigns to improve ROI and lead generation",
-      "Creating high-quality, SEO-driven content to boost organic traffic and engagement"
-    ]
-  },
-  {
     company: "Zomato",
     role: "Sales & Operations Intern",
     period: "2025",

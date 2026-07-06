@@ -67,6 +67,111 @@
         }
       },
       "required": ["name", "email", "website", "tier", "budget", "message", "createdAt"]
+    },
+    "ContentHubItem": {
+      "title": "Content Hub Item",
+      "description": "A syndicated content asset published across various platforms.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "publishedDate": {
+          "type": "string"
+        },
+        "readTime": {
+          "type": "string"
+        },
+        "views": {
+          "type": "integer"
+        },
+        "likes": {
+          "type": "integer"
+        },
+        "author": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "role": { "type": "string" },
+            "image": { "type": "string" }
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string"
+        }
+      },
+      "required": ["title", "excerpt", "description", "thumbnail", "platform", "contentType", "category", "tags", "url", "featured", "publishedDate", "readTime", "status", "visibility"]
+    },
+    "AutomationSettings": {
+      "title": "Automation Settings",
+      "description": "Global automation control settings for synching content from external platforms.",
+      "type": "object",
+      "properties": {
+        "mediumEnabled": { "type": "boolean" },
+        "youtubeEnabled": { "type": "boolean" },
+        "linkedinEnabled": { "type": "boolean" },
+        "instagramEnabled": { "type": "boolean" },
+        "threadsEnabled": { "type": "boolean" },
+        "xEnabled": { "type": "boolean" },
+        "autoSync": { "type": "boolean" },
+        "syncInterval": { "type": "integer" },
+        "lastGlobalSync": { "type": "string", "format": "date-time" }
+      },
+      "required": ["mediumEnabled", "youtubeEnabled", "linkedinEnabled", "instagramEnabled", "threadsEnabled", "xEnabled", "autoSync", "syncInterval"]
+    },
+    "SyncLog": {
+      "title": "Sync Log",
+      "description": "Log details of a specific platform synchronization run.",
+      "type": "object",
+      "properties": {
+        "platform": { "type": "string" },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string" },
+        "imported": { "type": "integer" },
+        "updated": { "type": "integer" },
+        "skipped": { "type": "integer" },
+        "failed": { "type": "integer" },
+        "duration": { "type": "integer" },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["platform", "startedAt", "completedAt", "status", "imported", "updated", "skipped", "failed", "duration", "errors"]
     }
   },
   "firestore": {
@@ -77,6 +182,18 @@
     "partners_submissions/{submissionId}": {
       "schema": "PartnerSubmission",
       "description": "Applications submitted through the Become a Partner form."
+    },
+    "content/{contentId}": {
+      "schema": "ContentHubItem",
+      "description": "Curated omnichannel growth assets and published articles."
+    },
+    "automation/{settingsId}": {
+      "schema": "AutomationSettings",
+      "description": "Global configuration settings for Content Automation."
+    },
+    "syncLogs/{logId}": {
+      "schema": "SyncLog",
+      "description": "Records of synchronization job outputs."
     }
   }
 }
