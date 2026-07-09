@@ -148,7 +148,7 @@ export const contentHubItems: ContentHubItem[] = [
     contentType: "Resource",
     category: "SEO Tips",
     tags: ["SEO Audit", "Resource", "Spreadsheet", "Technical SEO"],
-    url: "#download-resource",
+    url: "/ultimate_seo_checklist.csv",
     featured: true,
     publishedDate: "2026-06-01T08:00:00Z",
     readTime: "Resource Download",

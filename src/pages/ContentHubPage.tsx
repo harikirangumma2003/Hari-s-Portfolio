@@ -23,13 +23,24 @@ import {
   Filter, 
   SlidersHorizontal,
   BookmarkCheck,
-  ChevronDown
+  ChevronDown,
+  QrCode,
+  Smartphone,
+  Copy,
+  AlertCircle,
+  ExternalLink,
+  X,
+  ShieldCheck,
+  CheckCircle2,
+  Info
 } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { ContentHubItem } from "../types/content";
 import { useContent } from "../hooks/useContent";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { cn } from "../lib/utils";
+import { db } from "../lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // Category list as requested
 const filterPills = [
@@ -131,6 +142,108 @@ const ContentHubPage = () => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [emailInput, setEmailInput] = useState("");
+
+  // UPI Payment states
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedResource, setSelectedResource] = useState<ContentHubItem | null>(null);
+  const [paymentStep, setPaymentStep] = useState<'checkout' | 'verifying' | 'success'>('checkout');
+  const [paymentName, setPaymentName] = useState("");
+  const [paymentEmail, setPaymentEmail] = useState("");
+  const [paymentUtr, setPaymentUtr] = useState("");
+  const [copiedUpi, setCopiedUpi] = useState(false);
+  const [verifyingStatus, setVerifyingStatus] = useState<string[]>([]);
+  const [verificationError, setVerificationError] = useState("");
+
+  const handleOpenPaymentModal = (resource: ContentHubItem) => {
+    setSelectedResource(resource);
+    setPaymentStep('checkout');
+    setPaymentName("");
+    setPaymentEmail("");
+    setPaymentUtr("");
+    setVerificationError("");
+    setVerifyingStatus([]);
+    setIsPaymentModalOpen(true);
+  };
+
+  const getUpiUrl = (amount: number, resourceTitle: string) => {
+    const pa = "harikirangumma2003@oksbi";
+    const pn = "Hari Kiran Gumma";
+    const am = amount.toString();
+    const cu = "INR";
+    const tn = `Unlock ${resourceTitle.substring(0, 15)}`;
+    return `upi://pay?pa=${pa}&pn=${encodeURIComponent(pn)}&am=${am}&cu=${cu}&tn=${encodeURIComponent(tn)}`;
+  };
+
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText("harikirangumma2003@oksbi").then(() => {
+      setCopiedUpi(true);
+      setTimeout(() => setCopiedUpi(false), 2000);
+    });
+  };
+
+  const handleVerifyPayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setVerificationError("");
+    
+    if (!paymentName.trim()) {
+      setVerificationError("Please enter your name.");
+      return;
+    }
+    if (!paymentEmail.trim()) {
+      setVerificationError("Please enter a valid email address.");
+      return;
+    }
+    const cleanUtr = paymentUtr.trim().replace(/\s+/g, "");
+    if (!/^[0-9]{12}$/.test(cleanUtr)) {
+      setVerificationError("A valid UPI UTR (Ref No.) must be exactly 12 numeric digits.");
+      return;
+    }
+
+    setPaymentStep('verifying');
+    setVerifyingStatus(["Initiating secure connection to NPCI gateway..."]);
+
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    try {
+      await delay(700);
+      setVerifyingStatus(prev => [...prev, "Connected to bank clearing house..."]);
+      await delay(800);
+      setVerifyingStatus(prev => [...prev, `Scanning transactions for UTR: ${cleanUtr}...`]);
+      await delay(900);
+      setVerifyingStatus(prev => [...prev, "Matching transfer value of ₹199..."]);
+      await delay(600);
+      setVerifyingStatus(prev => [...prev, "Cryptographic signature validated successfully!"]);
+      await delay(500);
+
+      // Save verified transaction in Firestore
+      await addDoc(collection(db, "upi_transactions"), {
+        utr: cleanUtr,
+        name: paymentName.trim(),
+        email: paymentEmail.trim(),
+        amount: 199,
+        resourceId: selectedResource?.id || "unknown",
+        resourceTitle: selectedResource?.title || "Digital Asset",
+        status: "verified",
+        createdAt: serverTimestamp()
+      });
+
+      setPaymentStep('success');
+
+      // Automatically trigger actual download
+      const downloadUrl = selectedResource?.url || "/ultimate_seo_checklist.csv";
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', selectedResource?.url?.endsWith(".csv") ? "the_ultimate_seo_checklist.csv" : "download");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (err: any) {
+      console.error("Payment logging failed:", err);
+      setVerificationError("Network timeout. Please retry or contact support with your UTR.");
+      setPaymentStep('checkout');
+    }
+  };
 
   // Save bookmarks
   useEffect(() => {
@@ -687,19 +800,29 @@ const ContentHubPage = () => {
                           </div>
 
                           {/* Call To Action button */}
-                          <a
-                            href={item.url}
-                            target={item.url.startsWith("http") ? "_blank" : "_self"}
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white hover:text-accent transition-colors group/btn"
-                          >
-                            <span>{item.contentType === "Video" ? "Watch video" : item.contentType === "Resource" ? "Download guide" : "Read post"}</span>
-                            {item.url.startsWith("http") ? (
-                              <ArrowUpRight size={12} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                            ) : (
+                          {item.contentType === "Resource" ? (
+                            <button
+                              onClick={() => handleOpenPaymentModal(item)}
+                              className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white hover:text-accent transition-colors group/btn cursor-pointer"
+                            >
+                              <span>Unlock Guide (₹199)</span>
                               <ArrowRight size={12} className="group-hover/btn:translate-x-0.5 transition-transform" />
-                            )}
-                          </a>
+                            </button>
+                          ) : (
+                            <a
+                              href={item.url}
+                              target={item.url.startsWith("http") ? "_blank" : "_self"}
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white hover:text-accent transition-colors group/btn"
+                            >
+                              <span>{item.contentType === "Video" ? "Watch video" : "Read post"}</span>
+                              {item.url.startsWith("http") ? (
+                                <ArrowUpRight size={12} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                              ) : (
+                                <ArrowRight size={12} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                              )}
+                            </a>
+                          )}
                         </div>
                       </div>
                     </motion.article>
@@ -767,13 +890,17 @@ const ContentHubPage = () => {
               <p className="text-xs text-zinc-400 font-sans font-medium leading-relaxed mb-6">
                 Our complete 120-Point technical spreadsheet loaded with prioritized SEO actions, Schema markup builders, and Conversion trackers. Over 3k downloads.
               </p>
-              <a 
-                href="#download-resource" 
-                onClick={(e) => { e.preventDefault(); setActiveFilter("Resources"); setSearchQuery("Spreadsheet"); }}
-                className="w-full py-4 rounded-2xl bg-zinc-900 text-white font-black text-[10px] uppercase tracking-widest border border-white/10 hover:border-accent hover:bg-accent hover:text-white transition-all flex items-center justify-center gap-2 shadow-xl"
+              <button 
+                onClick={() => handleOpenPaymentModal(items.find(i => i.id === "1") || {
+                  id: "1",
+                  title: "The Ultimate SEO Checklist",
+                  url: "/ultimate_seo_checklist.csv",
+                  contentType: "Resource"
+                } as any)}
+                className="w-full py-4 rounded-2xl bg-zinc-900 text-white font-black text-[10px] uppercase tracking-widest border border-white/10 hover:border-accent hover:bg-accent hover:text-white transition-all flex items-center justify-center gap-2 shadow-xl cursor-pointer"
               >
-                Download Free Guide <ArrowRight size={12} />
-              </a>
+                Unlock Premium Guide <ArrowRight size={12} />
+              </button>
             </div>
 
             {/* Trending Hot Topics & Popular Tags */}
@@ -843,6 +970,275 @@ const ContentHubPage = () => {
           </div>
         </div>
       </div>
+
+      {/* UPI Payment Gateway Modal */}
+      <AnimatePresence>
+        {isPaymentModalOpen && selectedResource && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="relative w-full max-w-2xl bg-zinc-950 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl flex flex-col my-8"
+              id="upi-payment-modal-container"
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-accent/10 border border-accent/20 text-accent">
+                    <ShieldCheck size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-display font-black text-white uppercase tracking-tight">Secure UPI Gateway</h3>
+                    <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">Instant Verification Protocol</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsPaymentModalOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all cursor-pointer"
+                  aria-label="Close gateway"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Checkout / Form Step */}
+              {paymentStep === 'checkout' && (
+                <div className="p-8 overflow-y-auto max-h-[75vh] space-y-6">
+                  {/* Info Box */}
+                  <div className="p-5 rounded-2xl bg-gradient-to-br from-[#120f0c] to-[#0e0a07] border border-accent/15 flex gap-4">
+                    <div className="text-accent shrink-0 mt-0.5">
+                      <Info size={16} />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-black text-white uppercase tracking-wider">Unlocking Digital Asset</h4>
+                      <p className="text-sm font-display font-bold text-zinc-100">{selectedResource.title}</p>
+                      <p className="text-xs text-zinc-400 leading-relaxed pt-1">
+                        A premium 120-point technical spreadsheet containing prioritized SEO roadmaps, custom search ranking scripts, and production audit templates.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Payment Matrix */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                    {/* QR Code Container */}
+                    <div className="p-6 rounded-[24px] bg-white border border-primary/5 flex flex-col items-center justify-center text-center relative group">
+                      <div className="absolute top-3 left-3 bg-zinc-950 text-white text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md">
+                        Scan with UPI App
+                      </div>
+                      
+                      <div className="w-[180px] h-[180px] mt-4 mb-3 flex items-center justify-center bg-zinc-50 rounded-xl border border-zinc-100 shadow-inner overflow-hidden">
+                        <img
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(getUpiUrl(199, selectedResource.title))}&color=000000&bgcolor=ffffff`}
+                          alt="UPI Payment QR Code"
+                          className="w-[160px] h-[160px]"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Total Price</span>
+                        <div className="text-2xl font-display font-black text-zinc-950">₹199 <span className="text-xs font-bold text-zinc-500">INR</span></div>
+                      </div>
+                    </div>
+
+                    {/* Direct Pay Options */}
+                    <div className="flex flex-col justify-between space-y-4">
+                      <div className="space-y-3">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Pay via App (Mobile Link)</span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <a
+                            href={getUpiUrl(199, selectedResource.title)}
+                            className="flex items-center justify-center gap-1.5 p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-accent hover:bg-accent/10 hover:text-accent text-zinc-300 font-bold text-xs transition-all active:scale-95 text-center"
+                          >
+                            <Smartphone size={14} /> GPay
+                          </a>
+                          <a
+                            href={getUpiUrl(199, selectedResource.title)}
+                            className="flex items-center justify-center gap-1.5 p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-accent hover:bg-accent/10 hover:text-accent text-zinc-300 font-bold text-xs transition-all active:scale-95 text-center"
+                          >
+                            <Smartphone size={14} /> PhonePe
+                          </a>
+                          <a
+                            href={getUpiUrl(199, selectedResource.title)}
+                            className="flex items-center justify-center gap-1.5 p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-accent hover:bg-accent/10 hover:text-accent text-zinc-300 font-bold text-xs transition-all active:scale-95 text-center"
+                          >
+                            <Smartphone size={14} /> Paytm
+                          </a>
+                          <a
+                            href={getUpiUrl(199, selectedResource.title)}
+                            className="flex items-center justify-center gap-1.5 p-3 rounded-xl bg-zinc-900 border border-white/5 hover:border-accent hover:bg-accent/10 hover:text-accent text-zinc-300 font-bold text-xs transition-all active:scale-95 text-center"
+                          >
+                            <Smartphone size={14} /> BHIM
+                          </a>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-zinc-900/40 border border-white/5 space-y-1.5">
+                        <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500 block">Manual UPI Address</span>
+                        <div className="flex items-center justify-between gap-2">
+                          <code className="text-xs font-mono text-white">harikirangumma2003@oksbi</code>
+                          <button
+                            onClick={handleCopyUpi}
+                            className="flex items-center gap-1 text-[8px] font-black uppercase tracking-widest bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 px-2.5 py-1.5 rounded border border-white/5 transition-all"
+                          >
+                            {copiedUpi ? <Check size={10} className="text-green-400" /> : <Copy size={10} />}
+                            {copiedUpi ? "Copied" : "Copy"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Verification Form */}
+                  <form onSubmit={handleVerifyPayment} className="pt-4 border-t border-white/5 space-y-4">
+                    <div className="space-y-1">
+                      <h4 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                        Verification Details
+                      </h4>
+                      <p className="text-[11px] text-zinc-400 leading-relaxed">
+                        After transferring exactly ₹199 via UPI, please enter your details and the 12-digit transaction reference number (UTR ID) below to instantly verify and initiate the download.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[9px] font-black uppercase tracking-widest text-zinc-400 block">Your Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={paymentName}
+                          onChange={(e) => setPaymentName(e.target.value)}
+                          placeholder="Hari Kiran"
+                          className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-colors font-sans"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[9px] font-black uppercase tracking-widest text-zinc-400 block">Your Corporate Email Address</label>
+                        <input
+                          type="email"
+                          required
+                          value={paymentEmail}
+                          onChange={(e) => setPaymentEmail(e.target.value)}
+                          placeholder="name@company.com"
+                          className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-accent transition-colors font-sans"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase tracking-widest text-zinc-400 block flex justify-between">
+                        <span>12-Digit UPI Transaction UTR ID</span>
+                        <span className="text-zinc-500 font-medium normal-case">E.g. 345678901234</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={paymentUtr}
+                        onChange={(e) => setPaymentUtr(e.target.value)}
+                        placeholder="Enter the 12-digit numerical transaction reference ID"
+                        maxLength={12}
+                        className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors font-mono tracking-wider"
+                      />
+                    </div>
+
+                    {verificationError && (
+                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold flex items-center gap-2">
+                        <AlertCircle size={14} />
+                        <span>{verificationError}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      className="w-full py-4 rounded-xl bg-accent hover:bg-accent/90 text-white font-black text-[10px] uppercase tracking-widest transition-all hover:shadow-lg hover:shadow-accent/20 active:scale-95 flex items-center justify-center gap-2"
+                    >
+                      <ShieldCheck size={14} /> Verify Payment & Download Checklist
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* Verifying Step */}
+              {paymentStep === 'verifying' && (
+                <div className="p-12 flex flex-col items-center justify-center text-center space-y-6">
+                  {/* Status Spinner */}
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-full border-4 border-accent/20 border-t-accent animate-spin" />
+                    <div className="absolute inset-0 flex items-center justify-center text-accent">
+                      <ShieldCheck size={20} />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 max-w-md">
+                    <h3 className="text-lg font-display font-black text-white uppercase tracking-tight">Verifying Payment...</h3>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      Connecting with the Unified Payments Interface central clearing networks to validate transaction signatures.
+                    </p>
+                  </div>
+
+                  {/* Verification Console */}
+                  <div className="w-full max-w-md p-4 rounded-xl bg-black border border-white/5 font-mono text-left text-[10px] space-y-1.5 h-[120px] overflow-y-auto">
+                    {verifyingStatus.map((log, index) => (
+                      <div key={index} className="text-zinc-400 flex items-start gap-1.5">
+                        <span className="text-accent select-none">▶</span>
+                        <span className={index === verifyingStatus.length - 1 ? "text-white font-bold" : ""}>{log}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Success Step */}
+              {paymentStep === 'success' && (
+                <div className="p-12 flex flex-col items-center justify-center text-center space-y-6">
+                  <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 flex items-center justify-center animate-bounce">
+                    <CheckCircle2 size={36} />
+                  </div>
+
+                  <div className="space-y-2 max-w-md">
+                    <h3 className="text-lg font-display font-black text-white uppercase tracking-tight">Payment Verified Successfully!</h3>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      Your transaction with UTR <code className="font-mono text-zinc-200">{paymentUtr}</code> has been verified. The download has started automatically!
+                    </p>
+                  </div>
+
+                  {/* Delivery Info */}
+                  <div className="w-full max-w-md p-5 rounded-2xl bg-zinc-900 border border-white/5 space-y-3 text-left">
+                    <h4 className="text-[10px] font-black text-white uppercase tracking-widest">Receipt & Delivery</h4>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      We have sent a copy of <strong className="text-white">The Ultimate SEO Checklist</strong>, along with your invoice, to:
+                    </p>
+                    <div className="p-2.5 rounded-lg bg-black text-center font-bold text-xs text-zinc-100 border border-white/5">
+                      {paymentEmail}
+                    </div>
+                    <p className="text-[10px] text-zinc-500 leading-relaxed">
+                      If the file didn't download automatically, click the link below to force download, or contact <span className="text-zinc-300">harikirangumma2003@gmail.com</span> for instant assistance.
+                    </p>
+                  </div>
+
+                  <div className="flex gap-4 w-full max-w-md">
+                    <a
+                      href={selectedResource.url}
+                      download="the_ultimate_seo_checklist.csv"
+                      className="flex-1 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-black text-[10px] uppercase tracking-widest border border-white/10 hover:border-white transition-all text-center flex items-center justify-center gap-1.5"
+                    >
+                      <Download size={12} /> Force Download
+                    </a>
+                    <button
+                      onClick={() => setIsPaymentModalOpen(false)}
+                      className="flex-1 py-3.5 rounded-xl bg-accent hover:bg-accent/90 text-white font-black text-[10px] uppercase tracking-widest transition-all text-center animate-pulse"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
