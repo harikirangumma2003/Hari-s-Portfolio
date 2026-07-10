@@ -460,8 +460,7 @@ const ContentHubPage = () => {
         <div className="mb-8" id="content-breadcrumbs">
           <Breadcrumbs 
             items={[
-              { label: "Home", path: "/" },
-              { label: "Content Hub", path: "/content-hub", active: true }
+              { name: "Content Hub", path: "/content-hub" }
             ]}
           />
         </div>
