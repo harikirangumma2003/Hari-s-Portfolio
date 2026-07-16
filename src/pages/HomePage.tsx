@@ -32,8 +32,8 @@ const HomePage = () => {
   };
 
   const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   const localSchemaGraph = {
@@ -74,11 +74,70 @@ const HomePage = () => {
         "@type": "WebSite",
         "@id": "https://harikiran-portfolio.netlify.app/#website",
         "url": "https://harikiran-portfolio.netlify.app",
-        "name": "G. Hari Kiran | SEO Expert & Digital Marketing Consultant in Jamshedpur",
+        "name": "G. Hari Kiran",
+        "alternateName": "G. Hari Kiran Portfolio",
         "description": "High-ROI digital growth strategies, conversion-rate optimization, advanced search engine positioning, and business scale consultancy in Jamshedpur.",
         "publisher": {
           "@id": "https://harikiran-portfolio.netlify.app/#person"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://harikiran-portfolio.netlify.app/content-hub?search={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
         }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://harikiran-portfolio.netlify.app/#navigation",
+        "name": "Main Navigation",
+        "description": "Primary links to the most important pages on G. Hari Kiran's SEO portfolio website.",
+        "itemListElement": [
+          {
+            "@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "About",
+            "url": "https://harikiran-portfolio.netlify.app/about"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "Portfolio",
+            "url": "https://harikiran-portfolio.netlify.app/work"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Experience",
+            "url": "https://harikiran-portfolio.netlify.app/experience"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "Blog",
+            "url": "https://harikiran-portfolio.netlify.app/blog"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 5,
+            "name": "Content Hub",
+            "url": "https://harikiran-portfolio.netlify.app/content-hub"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 6,
+            "name": "SEO Dashboard",
+            "url": "https://harikiran-portfolio.netlify.app/seo-dashboard"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 7,
+            "name": "Contact",
+            "url": "https://harikiran-portfolio.netlify.app/contact"
+          }
+        ]
       },
       {
         "@type": "ProfessionalService",

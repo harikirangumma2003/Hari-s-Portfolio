@@ -6,13 +6,14 @@ import { blogPosts } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 import React, { useState, useMemo, useEffect } from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
+import NotFoundPage from "./NotFoundPage";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
   
-  const [posts, setPosts] = useState<any[]>(() => {
+  const initialPosts = useMemo(() => {
     const staticPosts = blogPosts;
     const cached = localStorage.getItem("g_hari_kiran_medium_feed");
     if (cached) {
@@ -26,9 +27,15 @@ const BlogPostPage = () => {
       }
     }
     return staticPosts;
-  });
+  }, []);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [posts, setPosts] = useState<any[]>(initialPosts);
+
+  const initialPostFound = useMemo(() => {
+    return initialPosts.some((p) => p.slug === slug);
+  }, [initialPosts, slug]);
+
+  const [isLoading, setIsLoading] = useState(!initialPostFound);
 
   const post = useMemo(() => {
     return posts.find((p) => p.slug === slug);
@@ -150,7 +157,7 @@ const BlogPostPage = () => {
   }
 
   if (!post) {
-    return <Navigate to="/blog" replace />;
+    return <NotFoundPage />;
   }
 
   const siteUrl = "https://harikiran-portfolio.netlify.app";

@@ -47,15 +47,28 @@ export const VideoCarousel: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="w-full rounded-[40px] bg-zinc-950/40 border border-white/5 p-8 md:p-12 animate-pulse">
-        <div className="flex flex-col md:flex-row gap-8 items-center h-[350px]">
-          <div className="w-full md:w-1/2 h-full bg-zinc-900 rounded-2xl" />
-          <div className="w-full md:w-1/2 space-y-4">
+      <div className="w-full rounded-[40px] bg-gradient-to-br from-zinc-900/60 to-zinc-950/80 border border-white/5 p-6 md:p-10 shadow-2xl backdrop-blur-md animate-pulse">
+        <div className="relative z-10 min-h-[360px] flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-6 md:mb-8 border-b border-white/5 pb-4">
             <div className="h-4 bg-zinc-900 rounded w-1/4" />
-            <div className="h-8 bg-zinc-900 rounded w-3/4" />
-            <div className="h-4 bg-zinc-900 rounded w-full" />
-            <div className="h-4 bg-zinc-900 rounded w-5/6" />
-            <div className="h-10 bg-zinc-900 rounded w-1/3 mt-6" />
+            <div className="h-4 bg-zinc-900 rounded w-1/12" />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center flex-1">
+            <div className="lg:col-span-6 w-full aspect-video rounded-3xl bg-zinc-900" />
+            <div className="lg:col-span-6 space-y-4">
+              <div className="h-4 bg-zinc-900 rounded w-1/3" />
+              <div className="h-8 bg-zinc-900 rounded w-3/4" />
+              <div className="h-4 bg-zinc-900 rounded w-full" />
+              <div className="h-4 bg-zinc-900 rounded w-5/6" />
+              <div className="h-10 bg-zinc-900 rounded w-1/3 mt-6" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between mt-8 pt-4 border-t border-white/5">
+            <div className="h-4 bg-zinc-900 rounded w-16" />
+            <div className="flex gap-2">
+              <div className="w-10 h-10 rounded-full bg-zinc-900" />
+              <div className="w-10 h-10 rounded-full bg-zinc-900" />
+            </div>
           </div>
         </div>
       </div>

@@ -187,6 +187,15 @@ const BlogPage = () => {
     fetchMedium();
   }, [localMapped]);
 
+  // Read URL search query for Sitelinks Searchbox integration
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchParam = params.get("search") || params.get("q");
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, []);
+
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
       const matchesCategory = activeCategory === "All Posts" || post.category === activeCategory;

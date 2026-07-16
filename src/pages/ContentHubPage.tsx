@@ -250,6 +250,15 @@ const ContentHubPage = () => {
     localStorage.setItem("g_hari_kiran_content_bookmarks", JSON.stringify(bookmarkedIds));
   }, [bookmarkedIds]);
 
+  // Read URL search query for Sitelinks Searchbox integration
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchParam = params.get("search") || params.get("q");
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, []);
+
   // Copy share link
   const handleShare = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -1285,7 +1294,7 @@ export const LatestContentWidget: React.FC<WidgetProps> = ({ platform, className
   if (error || !latestItem) return null;
 
   return (
-    <div className={cn("p-6 rounded-[32px] bg-white border border-primary/5 shadow-xl flex flex-col justify-between hover:shadow-2xl transition-all duration-300 relative group overflow-hidden", className)}>
+    <div className={cn("p-6 rounded-[32px] bg-white border border-primary/5 shadow-xl flex flex-col justify-between hover:shadow-2xl transition-all duration-300 relative group overflow-hidden h-[180px]", className)}>
       <div className="absolute top-0 right-0 w-16 h-16 bg-accent/5 rounded-full blur-xl pointer-events-none" />
       <div>
         <div className="flex items-center justify-between gap-4 mb-4">
