@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowLeft, User, Target, Award, Globe, Heart } from "lucide-react";
+import { ArrowLeft, User, Target, Award, Globe, Heart, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
 import { Breadcrumbs } from "../components/Breadcrumbs";
@@ -51,6 +51,11 @@ const AboutPage = () => {
             "@type": "Organization",
             "name": "SuMeera Solutions",
             "url": "https://sumeerasolutions.com"
+          },
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Netaji Subhas University",
+            "url": "https://nsuniv.ac.in/"
           }
         }}
       />
@@ -142,6 +147,106 @@ const AboutPage = () => {
                 <p className="text-sm text-muted leading-relaxed">{item.text}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+
+        {/* Education Section */}
+        <div className="mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left Column: Title and Description */}
+            <div className="lg:col-span-4 lg:sticky lg:top-36">
+              <span className="text-xs font-black uppercase tracking-[2px] text-accent mb-4 block">Academic Path</span>
+              <h2 className="text-4xl md:text-5xl font-display font-black uppercase tracking-tighter mb-6 leading-none">
+                Educational <br className="hidden lg:block" />
+                <span className="text-accent">Foundation</span>
+              </h2>
+              <p className="text-muted text-base leading-relaxed mb-8 max-w-md">
+                Combining business management expertise with hands-on growth hacks. Proudly recognized as an emerging <strong className="text-primary font-black">Best Digital Marketer in Netaji Subhas University</strong>, building high-ROI organic search strategies and traffic frameworks directly from academic foundations.
+              </p>
+              <div className="hidden lg:flex items-center gap-4 p-6 rounded-3xl bg-neutral-50 border border-primary/5">
+                <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                  <GraduationCap size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs font-bold text-muted uppercase tracking-wider">Focus Area</p>
+                  <p className="text-sm font-black text-primary uppercase">Business & Marketing</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Timeline / Cards */}
+            <div className="lg:col-span-8 relative border-l-2 border-dashed border-neutral-200 pl-8 ml-4 lg:ml-0 space-y-12">
+              {[
+                {
+                  degree: "Master's in Business Administration (MBA)",
+                  institution: "Netaji Subhas University",
+                  period: "2026 - 2028",
+                  details: ["Pursuing / Upcoming", "Advanced Management Studies"]
+                },
+                {
+                  degree: "Bachelor's in Business Administration (BBA)",
+                  institution: "Netaji Subhas University",
+                  period: "2022 - 2025",
+                  details: ["Specialization: Marketing", "Performance: 9.0 CGPA"]
+                },
+                {
+                  degree: "Senior Secondary (Class XII)",
+                  institution: "Netaji Subhas Public School",
+                  period: "2021 - 2022",
+                  details: ["Commerce", "CBSE Board", "Score: 78.4%", "Rank: 3rd in School"]
+                },
+                {
+                  degree: "Secondary School (Class X)",
+                  institution: "Netaji Subhas Public School",
+                  period: "2019 - 2020",
+                  details: ["CBSE Board", "Score: 72.6%"]
+                }
+              ].map((edu, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className="relative group"
+                >
+                  {/* Timeline Dot */}
+                  <div className="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-white border-2 border-accent flex items-center justify-center group-hover:bg-accent transition-all duration-300">
+                    <div className="w-2 h-2 rounded-full bg-accent group-hover:bg-white transition-all duration-300" />
+                  </div>
+
+                  <div className="bento-card p-6 md:p-8 bg-white border border-primary/5 hover:border-accent/30 transition-all rounded-[32px] shadow-sm hover:shadow-md">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                      <div>
+                        <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-primary/5 text-primary mb-2">
+                          {edu.period}
+                        </span>
+                        <h3 className="text-xl md:text-2xl font-display font-black uppercase tracking-tight text-primary leading-snug">
+                          {edu.degree}
+                        </h3>
+                      </div>
+                    </div>
+                    
+                    <p className="text-base font-bold text-muted mb-4 uppercase tracking-wider text-sm">
+                      {edu.institution}
+                    </p>
+
+                    {edu.details && edu.details.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-dashed border-neutral-100">
+                        {edu.details.map((detail, i) => (
+                          <span 
+                            key={i} 
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-neutral-50 text-neutral-600 border border-neutral-200/50"
+                          >
+                            {detail}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
 

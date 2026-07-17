@@ -27,6 +27,7 @@
         var link = document.querySelector("link[rel='canonical']") || document.createElement("link");
         link.setAttribute("rel", "canonical");
         link.setAttribute("href", canonicalUrl);
+        link.setAttribute("data-react-helmet", "true");
         if (!link.parentNode) {
           document.head.appendChild(link);
         }
@@ -35,6 +36,7 @@
         var ogUrl = document.querySelector("meta[property='og:url']") || document.createElement("meta");
         ogUrl.setAttribute("property", "og:url");
         ogUrl.setAttribute("content", canonicalUrl);
+        ogUrl.setAttribute("data-react-helmet", "true");
         if (!ogUrl.parentNode) {
           document.head.appendChild(ogUrl);
         }

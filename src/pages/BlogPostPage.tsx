@@ -320,7 +320,8 @@ const BlogPostPage = () => {
             <img 
               src={post.image} 
               alt={`Featured image for blog post: ${post.title}`}
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
               width="1200"
               height="675"

@@ -76,7 +76,8 @@ const ProjectDetailPage = () => {
             <img 
               src={project.image} 
               alt={`Featured hero image for ${project.title} case study`} 
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
               width="1600"
               height="900"

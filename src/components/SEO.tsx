@@ -39,6 +39,14 @@ export const SEO: React.FC<SEOProps> = ({
   // Determine precise canonical URL dynamically, force lowercase, and strip trailing slashes (except apex /) to ensure sitemap matches
   const path = url !== undefined ? url : location.pathname;
   let cleanPath = path.toLowerCase();
+  if (cleanPath.includes('://')) {
+    try {
+      cleanPath = new URL(cleanPath).pathname;
+    } catch (e) {
+      const index = cleanPath.indexOf('/', cleanPath.indexOf('://') + 3);
+      cleanPath = index !== -1 ? cleanPath.substring(index) : '/';
+    }
+  }
   if (!cleanPath.startsWith('/')) {
     cleanPath = `/${cleanPath}`;
   }
