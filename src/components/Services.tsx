@@ -71,7 +71,7 @@ const Services = () => {
 
   return (
     <div className="h-full flex flex-col pt-4 lg:pt-0">
-      <span className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block font-sans text-center lg:text-left">Specialized Services</span>
+      <h2 className="text-[10px] font-black uppercase tracking-[3px] text-accent mb-8 block font-sans text-center lg:text-left">Specialized Services</h2>
       <motion.div 
         variants={container}
         initial="hidden"
@@ -88,7 +88,7 @@ const Services = () => {
             <div className={`w-8 h-8 rounded-lg ${service.color} flex items-center justify-center mb-4 transition-transform group-hover:scale-110 group-hover:rotate-3`}>
               <service.icon size={16} />
             </div>
-            <h4 className="text-xs md:text-sm font-display font-black mb-1 uppercase tracking-tight group-hover:text-accent transition-colors">{service.title}</h4>
+            <h3 className="text-xs md:text-sm font-display font-black mb-1 uppercase tracking-tight group-hover:text-accent transition-colors">{service.title}</h3>
             <p className="text-[10px] text-muted font-medium leading-[1.4] opacity-70">{service.description}</p>
           </motion.div>
         ))}

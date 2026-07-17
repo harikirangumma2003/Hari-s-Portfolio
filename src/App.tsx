@@ -20,6 +20,7 @@ const ContentHubPage = React.lazy(() => import("./pages/ContentHubPage"));
 const ProjectDetailPage = React.lazy(() => import("./pages/ProjectDetailPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
 const PartnersPage = React.lazy(() => import("./pages/PartnersPage"));
+const ResourcesPage = React.lazy(() => import("./pages/ResourcesPage"));
 const SEODashboardPage = React.lazy(() => import("./pages/SEODashboardPage"));
 const AdminCMSPage = React.lazy(() => import("./pages/AdminCMSPage"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
@@ -76,6 +77,7 @@ export default function App() {
                 <Route path="/content-hub" element={<ContentHubPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/partners" element={<PartnersPage />} />
+                <Route path="/resources" element={<ResourcesPage />} />
                 <Route path="/seo-audit" element={<SEODashboardPage />} />
                 <Route path="/admin/*" element={<AdminCMSPage />} />
                 <Route path="*" element={<NotFoundPage />} />

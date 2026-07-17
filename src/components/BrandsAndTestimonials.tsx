@@ -5,7 +5,7 @@ export const TestimonialCard = () => {
   const testimonial = {
     name: "Gourav Panda",
     role: "E-commerce Manager",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format,compress&fit=crop&fm=webp&q=70&w=200",
     text: "Hari demonstrates an excellent understanding of brand growth and his marketing strategies are both creative and results-driven. He is highly strategic and handles feedback with great professionalism.",
     rating: 5.0
   };
@@ -22,7 +22,7 @@ export const TestimonialCard = () => {
       <div className="mt-8 flex items-center gap-4">
         <div className="w-10 h-10 rounded-full bg-muted overflow-hidden border border-white/20">
           <img 
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format,compress&q=80&w=200&fm=webp" 
+            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format,compress&q=70&w=200&fm=webp" 
             alt={testimonial.name}
             loading="lazy"
             decoding="async"

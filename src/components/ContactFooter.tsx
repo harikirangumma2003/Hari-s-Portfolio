@@ -163,6 +163,7 @@ const Footer = () => {
                   { name: "Work", path: "/work" },
                   { name: "Blog", path: "/blog" },
                   { name: "Partners", path: "/partners" },
+                  { name: "Resources", path: "/resources" },
                   { name: "Contact", path: "/contact" },
                   { name: "SEO Audit", path: "/seo-audit" }
                 ].map((link) => (

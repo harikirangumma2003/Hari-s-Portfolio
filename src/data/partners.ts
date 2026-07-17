@@ -37,7 +37,7 @@ export const partnersData: Partner[] = [
         "SuMeera Solutions partnered with G. Hari Kiran to build a robust semantic search and content marketing engine for their OSHA compliance SaaS platforms.",
         "By optimizing technical SEO infrastructure, designing target-focused compliance landing pages, and establishing clean educational resources, they achieved significant organic search growth, ranking for high-intent safety compliance terms and turning organic visitors into active trial sign-ups."
       ],
-      videoPlaceholderImg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+      videoPlaceholderImg: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&fit=crop&fm=webp&q=70&w=1200",
       videoUrl: "https://www.youtube.com/embed/c-vevPRIsWo"
     }
   }

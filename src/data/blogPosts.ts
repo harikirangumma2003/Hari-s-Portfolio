@@ -29,7 +29,7 @@ export const blogPosts: BlogPost[] = [
     slug: "compliease-osha-log-management-software",
     category: "Compliance",
     date: "Apr 30, 2026",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Looking for OSHA compliance software? Compliease by Sumeera Solutions automates OSHA 300, 301 & 300A logs, reduces errors, and keeps your business audit-ready.",
     content: `
       <h2>Why Businesses Need OSHA Compliance Software Today</h2>
@@ -172,7 +172,7 @@ export const blogPosts: BlogPost[] = [
     slug: "workplace-compliance-software-modern-business",
     category: "Compliance",
     date: "Apr 27, 2026",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Tired of tracking OSHA logs and safety audits in spreadsheets? Learn how workplace compliance software automates risks, saves time, and prevents costly fines.",
     content: `
       <h2>The Hidden Cost of Manual Compliance</h2>
@@ -270,7 +270,7 @@ export const blogPosts: BlogPost[] = [
     slug: "sumeera-solutions-osha-compliance-software",
     category: "Compliance",
     date: "Apr 25, 2026",
-    image: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Struggling with OSHA compliance? Discover how Sumeera Solutions helps businesses manage OSHA logs, avoid costly fines, and stay audit-ready with smart compliance software.",
     content: `
       <h2>What is OSHA Compliance and Why Does It Matter?</h2>
@@ -399,7 +399,7 @@ export const blogPosts: BlogPost[] = [
     slug: "retention-marketing-sustainable-growth",
     category: "Retention",
     date: "Apr 24, 2026",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Acquisition is expensive. Retention is profitable. Learn why focusing on your existing customers is the most effective growth strategy today.",
     content: `
       <h2>Why Retention is the New Acquisition</h2>
@@ -437,7 +437,7 @@ export const blogPosts: BlogPost[] = [
     slug: "high-converting-email-newsletter-guide",
     category: "Email Marketing",
     date: "Apr 23, 2026",
-    image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Email marketing isn't dead—it's evolving. Discover the framework for creating newsletters that your audience actually wants to read.",
     content: `
       <h2>The Anatomy of a Perfect Newsletter</h2>
@@ -471,7 +471,7 @@ export const blogPosts: BlogPost[] = [
     slug: "rank-higher-google-organically",
     category: "SEO",
     date: "Dec 31, 2025",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Discover the fundamental steps to improve your website's search engine rankings without paid advertising.",
     content: `
       <h2>The Foundation of Organic SEO</h2>
@@ -515,7 +515,7 @@ export const blogPosts: BlogPost[] = [
     slug: "facebook-marketing-small-businesses",
     category: "Digital Marketing",
     date: "Apr 20, 2026",
-    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "You don't need a million-dollar budget to see results from Facebook. Learn the targeted strategies that drive real business growth.",
     content: `
       <h2>Facebook Marketing in 2026: The Strategy</h2>
@@ -545,7 +545,7 @@ export const blogPosts: BlogPost[] = [
     slug: "organic-seo-services",
     category: "SEO",
     date: "Apr 18, 2026",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "Is SEO still worth it? Absolutely. Discover why organic search is still the highest-ROI channel for long-term brand building.",
     content: `
       <h2>The Long Game of Digital Marketing</h2>
@@ -576,7 +576,7 @@ export const blogPosts: BlogPost[] = [
     slug: "best-digital-marketer-in-netaji-subhas-university",
     category: "Digital Marketing",
     date: "Jul 17, 2026",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=70&w=1200&fm=webp",
     excerpt: "What makes someone the best digital marketer in Netaji Subhas University? Discover why true marketing is about strategy, thinking, and uniqueness, not just execution.",
     content: `
       <h2>The Dilution of Modern Digital Marketing</h2>

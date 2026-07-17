@@ -133,7 +133,7 @@ export const VideoCarousel: React.FC = () => {
             {/* Interactive Thumbnail Preview */}
             <div className="lg:col-span-6 relative w-full aspect-video rounded-3xl overflow-hidden group/thumb cursor-pointer border border-white/5 shadow-xl bg-zinc-950">
               <img
-                src={currentItem.thumbnail || "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80"}
+                src={currentItem.thumbnail || "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format,compress&fit=crop&fm=webp&q=70&w=800"}
                 alt={currentItem.title}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105"

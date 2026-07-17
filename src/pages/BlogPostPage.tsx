@@ -65,7 +65,7 @@ const BlogPostPage = () => {
                 if (match && match[1] && !match[1].includes("stat?event=") && !match[1].includes("avatar")) {
                   img = match[1];
                 } else {
-                  img = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=800&fm=webp";
+                  img = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=800&fm=webp";
                 }
               }
 
