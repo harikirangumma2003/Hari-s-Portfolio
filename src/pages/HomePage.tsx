@@ -15,7 +15,7 @@ import { GrowthPartners } from "../components/GrowthPartners";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { projects } from "../data/projects";
-import { LatestContentWidget } from "./ContentHubPage";
+import { LatestContentWidget } from "../components/LatestContentWidget";
 import { VideoCarousel } from "../components/VideoCarousel";
 
 const HomePage = () => {

@@ -62,11 +62,28 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: "spa",
     });
+    // Explicitly serve static public assets in dev mode via Express to ensure reliability
+    app.use(express.static(path.join(process.cwd(), 'public')));
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, {
+      maxAge: '1y',
+      setHeaders: (res, filePath) => {
+        // Assets are compiled by Vite with content hashes in the filename, making them immutable.
+        if (filePath.includes('/assets/') || filePath.match(/\.(js|css|woff2|woff|ttf|eot)$/)) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else if (filePath.match(/\.(jpg|jpeg|png|webp|gif|svg|ico|xml|txt)$/)) {
+          // General images and XML/txt documents are cached for 1 hour to allow updates
+          res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+        } else {
+          // Default fallbacks (HTML documents, etc.) should not be cached aggressively
+          res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+        }
+      }
+    }));
     app.get('*', (req, res) => {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
