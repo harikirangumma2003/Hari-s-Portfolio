@@ -128,12 +128,18 @@ const HomePage = () => {
           {
             "@type": "SiteNavigationElement",
             "position": 6,
-            "name": "SEO Dashboard",
-            "url": "https://harikiran-portfolio.netlify.app/seo-dashboard"
+            "name": "Resources",
+            "url": "https://harikiran-portfolio.netlify.app/resources"
           },
           {
             "@type": "SiteNavigationElement",
             "position": 7,
+            "name": "SEO Audit",
+            "url": "https://harikiran-portfolio.netlify.app/seo-audit"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 8,
             "name": "Contact",
             "url": "https://harikiran-portfolio.netlify.app/contact"
           }

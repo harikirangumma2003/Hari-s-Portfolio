@@ -1,5 +1,7 @@
-# Forcing www to non-www canonical apex redirects (HTTP 301)
-https://www.harikiran-portfolio.netlify.app/* https://harikiran-portfolio.netlify.app/:splat 301!
+# Forcing HTTP to HTTPS and www to non-www canonical apex redirects (HTTP 301)
+http://harikiran-portfolio.netlify.app/*       https://harikiran-portfolio.netlify.app/:splat 301!
+http://www.harikiran-portfolio.netlify.app/*   https://harikiran-portfolio.netlify.app/:splat 301!
+https://www.harikiran-portfolio.netlify.app/*  https://harikiran-portfolio.netlify.app/:splat 301!
 
 # Legacy OSHA and Recordkeeping posts redirecting to High-Performance OSHA Guides (HTTP 301)
 /blog/osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands /blog/compliease-osha-log-management-software 301
