@@ -7,12 +7,13 @@ interface SEOProps {
   description: string;
   image?: string;
   url?: string;
-  type?: 'website' | 'article';
+  type?: 'website' | 'article' | 'profile';
   articleData?: {
     publishedTime: string;
     modifiedTime?: string;
-    author: string;
-    tags: string[];
+    author?: string;
+    section?: string;
+    tags?: string[];
   };
   schemaData?: object;
   noindex?: boolean;
@@ -33,10 +34,25 @@ export const SEO: React.FC<SEOProps> = ({
   const location = useLocation();
   const siteName = "G. Hari Kiran";
   const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | ${siteName}`;
-  const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg"; // Placeholder
+  const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg";
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 
-  // Determine precise canonical URL dynamically, force lowercase, and strip trailing slashes (except apex /) to ensure sitemap matches
+  // Determine absolute image URL
+  const ogImage = image 
+    ? (image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`) 
+    : defaultImage;
+
+  // Determine image mime type
+  let imageType = "image/jpeg";
+  if (ogImage.endsWith(".png")) {
+    imageType = "image/png";
+  } else if (ogImage.endsWith(".webp")) {
+    imageType = "image/webp";
+  } else if (ogImage.endsWith(".svg")) {
+    imageType = "image/svg+xml";
+  }
+
+  // Determine precise canonical URL dynamically
   const path = url !== undefined ? url : location.pathname;
   let cleanPath = path.toLowerCase();
   if (cleanPath.includes('://')) {
@@ -84,32 +100,48 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="DC.language" content="en" />
       <meta name="DC.coverage" content="Jamshedpur, Jharkhand, India" />
 
-      {/* Open Graph / Facebook */}
+      {/* Complete Open Graph / Facebook / LinkedIn / WhatsApp */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image || defaultImage} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:secure_url" content={ogImage} />
+      <meta property="og:image:type" content={imageType} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={fullTitle} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_IN" />
+      <meta property="og:locale:alternate" content="en_US" />
+      <meta property="og:updated_time" content={articleData?.modifiedTime || articleData?.publishedTime || "2026-07-30T00:00:00Z"} />
 
-      {/* Twitter */}
+      {/* Profile Open Graph Attributes */}
+      <meta property="profile:first_name" content="Hari Kiran" />
+      <meta property="profile:last_name" content="Gumma" />
+      <meta property="profile:username" content="GHariKiran29" />
+
+      {/* Twitter / X Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@GHariKiran29" />
       <meta name="twitter:creator" content="@GHariKiran29" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image || defaultImage} />
+      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:src" content={ogImage} />
       <meta name="twitter:image:alt" content={fullTitle} />
+      <meta name="twitter:domain" content="harikiran-portfolio.netlify.app" />
+      <meta name="twitter:url" content={canonicalUrl} />
 
-      {/* Article Specifics */}
+      {/* Article Specific Open Graph Attributes */}
       {type === 'article' && articleData && (
         <>
           <meta property="article:published_time" content={articleData.publishedTime} />
           {articleData.modifiedTime && <meta property="article:modified_time" content={articleData.modifiedTime} />}
-          <meta property="article:author" content={articleData.author} />
-          {articleData.tags.map(tag => (
+          <meta property="article:author" content={articleData.author || "G. Hari Kiran"} />
+          <meta property="article:publisher" content="https://harikiran-portfolio.netlify.app" />
+          {articleData.section && <meta property="article:section" content={articleData.section} />}
+          {articleData.tags && articleData.tags.map(tag => (
             <meta key={tag} property="article:tag" content={tag} />
           ))}
         </>

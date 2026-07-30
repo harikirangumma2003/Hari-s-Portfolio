@@ -21,6 +21,7 @@ const ProjectDetailPage = () => {
       <SEO 
         title={seoTitle}
         description={seoDescription}
+        image={project.image}
         url={`/work/${project.slug}`}
         schemaData={{
           "@context": "https://schema.org",

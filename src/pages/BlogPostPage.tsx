@@ -208,6 +208,7 @@ const BlogPostPage = () => {
         articleData={{
           publishedTime: post.date,
           author: "G. Hari Kiran",
+          section: post.category,
           tags: post.keywords
         }}
         schemaData={{

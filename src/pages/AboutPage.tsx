@@ -34,6 +34,7 @@ const AboutPage = () => {
         title="About G. Hari Kiran | Leading SEO Expert Jamshedpur"
         description="Meet G. Hari Kiran, the leading SEO Expert and dedicated Digital Marketing Consultant in Jamshedpur, Jharkhand. Learn how I grow organic authority and drive business revenue."
         url="/about"
+        type="profile"
         schemaData={{
           "@context": "https://schema.org",
           "@type": "Person",

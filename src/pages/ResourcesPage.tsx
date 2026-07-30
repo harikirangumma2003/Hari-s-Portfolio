@@ -5,18 +5,12 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { 
   Search, 
   ExternalLink, 
-  Award, 
-  Sparkles, 
   Layers, 
-  Zap, 
   Info, 
   BookOpen, 
   TrendingUp, 
   FileSpreadsheet, 
-  Download, 
   Check, 
-  ChevronRight,
-  Filter,
   CheckCircle2,
   ShieldCheck,
   X,
@@ -24,77 +18,10 @@ import {
   Copy,
   AlertCircle,
   Mail,
-  Maximize2,
-  Eye
+  Maximize2
 } from "lucide-react";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-
-// Curated list of high-quality tools for marketing, design, and SEO
-interface ToolItem {
-  id: string;
-  name: string;
-  category: "SEO & Analytics" | "Content & Copy" | "Automation & Hosting";
-  description: string;
-  longDescription: string;
-  whyIUseIt: string;
-  rating: number;
-  promoText: string;
-  badge: string;
-  badgeColor: string;
-  affiliateUrl: string;
-  logo: string;
-  tags: string[];
-}
-
-// 1. Curated list of approved software with active affiliates
-const RECOMMENDED_TOOLS: ToolItem[] = [
-  {
-    id: "semrush",
-    name: "Semrush",
-    category: "SEO & Analytics",
-    description: "The gold standard in search intelligence, competitor analysis, and organic traffic growth.",
-    longDescription: "Semrush is an all-in-one digital marketing suite that covers SEO, PPC, SMM, keyword research, competitive research, PR, content marketing, and market insights. It is the absolute core engine of my professional SEO consulting workflow.",
-    whyIUseIt: "It provides the most accurate search volume metrics, competitor backlink profiling, and automated keyword tracking that allow me to design 300% growth blueprints for my clients.",
-    rating: 4.9,
-    promoText: "Get a 7-Day Free Trial of Semrush Pro",
-    badge: "Must Have",
-    badgeColor: "bg-[#FF6B00]/10 text-[#FF6B00] border-[#FF6B00]/20",
-    affiliateUrl: "https://semrush.sjv.io/c/5443210/1308303/13010",
-    logo: "SR",
-    tags: ["Keyword Research", "Competitor Audit", "Rank Tracker"]
-  },
-  {
-    id: "surferseo",
-    name: "Surfer SEO",
-    category: "Content & Copy",
-    description: "Write content that Google loves with NLP-driven content editors and outline builders.",
-    longDescription: "Surfer SEO merges content creation with data science. It analyzes competitor page structures, word counts, and semantic NLP entities to give you an exact roadmap for writing articles that rank on page one of Google.",
-    whyIUseIt: "It completely eliminates the guesswork from content marketing. Every article I optimize through Surfer ranks significantly higher, saving weeks of continuous manual testing.",
-    rating: 4.8,
-    promoText: "Optimize Content with Surfer SEO",
-    badge: "AI Powered",
-    badgeColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-    affiliateUrl: "https://surferseo.com",
-    logo: "SF",
-    tags: ["NLP SEO", "Content Optimization", "SERP Analyzer"]
-  },
-  {
-    id: "hostinger",
-    name: "Hostinger",
-    category: "Automation & Hosting",
-    description: "Ultra-fast, secure, and budget-friendly web hosting optimized for WordPress speed and SEO.",
-    longDescription: "Hostinger provides lightning-quick cloud and WordPress hosting environments. Backed by LiteSpeed cache engines, global CDNs, and robust security Firewalls, it ensures your website scores a perfect 100 on Core Web Vitals.",
-    whyIUseIt: "For startups and local brands, speed is a major search ranking factor. Hostinger delivers world-class load speeds and server reliability at an extremely accessible price point.",
-    rating: 4.7,
-    promoText: "Save Up to 75% on High-Speed Hosting",
-    badge: "Top Value",
-    badgeColor: "bg-amber-500/10 text-amber-600 border-amber-500/20",
-    affiliateUrl: "https://www.hostinger.com",
-    logo: "HI",
-    tags: ["WordPress Hosting", "Site Speed", "Free SSL"]
-  }
-];
 
 // Curated list of high-value Google Sheet templates & Digital Products
 interface DigitalProduct {
@@ -377,14 +304,12 @@ const SheetPreviewCard: React.FC<SheetPreviewCardProps> = ({ id, onZoom }) => {
         onClick={() => !imgError && onZoom(imgSrc, title)}
         className={`w-full h-48 bg-zinc-950 border-b border-x border-white/10 rounded-b-2xl overflow-hidden relative shadow-md transition-all duration-300 ${!imgError ? "cursor-zoom-in group-hover/preview:shadow-xl" : "cursor-default"}`}
       >
-        {/* Shimmer loading placeholder */}
         {!imgLoaded && !imgError && (
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 animate-pulse flex flex-col items-center justify-center gap-1.5">
             <span className="text-[9px] text-zinc-500 uppercase tracking-widest font-black font-mono">Loading Blueprint...</span>
           </div>
         )}
 
-        {/* The actual image */}
         {!imgError && (
           <img 
             src={imgSrc} 
@@ -401,10 +326,8 @@ const SheetPreviewCard: React.FC<SheetPreviewCardProps> = ({ id, onZoom }) => {
           />
         )}
 
-        {/* Beautiful fallback CSS Grid if image fails */}
         {imgError && renderFallbackGrid()}
 
-        {/* Hover Overlay - only shown if image loaded successfully */}
         {!imgError && imgLoaded && (
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/preview:opacity-100 flex flex-col items-center justify-center gap-2 transition-all duration-300 backdrop-blur-[2px]">
             <div className="p-2.5 rounded-full bg-white/15 text-white border border-white/25 scale-75 group-hover/preview:scale-100 transition-all duration-300">
@@ -419,9 +342,7 @@ const SheetPreviewCard: React.FC<SheetPreviewCardProps> = ({ id, onZoom }) => {
 };
 
 export default function ResourcesPage() {
-  const [activeTab, setActiveTab] = useState<"software" | "products">("software");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSoftwareCategory, setSelectedSoftwareCategory] = useState<string>("all");
   const [selectedProductCategory, setSelectedProductCategory] = useState<string>("all");
 
   // UPI Payment states
@@ -525,32 +446,12 @@ export default function ResourcesPage() {
     }
   };
 
-  const softwareCategories = [
-    { id: "all", name: "All Tools", icon: Layers },
-    { id: "SEO & Analytics", name: "SEO & Analytics", icon: TrendingUp },
-    { id: "Content & Copy", name: "Content & Copy", icon: BookOpen },
-    { id: "Automation & Hosting", name: "Automation & Hosting", icon: Zap }
-  ];
-
   const productCategories = [
     { id: "all", name: "All Products", icon: Layers },
     { id: "Finance & Budgeting", name: "Finance", icon: FileSpreadsheet },
     { id: "Productivity & Habits", name: "Habits", icon: BookOpen },
     { id: "Reading & Learning", name: "Reading", icon: TrendingUp }
   ];
-
-  const filteredTools = useMemo(() => {
-    return RECOMMENDED_TOOLS.filter((tool) => {
-      const matchesSearch = 
-        tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tool.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
-      const matchesCategory = selectedSoftwareCategory === "all" || tool.category === selectedSoftwareCategory;
-
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, selectedSoftwareCategory]);
 
   const filteredProducts = useMemo(() => {
     return DIGITAL_PRODUCTS.filter((product) => {
@@ -565,19 +466,11 @@ export default function ResourcesPage() {
     });
   }, [searchQuery, selectedProductCategory]);
 
-  // Clean filters when switching tabs
-  const handleTabChange = (tab: "software" | "products") => {
-    setActiveTab(tab);
-    setSearchQuery("");
-    setSelectedSoftwareCategory("all");
-    setSelectedProductCategory("all");
-  };
-
   return (
     <>
       <SEO 
-        title="Recommended Tools & Digital Google Sheets Templates | G. Hari Kiran" 
-        description="Explore curated affiliate tools (Semrush, Surfer, Hostinger) and custom-designed premium Google Sheets templates for SEO, content calendars, and client reporting." 
+        title="Digital Google Sheets Templates & Spreadsheets | G. Hari Kiran" 
+        description="Access custom-engineered, fully automated Google Sheets templates for personal finance tracking, habit building, and book reading management." 
       />
 
       <main className="pt-24 pb-32 bg-white text-primary" id="resources-page-container">
@@ -596,52 +489,26 @@ export default function ResourcesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="text-[10px] font-black uppercase tracking-[4px] text-accent mb-4 block">Affiliates & Store</span>
+              <span className="text-[10px] font-black uppercase tracking-[4px] text-accent mb-4 block">Digital Store</span>
               <h1 className="text-4xl md:text-6xl font-display font-black tracking-tighter uppercase leading-[0.9] mb-6">
-                GROWTH PLATFORMS <br/> & <span className="text-accent underline underline-offset-8 decoration-4">DIGITAL SHEETS</span>
+                AUTOMATED GOOGLE SHEETS <br/> & <span className="text-accent underline underline-offset-8 decoration-4">DIGITAL PRODUCTS</span>
               </h1>
               <p className="text-sm md:text-base text-muted font-medium leading-relaxed opacity-80">
-                I believe in transparency and absolute performance. Discover my fully vetted stack of elite organic marketing software alongside custom-engineered, fully automated Google Sheets designed to speed up audits, onboarding, and planning.
+                Discover custom-engineered, fully automated Google Sheets designed to streamline your personal finances, habit tracking, and reading backlogs without recurring subscription software.
               </p>
             </motion.div>
           </div>
         </div>
 
-        {/* Dynamic Dual Tab Selector */}
+        {/* Search & Filter Controls */}
         <section className="container-custom max-w-7xl mx-auto px-6 lg:px-12 mb-12">
-          <div className="flex border-b border-primary/10 mb-8 p-1.5 bg-[#fafafa] rounded-[24px] max-w-md shadow-sm">
-            <button
-              onClick={() => handleTabChange("software")}
-              className={`flex-1 py-4 rounded-[18px] text-[10px] font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 ${
-                activeTab === "software"
-                  ? "bg-primary text-white shadow-md"
-                  : "text-primary/60 hover:text-primary hover:bg-primary/5"
-              }`}
-            >
-              <Zap size={13} className={activeTab === "software" ? "text-accent" : ""} />
-              <span>Marketing Software ({RECOMMENDED_TOOLS.length})</span>
-            </button>
-            <button
-              onClick={() => handleTabChange("products")}
-              className={`flex-1 py-4 rounded-[18px] text-[10px] font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 ${
-                activeTab === "products"
-                  ? "bg-primary text-white shadow-md"
-                  : "text-primary/60 hover:text-primary hover:bg-primary/5"
-              }`}
-            >
-              <FileSpreadsheet size={13} className={activeTab === "products" ? "text-accent" : ""} />
-              <span>Digital Sheets ({DIGITAL_PRODUCTS.length})</span>
-            </button>
-          </div>
-
-          {/* Search & Filter Controls */}
           <div className="flex flex-col lg:flex-row gap-6 justify-between items-stretch lg:items-center bg-[#fafafa] border border-primary/5 p-6 rounded-[32px] shadow-sm">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40 w-4 h-4" />
               <input 
                 type="text"
-                placeholder={activeTab === "software" ? "Search software, features, tags..." : "Search templates, spreadsheets, niches..."}
+                placeholder="Search templates, spreadsheets, niches..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-white text-primary pl-11 pr-4 py-3 rounded-2xl border border-primary/10 text-xs font-bold uppercase tracking-wider focus:outline-none focus:border-accent transition-colors shadow-sm"
@@ -650,358 +517,148 @@ export default function ResourcesPage() {
 
             {/* Category Filters */}
             <div className="flex flex-wrap gap-2">
-              {activeTab === "software" 
-                ? softwareCategories.map((cat) => {
-                    const CatIcon = cat.icon;
-                    const isSelected = selectedSoftwareCategory === cat.id;
-                    return (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedSoftwareCategory(cat.id)}
-                        className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-[9px] font-black uppercase tracking-wider border transition-all duration-300 ${
-                          isSelected 
-                            ? "bg-primary text-white border-primary shadow-md" 
-                            : "bg-white text-primary/60 border-primary/10 hover:text-primary hover:border-primary/20"
-                        }`}
-                      >
-                        <CatIcon size={12} className={isSelected ? "text-accent" : "text-primary/40"} />
-                        <span>{cat.name}</span>
-                      </button>
-                    );
-                  })
-                : productCategories.map((cat) => {
-                    const CatIcon = cat.icon;
-                    const isSelected = selectedProductCategory === cat.id;
-                    return (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedProductCategory(cat.id)}
-                        className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-[9px] font-black uppercase tracking-wider border transition-all duration-300 ${
-                          isSelected 
-                            ? "bg-primary text-white border-primary shadow-md" 
-                            : "bg-white text-primary/60 border-primary/10 hover:text-primary hover:border-primary/20"
-                        }`}
-                      >
-                        <CatIcon size={12} className={isSelected ? "text-accent" : "text-primary/40"} />
-                        <span>{cat.name}</span>
-                      </button>
-                    );
-                  })
-              }
+              {productCategories.map((cat) => {
+                const CatIcon = cat.icon;
+                const isSelected = selectedProductCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedProductCategory(cat.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-[9px] font-black uppercase tracking-wider border transition-all duration-300 ${
+                      isSelected 
+                        ? "bg-primary text-white border-primary shadow-md" 
+                        : "bg-white text-primary/60 border-primary/10 hover:text-primary hover:border-primary/20"
+                    }`}
+                  >
+                    <CatIcon size={12} className={isSelected ? "text-accent" : "text-primary/40"} />
+                    <span>{cat.name}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* FTC Disclosure Notice (only for Software Affiliates) */}
-        {activeTab === "software" && (
-          <section className="container-custom max-w-7xl mx-auto px-6 lg:px-12 mb-12">
-            <div className="flex gap-4 p-6 rounded-[24px] bg-accent/5 border border-accent/10 items-start max-w-4xl">
-              <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-              <div className="text-xs text-primary/70 leading-relaxed font-medium">
-                <strong className="text-primary font-black uppercase tracking-wider text-[10px] block mb-1">FTC Affiliate Disclosure:</strong>
-                Some of the recommendations listed below contain custom partner links. If you purchase a premium plan or register using my referral links, I may receive a small commission at zero additional cost to you. I only recommend software I genuinely use and advocate for to help brands scale.
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Dynamic Display (Software vs Digital Products) */}
+        {/* Digital Products Grid Section */}
         <section className="container-custom max-w-7xl mx-auto px-6 lg:px-12 mb-20">
           <AnimatePresence mode="wait">
-            {activeTab === "software" ? (
-              <motion.div
-                key="software-grid"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
-              >
-                {filteredTools.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {filteredTools.map((tool, index) => (
-                      <div
-                        key={tool.id}
-                        className="flex flex-col p-8 rounded-[40px] bg-[#fafafa] border border-primary/5 hover:border-accent/30 hover:bg-white hover:shadow-2xl transition-all duration-500 group relative overflow-hidden h-full"
-                      >
-                        {/* Rating & Badge Row */}
-                        <div className="flex justify-between items-center mb-6">
-                          <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border ${tool.badgeColor}`}>
-                            {tool.badge}
-                          </span>
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-primary/5 shadow-sm text-[10px] font-black text-primary">
-                            <Award className="w-3.5 h-3.5 text-accent" />
-                            <span>{tool.rating.toFixed(1)} / 5.0</span>
-                          </div>
-                        </div>
+            <motion.div
+              key="products-grid"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+            >
+              {filteredProducts.length > 0 ? (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {filteredProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="flex flex-col p-8 rounded-[40px] bg-[#fafafa] border border-primary/5 hover:border-emerald-500/20 hover:bg-white hover:shadow-2xl transition-all duration-500 group relative overflow-hidden h-full"
+                    >
+                      {/* Custom Sheet/Grid Background Accent */}
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
 
-                        {/* Header Row */}
-                        <div className="flex items-center gap-4 mb-5">
-                          <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center font-display font-black text-lg shadow-md group-hover:bg-accent transition-colors shrink-0">
-                            {tool.logo}
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-display font-black uppercase tracking-tight text-primary">
-                              {tool.name}
-                            </h3>
-                            <span className="text-[9px] font-black uppercase tracking-widest text-accent italic">
-                              {tool.category}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Description */}
-                        <p className="text-xs text-primary/80 font-bold mb-4 line-clamp-2">
-                          {tool.description}
-                        </p>
-
-                        <p className="text-[11px] text-muted font-medium leading-[1.6] opacity-75 mb-6 flex-grow">
-                          {tool.longDescription}
-                        </p>
-
-                        {/* Expert Commentary */}
-                        <div className="p-4 rounded-2xl bg-white border border-primary/5 shadow-sm mb-6">
-                          <span className="text-[8px] font-black uppercase tracking-[2px] text-primary/40 block mb-1">Hari's Insights</span>
-                          <p className="text-[10px] text-primary/75 leading-relaxed font-semibold italic">
-                            "{tool.whyIUseIt}"
-                          </p>
-                        </div>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1.5 mb-8">
-                          {tool.tags.map((tag) => (
-                            <span key={tag} className="px-2 py-1 bg-white border border-primary/5 rounded-lg text-[8px] font-black uppercase tracking-wider text-primary/50">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* Call To Action Buttons */}
-                        <div className="mt-auto pt-4 border-t border-primary/5 flex flex-col gap-3">
-                          <div className="text-[10px] font-black uppercase text-accent tracking-widest flex items-center gap-1.5">
-                            <Sparkles className="w-3 h-3 text-accent shrink-0 animate-pulse" />
-                            <span className="truncate">{tool.promoText}</span>
-                          </div>
-                          <a
-                            href={tool.affiliateUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full py-4 rounded-2xl bg-primary hover:bg-accent text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all group-hover:shadow-accent/10 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
-                          >
-                            <span>Claim Deal</span>
-                            <ExternalLink size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                          </a>
+                      {/* Rating & Badge Row */}
+                      <div className="flex justify-between items-center mb-6">
+                        <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border ${product.badgeColor}`}>
+                          {product.badge}
+                        </span>
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-primary/5 shadow-sm">
+                          {product.originalPrice && (
+                            <span className="text-[10px] text-muted line-through font-bold">{product.originalPrice}</span>
+                          )}
+                          <span className="text-xs font-black text-emerald-600">{product.price}</span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-20 bg-[#fafafa] rounded-[40px] border border-primary/5">
-                    <Layers className="w-12 h-12 text-primary/20 mx-auto mb-4" />
-                    <h3 className="text-lg font-display font-black uppercase text-primary mb-2">No tools matches search</h3>
-                    <p className="text-xs text-muted max-w-md mx-auto px-6 font-medium">
-                      Try searching for general terms like "SEO", "analytics", or "keyword".
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            ) : (
-              <motion.div
-                key="products-grid"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
-              >
-                {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {filteredProducts.map((product) => (
-                      <div
-                        key={product.id}
-                        className="flex flex-col p-8 rounded-[40px] bg-[#fafafa] border border-primary/5 hover:border-emerald-500/20 hover:bg-white hover:shadow-2xl transition-all duration-500 group relative overflow-hidden h-full"
-                      >
-                        {/* Custom Sheet/Grid Background Accent */}
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
 
-                        {/* Rating & Badge Row */}
-                        <div className="flex justify-between items-center mb-6">
-                          <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border ${product.badgeColor}`}>
-                            {product.badge}
+                      {/* Interactive Sheet Preview Banner */}
+                      <SheetPreviewCard id={product.id} onZoom={(imgSrc, title) => {
+                        setZoomImage(imgSrc);
+                        setZoomTitle(title);
+                      }} />
+
+                      {/* Header Row */}
+                      <div className="flex items-center gap-4 mb-5">
+                        <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-display font-black text-lg shadow-md group-hover:bg-emerald-500 transition-colors shrink-0">
+                          {product.logo}
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-display font-black uppercase tracking-tight text-primary">
+                            {product.name}
+                          </h3>
+                          <span className="text-[9px] font-black uppercase tracking-widest text-emerald-600 italic">
+                            {product.category}
                           </span>
-                          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-primary/5 shadow-sm">
-                            {product.originalPrice && (
-                              <span className="text-[10px] text-muted line-through font-bold">{product.originalPrice}</span>
-                            )}
-                            <span className="text-xs font-black text-emerald-600">{product.price}</span>
-                          </div>
-                        </div>
-
-                        {/* Interactive Sheet Preview Banner */}
-                        <SheetPreviewCard id={product.id} onZoom={(imgSrc, title) => {
-                          setZoomImage(imgSrc);
-                          setZoomTitle(title);
-                        }} />
-
-                        {/* Header Row */}
-                        <div className="flex items-center gap-4 mb-5">
-                          <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-display font-black text-lg shadow-md group-hover:bg-emerald-500 transition-colors shrink-0">
-                            {product.logo}
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-display font-black uppercase tracking-tight text-primary">
-                              {product.name}
-                            </h3>
-                            <span className="text-[9px] font-black uppercase tracking-widest text-emerald-600 italic">
-                              {product.category}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Description */}
-                        <p className="text-xs text-primary/80 font-bold mb-4">
-                          {product.description}
-                        </p>
-
-                        <p className="text-[11px] text-muted font-medium leading-[1.6] opacity-75 mb-6">
-                          {product.longDescription}
-                        </p>
-
-                        {/* Key Features / Tabs List */}
-                        <div className="p-5 rounded-2xl bg-[#fdfdfd] border border-primary/5 shadow-sm mb-6 flex-grow">
-                          <span className="text-[8px] font-black uppercase tracking-[2px] text-primary/40 block mb-3">What's Inside</span>
-                          <ul className="space-y-2.5">
-                            {product.features.map((feature, i) => (
-                              <li key={i} className="flex gap-2 items-start text-[10px] font-semibold text-primary/85">
-                                <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                                <span>{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Value Statement */}
-                        <div className="mb-8 p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-500/10 text-center">
-                          <p className="text-[10px] font-bold text-emerald-800 leading-relaxed italic">
-                            💡 {product.valueProposition}
-                          </p>
-                        </div>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1.5 mb-8">
-                          {product.tags.map((tag) => (
-                            <span key={tag} className="px-2 py-1 bg-white border border-primary/5 rounded-lg text-[8px] font-black uppercase tracking-wider text-primary/50">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* Call To Action Buttons */}
-                        <div className="mt-auto pt-4 border-t border-primary/5">
-                          <button
-                            onClick={() => handleOpenPaymentModal(product)}
-                            className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
-                          >
-                            <ShieldCheck size={13} />
-                            <span>Unlock Template ({product.price})</span>
-                          </button>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-20 bg-[#fafafa] rounded-[40px] border border-primary/5">
-                    <FileSpreadsheet className="w-12 h-12 text-primary/20 mx-auto mb-4" />
-                    <h3 className="text-lg font-display font-black uppercase text-primary mb-2">No products matches search</h3>
-                    <p className="text-xs text-muted max-w-md mx-auto px-6 font-medium">
-                      Try searching for general tags like "Audit", "SMM", or "Portal".
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            )}
+
+                      {/* Description */}
+                      <p className="text-xs text-primary/80 font-bold mb-4">
+                        {product.description}
+                      </p>
+
+                      <p className="text-[11px] text-muted font-medium leading-[1.6] opacity-75 mb-6">
+                        {product.longDescription}
+                      </p>
+
+                      {/* Key Features / Tabs List */}
+                      <div className="p-5 rounded-2xl bg-[#fdfdfd] border border-primary/5 shadow-sm mb-6 flex-grow">
+                        <span className="text-[8px] font-black uppercase tracking-[2px] text-primary/40 block mb-3">What's Inside</span>
+                        <ul className="space-y-2.5">
+                          {product.features.map((feature, i) => (
+                            <li key={i} className="flex gap-2 items-start text-[10px] font-semibold text-primary/85">
+                              <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Value Statement */}
+                      <div className="mb-8 p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-500/10 text-center">
+                        <p className="text-[10px] font-bold text-emerald-800 leading-relaxed italic">
+                          💡 {product.valueProposition}
+                        </p>
+                      </div>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-8">
+                        {product.tags.map((tag) => (
+                          <span key={tag} className="px-2 py-1 bg-white border border-primary/5 rounded-lg text-[8px] font-black uppercase tracking-wider text-primary/50">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Call To Action Button */}
+                      <div className="mt-auto pt-4 border-t border-primary/5">
+                        <button
+                          onClick={() => handleOpenPaymentModal(product)}
+                          className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
+                        >
+                          <ShieldCheck size={13} />
+                          <span>Unlock Template ({product.price})</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-20 bg-[#fafafa] rounded-[40px] border border-primary/5">
+                  <FileSpreadsheet className="w-12 h-12 text-primary/20 mx-auto mb-4" />
+                  <h3 className="text-lg font-display font-black uppercase text-primary mb-2">No products match your search</h3>
+                  <p className="text-xs text-muted max-w-md mx-auto px-6 font-medium">
+                    Try searching for general tags like "Finance", "Habit", or "Book".
+                  </p>
+                </div>
+              )}
+            </motion.div>
           </AnimatePresence>
         </section>
 
-        {/* Premium Google Sheets Showcase Section */}
+        {/* Custom Solution Contact Banner */}
         <section className="container-custom max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <span className="text-[10px] font-black uppercase tracking-[4px] text-emerald-600 mb-4 block">Spreadsheet Store</span>
-            <h2 className="text-3xl md:text-5xl font-display font-black tracking-tighter uppercase leading-[0.9] mb-6 text-primary">
-              Premium Google Sheet <br/> <span className="text-emerald-600 underline underline-offset-8 decoration-4">Templates</span>
-            </h2>
-            <p className="text-xs md:text-sm text-muted font-semibold leading-relaxed">
-              Skip the expensive subscription apps. Access high-converting, fully automated, daily-tested spreadsheets designed specifically to streamline your finances, habits, and reading backlogs.
-            </p>
-          </div>
-
-          {/* Pricing Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {DIGITAL_PRODUCTS.map((product) => (
-              <div
-                key={product.id + "-showcase"}
-                className="flex flex-col p-8 rounded-[40px] bg-[#fafafa] border border-primary/5 hover:border-emerald-500/30 hover:bg-white hover:shadow-2xl transition-all duration-500 group relative overflow-hidden h-full"
-              >
-                <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/5 rounded-full blur-xl pointer-events-none" />
-                
-                <div className="flex justify-between items-center mb-6">
-                  <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border ${product.badgeColor}`}>
-                    {product.badge}
-                  </span>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-primary/5 shadow-sm">
-                    {product.originalPrice && (
-                      <span className="text-[10px] text-muted line-through font-bold">{product.originalPrice}</span>
-                    )}
-                    <span className="text-xs font-black text-emerald-600">{product.price}</span>
-                  </div>
-                </div>
-
-                {/* Interactive Sheet Preview Banner */}
-                <SheetPreviewCard id={product.id} onZoom={(imgSrc, title) => {
-                  setZoomImage(imgSrc);
-                  setZoomTitle(title);
-                }} />
-
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-display font-black text-lg shadow-md group-hover:bg-emerald-500 transition-colors shrink-0">
-                    {product.logo}
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-display font-black uppercase tracking-tight text-primary leading-tight">
-                      {product.name}
-                    </h3>
-                    <span className="text-[9px] font-black uppercase tracking-widest text-emerald-600 italic">
-                      {product.category}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-[11px] text-muted font-medium leading-[1.6] opacity-75 mb-6 flex-grow">
-                  {product.description}
-                </p>
-
-                <div className="p-4 rounded-2xl bg-white border border-primary/5 shadow-sm mb-6 font-bold">
-                  <span className="text-[8px] font-black uppercase tracking-[2px] text-primary/40 block mb-2">Key Features</span>
-                  <ul className="space-y-1.5">
-                    {product.features.slice(0, 3).map((feature, i) => (
-                      <li key={i} className="flex gap-2 items-start text-[9px] font-bold text-primary/80">
-                        <Check className="w-3 h-3 text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <button
-                  onClick={() => handleOpenPaymentModal(product)}
-                  className="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-                >
-                  <ShieldCheck size={12} />
-                  <span>Unlock Template ({product.price})</span>
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Custom Solution Contact Banner */}
           <div className="p-8 md:p-12 rounded-[48px] bg-primary text-white relative overflow-hidden shadow-2xl border border-white/5">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
               <div className="max-w-2xl text-left">
@@ -1305,7 +962,6 @@ export default function ResourcesPage() {
         <AnimatePresence>
           {zoomImage && (
             <div id="sheet-preview-lightbox" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-              {/* Dark overlay close trigger */}
               <motion.div 
                 id="sheet-preview-lightbox-overlay"
                 initial={{ opacity: 0 }}
@@ -1315,7 +971,6 @@ export default function ResourcesPage() {
                 className="absolute inset-0 cursor-zoom-out"
               />
               
-              {/* Modal Card content */}
               <motion.div
                 id="sheet-preview-lightbox-card"
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -1323,7 +978,6 @@ export default function ResourcesPage() {
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 className="relative max-w-5xl w-full bg-zinc-950 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh] z-10"
               >
-                {/* Header bar */}
                 <div id="sheet-preview-lightbox-header" className="flex items-center justify-between border-b border-white/10 px-6 py-4.5 bg-zinc-900/50">
                   <div className="flex items-center gap-3">
                     <FileSpreadsheet className="w-5 h-5 text-emerald-500" />
@@ -1341,7 +995,6 @@ export default function ResourcesPage() {
                   </button>
                 </div>
 
-                {/* Main image preview */}
                 <div id="sheet-preview-lightbox-body" className="flex-1 overflow-auto p-4 flex items-center justify-center bg-zinc-900/30">
                   <img 
                     id="sheet-preview-lightbox-image"
@@ -1354,7 +1007,6 @@ export default function ResourcesPage() {
                   />
                 </div>
 
-                {/* Footer bar */}
                 <div id="sheet-preview-lightbox-footer" className="flex items-center justify-between border-t border-white/10 px-6 py-4.5 bg-zinc-900/50">
                   <span id="sheet-preview-lightbox-footer-text" className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">
                     Press ESC or Click Outside to close
