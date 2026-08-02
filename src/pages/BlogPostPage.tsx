@@ -317,9 +317,9 @@ const BlogPostPage = () => {
           </header>
 
           {/* Featured Image */}
-          <div className="relative aspect-square sm:aspect-video mb-16 rounded-[32px] md:rounded-[40px] overflow-hidden border border-primary/5 shadow-2xl">
+          <div className="relative aspect-square sm:aspect-video mb-16 rounded-[32px] md:rounded-[40px] overflow-hidden border border-primary/5 shadow-2xl bg-neutral-100">
             <img 
-              src={post.image} 
+              src={post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp"} 
               alt={`Featured image for blog post: ${post.title}`}
               loading="eager"
               fetchPriority="high"
@@ -328,6 +328,11 @@ const BlogPostPage = () => {
               height="675"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+              }}
             />
           </div>
 

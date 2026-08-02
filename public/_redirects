@@ -9,6 +9,10 @@ https://www.harikiran-portfolio.netlify.app/*  https://harikiran-portfolio.netli
 /blog/who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand /blog/compliease-osha-log-management-software 301
 /blog/the-contractor-injury-reporting-gap-that-creates-osha-1904-problems /blog/compliease-osha-log-management-software 301
 
+# Technical SEO Checklist 2026 slug variants redirecting to canonical article (HTTP 301)
+/blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking /blog/technical-seo-checklist-2026-audit-before-ranking 301
+/blog/technical-seo-checklist-2026 /blog/technical-seo-checklist-2026-audit-before-ranking 301
+
 # Legacy Growth Formula post redirecting to modern Retention Marketing Bible (HTTP 301)
 /blog/the-2x-growth-formula-in-marketing-customer-experience-employee-experience /blog/retention-marketing-sustainable-growth 301
 

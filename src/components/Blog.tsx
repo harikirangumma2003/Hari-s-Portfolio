@@ -31,7 +31,7 @@ const Blog = () => {
             <Link to={`/blog/${post.slug}`} className="flex flex-col h-full">
               <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] mb-6">
                 <img
-                  src={post.image}
+                  src={post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp"}
                   alt={`Cover image for ${post.title}`}
                   loading="lazy"
                   decoding="async"
@@ -39,6 +39,11 @@ const Blog = () => {
                   height="300"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null;
+                    target.src = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp";
+                  }}
                 />
                 <div className="absolute top-4 left-4 bg-accent text-white px-3 py-1.5 rounded-full text-[10px] font-black font-display uppercase tracking-widest">
                   {post.category}

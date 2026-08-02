@@ -864,6 +864,11 @@ export function BlogWriterSection({
                         alt={imageAltText || "Cover Preview"}
                         className="w-full h-full object-cover"
                         referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null;
+                          target.src = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+                        }}
                       />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white text-[10px] space-y-1">
                         <p className="font-bold line-clamp-1">Alt text: {imageAltText || "No Alt text defined"}</p>
