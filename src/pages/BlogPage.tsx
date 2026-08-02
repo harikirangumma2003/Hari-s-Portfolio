@@ -6,6 +6,7 @@ import { Newsletter } from "../components/Newsletter";
 import { blogPosts, categories } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 import { Breadcrumbs } from "../components/Breadcrumbs";
+import { getPublishedContent } from "../services/contentService";
 
 interface UnifiedBlogPost {
   title: string;
@@ -22,9 +23,10 @@ interface UnifiedBlogPost {
   rawDate?: string;
 }
 
-const formatDate = (dateStr: string): string => {
+const formatDate = (dateVal: any): string => {
   try {
-    const d = new Date(dateStr.replace(/-/g, "/"));
+    if (!dateVal) return "Recent Post";
+    const d = dateVal instanceof Date ? dateVal : new Date(typeof dateVal === 'string' ? dateVal.replace(/-/g, "/") : dateVal);
     if (isNaN(d.getTime())) return "Recent Post";
     return d.toLocaleDateString("en-US", {
       month: "short",
@@ -36,10 +38,10 @@ const formatDate = (dateStr: string): string => {
   }
 };
 
-const safeToISOString = (dateStr?: string): string => {
+const safeToISOString = (dateStr?: any): string => {
   if (!dateStr) return new Date().toISOString();
   try {
-    const parsed = new Date(dateStr.replace(/-/g, "/"));
+    const parsed = dateStr instanceof Date ? dateStr : new Date(typeof dateStr === 'string' ? dateStr.replace(/-/g, "/") : dateStr);
     if (isNaN(parsed.getTime())) {
       return new Date().toISOString();
     }
@@ -77,12 +79,12 @@ const BlogPage = () => {
   }, []);
 
   useEffect(() => {
-    const fetchMedium = async () => {
+    const fetchAllPosts = async () => {
       setIsLoading(true);
-      
+
+      // 1. Load cached Medium feed
       const cached = localStorage.getItem("g_hari_kiran_medium_feed");
       let cachedMedium: UnifiedBlogPost[] = [];
-      
       if (cached) {
         try {
           const parsed = JSON.parse(cached);
@@ -92,7 +94,7 @@ const BlogPage = () => {
               slug: item.slug || generateSlug(item.title || ""),
               category: item.category || "Medium Articles",
               date: item.date || "Recent Post",
-              image: item.image || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=800&fm=webp",
+              image: item.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp",
               excerpt: item.excerpt || "",
               content: item.content || "",
               keywords: item.keywords || [],
@@ -107,22 +109,89 @@ const BlogPage = () => {
         }
       }
 
-      const combineAndSort = (medItems: UnifiedBlogPost[]) => {
-        const combined = [...localMapped, ...medItems];
+      // Helper to merge local, CMS, and Medium posts without duplicates
+      const combineAndSet = (cmsItems: UnifiedBlogPost[], mediumItems: UnifiedBlogPost[]) => {
+        const existingSlugs = new Set<string>();
+        const existingTitles = new Set<string>();
+        const combined: UnifiedBlogPost[] = [];
+
+        // Priority 1: Static blogPosts
+        for (const p of localMapped) {
+          const s = p.slug || generateSlug(p.title);
+          const t = p.title.toLowerCase().trim();
+          if (!existingSlugs.has(s) && !existingTitles.has(t)) {
+            existingSlugs.add(s);
+            existingTitles.add(t);
+            combined.push({ ...p, slug: s });
+          }
+        }
+
+        // Priority 2: CMS published posts from Firestore
+        for (const p of cmsItems) {
+          const s = p.slug || generateSlug(p.title);
+          const t = p.title.toLowerCase().trim();
+          if (!existingSlugs.has(s) && !existingTitles.has(t)) {
+            existingSlugs.add(s);
+            existingTitles.add(t);
+            combined.push({ ...p, slug: s });
+          }
+        }
+
+        // Priority 3: Medium RSS items
+        for (const p of mediumItems) {
+          const s = p.slug || generateSlug(p.title);
+          const t = p.title.toLowerCase().trim();
+          if (!existingSlugs.has(s) && !existingTitles.has(t)) {
+            existingSlugs.add(s);
+            existingTitles.add(t);
+            combined.push({ ...p, slug: s });
+          }
+        }
+
         combined.sort((a, b) => {
           const dateA = a.rawDate ? new Date(a.rawDate).getTime() : 0;
           const dateB = b.rawDate ? new Date(b.rawDate).getTime() : 0;
           return dateB - dateA;
         });
+
         setPosts(combined);
       };
 
-      if (cachedMedium.length > 0) {
-        combineAndSort(cachedMedium);
-      } else {
-        setPosts(localMapped);
+      // Set initial combined state with cached Medium
+      combineAndSet([], cachedMedium);
+
+      // 2. Fetch CMS published posts from Firestore
+      let cmsPosts: UnifiedBlogPost[] = [];
+      try {
+        const firestoreContent = await getPublishedContent();
+        cmsPosts = firestoreContent
+          .filter(item => item.contentType === "Blog" || item.platform === "Portfolio" || item.platform === "Medium")
+          .map(item => {
+            let postSlug = item.canonicalUrl ? item.canonicalUrl.replace(/^.*\/blog\//, "") : "";
+            if (!postSlug) {
+              postSlug = item.url ? item.url.replace(/^.*\/blog\//, "") : generateSlug(item.title);
+            }
+            return {
+              title: item.title,
+              slug: postSlug,
+              category: item.category || "SEO",
+              date: formatDate(item.publishedDate),
+              image: item.thumbnail || item.ogImage || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp",
+              excerpt: item.excerpt || item.description || "",
+              content: item.description || "",
+              keywords: item.tags || [],
+              isExternal: false,
+              externalUrl: item.url || "",
+              readingTime: item.readTime || "5 min read",
+              rawDate: safeToISOString(item.publishedDate)
+            };
+          });
+      } catch (err) {
+        console.error("Failed to fetch CMS posts from Firestore inside BlogPage:", err);
       }
 
+      // 3. Fetch fresh Medium posts
+      let freshMedium: UnifiedBlogPost[] = [];
       try {
         const feedUrl = "https://medium.com/feed/@harikirangumma2003";
         const targetUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
@@ -131,7 +200,7 @@ const BlogPage = () => {
         if (res.ok) {
           const data = await res.json();
           if (data.status === "ok" && Array.isArray(data.items)) {
-            const freshMedium: UnifiedBlogPost[] = data.items.map((item: any) => {
+            freshMedium = data.items.map((item: any) => {
               const content = item.content || item.description || "";
               
               let img = item.thumbnail;
@@ -141,7 +210,7 @@ const BlogPage = () => {
                 if (match && match[1] && !match[1].includes("stat?event=") && !match[1].includes("avatar")) {
                   img = match[1];
                 } else {
-                  img = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=800&fm=webp";
+                  img = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp";
                 }
               }
 
@@ -173,18 +242,19 @@ const BlogPage = () => {
 
             if (freshMedium.length > 0) {
               localStorage.setItem("g_hari_kiran_medium_feed", JSON.stringify(freshMedium));
-              combineAndSort(freshMedium);
             }
           }
         }
       } catch (err) {
         console.error("Failed to fetch fresh Medium articles inside BlogPage", err);
       } finally {
+        const activeMedium = freshMedium.length > 0 ? freshMedium : cachedMedium;
+        combineAndSet(cmsPosts, activeMedium);
         setIsLoading(false);
       }
     };
 
-    fetchMedium();
+    fetchAllPosts();
   }, [localMapped]);
 
   // Read URL search query for Sitelinks Searchbox integration

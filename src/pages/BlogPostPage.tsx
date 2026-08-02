@@ -7,6 +7,18 @@ import { SEO } from "../components/SEO";
 import React, { useState, useMemo, useEffect } from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import NotFoundPage from "./NotFoundPage";
+import { getPublishedContent } from "../services/contentService";
+
+const generateSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "").substring(0, 100);
+
+const formatDate = (dateVal: any): string => {
+  try {
+    if (!dateVal) return "Recent Post";
+    const d = dateVal instanceof Date ? dateVal : new Date(typeof dateVal === 'string' ? dateVal.replace(/-/g, "/") : dateVal);
+    if (isNaN(d.getTime())) return "Recent Post";
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  } catch { return "Recent Post"; }
+};
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -44,17 +56,47 @@ const BlogPostPage = () => {
   useEffect(() => {
     if (post) return;
 
-    const fetchFreshMedium = async () => {
+    const fetchAdditionalPosts = async () => {
       setIsLoading(true);
       try {
+        // 1. Fetch CMS posts from Firestore
+        const firestoreContent = await getPublishedContent();
+        const cmsPosts = firestoreContent.map(item => {
+          let postSlug = item.canonicalUrl ? item.canonicalUrl.replace(/^.*\/blog\//, "") : "";
+          if (!postSlug) {
+            postSlug = item.url ? item.url.replace(/^.*\/blog\//, "") : generateSlug(item.title);
+          }
+          return {
+            title: item.title,
+            slug: postSlug,
+            category: item.category || "SEO",
+            date: formatDate(item.publishedDate),
+            image: item.thumbnail || item.ogImage || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp",
+            excerpt: item.excerpt || item.description || "",
+            content: item.description || "",
+            keywords: item.tags || [],
+            isExternal: false,
+            externalUrl: item.url || "",
+            readingTime: item.readTime || "5 min read",
+            rawDate: item.publishedDate ? new Date(item.publishedDate).toISOString() : new Date().toISOString()
+          };
+        });
+
+        if (cmsPosts.length > 0) {
+          setPosts(prev => {
+            const existingSlugs = new Set(prev.map(p => p.slug));
+            const newToAdd = cmsPosts.filter(c => !existingSlugs.has(c.slug));
+            return [...prev, ...newToAdd];
+          });
+        }
+
+        // 2. Fetch fresh Medium RSS
         const feedUrl = "https://medium.com/feed/@harikirangumma2003";
         const targetUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
         const res = await fetch(targetUrl);
         if (res.ok) {
           const data = await res.json();
           if (data.status === "ok" && Array.isArray(data.items)) {
-            const generateSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "").substring(0, 100);
-            
             const freshMedium = data.items.map((item: any) => {
               const content = item.content || item.description || "";
               
@@ -65,7 +107,7 @@ const BlogPostPage = () => {
                 if (match && match[1] && !match[1].includes("stat?event=") && !match[1].includes("avatar")) {
                   img = match[1];
                 } else {
-                  img = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=800&fm=webp";
+                  img = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp";
                 }
               }
 
@@ -78,14 +120,6 @@ const BlogPostPage = () => {
               const wordCount = clean.split(/\s+/).filter(Boolean).length;
               const minutes = Math.ceil(wordCount / 225);
               const readingTime = `${Math.max(2, minutes)} min read`;
-
-              const formatDate = (dateStr: string): string => {
-                try {
-                  const d = new Date(dateStr.replace(/-/g, "/"));
-                  if (isNaN(d.getTime())) return "Recent Post";
-                  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                } catch { return "Recent Post"; }
-              };
 
               return {
                 title: item.title,
@@ -113,13 +147,13 @@ const BlogPostPage = () => {
           }
         }
       } catch (err) {
-        console.error("Failed to fetch fresh Medium articles inside BlogPostPage", err);
+        console.error("Failed to fetch fresh posts inside BlogPostPage", err);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchFreshMedium();
+    fetchAdditionalPosts();
   }, [slug, post]);
 
   const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {

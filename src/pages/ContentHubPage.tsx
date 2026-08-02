@@ -703,10 +703,15 @@ const ContentHubPage = () => {
                         layoutMode === "list" ? "w-full md:w-2/5 aspect-auto md:min-h-full" : "w-full"
                       )}>
                         <img 
-                          src={item.thumbnail || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"} 
+                          src={item.thumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp"} 
                           alt={item.title}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp";
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-black/30 pointer-events-none" />
                         
@@ -958,10 +963,15 @@ const ContentHubPage = () => {
                     className="flex items-center gap-3 p-2 rounded-2xl hover:bg-white/5 transition-colors group"
                   >
                     <img
-                      src={item.thumbnail || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"}
+                      src={item.thumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp"}
                       alt={item.title}
                       referrerPolicy="no-referrer"
                       className="w-12 h-12 rounded-xl object-cover shrink-0"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp";
+                      }}
                     />
                     <div className="overflow-hidden">
                       <h4 className="text-xs font-black text-white group-hover:text-accent transition-colors truncate uppercase tracking-tight">{item.title}</h4>
