@@ -169,8 +169,8 @@ ${formData.message || "N/A"}
         "description": "Collaborate, build trust, and gain organic brand visibility with G. Hari Kiran's professional partner program.",
         "isPartOf": {
           "@type": "WebSite",
-          "name": "G. Hari Kiran",
-          "url": "https://harikiran-portfolio.netlify.app"
+          "name": "G. Hari Kiran Portfolio",
+          "url": "https://harikiran-portfolio.netlify.app/"
         }
       },
       {

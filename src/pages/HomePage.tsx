@@ -73,9 +73,14 @@ const HomePage = () => {
       {
         "@type": "WebSite",
         "@id": "https://harikiran-portfolio.netlify.app/#website",
-        "url": "https://harikiran-portfolio.netlify.app",
-        "name": "G. Hari Kiran",
-        "alternateName": "G. Hari Kiran Portfolio",
+        "url": "https://harikiran-portfolio.netlify.app/",
+        "name": "G. Hari Kiran Portfolio",
+        "alternateName": [
+          "G. Hari Kiran",
+          "Hari Kiran Portfolio",
+          "G Hari Kiran",
+          "G. Hari Kiran SEO Portfolio"
+        ],
         "description": "High-ROI digital growth strategies, conversion-rate optimization, advanced search engine positioning, and business scale consultancy in Jamshedpur.",
         "publisher": {
           "@id": "https://harikiran-portfolio.netlify.app/#person"

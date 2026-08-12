@@ -32,7 +32,7 @@ export const SEO: React.FC<SEOProps> = ({
   canonical
 }) => {
   const location = useLocation();
-  const siteName = "G. Hari Kiran";
+  const siteName = "G. Hari Kiran Portfolio";
   const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | ${siteName}`;
   const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg";
   const siteUrl = "https://harikiran-portfolio.netlify.app";
@@ -84,6 +84,8 @@ export const SEO: React.FC<SEOProps> = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="author" content="G. Hari Kiran" />
+      <meta name="application-name" content={siteName} />
+      <meta name="apple-mobile-web-app-title" content={siteName} />
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Geotagging / GEO & Local SEO Visibility */}
