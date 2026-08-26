@@ -98,7 +98,7 @@ const Contact = () => {
         </div>
 
         <div className="mt-20 text-center pb-8 border-b border-primary/5 relative z-10">
-          <p className="text-[10px] font-black text-muted uppercase tracking-[0.3em] mb-6">Inquiries & Partnerships</p>
+          <p className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em] mb-6">Inquiries & Partnerships</p>
           <Link
             to="/contact"
             className="text-xl sm:text-2xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter hover:text-accent transition-colors block break-words leading-[1] md:leading-[0.9]"
@@ -131,7 +131,7 @@ const Footer = () => {
             <Link to="/" className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase mb-6 md:mb-8 block">
               Hari <span className="text-accent">.</span>
             </Link>
-            <p className="text-sm md:text-lg text-white/50 leading-relaxed max-w-sm mb-10 md:mb-12 italic border-l border-accent/30 pl-6">
+            <p className="text-sm md:text-base text-zinc-300 leading-relaxed max-w-sm mb-10 md:mb-12 italic border-l border-accent/40 pl-6">
               Architecting scalable brand systems through high-velocity SEO, data-driven content, and human-centric growth engines.
             </p>
             
@@ -139,12 +139,12 @@ const Footer = () => {
                {/* Digital Availability Badge */}
                <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(255,107,0,0.5)]" />
-                 <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-white/60">Open for Consultation</span>
+                 <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-zinc-200">Open for Consultation</span>
                </div>
                
                <button 
                 onClick={scrollToTop}
-                className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[2px] text-white/40 hover:text-accent transition-colors group/top"
+                className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[2px] text-zinc-400 hover:text-white transition-colors group/top"
                >
                  Back to top <ArrowUpRight size={14} className="-rotate-45 group-hover/top:translate-y-[-2px] transition-transform" />
                </button>
@@ -154,7 +154,7 @@ const Footer = () => {
           {/* Links Columns */}
           <div className="md:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-12 pt-4">
             <div className="space-y-8">
-              <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Navigation</p>
+              <p className="text-[10px] font-black uppercase tracking-[4px] text-amber-400 font-display italic">Navigation</p>
               <ul className="space-y-3">
                 {[
                   { name: "Home", path: "/" },
@@ -169,41 +169,41 @@ const Footer = () => {
                   { name: "SEO Audit", path: "/seo-audit" }
                 ].map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
+                    <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
                   </li>
                 ))}
               </ul>
             </div>
             
             <div className="space-y-8">
-              <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Services</p>
+              <p className="text-[10px] font-black uppercase tracking-[4px] text-amber-400 font-display italic">Services</p>
               <ul className="space-y-5">
                 {["SEO Strategy", "Market Research", "Content Audits", "Growth Hacking"].map((item) => (
                   <li key={item}>
-                    <Link to={`/contact?interest=${encodeURIComponent(item)}`} className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</Link>
+                    <Link to={`/contact?interest=${encodeURIComponent(item)}`} className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</Link>
                   </li>
                 ))}
               </ul>
             </div>
             
             <div className="col-span-2 lg:col-span-1 border-t lg:border-t-0 lg:border-l border-white/5 pt-12 lg:pt-0 lg:pl-12 space-y-8">
-              <p className="text-[10px] font-black uppercase tracking-[4px] text-accent font-display italic opacity-80">Mission</p>
-              <p className="text-[11px] font-bold uppercase leading-[1.8] text-white/30 tracking-widest">
-                I believe that <span className="text-white/60 italic">meaningful marketing</span> is the bridge between a visionary product and its global community. Let's build that bridge.
+              <p className="text-[10px] font-black uppercase tracking-[4px] text-amber-400 font-display italic">Mission</p>
+              <p className="text-[11px] font-bold uppercase leading-[1.8] text-zinc-400 tracking-widest">
+                I believe that <span className="text-zinc-200 italic">meaningful marketing</span> is the bridge between a visionary product and its global community. Let's build that bridge.
               </p>
             </div>
           </div>
         </div>
         
         {/* Final Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[3px] text-white/20">
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[3px] text-zinc-400">
           <p className="text-center md:text-left">
             &copy; {currentYear} G. Hari Kiran. All Architecture & Intellectual Reserved.
           </p>
           <div className="flex gap-12">
-            <Link to="/contact" className="hover:text-white transition-colors">Privacy Information</Link>
-            <Link to="/contact" className="hover:text-white transition-colors">Service Terms</Link>
-            <Link to="/about" className="hover:text-white transition-colors">Attributions & Credentials</Link>
+            <Link to="/contact" className="hover:text-white transition-colors text-zinc-400">Privacy Information</Link>
+            <Link to="/contact" className="hover:text-white transition-colors text-zinc-400">Service Terms</Link>
+            <Link to="/about" className="hover:text-white transition-colors text-zinc-400">Attributions & Credentials</Link>
           </div>
         </div>
       </div>

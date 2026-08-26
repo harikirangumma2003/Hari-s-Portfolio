@@ -1,17 +1,32 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google Publisher Script for Preferred Sources -->
-    <script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
-    <meta name="impact-site-verification" value="652ad15f-55e6-45b2-9ef5-0d32d48d70cd" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHKHCEE1WW"></script>
+    <meta name="impact-site-verification" content="652ad15f-55e6-45b2-9ef5-0d32d48d70cd" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="I3Tah_rfMBS0hupAv27ZsGwwJLhHUNVdydelST9jCLc" />
+    
+    <!-- Google Fonts Preconnect and Optimal Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Google tag (gtag.js) - Deferred with cookie isolation -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
-      gtag('config', 'G-QHKHCEE1WW');
+      gtag('config', 'G-QHKHCEE1WW', {
+        'anonymize_ip': true,
+        'cookie_flags': 'SameSite=Strict;Secure'
+      });
+      // Load gtag after initial paint to prevent main thread blocking
+      window.addEventListener('load', function() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QHKHCEE1WW';
+        document.head.appendChild(script);
+      });
     </script>
     <script>
       (function() {
@@ -45,15 +60,6 @@
         }
       })();
     </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="I3Tah_rfMBS0hupAv27ZsGwwJLhHUNVdydelST9jCLc" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    </noscript>
     <title data-react-helmet="true">SEO Expert & Consultant Jamshedpur | G. Hari Kiran</title>
     <meta data-react-helmet="true" name="description" content="Scale organic search traffic and revenue with G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Request an audit." />
     

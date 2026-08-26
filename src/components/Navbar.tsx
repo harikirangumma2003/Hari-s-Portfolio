@@ -20,7 +20,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -76,7 +76,7 @@ const Navbar = () => {
                     "text-[10px] font-black uppercase tracking-[2px] transition-all px-4 py-2 rounded-full relative group",
                     location.pathname === link.href 
                       ? "text-white" 
-                      : "text-primary/60 hover:text-primary"
+                      : "text-zinc-800 hover:text-black"
                   )}
                 >
                   <span className="relative z-10">{link.name}</span>

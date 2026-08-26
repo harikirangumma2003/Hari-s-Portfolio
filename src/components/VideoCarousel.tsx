@@ -47,8 +47,8 @@ export const VideoCarousel: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="w-full rounded-[40px] bg-gradient-to-br from-zinc-900/60 to-zinc-950/80 border border-white/5 p-6 md:p-10 shadow-2xl backdrop-blur-md animate-pulse">
-        <div className="relative z-10 min-h-[360px] flex flex-col justify-between">
+      <div className="w-full rounded-[40px] bg-gradient-to-br from-zinc-900/60 to-zinc-950/80 border border-white/5 p-6 md:p-10 shadow-2xl backdrop-blur-md min-h-[460px] flex flex-col justify-between">
+        <div className="relative z-10 flex flex-col justify-between h-full">
           <div className="flex items-center justify-between mb-6 md:mb-8 border-b border-white/5 pb-4">
             <div className="h-4 bg-zinc-900 rounded w-1/4" />
             <div className="h-4 bg-zinc-900 rounded w-1/12" />
@@ -276,9 +276,9 @@ export const VideoCarousel: React.FC = () => {
                 <X size={18} />
               </button>
               
-              {/* Embed Iframe */}
+              {/* Embed Iframe with zero tracking cookies */}
               <iframe
-                src={`https://www.youtube.com/embed/${activeEmbedId}?autoplay=1&rel=0`}
+                src={`https://www.youtube-nocookie.com/embed/${activeEmbedId}?autoplay=1&rel=0`}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -89,7 +89,7 @@ const Services = () => {
               <service.icon size={16} />
             </div>
             <h3 className="text-xs md:text-sm font-display font-black mb-1 uppercase tracking-tight group-hover:text-accent transition-colors">{service.title}</h3>
-            <p className="text-[10px] text-muted font-medium leading-[1.4] opacity-70">{service.description}</p>
+            <p className="text-[11px] text-zinc-600 font-medium leading-[1.4]">{service.description}</p>
           </motion.div>
         ))}
       </motion.div>

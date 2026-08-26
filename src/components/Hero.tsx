@@ -45,7 +45,7 @@ const Hero = () => {
 
         <motion.p 
           variants={item}
-          className="text-sm md:text-base font-medium text-muted max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed opacity-90"
+          className="text-sm md:text-base font-medium text-zinc-700 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed"
         >
           Hi, I'm G. Hari Kiran—the leading SEO Expert in Jamshedpur and certified Digital Marketing Consultant in Jamshedpur, Jharkhand. I build sustainable search authority and scale conversions using advanced semantic SEO, Google Analytics insights, and automated retention systems.
         </motion.p>

@@ -71,7 +71,7 @@ export const FAQ = () => {
             Frequently <br />
             <span className="text-accent italic">Asked</span> Questions
           </h2>
-          <p className="text-muted leading-relaxed mb-8 text-sm md:text-base">
+          <p className="text-zinc-600 leading-relaxed mb-8 text-sm md:text-base">
             Get transparent answers regarding SEO practices, growth execution timelines, local analytics reporting, and customized retention marketing campaigns.
           </p>
           <a
@@ -94,12 +94,12 @@ export const FAQ = () => {
                 <h3>
                   <button
                     onClick={() => toggleFAQ(faq.id)}
-                    className="w-full text-left px-6 py-5 flex items-center justify-between text-base font-display font-black uppercase tracking-tight gap-4 text-primary hover:text-accent transition-colors focus:outline-none"
+                    className="w-full text-left px-6 py-5 flex items-center justify-between text-base font-display font-black uppercase tracking-tight gap-4 text-primary hover:text-accent transition-colors focus:outline-none cursor-pointer"
                     aria-expanded={isOpen}
                     aria-controls={faq.id}
                   >
                     <span className="flex items-center gap-3">
-                      <HelpCircle size={16} className="text-accent/60 flex-shrink-0" />
+                      <HelpCircle size={16} className="text-accent flex-shrink-0" />
                       {faq.question}
                     </span>
                     <motion.div
@@ -107,7 +107,7 @@ export const FAQ = () => {
                       transition={{ duration: 0.3, ease: "easeOut" }}
                       className="flex-shrink-0"
                     >
-                      <ChevronDown size={18} className="text-muted" />
+                      <ChevronDown size={18} className="text-zinc-600" />
                     </motion.div>
                   </button>
                 </h3>
@@ -120,7 +120,7 @@ export const FAQ = () => {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      <div className="px-6 pb-6 pt-1 text-sm text-muted leading-relaxed border-t border-primary/5">
+                      <div className="px-6 pb-6 pt-1 text-sm text-zinc-600 font-medium leading-relaxed border-t border-primary/5">
                         {faq.answer}
                       </div>
                     </motion.div>

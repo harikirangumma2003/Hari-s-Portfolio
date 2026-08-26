@@ -30,7 +30,7 @@ const WorkingProcess = () => {
             <div key={step.num} className="relative group p-8 rounded-[32px] bg-white border border-primary/5 hover:border-accent/20 transition-all duration-500 shadow-sm hover:shadow-xl">
               <span className="text-4xl md:text-5xl font-display font-black text-primary/10 group-hover:text-accent transition-colors duration-500 mb-6 block leading-none">{step.num}</span>
               <h3 className="text-xl md:text-2xl font-display font-black mb-4 tracking-tight">{step.title}</h3>
-              <p className="text-[11px] font-bold leading-relaxed opacity-50 uppercase tracking-wider">{step.description}</p>
+              <p className="text-xs font-medium text-zinc-600 leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>

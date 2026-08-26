@@ -58,7 +58,7 @@ const Blog = () => {
                 {post.title}
               </h3>
               
-              <div className="flex items-center gap-2 text-muted text-[10px] font-black uppercase tracking-widest mt-6 pt-6 border-t border-primary/5">
+              <div className="flex items-center gap-2 text-zinc-600 text-[10px] font-black uppercase tracking-widest mt-6 pt-6 border-t border-primary/5">
                 <Calendar size={12} className="text-accent" />
                 {post.date}
               </div>

@@ -97,14 +97,14 @@ export const GrowthPartners = () => {
             <div className="relative z-10 mt-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
               {/* Left detail Column */}
               <div className="md:col-span-5 space-y-4">
-                <div className="bg-white/[0.05] border border-white/10 rounded-3xl p-5 backdrop-blur-sm">
-                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/40 mb-1">Impact Metric</p>
-                  <p className="text-3xl font-display font-black text-accent">{partner.stats?.value}</p>
-                  <p className="text-xs text-white/60 font-sans font-medium">{partner.stats?.label}</p>
+                <div className="bg-white/[0.08] border border-white/15 rounded-3xl p-5 backdrop-blur-sm">
+                  <p className="text-[10px] font-mono tracking-widest uppercase text-zinc-300 mb-1">Impact Metric</p>
+                  <p className="text-3xl font-display font-black text-amber-400">{partner.stats?.value}</p>
+                  <p className="text-xs text-zinc-200 font-sans font-medium">{partner.stats?.label}</p>
                 </div>
                 <button
                   onClick={() => setActiveVideo(partner.brandStory?.videoUrl || null)}
-                  className="w-full flex items-center justify-center gap-3 bg-white hover:bg-accent text-black hover:text-white py-4 px-6 rounded-2xl text-[10px] font-black tracking-wider uppercase transition-all shadow-xl active:scale-95"
+                  className="w-full flex items-center justify-center gap-3 bg-white hover:bg-accent text-black hover:text-white py-4 px-6 rounded-2xl text-[10px] font-black tracking-wider uppercase transition-all shadow-xl active:scale-95 cursor-pointer"
                   id="btn-play-story"
                 >
                   <Play size={14} fill="currentColor" /> Watch Brand Case Study
@@ -168,13 +168,13 @@ export const GrowthPartners = () => {
                 <h4 className="text-xl font-display font-black uppercase text-primary mb-3">
                   {partner.name}
                 </h4>
-                <p className="text-muted text-xs sm:text-sm leading-relaxed mb-6 font-sans">
+                <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed mb-6 font-sans">
                   {partner.description}
                 </p>
               </div>
 
               <div className="flex items-center justify-between mt-auto border-t border-primary/5 pt-5">
-                <span className="text-[10px] font-mono text-muted/60 uppercase">{partner.category}</span>
+                <span className="text-[10px] font-mono text-zinc-600 font-semibold uppercase">{partner.category}</span>
                 <a
                   href={partner.url}
                   target="_blank"

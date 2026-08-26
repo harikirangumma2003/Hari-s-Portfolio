@@ -79,12 +79,12 @@ export const LatestContentWidget: React.FC<WidgetProps> = ({ platform, className
       <div>
         <div className="flex items-center justify-between gap-4 mb-4">
           <PlatformBadge platform={latestItem.platform} />
-          <span className="text-[9px] font-black uppercase tracking-widest text-muted">{latestItem.readTime}</span>
+          <span className="text-[9px] font-black uppercase tracking-widest text-zinc-600">{latestItem.readTime}</span>
         </div>
         <h4 className="text-sm font-display font-black text-primary uppercase leading-tight tracking-tight mb-2 group-hover:text-accent transition-colors">
           {latestItem.title}
         </h4>
-        <p className="text-[11px] text-muted line-clamp-2 leading-relaxed mb-4 font-sans font-medium">
+        <p className="text-[11px] text-zinc-600 line-clamp-2 leading-relaxed mb-4 font-sans font-medium">
           {latestItem.excerpt}
         </p>
       </div>
