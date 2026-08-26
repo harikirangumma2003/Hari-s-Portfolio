@@ -1,5 +1,6 @@
 export interface BlogPost {
   title: string;
+  seoTitle?: string;
   slug: string;
   category: string;
   date: string;
@@ -26,11 +27,12 @@ export const categories = [
 export const blogPosts: BlogPost[] = [
   {
     title: "Technical SEO Checklist for 2026: 25 Things Every Website Should Audit Before Ranking",
+    seoTitle: "Technical SEO Checklist 2026: 25 Audit Steps | Hari Kiran",
     slug: "technical-seo-checklist-2026-audit-before-ranking",
     category: "SEO",
     date: "Aug 02, 2026",
     image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp",
-    excerpt: "The definitive 25-point technical SEO checklist for 2026. Audit your website for Core Web Vitals INP, AI Bot crawling, Schema JSON-LD, canonical integrity, and crawl budget to achieve 100/100 search performance.",
+    excerpt: "The 25-point technical SEO checklist for 2026. Audit Core Web Vitals INP, AI crawler rules, Schema JSON-LD, and site speed for top rankings.",
     author: {
       name: "G. Hari Kiran",
       role: "SEO Consultant & Growth Strategist",
@@ -157,11 +159,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Best OSHA Compliance Software in 2026: Compliease by Sumeera Solutions",
+    seoTitle: "Best OSHA Compliance Software 2026: Compliease | Sumeera",
     slug: "compliease-osha-log-management-software",
     category: "Compliance",
     date: "Apr 30, 2026",
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Looking for OSHA compliance software? Compliease by Sumeera Solutions automates OSHA 300, 301 & 300A logs, reduces errors, and keeps your business audit-ready.",
+    excerpt: "Compliease by Sumeera Solutions automates OSHA 300 logs, incident reporting, and safety tracking to help businesses prevent costly fines.",
     content: `
       <h2>Why Businesses Need OSHA Compliance Software Today</h2>
       <p>Managing workplace safety records is no longer optional. The Occupational Safety and Health Administration requires accurate reporting of injuries and illnesses.</p>
@@ -300,11 +303,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Why Workplace Compliance Software is Critical for Modern Business Growth",
+    seoTitle: "Workplace Compliance Software for Business Growth",
     slug: "workplace-compliance-software-modern-business",
     category: "Compliance",
     date: "Apr 27, 2026",
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Tired of tracking OSHA logs and safety audits in spreadsheets? Learn how workplace compliance software automates risks, saves time, and prevents costly fines.",
+    excerpt: "Learn how workplace compliance software automates regulatory tracking, prevents costly OSHA fines, and protects employee safety records.",
     content: `
       <h2>The Hidden Cost of Manual Compliance</h2>
       <p>For many businesses, "compliance" is a dreaded word that involves dusty filing cabinets, complex spreadsheets, and the constant fear of a surprise audit. But in today’s high-stakes regulatory environment, manual tracking isn't just slow—it's dangerous.</p>
@@ -398,11 +402,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Sumeera Solutions: The Smart Way to Manage OSHA Compliance & Avoid Costly Fines",
+    seoTitle: "Sumeera Solutions: Smart OSHA Compliance Software",
     slug: "sumeera-solutions-osha-compliance-software",
     category: "Compliance",
     date: "Apr 25, 2026",
     image: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Struggling with OSHA compliance? Discover how Sumeera Solutions helps businesses manage OSHA logs, avoid costly fines, and stay audit-ready with smart compliance software.",
+    excerpt: "Sumeera Solutions simplifies OSHA log management with automated compliance tracking, proactive error detection, and audit protection.",
     content: `
       <h2>What is OSHA Compliance and Why Does It Matter?</h2>
       <p>Workplace safety is not just a legal requirement—it’s a business necessity. The Occupational Safety and Health Administration (OSHA) mandates businesses to maintain accurate records of workplace injuries and illnesses.</p>
@@ -527,11 +532,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Retention Marketing: The Secret Sauce to Sustainable Growth",
+    seoTitle: "Retention Marketing for Sustainable Growth | Hari Kiran",
     slug: "retention-marketing-sustainable-growth",
     category: "Retention",
     date: "Apr 24, 2026",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Acquisition is expensive. Retention is profitable. Learn why focusing on your existing customers is the most effective growth strategy today.",
+    excerpt: "Customer acquisition is expensive while retention builds profit. Discover practical retention frameworks to maximize user lifetime value.",
     content: `
       <h2>Why Retention is the New Acquisition</h2>
       <p>In a world where CAC (Customer Acquisition Cost) is skyrocketing, businesses that rely solely on new customers are destined to struggle. Retention marketing is the practice of engaging existing customers to ensure they return, buy more, and become brand advocates.</p>
@@ -565,11 +571,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "How to Build a High-Converting Email Newsletter",
+    seoTitle: "High-Converting Email Newsletter Blueprint | Hari Kiran",
     slug: "high-converting-email-newsletter-guide",
     category: "Email Marketing",
     date: "Apr 23, 2026",
     image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Email marketing isn't dead—it's evolving. Discover the framework for creating newsletters that your audience actually wants to read.",
+    excerpt: "Email marketing remains the highest-ROI direct channel. Learn how to craft magnetic hooks, value-first content, and high-converting CTAs.",
     content: `
       <h2>The Anatomy of a Perfect Newsletter</h2>
       <p>Despite the rise of social media, email remains the most direct and personal way to reach your audience. A well-crafted newsletter can drive consistent traffic and conversions without the volatility of search engine algorithms.</p>
@@ -599,11 +606,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "9 Simple Steps How To Rank Higher On Google Organically",
+    seoTitle: "How to Rank Higher on Google Organically | G. Hari Kiran",
     slug: "rank-higher-google-organically",
     category: "SEO",
     date: "Dec 31, 2025",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Discover the fundamental steps to improve your website's search engine rankings without paid advertising.",
+    excerpt: "Learn how to rank higher on Google organically using keyword research, technical on-page optimization, and high-authority semantic content.",
     content: `
       <h2>The Foundation of Organic SEO</h2>
       <p>Content is the bedrock of any successful digital presence. To rank higher on Google, you need to understand identifying what your audience is searching for and providing the most valuable answer. It's not just about technical metrics; it's about the <strong>intent</strong> behind the search.</p>
@@ -643,11 +651,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "How Small Businesses Can Win Big on Facebook Marketing",
+    seoTitle: "Facebook Marketing Guide for Small Businesses | Hari Kiran",
     slug: "facebook-marketing-small-businesses",
     category: "Digital Marketing",
     date: "Apr 20, 2026",
     image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "You don't need a million-dollar budget to see results from Facebook. Learn the targeted strategies that drive real business growth.",
+    excerpt: "Master Facebook marketing in 2026 with hyper-local targeting, short-form video reels, and custom audience retargeting frameworks.",
     content: `
       <h2>Facebook Marketing in 2026: The Strategy</h2>
       <p>The days of 'post and pray' are over. Facebook is now a pay-to-play platform, but that doesn't mean it's only for the big players. For small businesses, the key is <strong>Hyper-Local Targeting</strong> and <strong>High-Engagement Content</strong>.</p>
@@ -673,11 +682,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Why You Need Organic SEO Services to Scale Your Brand",
+    seoTitle: "Why You Need Organic SEO Services to Scale | Hari Kiran",
     slug: "organic-seo-services",
     category: "SEO",
     date: "Apr 18, 2026",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "Is SEO still worth it? Absolutely. Discover why organic search is still the highest-ROI channel for long-term brand building.",
+    excerpt: "Discover why organic SEO services remain the highest-ROI channel for long-term customer acquisition, brand credibility, and compounding traffic.",
     content: `
       <h2>The Long Game of Digital Marketing</h2>
       <p>SEO isn't a quick fix; it's an investment. While ads stop working the second you stop paying, SEO continues to deliver traffic for years. This is the cornerstone of sustainable growth.</p>
@@ -704,11 +714,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Best Digital Marketer in Netaji Subhas University: The Power of Strategy Over Execution",
+    seoTitle: "Best Digital Marketer in NSU Jamshedpur | G. Hari Kiran",
     slug: "best-digital-marketer-in-netaji-subhas-university",
     category: "Digital Marketing",
     date: "Jul 17, 2026",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=70&w=1200&fm=webp",
-    excerpt: "What makes someone the best digital marketer in Netaji Subhas University? Discover why true marketing is about strategy, thinking, and uniqueness, not just execution.",
+    excerpt: "Discover why the best digital marketer in Netaji Subhas University focuses on consumer psychology, search dominance, and growth strategy.",
     content: `
       <h2>The Dilution of Modern Digital Marketing</h2>
       <p>Every year, Netaji Subhas University (NSU) produces thousands of bright minds ready to conquer the corporate world. Among them, many aspire to build careers in digital marketing. Yet, there is a silent trend happening right under our noses.</p>

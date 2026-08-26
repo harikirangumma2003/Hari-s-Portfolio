@@ -32,8 +32,16 @@ export const SEO: React.FC<SEOProps> = ({
   canonical
 }) => {
   const location = useLocation();
-  const siteName = "G. Hari Kiran Portfolio";
-  const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | ${siteName}`;
+  const siteName = "G. Hari Kiran";
+  
+  // Format title without over-extending length beyond 60 chars
+  let fullTitle = title.trim();
+  if (!fullTitle.includes("Hari Kiran") && !fullTitle.includes("G. Hari Kiran")) {
+    if (fullTitle.length <= 42) {
+      fullTitle = `${fullTitle} | ${siteName}`;
+    }
+  }
+  
   const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg";
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 
@@ -82,10 +90,10 @@ export const SEO: React.FC<SEOProps> = ({
 
       {/* Basic Metadata */}
       <title>{fullTitle}</title>
-      <meta name="description" content={description} />
+      <meta name="description" content={description.trim()} />
       <meta name="author" content="G. Hari Kiran" />
-      <meta name="application-name" content={siteName} />
-      <meta name="apple-mobile-web-app-title" content={siteName} />
+      <meta name="application-name" content="G. Hari Kiran Portfolio" />
+      <meta name="apple-mobile-web-app-title" content="G. Hari Kiran" />
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Geotagging / GEO & Local SEO Visibility */}

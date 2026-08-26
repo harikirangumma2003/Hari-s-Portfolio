@@ -13,8 +13,8 @@ const ProjectDetailPage = () => {
     return <Navigate to="/work" replace />;
   }
 
-  const seoTitle = `${project.title} Case Study`.slice(0, 43);
-  const seoDescription = project.description.length > 150 ? project.description.slice(0, 150) + "..." : project.description;
+  const seoTitle = project.seoTitle || `${project.title} Case Study | Hari Kiran`;
+  const seoDescription = project.description;
 
   return (
     <div className="pt-32 pb-24">

@@ -1,6 +1,7 @@
 export interface Project {
   slug: string;
   title: string;
+  seoTitle?: string;
   category: string;
   image: string;
   description: string;
@@ -15,9 +16,10 @@ export const projects: Project[] = [
   {
     slug: "local-search-dominance",
     title: "Local Search Dominance",
+    seoTitle: "Local SEO Dominance Case Study | G. Hari Kiran",
     category: "SEO & Content",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&fit=crop&fm=webp&q=70&w=1200",
-    description: "Achieved 300% growth in organic traffic through local SEO excellence.",
+    description: "Achieved 300% organic search traffic growth and #1 Google rankings through local SEO optimization and semantic content strategy.",
     longDescription: "For local brands, visibility is everything. The goal was to break through a crowded search landscape and position the brand at the top of search results. By implementing a targeted, content-driven SEO strategy, we transformed a single blog into a high-performing traffic asset that consistently attracts and converts local audiences.",
     tags: ["SEO", "Content Strategy", "Local Search"],
     stats: [
@@ -39,9 +41,10 @@ export const projects: Project[] = [
   {
     slug: "sms-conversion-engine",
     title: "High-Impact SMS Conversion Engine",
+    seoTitle: "SMS Marketing Engine Case Study | G. Hari Kiran",
     category: "Direct Marketing",
     image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format,compress&fit=crop&fm=webp&q=70&w=1200",
-    description: "Scaled a high-conversion direct marketing channel to drive 21% conversion rates.",
+    description: "Scaled a high-conversion direct SMS marketing channel delivering a 25% click-through rate and 21% verified purchase conversion rate.",
     longDescription: "In a fast-paced digital environment, attention spans are short and immediacy is key. The goal was to leverage SMS marketing as a direct, high-conversion channel to drive instant user action. By combining precise targeting with compelling messaging, we built a campaign that delivered both reach and results at scale.",
     tags: ["SMS Marketing", "Retention", "Direct Response"],
     stats: [
@@ -63,9 +66,10 @@ export const projects: Project[] = [
   {
     slug: "viral-brand-campaign",
     title: "Viral Push Campaign",
+    seoTitle: "Viral Push Campaign Case Study | G. Hari Kiran",
     category: "Creative Strategy",
     image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format,compress&fit=crop&fm=webp&q=70&w=1200",
-    description: "High-impact push notification campaign driving +5% order increase through witty, timed messaging.",
+    description: "High-impact creative push notification campaign delivering +25% order volume growth through witty copy and behavioral scheduling.",
     longDescription: "In a highly competitive food delivery space, capturing user attention in seconds is critical. The goal was to create a high-impact push notification campaign that not only stood out but also drove immediate engagement and conversions through creativity and timing.",
     tags: ["Push Notifications", "Copywriting", "Food Delivery"],
     stats: [
@@ -87,9 +91,10 @@ export const projects: Project[] = [
   {
     slug: "b2b-lead-engine",
     title: "B2B Lead Engine",
+    seoTitle: "B2B Email Lead Engine Case Study | Hari Kiran",
     category: "Email Marketing",
     image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format,compress&fit=crop&fm=webp&q=70&w=1200",
-    description: "Built high-impact email campaigns driving exceptional open rates and conversions.",
+    description: "Built high-impact B2B email acquisition funnels delivering a 64% open rate and scalable qualified customer pipeline conversions.",
     longDescription: "In B2B marketing, attention is limited and trust is everything. The objective was to design email campaigns that not only get opened but also drive meaningful engagement and conversions. By combining personalization, strategic messaging, and performance tracking, we built a scalable email engine that consistently delivers results.",
     tags: ["Automation", "Copywriting", "CRM"],
     stats: [

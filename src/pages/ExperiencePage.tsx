@@ -74,7 +74,7 @@ const ExperiencePage = () => {
     <div className="pt-32 pb-24">
       <SEO 
         title="SEO Experience & Marketing Strategy | G. Hari Kiran"
-        description="View my professional timeline as a leading SEO Expert and Digital Marketing Consultant in Jamshedpur. Proven record of scaling revenue and search traffic."
+        description="View the professional career timeline of G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, scaling client revenue and traffic."
         url="/experience"
         schemaData={{
           "@context": "https://schema.org",

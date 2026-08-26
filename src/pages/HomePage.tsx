@@ -235,7 +235,7 @@ const HomePage = () => {
     <div className="pt-24 pb-12 bg-bg-light">
       <SEO 
         title="SEO Expert & Consultant Jamshedpur | G. Hari Kiran"
-        description="Rank higher and grow your revenue with G. Hari Kiran, the premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Start with a free audit."
+        description="Rank higher and grow revenue with G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Request your free site audit."
         url=""
         schemaData={localSchemaGraph}
       />

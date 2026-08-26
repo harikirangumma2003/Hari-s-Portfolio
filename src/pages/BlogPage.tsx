@@ -280,7 +280,7 @@ const BlogPage = () => {
     <div className="pt-32 pb-24">
       <SEO 
         title="SEO & Growth Marketing Strategy Blog | G. Hari Kiran"
-        description="Actionable organic search marketing tutorials, automated retention maps, and growth articles from the top SEO Expert and Digital Marketing Consultant in Jamshedpur."
+        description="Explore actionable SEO guides, organic growth strategies, and digital marketing insights written by G. Hari Kiran in Jamshedpur, Jharkhand."
         url="/blog"
         schemaData={{
           "@context": "https://schema.org",

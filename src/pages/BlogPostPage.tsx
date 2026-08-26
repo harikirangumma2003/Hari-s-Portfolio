@@ -235,8 +235,8 @@ const BlogPostPage = () => {
     }
   };
 
-  const postTitle = post.title.length > 43 ? post.title.slice(0, 40) + "..." : post.title;
-  const postExcerpt = post.excerpt.length > 152 ? post.excerpt.slice(0, 149) + "..." : post.excerpt;
+  const postTitle = post.seoTitle || (post.title.length > 55 ? post.title.slice(0, 52) + "..." : post.title);
+  const postExcerpt = post.excerpt;
 
   return (
     <div className="pt-32 pb-24">

@@ -469,8 +469,9 @@ export default function ResourcesPage() {
   return (
     <>
       <SEO 
-        title="Digital Google Sheets Templates & Spreadsheets | G. Hari Kiran" 
+        title="Google Sheets Growth & Finance Templates | G. Hari Kiran" 
         description="Access custom-engineered, fully automated Google Sheets templates for personal finance tracking, habit building, and book reading management." 
+        url="/resources"
       />
 
       <main className="pt-24 pb-32 bg-white text-primary" id="resources-page-container">

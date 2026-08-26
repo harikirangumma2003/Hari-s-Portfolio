@@ -456,8 +456,8 @@ const ContentHubPage = () => {
   return (
     <div className="min-h-screen bg-[#070708] text-zinc-100 pt-28 pb-16 overflow-x-hidden relative" id="content-hub-page">
       <SEO 
-        title="Content Hub - Curated Marketing, SEO, and Growth Engine | G. Hari Kiran"
-        description="Access G. Hari Kiran's centralized content stream: deep-dive SEO audits, case studies, high-performing Instagram reels, and actionable guides for business growth."
+        title="Omnichannel Content Hub & Playbooks | G. Hari Kiran"
+        description="Explore G. Hari Kiran's curated growth library: SEO audits, viral marketing playbooks, video breakdowns, and syndications across modern platforms."
         url="/content-hub"
         schemaData={collectionSchema}
       />
