@@ -691,7 +691,9 @@ export function BlogWriterSection({
                   <div className="space-y-1.5 relative group">
                     <label className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
                       Target Focus Keyword
-                      <HelpCircle className="w-3 h-3 text-zinc-500 hover:text-zinc-300 cursor-pointer" title="The search keyword you want to rank for on Google" />
+                      <span title="The search keyword you want to rank for on Google" className="inline-flex cursor-pointer">
+                        <HelpCircle className="w-3 h-3 text-zinc-500 hover:text-zinc-300" />
+                      </span>
                     </label>
                     <input
                       type="text"

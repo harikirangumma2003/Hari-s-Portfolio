@@ -90,6 +90,14 @@ const blogPosts = [
     category: 'Growth',
     date: 'Jun 01, 2026',
     excerpt: 'Why true digital marketing excellence comes from strategy, positioning, and data-driven systems rather than generic tactical execution.'
+  },
+  {
+    slug: 'google-preferred-source-how-to-add-my-website-on-google',
+    title: 'Google Preferred Source: How to Add My Website on Google',
+    seoTitle: 'Google Preferred Source: How to Add My Website on Google | Hari Kiran',
+    category: 'SEO',
+    date: 'Aug 20, 2026',
+    excerpt: 'If you find my content useful, adding my website as a Google Preferred Source is an easy way to stay connected with future articles across SEO, AI, and digital marketing.'
   }
 ];
 

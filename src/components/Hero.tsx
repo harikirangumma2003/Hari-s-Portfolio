@@ -1,10 +1,10 @@
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GooglePreferredSourceButton } from "./GooglePreferredSourceButton";
 
 const Hero = () => {
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -15,9 +15,9 @@ const Hero = () => {
     },
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    show: { opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
   };
 
   return (

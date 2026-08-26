@@ -9,6 +9,9 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import NotFoundPage from "./NotFoundPage";
 import { getPublishedContent } from "../services/contentService";
 import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 const generateSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "").substring(0, 100);
 
@@ -402,9 +405,74 @@ const BlogPostPage = () => {
             
             <div 
               className="markdown-content"
-              dangerouslySetInnerHTML={{ __html: post.content }}
               onClick={handleContentClick}
-            />
+            >
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-primary mt-12 mb-6 uppercase border-b border-primary/10 pb-4" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-black tracking-tight text-primary mt-14 mb-6 uppercase border-b border-primary/10 pb-3" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-black tracking-tight text-primary mt-10 mb-4 uppercase flex items-center gap-2" {...props} />
+                  ),
+                  h4: ({ node, ...props }) => (
+                    <h4 className="text-lg sm:text-xl font-display font-black text-primary mt-8 mb-3 uppercase" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p className="text-base sm:text-lg text-zinc-800 leading-[1.85] mb-6 font-normal" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="list-disc ml-6 sm:ml-8 mb-8 space-y-3 text-zinc-800 text-base sm:text-lg" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal ml-6 sm:ml-8 mb-8 space-y-3 text-zinc-800 text-base sm:text-lg" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="pl-2 leading-relaxed" {...props} />
+                  ),
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-4 border-accent pl-6 py-4 my-8 bg-accent/5 rounded-r-2xl italic text-zinc-700 text-lg font-medium shadow-sm" {...props} />
+                  ),
+                  a: ({ node, href, ...props }) => {
+                    const isInternal = href?.startsWith('/') || href?.includes('harikiran-portfolio.netlify.app');
+                    if (isInternal) {
+                      return <a href={href} className="text-accent font-semibold underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors" {...props} />;
+                    }
+                    return <a href={href} target="_blank" rel="noopener noreferrer" className="text-accent font-semibold underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors" {...props} />;
+                  },
+                  table: ({ node, ...props }) => (
+                    <div className="overflow-x-auto my-10 rounded-2xl border border-primary/10 shadow-sm bg-white">
+                      <table className="w-full text-left border-collapse text-sm" {...props} />
+                    </div>
+                  ),
+                  th: ({ node, ...props }) => (
+                    <th className="border-b border-primary/10 bg-primary/5 px-6 py-4 font-display font-black uppercase text-xs tracking-wider text-primary" {...props} />
+                  ),
+                  td: ({ node, ...props }) => (
+                    <td className="border-b border-primary/5 px-6 py-4 text-zinc-700 text-sm" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-bold text-zinc-950" {...props} />
+                  ),
+                  code: ({ node, ...props }: any) => (
+                    <code className="bg-zinc-100 text-accent font-mono text-sm px-2 py-0.5 rounded border border-zinc-200" {...props} />
+                  ),
+                  hr: ({ node, ...props }) => (
+                    <hr className="my-12 border-t border-primary/10" {...props} />
+                  ),
+                  img: ({ node, ...props }) => (
+                    <img className="rounded-3xl border border-primary/5 shadow-xl my-8 mx-auto max-w-full" loading="lazy" decoding="async" referrerPolicy="no-referrer" {...props} />
+                  )
+                }}
+              >
+                {post.content || ""}
+              </Markdown>
+            </div>
           </div>
 
           {/* Social Share Section - Bottom */}

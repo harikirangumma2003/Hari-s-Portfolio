@@ -479,8 +479,7 @@ export default function ResourcesPage() {
         <div className="container-custom max-w-7xl mx-auto px-6 lg:px-12 mb-12">
           <Breadcrumbs 
             items={[
-              { label: "Home", path: "/" },
-              { label: "Resources", path: "/resources" }
+              { name: "Resources", path: "/resources" }
             ]} 
           />
 

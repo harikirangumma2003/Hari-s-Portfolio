@@ -762,6 +762,187 @@ export const blogPosts: BlogPost[] = [
       name: "G. Hari Kiran",
       role: "Growth Strategist"
     }
+  },
+  {
+    title: "Google Preferred Source: How to Add My Website on Google",
+    seoTitle: "Google Preferred Source: How to Add My Website on Google | Hari Kiran",
+    slug: "google-preferred-source-how-to-add-my-website-on-google",
+    category: "SEO",
+    date: "Aug 20, 2026",
+    image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format,compress&q=80&w=1200&fm=webp",
+    excerpt: "If you find my content useful, adding my website as a Google Preferred Source is an easy way to stay connected with future articles across SEO, AI, and digital marketing.",
+    author: {
+      name: "G. Hari Kiran",
+      role: "SEO Consultant & Growth Strategist",
+      image: "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png"
+    },
+    keywords: [
+      "Google Preferred Source",
+      "Add Website on Google Preferred Source",
+      "Google News Publisher Center",
+      "Google News SEO",
+      "Google Discover Optimization",
+      "AI Search Overviews",
+      "SEO Consultant Jamshedpur"
+    ],
+    content: `
+If you already find my content useful, adding my website as a **Google Preferred Source** is an easy way to stay connected with future articles.
+
+My portfolio covers topics across:
+
+* **SEO**
+* **Digital marketing**
+* **Content writing**
+* **Google Search**
+* **Generative AI**
+* **Advertising**
+* **Marketing tools**
+* **Digital marketing processes**
+* **Website growth**
+* **AI and search trends**
+
+Instead of remembering to check the website manually, you can tell Google that my website is one of the sources you prefer.
+
+Google has also reported that people are more likely to click through to a website after selecting it as a Preferred Source. In April 2026, Google said users were twice as likely to click through to a site after marking it as a Preferred Source.
+
+---
+
+## How to Add My Website as a Google Preferred Source
+
+There are a couple of ways Google allows you to manage your Preferred Sources.
+
+### Option 1: Use the Preferred Source Button
+
+If you see an **"Add as a preferred source on Google"** button on this website, click it.
+
+Google provides publishers with a dedicated button that can be added to their websites, allowing readers to select the publication as a Preferred Source.
+
+After selecting the option, Google handles the preference through your Google account.
+
+That's it.
+
+### Option 2: Add a Source Through Google Search
+
+You can also manage Preferred Sources directly through Google Search:
+
+1. Open **Google Search**.
+2. Sign in to your **Google Account**.
+3. Open your **Search personalization** or source preference settings.
+4. Look for the option to manage your **Preferred Sources**.
+5. Search for the website you want to follow (\`harikiran-portfolio.netlify.app\`).
+6. Select the website.
+7. Save your preference.
+
+Google's current help documentation says Preferred Sources can be managed through **Search personalization → Source preferences**.
+
+---
+
+## What Happens After You Add a Preferred Source?
+
+Adding a website as a Preferred Source doesn't mean every article from that website will automatically appear in every Google search.
+
+Google still determines which content is relevant to your search.
+
+Instead, your preference tells Google that this is a source you value.
+
+Google explains that selected sources can be highlighted when they have relevant content, including within **Top Stories** and **AI-powered Search experiences**.
+
+That's an important distinction.
+
+Preferred Source does not replace Google's ranking systems. It adds another layer of personalization to your Search experience.
+
+---
+
+## Preferred Sources Are Becoming More Important in AI Search
+
+This is where the feature gets particularly interesting.
+
+Google has expanded Preferred Sources into **AI Overviews** and **AI Mode**.
+
+That means your preferred websites aren't limited to traditional news-style Search experiences. Google says Preferred Sources can be highlighted within AI-generated Search experiences as well.
+
+As search continues to evolve from traditional blue links toward AI-assisted answers, having a direct preference for the sources you trust becomes increasingly useful.
+
+* **For content creators**: This creates another way to build a relationship with readers.
+* **For readers**: It creates more control over where the information they discover comes from.
+
+---
+
+## Why This Matters for Independent Creators
+
+The web isn't only made up of large publishers.
+
+There are thousands of independent marketers, consultants, creators, researchers, developers, and specialists publishing useful information every day.
+
+Preferred Sources gives readers another mechanism for saying:
+
+> *"I want more content from this creator."*
+
+For someone building a professional portfolio and publishing consistently, that is valuable.
+
+Instead of relying entirely on someone remembering a website URL, subscribing to a newsletter, or checking social media, the creator can become part of the reader's personalized Google experience.
+
+---
+
+## A Simple Request From Me
+
+If you've found my articles useful, I'd genuinely appreciate it if you added my website as a Google Preferred Source.
+
+You don't need to do it because every article will be relevant to you.
+
+Do it if you want Google to make it easier to discover my future content when it matches the topics you're searching for.
+
+---
+
+## Add My Website as a Preferred Source
+
+<div class="my-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-primary/5 via-white to-accent/5 border-2 border-accent/20 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+  <div>
+    <h4 class="text-xl font-display font-black uppercase text-primary mb-2">Support G. Hari Kiran on Google</h4>
+    <p class="text-sm text-zinc-600 font-medium">Add harikiran-portfolio.netlify.app to your Google Preferred Sources in one click.</p>
+  </div>
+  <a href="https://www.google.com/preferences/source?q=harikiran-portfolio.netlify.app" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-accent text-white font-bold text-xs uppercase tracking-wider hover:bg-accent/90 transition-all shadow-lg active:scale-95 whitespace-nowrap">
+    <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+    Add as Preferred Source on Google
+  </a>
+</div>
+
+It takes only a few moments, and it helps you stay connected with future articles about SEO, digital marketing, AI, content, advertising, and online growth.
+
+---
+
+## Final Thoughts
+
+Google Search is becoming increasingly personalized.
+
+Features such as Preferred Sources give users more control over the websites and creators they want to hear from, while Google's expansion of the feature into AI Overviews and AI Mode makes it even more relevant to the future of search.
+
+So if you regularly read my content and want to see more of it, consider adding my website as a Google Preferred Source.
+
+It's a small action, but it can make it easier for Google to surface content from a website you already trust.
+
+And if you're interested in SEO and the future of search, keep following along. I'll be covering more of these changes as Google continues to reshape how we discover information online.
+
+---
+
+## Frequently Asked Questions (FAQs)
+
+### What is a Google Preferred Source?
+A Google Preferred Source is a website or publisher that a user chooses to see more often in relevant Google Search experiences.
+
+### How do I add a website as a Google Preferred Source?
+You can manage Preferred Sources through Google's Search personalization and source preference settings. Publishers can also provide Google's Preferred Source button on their websites.
+
+### Does Preferred Source guarantee that I will see every article?
+No. Google still determines which content is relevant to your search. The preference helps personalize which sources you see more often.
+
+### Can Preferred Sources appear in AI Overviews?
+Yes. Google has expanded Preferred Sources to AI Overviews and AI Mode.
+
+### Is Google Preferred Source the same as following a website?
+Not exactly. Google has separate personalization and following experiences. Preferred Sources specifically lets users tell Google which sources they want highlighted more often in relevant Search experiences.
+    `
   }
 ];
+
 

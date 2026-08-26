@@ -1,5 +1,5 @@
 import { SEO } from "../components/SEO";
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Marquee from "../components/Marquee";
@@ -28,7 +28,7 @@ const HomePage = () => {
     ["Blogger", "Instagram", "LinkedIn", "YouTube", "Medium", "X", "Threads", "Podcast"].includes(item.platform)
   );
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -38,9 +38,9 @@ const HomePage = () => {
     },
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    show: { opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
   };
 
   const localSchemaGraph = {
