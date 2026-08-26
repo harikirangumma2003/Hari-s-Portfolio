@@ -8,6 +8,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import NotFoundPage from "./NotFoundPage";
 import { getPublishedContent } from "../services/contentService";
+import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
 
 const generateSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "").substring(0, 100);
 
@@ -182,9 +183,16 @@ const BlogPostPage = () => {
   }, [slug, post, posts]);
 
   if (!post && isLoading) {
+    const formattedSlugTitle = slug 
+      ? slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
+      : "Growth Article";
+
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" id="post-loading">
-        <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+        <h1 className="text-2xl sm:text-3xl font-display font-black tracking-tight uppercase text-primary text-center px-4">
+          {formattedSlugTitle}
+        </h1>
+        <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin mt-2" />
         <p className="text-xs font-black uppercase tracking-widest text-muted">Fetching original article...</p>
       </div>
     );
@@ -442,12 +450,17 @@ const BlogPostPage = () => {
 
           {/* Footer / Tags */}
           <footer className="mt-20 pt-12 border-t border-primary/5">
-            <div className="flex flex-wrap gap-4 mb-16">
+            <div className="flex flex-wrap gap-4 mb-12">
               {post.keywords.map((tag) => (
                 <span key={tag} className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-primary/5 rounded-full text-muted border border-transparent hover:border-accent hover:text-accent transition-all">
                   #{tag}
                 </span>
               ))}
+            </div>
+
+            {/* Google Preferred Source Follow Prompt */}
+            <div className="mb-12">
+              <GooglePreferredSourceButton variant="banner" />
             </div>
 
             {/* Author Card */}

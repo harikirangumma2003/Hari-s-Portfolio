@@ -17,9 +17,16 @@ import { Link } from "react-router-dom";
 import { projects } from "../data/projects";
 import { LatestContentWidget } from "../components/LatestContentWidget";
 import { VideoCarousel } from "../components/VideoCarousel";
+import { useContent } from "../hooks/useContent";
 
 const HomePage = () => {
   const featuredProjects = projects.slice(0, 3);
+  const { content: liveContent } = useContent();
+
+  // Determine if there is any syndicated content (social updates, videos, or posts from CMS)
+  const hasSyndicatedContent = liveContent && liveContent.some(item => 
+    ["Blogger", "Instagram", "LinkedIn", "YouTube", "Medium", "X", "Threads", "Podcast"].includes(item.platform)
+  );
 
   const container = {
     hidden: { opacity: 0 },
@@ -47,6 +54,7 @@ const HomePage = () => {
         "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
         "url": "https://harikiran-portfolio.netlify.app",
         "sameAs": [
+          "https://gharikiran.blogspot.com/",
           "https://www.linkedin.com/in/hari-kiran-gumma",
           "https://x.com/GHariKiran29",
           "https://discord.com/users/1431285511363760149",
@@ -344,29 +352,31 @@ const HomePage = () => {
           <WorkingProcess />
           <Blog />
           
-          {/* Content Hub Highlights Section */}
-          <section id="content-hub-highlights" className="py-12">
-            <div className="flex flex-col md:flex-row justify-between items-center md:items-end text-center md:text-left mb-12 gap-8">
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-4 block">Omnichannel stream</span>
-                <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight">Syndicated Content</h2>
+          {/* Content Hub Highlights Section - Dynamically rendered only when live entries exist in CMS */}
+          {hasSyndicatedContent && (
+            <section id="content-hub-highlights" className="py-12">
+              <div className="flex flex-col md:flex-row justify-between items-center md:items-end text-center md:text-left mb-12 gap-8">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-4 block">Omnichannel stream</span>
+                  <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight">Syndicated Content</h2>
+                </div>
+                <Link to="/content-hub" className="w-full sm:w-auto btn-primary flex items-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
+                  Explore Content Hub <ArrowRight className="ml-2" size={16}/>
+                </Link>
               </div>
-              <Link to="/content-hub" className="w-full sm:w-auto btn-primary flex items-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
-                Explore Content Hub <ArrowRight className="ml-2" size={16}/>
-              </Link>
-            </div>
 
-            <div className="space-y-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <LatestContentWidget platform="Instagram" />
-                <LatestContentWidget platform="LinkedIn" />
+              <div className="space-y-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <LatestContentWidget platform="Instagram" />
+                  <LatestContentWidget platform="LinkedIn" />
+                </div>
+                
+                <div className="pt-4">
+                  <VideoCarousel />
+                </div>
               </div>
-              
-              <div className="pt-4">
-                <VideoCarousel />
-              </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           <FAQ />
           <Contact />

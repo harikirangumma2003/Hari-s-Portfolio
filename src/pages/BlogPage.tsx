@@ -7,6 +7,7 @@ import { blogPosts, categories } from "../data/blogPosts";
 import { SEO } from "../components/SEO";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { getPublishedContent } from "../services/contentService";
+import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
 
 interface UnifiedBlogPost {
   title: string;
@@ -308,9 +309,14 @@ const BlogPage = () => {
             <h1 className="text-4xl sm:text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.85] mb-8">
               The <span className="text-accent">Growth</span> <br className="hidden md:block" />Journal
             </h1>
-            <p className="max-w-xl mx-auto md:mx-0 text-muted text-lg leading-relaxed">
+            <p className="max-w-xl mx-auto md:mx-0 text-muted text-lg leading-relaxed mb-8">
               Deep dives into SEO, brand positioning, and the data-driven strategies I use to scale global brands.
             </p>
+
+            {/* Google Preferred Source Follow Callout */}
+            <div className="mb-10">
+              <GooglePreferredSourceButton variant="card" />
+            </div>
           </div>
 
           {/* Search/Filter */}

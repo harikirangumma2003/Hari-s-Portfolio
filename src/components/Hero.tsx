@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { GooglePreferredSourceButton } from "./GooglePreferredSourceButton";
 
 const Hero = () => {
   const container = {
@@ -27,9 +28,12 @@ const Hero = () => {
       className="h-full flex flex-col justify-center py-10 md:py-0"
     >
       <div className="relative z-10 text-center lg:text-left">
-        <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 bg-accent/10 border border-accent/20 rounded-full">
-          <Sparkles size={12} className="text-accent ring-accent/20 animate-pulse" />
-          <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-accent">A Digital Marketer & Growth Strategist</span>
+        <motion.div variants={item} className="mb-6 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-accent/10 border border-accent/20 rounded-full">
+            <Sparkles size={12} className="text-accent ring-accent/20 animate-pulse" />
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[2px] text-accent">A Digital Marketer & Growth Strategist</span>
+          </div>
+          <GooglePreferredSourceButton variant="compact" />
         </motion.div>
         
          <motion.h1

@@ -8,6 +8,8 @@ import { cn } from "../lib/utils";
 export const PlatformBadge = ({ platform }: { platform: ContentHubItem["platform"] }) => {
   const getStyle = () => {
     switch (platform) {
+      case "Blogger":
+        return "bg-[#f57d00]/10 text-[#f57d00] border-[#f57d00]/20";
       case "Medium":
         return "bg-black text-[#f7f7f7] border-zinc-800";
       case "Portfolio":

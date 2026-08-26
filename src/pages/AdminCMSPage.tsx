@@ -1519,6 +1519,7 @@ export default function AdminCMSPage() {
                     )}
                   >
                     <option value="All">All Platforms</option>
+                    <option value="Blogger">Blogger</option>
                     <option value="Medium">Medium</option>
                     <option value="Portfolio">Portfolio</option>
                     <option value="Instagram">Instagram</option>
@@ -2329,6 +2330,7 @@ export default function AdminCMSPage() {
                             themeMode === "dark" ? "bg-zinc-900 border-white/5 text-zinc-200 focus:border-accent" : "bg-zinc-50 border-zinc-200 text-zinc-700 focus:border-accent"
                           )}
                         >
+                          <option value="Blogger">Blogger</option>
                           <option value="Medium">Medium</option>
                           <option value="Portfolio">Portfolio</option>
                           <option value="Instagram">Instagram</option>

@@ -3,6 +3,7 @@ import { db } from "../../lib/firebase";
 import { AutomationSettings, ContentImporter, RawPlatformItem, SyncLog } from "./types";
 import { MediumImporter } from "./mediumImporter";
 import { YoutubeImporter } from "./youtubeImporter";
+import { BloggerImporter } from "./bloggerImporter";
 import { DuplicateDetector } from "./duplicateDetector";
 import { ContentNormalizer } from "./normalizer";
 import { SyncLogger } from "./syncLogger";
@@ -94,7 +95,7 @@ export class AutomationService {
    */
   static async runPipeline(
     importer: ContentImporter,
-    platform: 'Medium' | 'YouTube' | 'LinkedIn' | 'Instagram' | 'X' | 'Threads',
+    platform: 'Blogger' | 'Medium' | 'YouTube' | 'LinkedIn' | 'Instagram' | 'X' | 'Threads',
     contentType: 'Blog' | 'Video' | 'Social Post'
   ): Promise<SyncSummary> {
     const startedAt = new Date();
@@ -209,6 +210,14 @@ export class AutomationService {
   static async syncMedium(): Promise<SyncSummary> {
     const importer = new MediumImporter();
     return this.runPipeline(importer, "Medium", "Blog");
+  }
+
+  /**
+   * Synchronizes Blogger RSS items
+   */
+  static async syncBlogger(): Promise<SyncSummary> {
+    const importer = new BloggerImporter();
+    return this.runPipeline(importer, "Blogger", "Blog");
   }
 
   /**

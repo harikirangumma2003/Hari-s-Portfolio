@@ -156,23 +156,37 @@ export async function getPublishedContent(): Promise<ContentHubItem[]> {
       orderBy("publishedDate", "desc")
     );
     
-    const snapshot = await getDocs(q);
+    const snapshotPromise = getDocs(q);
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("Firestore query timed out")), 3500)
+    );
+
+    const snapshot = await Promise.race([snapshotPromise, timeoutPromise]);
     return snapshot.docs.map(doc => normalizeContentItem(doc.id, doc.data()));
   } catch (error: any) {
-    console.warn("Firestore indexed query failed, falling back to client-side filtering/sorting", error);
+    console.warn("Firestore indexed query failed or timed out, falling back to client-side filtering/sorting", error);
     
-    // Failsafe fallback: Fetch all, then filter and sort manually
-    const snapshot = await getDocs(contentRef);
-    const items = snapshot.docs.map(doc => normalizeContentItem(doc.id, doc.data()));
-    
-    return items
-      .filter(item => item.status === "Published" && item.visibility === "public")
-      .sort((a, b) => {
-        // featured descending, then publishedDate descending
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-        return b.publishedDate.getTime() - a.publishedDate.getTime();
-      });
+    try {
+      // Failsafe fallback: Fetch all with quick timeout
+      const snapshotPromise = getDocs(contentRef);
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("Firestore fallback fetch timed out")), 2500)
+      );
+      const snapshot = await Promise.race([snapshotPromise, timeoutPromise]);
+      const items = snapshot.docs.map(doc => normalizeContentItem(doc.id, doc.data()));
+      
+      return items
+        .filter(item => item.status === "Published" && item.visibility === "public")
+        .sort((a, b) => {
+          // featured descending, then publishedDate descending
+          if (a.featured && !b.featured) return -1;
+          if (!a.featured && b.featured) return 1;
+          return b.publishedDate.getTime() - a.publishedDate.getTime();
+        });
+    } catch (fallbackErr) {
+      console.warn("Firestore fallback also unavailable, using local hub dataset");
+      return [];
+    }
   }
 }
 

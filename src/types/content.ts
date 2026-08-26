@@ -12,7 +12,7 @@ export interface FirestoreContentHubItem {
   excerpt: string;
   description: string;
   thumbnail: string;
-  platform: 'Medium' | 'Portfolio' | 'Instagram' | 'YouTube' | 'LinkedIn' | 'X' | 'Threads' | 'Podcast' | 'Case Study' | 'Resource';
+  platform: 'Blogger' | 'Medium' | 'Portfolio' | 'Instagram' | 'YouTube' | 'LinkedIn' | 'X' | 'Threads' | 'Podcast' | 'Case Study' | 'Resource';
   contentType: 'Blog' | 'Video' | 'Short' | 'Social Post' | 'Case Study' | 'Resource' | 'Audio';
   category: 'SEO Tips' | 'Marketing' | 'AI' | 'Growth' | 'Compliance' | 'Retention' | 'Video';
   tags: string[];
@@ -46,7 +46,7 @@ export interface ContentHubItem {
   excerpt: string;
   description: string;
   thumbnail: string;
-  platform: 'Medium' | 'Portfolio' | 'Instagram' | 'YouTube' | 'LinkedIn' | 'X' | 'Threads' | 'Podcast' | 'Case Study' | 'Resource';
+  platform: 'Blogger' | 'Medium' | 'Portfolio' | 'Instagram' | 'YouTube' | 'LinkedIn' | 'X' | 'Threads' | 'Podcast' | 'Case Study' | 'Resource';
   contentType: 'Blog' | 'Video' | 'Short' | 'Social Post' | 'Case Study' | 'Resource' | 'Audio';
   category: 'SEO Tips' | 'Marketing' | 'AI' | 'Growth' | 'Compliance' | 'Retention' | 'Video';
   tags: string[];

@@ -61,7 +61,7 @@ export class ContentNormalizer {
    */
   static normalize(
     item: RawPlatformItem,
-    platform: 'Medium' | 'YouTube' | 'LinkedIn' | 'Instagram' | 'X' | 'Threads',
+    platform: 'Blogger' | 'Medium' | 'YouTube' | 'LinkedIn' | 'Instagram' | 'X' | 'Threads',
     contentType: 'Blog' | 'Video' | 'Social Post'
   ): any {
     const now = new Date();

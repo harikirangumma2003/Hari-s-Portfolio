@@ -36,6 +36,31 @@ async function startServer() {
     }
   });
 
+  // Serve proxy endpoint for Blogger RSS Feed (CORS-free, server-to-server)
+  app.get("/api/proxy/blogger", async (req, res) => {
+    try {
+      console.log("[Server Proxy] Fetching Blogger feed...");
+      const feedUrl = "https://gharikiran.blogspot.com/feeds/posts/default?alt=rss";
+      
+      const response = await fetch(feedUrl, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Blogger feed: HTTP ${response.status}`);
+      }
+      
+      const xmlText = await response.text();
+      res.setHeader("Content-Type", "application/xml; charset=utf-8");
+      res.send(xmlText);
+    } catch (err: any) {
+      console.error("[Server Proxy] Error fetching Blogger feed:", err);
+      res.status(500).json({ error: err.message || "Failed to fetch Blogger feed" });
+    }
+  });
+
   // Serve proxy endpoint for YouTube RSS Feed (CORS-free, server-to-server)
   app.get("/api/proxy/youtube", async (req, res) => {
     try {

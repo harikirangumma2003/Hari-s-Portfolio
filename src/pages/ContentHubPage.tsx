@@ -41,14 +41,16 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { cn } from "../lib/utils";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
 
 // Category list as requested
 const filterPills = [
   "All",
   "Articles",
+  "Blogger",
+  "Medium",
   "Videos",
   "Shorts",
-  "Medium",
   "YouTube",
   "Instagram",
   "LinkedIn",
@@ -65,6 +67,8 @@ const filterPills = [
 const PlatformBadge = ({ platform }: { platform: ContentHubItem["platform"] }) => {
   const getStyle = () => {
     switch (platform) {
+      case "Blogger":
+        return "bg-[#f57d00]/10 text-[#f57d00] border-[#f57d00]/20";
       case "Medium":
         return "bg-black text-[#f7f7f7] border-zinc-800";
       case "Portfolio":
@@ -296,6 +300,8 @@ const ContentHubPage = () => {
       if (activeFilter !== "All") {
         if (activeFilter === "Blogs" || activeFilter === "Articles") {
           if (item.contentType !== "Blog") return false;
+        } else if (activeFilter === "Blogger") {
+          if (item.platform !== "Blogger") return false;
         } else if (activeFilter === "Videos") {
           if (item.contentType !== "Video") return false;
         } else if (activeFilter === "Shorts") {
@@ -482,9 +488,12 @@ const ContentHubPage = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-accent text-[9px] font-black uppercase tracking-widest mb-6">
-              <Sparkles size={12} className="animate-pulse" />
-              Omnichannel Knowledge Engine
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-accent text-[9px] font-black uppercase tracking-widest">
+                <Sparkles size={12} className="animate-pulse" />
+                Omnichannel Knowledge Engine
+              </div>
+              <GooglePreferredSourceButton variant="compact" />
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight uppercase leading-[0.9] text-white">

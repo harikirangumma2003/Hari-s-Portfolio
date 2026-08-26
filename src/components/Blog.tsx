@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { GooglePreferredSourceButton } from "./GooglePreferredSourceButton";
 
 const Blog = () => {
   const posts = blogPosts.slice(0, 3);
@@ -13,9 +14,12 @@ const Blog = () => {
           <span className="text-[10px] font-black uppercase tracking-[2px] text-accent mb-4 block">Insights</span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl leading-tight">Latest From The Studio</h2>
         </div>
-        <Link to="/blog" className="w-full sm:w-auto btn-primary flex items-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
-          Browse All <ArrowRight className="ml-2" size={16}/>
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+          <GooglePreferredSourceButton variant="compact" />
+          <Link to="/blog" className="w-full sm:w-auto btn-primary flex items-center justify-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
+            Browse All <ArrowRight className="ml-2" size={16}/>
+          </Link>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">

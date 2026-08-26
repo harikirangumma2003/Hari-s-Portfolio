@@ -25,12 +25,20 @@ const SEODashboardPage = React.lazy(() => import("./pages/SEODashboardPage"));
 const AdminCMSPage = React.lazy(() => import("./pages/AdminCMSPage"));
 const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 
-// Ultra-lightweight loading skeleton/spinner to minimize main-thread work during loads
-const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-[60vh]" id="page-loader">
-    <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
-  </div>
-);
+// Ultra-lightweight loading skeleton with semantic H1 for instant crawler parsing
+const PageLoader = () => {
+  const location = useLocation();
+  const rawPath = location.pathname.replace(/^\/|\/$/g, "");
+  const segment = rawPath.split("/")[0] || "Home";
+  const displayTitle = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4" id="page-loader">
+      <h1 className="sr-only">{displayTitle} | G. Hari Kiran Portfolio</h1>
+      <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+    </div>
+  );
+};
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
