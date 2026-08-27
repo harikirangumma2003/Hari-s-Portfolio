@@ -33,8 +33,8 @@ export const TestimonialCard = () => {
           />
         </div>
         <div className="text-xs">
-          <p className="font-black uppercase">{testimonial.name}</p>
-          <p className="opacity-60">{testimonial.role}</p>
+          <p className="font-black uppercase text-white">{testimonial.name}</p>
+          <p className="text-zinc-300 font-medium">{testimonial.role}</p>
         </div>
       </div>
     </div>

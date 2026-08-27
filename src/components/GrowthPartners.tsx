@@ -23,7 +23,7 @@ export const GrowthPartners = () => {
             Growth Partners <br />
             <span className="text-accent italic">&amp; Featured Brands</span>
           </h2>
-          <p className="text-muted text-sm md:text-base mt-4 max-w-xl leading-relaxed">
+          <p className="text-zinc-700 text-sm md:text-base mt-4 max-w-xl leading-relaxed">
             We operate at the nexus of high-signal organic visibility and conversion engineering. Explore the market leaders scaling with our framework.
           </p>
         </div>
@@ -56,7 +56,7 @@ export const GrowthPartners = () => {
                   <span className="text-[10px] font-black uppercase tracking-widest bg-accent text-white px-3 py-1 rounded-full flex items-center gap-1">
                     <Star size={10} fill="currentColor" /> Premium Partner
                   </span>
-                  <span className="text-xs font-mono opacity-50 px-2">{partner.category}</span>
+                  <span className="text-xs font-mono text-zinc-300 px-2">{partner.category}</span>
                 </div>
                 <a
                   href={partner.url}
@@ -85,7 +85,7 @@ export const GrowthPartners = () => {
                 </h3>
                 <div className="space-y-4 max-w-xl">
                   {partner.brandStory?.paragraphs.slice(0, 1).map((p, idx) => (
-                    <p key={idx} className="text-white/70 text-sm leading-relaxed font-sans">
+                    <p key={idx} className="text-zinc-200 text-sm leading-relaxed font-sans">
                       {p}
                     </p>
                   ))}
@@ -130,8 +130,8 @@ export const GrowthPartners = () => {
                       <Play size={24} fill="currentColor" className="ml-1" />
                     </div>
                   </div>
-                  <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-                    <p className="text-[9px] font-mono font-black uppercase text-white/80">Interactive Video Case Study</p>
+                  <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15">
+                    <p className="text-[9px] font-mono font-black uppercase text-zinc-100">Interactive Video Case Study</p>
                   </div>
                 </div>
               </div>
@@ -168,13 +168,13 @@ export const GrowthPartners = () => {
                 <h4 className="text-xl font-display font-black uppercase text-primary mb-3">
                   {partner.name}
                 </h4>
-                <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed mb-6 font-sans">
+                <p className="text-zinc-700 text-xs sm:text-sm leading-relaxed mb-6 font-sans">
                   {partner.description}
                 </p>
               </div>
 
               <div className="flex items-center justify-between mt-auto border-t border-primary/5 pt-5">
-                <span className="text-[10px] font-mono text-zinc-600 font-semibold uppercase">{partner.category}</span>
+                <span className="text-[10px] font-mono text-zinc-700 font-semibold uppercase">{partner.category}</span>
                 <a
                   href={partner.url}
                   target="_blank"
@@ -194,7 +194,7 @@ export const GrowthPartners = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-2 flex-shrink-0">
             <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-muted">Trusted Growth Ecosystem</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-700">Trusted Growth Ecosystem</span>
           </div>
           
           <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 md:gap-x-12">

@@ -246,14 +246,17 @@ function generatePages() {
           <h1 style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; line-height: 1; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 20px; color: #0A0A0A;">
             ${heading}
           </h1>
-          <p style="font-size: 1.125rem; line-height: 1.6; color: #666; max-width: 800px;">
+          <p style="font-size: 1.125rem; line-height: 1.6; color: #333; max-width: 850px;">
             ${description}
           </p>
         </header>
+        <section style="margin-top: 30px; font-size: 0.95rem; color: #555; line-height: 1.7;">
+          <p>Published by <strong>G. Hari Kiran</strong>, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Discover more on our <a href="/blog" style="color: #FF6B00; text-decoration: underline;">SEO Knowledge Base</a> or request a <a href="/contact" style="color: #FF6B00; text-decoration: underline;">Free SEO Audit</a>.</p>
+        </section>
       </div>
     `;
 
-    // Inject into #root so crawlers see the H1 immediately
+    // Inject into #root so crawlers see the H1 and semantic text immediately
     html = html.replace('<div id="root">', `<div id="root">${preRenderedContent}`);
 
     return html;

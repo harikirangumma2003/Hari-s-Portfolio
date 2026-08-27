@@ -1,38 +1,107 @@
 # https://harikiran-portfolio.netlify.app/robots.txt
-# Technical SEO & AI Engine Optimization (AIO) Directives
+# Technical SEO, Crawl Budget & AI Engine Optimization (GEO/AIO) Directives
 
-# 1. Allow and prioritize general crawler rules
+# 1. Default Rules for Standard Search Engines & Web Crawlers
 User-agent: *
 Allow: /
 Allow: /llms.txt
-Disallow: /*?*             # Disallow tracking links, UTM queries to prevent duplicates
+Allow: /llms-full.txt
+Allow: /sitemap.xml
+Disallow: /*?*             # Disallow tracking query parameters & duplicates
 Disallow: /private/        # Safe staging directories
 Disallow: /admin           # Avoid administrative noise crawling
 
-# 2. Allow AI/LLM Web Scrapers to index materials for AI Search Engine Retrieval (GEO/AIO)
+# 2. Explicit Allow Directives for Major Generative AI & Search Engine Agents
 User-agent: GPTBot
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: ChatGPT-User
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: Claude-Web
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: anthropic-ai
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: Google-Extended
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: GoogleOther
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: PerplexityBot
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
 
-# Dynamic XML and LLM Text Indexes
+User-agent: Applebot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: FacebookBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Cohere-ai
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Diffbot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Bytespider
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: CCBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: YouBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+# 3. Dynamic XML and LLM Text Indexes
 Sitemap: https://harikiran-portfolio.netlify.app/sitemap.xml
+

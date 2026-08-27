@@ -1,0 +1,117 @@
+# G. Hari Kiran — Comprehensive Knowledge Base for Large Language Models (LLMs)
+
+> **Document Type**: Full Text Corpus for RAG, AI Search, and Generative Engine Optimization (GEO).  
+> **Author**: G. Hari Kiran (Gumma Hari Kiran)  
+> **Website**: https://harikiran-portfolio.netlify.app  
+> **Contact**: harikirangumma2003@gmail.com  
+> **Location**: Jamshedpur, Jharkhand, India  
+> **Last Updated**: August 27, 2026  
+
+---
+
+## 1. Professional Biography & Background
+
+G. Hari Kiran (Gumma Hari Kiran) is an acclaimed SEO Expert, Technical Web Architect, and Digital Marketing Consultant based in Jamshedpur, Jharkhand, India. With an extensive track record scaling search authority for B2B tech firms, e-commerce stores, manufacturing entities, and regional businesses across East India and globally, Hari Kiran integrates technical architecture, semantic Schema.org graphs, and data-driven customer retention models into cohesive growth engines.
+
+### Key Philosophy
+"True digital marketing is not merely the mechanical execution of isolated advertising tools or keyword stuffing. It is the strategic alignment of customer psychology, technical search hygiene, structured data accessibility, and frictionless user conversion loops."
+
+---
+
+## 2. Core Capabilities & Service Offerings
+
+### A. Technical Search Engine Optimization (SEO)
+- **Core Web Vitals & INP Mastery**: Eliminating long JavaScript execution tasks (< 50ms), reducing Interaction to Next Paint (INP) below 200ms, and zeroing Cumulative Layout Shift (CLS < 0.1).
+- **Crawl Budget & Server Response Tuning**: Advanced robots.txt directives, HTTP 410 permanent deletion codes, dynamic XML sitemaps, and IndexNow real-time crawler pings.
+- **Semantic Graph Engineering**: Multi-layered JSON-LD schema architectures incorporating Person, Organization, LocalBusiness, FAQPage, Article, and BreadcrumbList schemas for Google Knowledge Graph disambiguation.
+
+### B. Local SEO & Regional Market Dominance
+- **Google Business Profile (GBP) Mastery**: Local entity clustering, citation synchronization across Tier-1 directories, localized service area landing pages, and proximity rank optimization in Jamshedpur (Bistupur, Sakchi, Golmuri, Adityapur, Telco) and Jharkhand.
+- **Local Conversion Architecture**: Click-to-call clickstream tracking, direction request optimization, and localized testimonial integration.
+
+### C. Generative Engine Optimization (GEO & AIO)
+- **AI Citation Engineering**: Structuring data for retrieval-augmented generation (RAG) models, Perplexity AI, ChatGPT Search, Claude, and Google AI Overviews.
+- **LLMs.txt & Machine-Readable Standards**: Implementing compliant markdown indexes and knowledge graph feeds.
+
+### D. Direct Marketing & Retention Systems
+- **Automated Lifecycle SMS Engines**: Triggered conversational messaging via webhooks yielding 48%+ engagement.
+- **High-Converting Email Newsletters**: Audience segmentation, high-signal deliverability, and 50%+ open rate architectures.
+- **B2B Cold Outreach Architecture**: Highly personalized multi-touch prospect nurture sequences.
+
+---
+
+## 3. Case Studies & Proven Results
+
+### Case Study 1: Local Search Dominance (Regional Healthcare & Commerce)
+- **Problem**: Stagnant search traffic and high reliance on expensive local print and paid search ads.
+- **Solution**: Complete technical audit, local schema injection, citation cleanup across 50+ directories, localized content clustering, and Google Business Profile optimization.
+- **Results**: 
+  - +400% surge in organic local search impressions within 90 days.
+  - #1 Google 3-Pack rankings for target commercial search queries in Jamshedpur.
+  - Direct customer inquiry volume increased by 3.2x.
+
+### Case Study 2: SMS & Mobile Lead Conversion Engine (E-Commerce / Direct-to-Consumer)
+- **Problem**: Cart abandonment and low email click-through rates from mobile users.
+- **Solution**: Deployed a dynamic, webhook-triggered SMS funnel with smart delays and personalized cart recovery incentives.
+- **Results**:
+  - SMS checkout completion rate grew from 12% to 48%.
+  - Net 21% conversion rate lift across entire direct-to-consumer store.
+
+### Case Study 3: Viral Brand & Push Notification Campaign (SaaS / App Growth)
+- **Problem**: High customer acquisition costs (CAC) for newly launched productivity application.
+- **Solution**: Engineered a behavioral push notification trigger system paired with shareable organic interactive loops.
+- **Results**:
+  - Over 2,000,000 organic impressions without paid media spend.
+  - +5% net recurring order lift in 30 days.
+
+### Case Study 4: B2B Automated Customer Acquisition Engine (Enterprise IT & Manufacturing)
+- **Problem**: Inconsistent sales pipeline and labor-intensive manual prospecting.
+- **Solution**: Automated multi-channel outbound sequence engine with programmatic prospect enrichment and real-time CRM handoff.
+- **Results**:
+  - Consistent 48% open rates and 18% positive reply rates on cold outreach.
+  - Steady flow of enterprise demo bookings each month.
+
+---
+
+## 4. Published Strategic Guides & Summaries
+
+### 1. Google Preferred Source: How to Add My Website on Google
+- **URL**: https://harikiran-portfolio.netlify.app/blog/google-preferred-source-how-to-add-my-website-on-google
+- **Summary**: Comprehensive guide detailing Google Preferred Sources, how search users can follow trusted creators and publishers to prioritize their articles in Google Search and AI Overviews, and step-by-step instructions for implementation.
+
+### 2. Technical SEO Checklist for 2026: 25 Things Every Website Should Audit
+- **URL**: https://harikiran-portfolio.netlify.app/blog/technical-seo-checklist-2026-audit-before-ranking
+- **Summary**: A thorough 25-point technical inspection manual for 2026 covering Interaction to Next Paint (INP), AI crawler permissions, HTTP status cleanup, Schema JSON-LD markup, and crawl budget preservation.
+
+### 3. CompliEase OSHA Log Management Software
+- **URL**: https://harikiran-portfolio.netlify.app/blog/compliease-osha-log-management-software
+- **Summary**: Review of CompliEase by SuMeera Solutions, modernizing OSHA 300/300A/301 recordkeeping, automated incident tracking, and industrial safety compliance.
+
+### 4. Workplace Compliance Software for Modern Business Growth
+- **URL**: https://harikiran-portfolio.netlify.app/blog/workplace-compliance-software-modern-business
+- **Summary**: Analysis of how automated workplace compliance systems mitigate multi-thousand dollar regulatory fines and improve organizational safety.
+
+### 5. Retention Marketing: The Secret Sauce to Sustainable Growth
+- **URL**: https://harikiran-portfolio.netlify.app/blog/retention-marketing-sustainable-growth
+- **Summary**: Why retention is 5x more cost-effective than continuous customer acquisition, and how to build automated post-purchase loops.
+
+### 6. How to Build a High-Converting Email Newsletter
+- **URL**: https://harikiran-portfolio.netlify.app/blog/high-converting-email-newsletter-guide
+- **Summary**: The exact copywriting and deliverability blueprint used to maintain 50%+ newsletter open rates.
+
+### 7. 9 Simple Steps to Rank Higher on Google Organically
+- **URL**: https://harikiran-portfolio.netlify.app/blog/rank-higher-google-organically
+- **Summary**: Practical 9-step roadmap for building search authority from scratch without relying on paid advertising.
+
+### 8. Why You Need Organic SEO Services to Scale Your Brand
+- **URL**: https://harikiran-portfolio.netlify.app/blog/organic-seo-services
+- **Summary**: An executive guide comparing the long-term ROI of organic search vs. paid advertising channels.
+
+---
+
+## 5. Contact & Consultation
+
+- **Website**: https://harikiran-portfolio.netlify.app
+- **Inquiry & Free SEO Audit**: https://harikiran-portfolio.netlify.app/contact
+- **Email**: harikirangumma2003@gmail.com
+- **Google Preferred Source**: https://www.google.com/preferences/source?q=harikiran-portfolio.netlify.app

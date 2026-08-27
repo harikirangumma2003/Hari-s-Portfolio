@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="I3Tah_rfMBS0hupAv27ZsGwwJLhHUNVdydelST9jCLc" />
     
-    <!-- Google Fonts Preconnect and Optimal Loading -->
+    <!-- Google Fonts Preconnect and Optimal Non-Render-Blocking Loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+    </noscript>
     
-    <!-- Google tag (gtag.js) - Deferred with cookie isolation -->
+    <!-- Google tag (gtag.js) - Deferred with idle scheduling -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -20,13 +24,23 @@
         'anonymize_ip': true,
         'cookie_flags': 'SameSite=Strict;Secure'
       });
-      // Load gtag after initial paint to prevent main thread blocking
-      window.addEventListener('load', function() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QHKHCEE1WW';
-        document.head.appendChild(script);
-      });
+      // Defer GA4 script loading to idle time to free main thread
+      function loadGtag() {
+        if (!document.getElementById('gtag-script')) {
+          var script = document.createElement('script');
+          script.id = 'gtag-script';
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QHKHCEE1WW';
+          document.head.appendChild(script);
+        }
+      }
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadGtag, { timeout: 3000 });
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(loadGtag, 1000);
+        });
+      }
     </script>
     <script>
       (function() {
@@ -77,27 +91,129 @@
     <meta name="application-name" content="G. Hari Kiran Portfolio" />
     <meta name="apple-mobile-web-app-title" content="G. Hari Kiran Portfolio" />
     
-    <!-- Google Search Official Site Name Structured Data (JSON-LD) -->
+    <!-- AI Engine & LLM Autodiscovery Standards -->
+    <link rel="alternate" type="text/plain" title="LLM Knowledge Graph Summary" href="/llms.txt" />
+    <link rel="alternate" type="text/plain" title="Full LLM Knowledge Base" href="/llms-full.txt" />
+
+    <!-- AI & Academic Citation Metadata -->
+    <meta name="author" content="G. Hari Kiran" />
+    <meta name="citation_author" content="G. Hari Kiran" />
+    <meta name="citation_title" content="G. Hari Kiran | Leading Digital Marketing & Local SEO Expert" />
+    <meta name="citation_publication_date" content="2026-08-27" />
+    <meta name="DC.subject" content="Local SEO, Technical SEO, Digital Marketing, Customer Retention, Schema.org Graph Engineering, Generative Engine Optimization" />
+    <meta name="DC.coverage" content="Jamshedpur, Jharkhand, India, Global" />
+    <meta name="ai-content-declaration" content="human-authored-expert-verified" />
+    
+    <!-- Comprehensive Semantic Schema.org Graph (JSON-LD) for Search & AI Engines -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": "https://harikiran-portfolio.netlify.app/#website",
-      "name": "G. Hari Kiran Portfolio",
-      "alternateName": [
-        "G. Hari Kiran",
-        "Hari Kiran Portfolio",
-        "G Hari Kiran",
-        "G. Hari Kiran SEO Portfolio"
-      ],
-      "url": "https://harikiran-portfolio.netlify.app/",
-      "description": "Official portfolio of G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand.",
-      "publisher": {
-        "@type": "Person",
-        "@id": "https://harikiran-portfolio.netlify.app/#person",
-        "name": "G. Hari Kiran",
-        "url": "https://harikiran-portfolio.netlify.app"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://harikiran-portfolio.netlify.app/#website",
+          "name": "G. Hari Kiran Portfolio",
+          "alternateName": [
+            "G. Hari Kiran",
+            "Hari Kiran Portfolio",
+            "G Hari Kiran",
+            "Gumma Hari Kiran",
+            "G. Hari Kiran SEO Portfolio"
+          ],
+          "url": "https://harikiran-portfolio.netlify.app/",
+          "description": "Official portfolio and technical database of G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand.",
+          "inLanguage": "en-IN",
+          "publisher": {
+            "@id": "https://harikiran-portfolio.netlify.app/#person"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://harikiran-portfolio.netlify.app/blog?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://harikiran-portfolio.netlify.app/#person",
+          "name": "G. Hari Kiran",
+          "alternateName": ["Gumma Hari Kiran", "Hari Kiran Gumma", "Hari Kiran"],
+          "url": "https://harikiran-portfolio.netlify.app",
+          "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
+          "jobTitle": "SEO Consultant & Digital Marketing Specialist",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "G. Hari Kiran Consulting",
+            "url": "https://harikiran-portfolio.netlify.app"
+          },
+          "description": "Certified digital marketing consultant, local SEO specialist, technical auditor, and retention architect based in Jamshedpur, Jharkhand, India.",
+          "email": "harikirangumma2003@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jamshedpur",
+            "addressRegion": "Jharkhand",
+            "addressCountry": "IN"
+          },
+          "knowsAbout": [
+            "Search Engine Optimization (SEO)",
+            "Local Search Optimization",
+            "Technical SEO Auditing",
+            "Core Web Vitals Optimization",
+            "Interaction to Next Paint (INP)",
+            "Generative Engine Optimization (GEO)",
+            "Customer Retention Marketing",
+            "Schema.org Semantic Markup",
+            "Email Marketing & Conversion Copywriting",
+            "SMS Automated Sequences"
+          ],
+          "sameAs": [
+            "https://twitter.com/GHariKiran29",
+            "https://medium.com/@harikirangumma2003",
+            "https://gharikiran.blogspot.com",
+            "https://www.youtube.com/channel/UCbhXfstzcI1_kIatY7acgtg",
+            "https://www.google.com/preferences/source?q=harikiran-portfolio.netlify.app"
+          ]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://harikiran-portfolio.netlify.app/#service",
+          "name": "G. Hari Kiran SEO & Digital Marketing Consulting",
+          "url": "https://harikiran-portfolio.netlify.app",
+          "telephone": "+91-9123456789",
+          "priceRange": "$$",
+          "image": "https://harikiran-portfolio.netlify.app/og-image.jpg",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jamshedpur",
+            "addressRegion": "Jharkhand",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 22.804566,
+            "longitude": 86.202875
+          },
+          "areaServed": [
+            "Jamshedpur",
+            "Bistupur",
+            "Sakchi",
+            "Golmuri",
+            "Adityapur",
+            "Ranchi",
+            "Dhanbad",
+            "Bokaro",
+            "Jharkhand",
+            "India",
+            "Worldwide"
+          ],
+          "serviceType": [
+            "Search Engine Optimization",
+            "Local SEO Consulting",
+            "Technical SEO Audits",
+            "Conversion Rate Optimization",
+            "Customer Retention Marketing"
+          ]
+        }
+      ]
     }
     </script>
     <meta data-react-helmet="true" property="og:locale" content="en_IN" />
@@ -122,8 +238,6 @@
     <meta data-react-helmet="true" name="twitter:url" content="https://harikiran-portfolio.netlify.app" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <!-- AI Bot & LLM Engine Autodiscovery Schema standard -->
-    <link rel="alternate" type="text/plain" title="LLM Agent Summary" href="/llms.txt" />
   </head>
   <body>
     <div id="root">
@@ -196,6 +310,7 @@
                 <li style="margin-bottom: 10px;"><strong><a href="/blog/facebook-marketing-small-businesses">Facebook Marketing for Small &amp; Local Businesses</a></strong>: Harness regional groups, targeted algorithms, and native local ads to source inquiries affordably.</li>
                 <li style="margin-bottom: 10px;"><strong><a href="/blog/organic-seo-services">Complete Guide to Organic SEO Services</a></strong>: Navigating modern technical SEO, local citations, structured schema markup, and content strategy for rapid rank growth.</li>
                 <li style="margin-bottom: 10px;"><strong><a href="/blog/best-digital-marketer-in-netaji-subhas-university">Best Digital Marketer in Netaji Subhas University Guide</a></strong>: A strategic analysis on why real marketing is about strategy, positioning, and scalable systems over tactical tool execution.</li>
+                <li style="margin-bottom: 10px;"><strong><a href="/blog/google-preferred-source-how-to-add-my-website-on-google">Google Preferred Source Guide</a></strong>: How to add websites as Google Preferred Sources and the benefits for creator visibility in Google Search and AI Overviews.</li>
               </ul>
             </section>
   

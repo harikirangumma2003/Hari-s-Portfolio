@@ -98,7 +98,7 @@ const Contact = () => {
         </div>
 
         <div className="mt-20 text-center pb-8 border-b border-primary/5 relative z-10">
-          <p className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em] mb-6">Inquiries & Partnerships</p>
+          <p className="text-[10px] font-black text-zinc-800 uppercase tracking-[0.3em] mb-6">Inquiries & Partnerships</p>
           <Link
             to="/contact"
             className="text-xl sm:text-2xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter hover:text-accent transition-colors block break-words leading-[1] md:leading-[0.9]"
@@ -169,7 +169,7 @@ const Footer = () => {
                   { name: "SEO Audit", path: "/seo-audit" }
                 ].map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
+                    <Link to={link.path} className="text-[10px] font-bold uppercase tracking-widest text-zinc-300 hover:text-white transition-all hover:translate-x-1 inline-block">{link.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -180,7 +180,7 @@ const Footer = () => {
               <ul className="space-y-5">
                 {["SEO Strategy", "Market Research", "Content Audits", "Growth Hacking"].map((item) => (
                   <li key={item}>
-                    <Link to={`/contact?interest=${encodeURIComponent(item)}`} className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</Link>
+                    <Link to={`/contact?interest=${encodeURIComponent(item)}`} className="text-[10px] font-bold uppercase tracking-widest text-zinc-300 hover:text-white transition-all hover:translate-x-1 inline-block">{item}</Link>
                   </li>
                 ))}
               </ul>
@@ -188,22 +188,22 @@ const Footer = () => {
             
             <div className="col-span-2 lg:col-span-1 border-t lg:border-t-0 lg:border-l border-white/5 pt-12 lg:pt-0 lg:pl-12 space-y-8">
               <p className="text-[10px] font-black uppercase tracking-[4px] text-amber-400 font-display italic">Mission</p>
-              <p className="text-[11px] font-bold uppercase leading-[1.8] text-zinc-400 tracking-widest">
-                I believe that <span className="text-zinc-200 italic">meaningful marketing</span> is the bridge between a visionary product and its global community. Let's build that bridge.
+              <p className="text-[11px] font-bold uppercase leading-[1.8] text-zinc-300 tracking-widest">
+                I believe that <span className="text-white italic">meaningful marketing</span> is the bridge between a visionary product and its global community. Let's build that bridge.
               </p>
             </div>
           </div>
         </div>
         
         {/* Final Bottom Bar */}
-        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[3px] text-zinc-400">
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[3px] text-zinc-300">
           <p className="text-center md:text-left">
             &copy; {currentYear} G. Hari Kiran. All Architecture & Intellectual Reserved.
           </p>
           <div className="flex gap-12">
-            <Link to="/contact" className="hover:text-white transition-colors text-zinc-400">Privacy Information</Link>
-            <Link to="/contact" className="hover:text-white transition-colors text-zinc-400">Service Terms</Link>
-            <Link to="/about" className="hover:text-white transition-colors text-zinc-400">Attributions & Credentials</Link>
+            <Link to="/contact" className="hover:text-white transition-colors text-zinc-300">Privacy Information</Link>
+            <Link to="/contact" className="hover:text-white transition-colors text-zinc-300">Service Terms</Link>
+            <Link to="/about" className="hover:text-white transition-colors text-zinc-300">Attributions & Credentials</Link>
           </div>
         </div>
       </div>

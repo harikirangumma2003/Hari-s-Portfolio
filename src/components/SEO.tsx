@@ -96,6 +96,15 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="apple-mobile-web-app-title" content="G. Hari Kiran" />
       <link rel="canonical" href={canonicalUrl} />
 
+      {/* AI Bot & LLM Autodiscovery Standards */}
+      <link rel="alternate" type="text/plain" title="LLM Knowledge Graph Summary" href="/llms.txt" />
+      <link rel="alternate" type="text/plain" title="Full LLM Knowledge Base" href="/llms-full.txt" />
+
+      {/* AI & Citation Metadata */}
+      <meta name="citation_author" content="G. Hari Kiran" />
+      <meta name="citation_title" content={fullTitle} />
+      <meta name="ai-content-declaration" content="human-authored-expert-verified" />
+
       {/* Geotagging / GEO & Local SEO Visibility */}
       <meta name="geo.region" content="IN-JH" />
       <meta name="geo.placename" content="Jamshedpur, Jharkhand, India" />

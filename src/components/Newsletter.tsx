@@ -40,7 +40,7 @@ export const Newsletter = () => {
           <h3 className="text-2xl md:text-5xl font-display font-black uppercase leading-[1.1] md:leading-[0.9] mb-4 md:mb-6">
             Get Marketing Strategy <br className="hidden md:block" /> and <span className="text-accent italic">Consultation</span>.
           </h3>
-          <p className="text-white/40 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">
+          <p className="text-zinc-300 text-[10px] md:text-[11px] font-bold uppercase tracking-widest">
             High-signal insights to scale your brand.
           </p>
         </div>
@@ -48,9 +48,9 @@ export const Newsletter = () => {
         <div className="w-full max-w-md">
           <div 
             ref={kitContainerRef} 
-            className="min-h-[100px] kit-form-container w-full"
+            className="min-h-[190px] kit-form-container w-full flex items-center justify-center"
           >
-            <div className="animate-pulse text-white/20 text-xs font-bold tracking-widest uppercase flex justify-center py-8">
+            <div className="text-zinc-400 text-xs font-bold tracking-widest uppercase flex justify-center py-8">
               Loading form...
             </div>
           </div>
