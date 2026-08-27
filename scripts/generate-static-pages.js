@@ -17,6 +17,7 @@ const blogPosts = [
     seoTitle: 'Technical SEO Checklist 2026: 25 Audit Points | Hari Kiran',
     category: 'SEO',
     date: 'Aug 02, 2026',
+    image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp',
     excerpt: 'Actionable 25-point technical SEO checklist for 2026. Audit Core Web Vitals INP, AI Bot crawling, canonical integrity, and crawl budget to rank #1.'
   },
   {
@@ -25,6 +26,7 @@ const blogPosts = [
     seoTitle: 'Best OSHA Compliance Software 2026: Compliease Review',
     category: 'Compliance',
     date: 'Jul 28, 2026',
+    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Compliease by Sumeera Solutions is the top OSHA compliance software for manufacturing in 2026. Streamline OSHA 300 logs and incident reporting.'
   },
   {
@@ -33,6 +35,7 @@ const blogPosts = [
     seoTitle: 'Workplace Compliance Software for Business Growth (2026)',
     category: 'Compliance',
     date: 'Jul 20, 2026',
+    image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Why workplace compliance software is essential for scaling modern businesses. Prevent OSHA fines, protect workers, and automate safety recordkeeping.'
   },
   {
@@ -41,6 +44,7 @@ const blogPosts = [
     seoTitle: 'SuMeera Solutions OSHA Compliance Software Guide (2026)',
     category: 'Compliance',
     date: 'Jul 15, 2026',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'How SuMeera Solutions transforms OSHA compliance and workplace safety logging for modern enterprise and manufacturing organizations.'
   },
   {
@@ -49,6 +53,7 @@ const blogPosts = [
     seoTitle: 'Retention Marketing Guide: Secrets to Sustainable Growth',
     category: 'Retention',
     date: 'Jul 10, 2026',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Learn why customer retention drives sustainable growth and how to build automated retention loops that maximize customer lifetime value.'
   },
   {
@@ -57,6 +62,7 @@ const blogPosts = [
     seoTitle: 'Build a High-Converting Email Newsletter: Full Blueprint',
     category: 'Email Marketing',
     date: 'Jul 05, 2026',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Step-by-step blueprint to designing, writing, and automating high-converting email newsletters with 50%+ open rates and rapid subscriber growth.'
   },
   {
@@ -65,6 +71,7 @@ const blogPosts = [
     seoTitle: 'How to Rank Higher on Google Organically: 9 Step Blueprint',
     category: 'SEO',
     date: 'Jun 28, 2026',
+    image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Master organic search rankings with 9 proven steps: search intent alignment, technical architecture, schema markup, and content authority.'
   },
   {
@@ -73,6 +80,7 @@ const blogPosts = [
     seoTitle: 'Facebook Marketing for Small Business: High-ROI Guide',
     category: 'Digital Marketing',
     date: 'Jun 20, 2026',
+    image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'A practical guide for local and small businesses to generate high-intent leads and sales through organic Facebook communities and targeted ads.'
   },
   {
@@ -81,6 +89,7 @@ const blogPosts = [
     seoTitle: 'Why Your Brand Needs Organic SEO Services to Scale Online',
     category: 'SEO',
     date: 'Jun 12, 2026',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Understand the power of organic SEO services to outrank competitors, capture commercial search intent, and drive qualified organic revenue.'
   },
   {
@@ -89,6 +98,7 @@ const blogPosts = [
     seoTitle: 'Top Digital Marketer Netaji Subhas University | Hari Kiran',
     category: 'Growth',
     date: 'Jun 01, 2026',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format,compress&q=70&w=1200&fm=webp',
     excerpt: 'Why true digital marketing excellence comes from strategy, positioning, and data-driven systems rather than generic tactical execution.'
   },
   {
@@ -97,6 +107,7 @@ const blogPosts = [
     seoTitle: 'Google Preferred Source: How to Add My Website on Google | Hari Kiran',
     category: 'SEO',
     date: 'Aug 20, 2026',
+    image: 'https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format,compress&q=80&w=1200&fm=webp',
     excerpt: 'If you find my content useful, adding my website as a Google Preferred Source is an easy way to stay connected with future articles across SEO, AI, and digital marketing.'
   }
 ];
@@ -109,6 +120,7 @@ const projects = [
     seoTitle: 'Local SEO Dominance Case Study | G. Hari Kiran',
     heading: 'Local Search Dominance',
     category: 'SEO & Content',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
     description: 'Achieved 300% growth in organic traffic through local SEO dominance, citations, and content clustering.'
   },
   {
@@ -117,6 +129,7 @@ const projects = [
     seoTitle: 'SMS Conversion Engine Case Study | G. Hari Kiran',
     heading: 'SMS & Mobile Lead Conversion Engine',
     category: 'Direct Marketing',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
     description: 'Scaled a high-conversion direct marketing channel to drive 21% conversion rates and automated SMS sequences.'
   },
   {
@@ -125,6 +138,7 @@ const projects = [
     seoTitle: 'Viral Brand Campaign Case Study | G. Hari Kiran',
     heading: 'Viral Growth & Brand Hacking Campaign',
     category: 'Creative Strategy',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80',
     description: 'High-impact push notification campaign driving +5% order increase through witty, timed messaging.'
   },
   {
@@ -133,6 +147,7 @@ const projects = [
     seoTitle: 'B2B Lead Engine Case Study | G. Hari Kiran',
     heading: 'B2B Automated Customer Acquisition Engine',
     category: 'Email Marketing',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
     description: 'Built high-impact automated B2B customer acquisition campaigns driving 48% open rates and steady demos.'
   }
 ];
@@ -210,7 +225,7 @@ function generatePages() {
   const template = fs.readFileSync(baseHtmlPath, 'utf8');
 
   // Helper to inject route-specific metadata and H1
-  function createPageHtml(pageUrl, title, heading, description, category = '') {
+  function createPageHtml(pageUrl, title, heading, description, category = '', ogImage = 'https://harikiran-portfolio.netlify.app/og-image.jpg') {
     const canonical = `${siteUrl}${pageUrl}`;
     let html = template;
 
@@ -227,11 +242,15 @@ function generatePages() {
     html = html.replace(/<meta[^>]*property="og:title"[^>]*content=".*?"[^>]*>/i, `<meta property="og:title" content="${title}">`);
     html = html.replace(/<meta[^>]*property="og:description"[^>]*content=".*?"[^>]*>/i, `<meta property="og:description" content="${description}">`);
     html = html.replace(/<meta[^>]*property="og:url"[^>]*content=".*?"[^>]*>/i, `<meta property="og:url" content="${canonical}">`);
+    html = html.replace(/<meta[^>]*property="og:image"[^>]*content=".*?"[^>]*>/i, `<meta property="og:image" content="${ogImage}">`);
+    html = html.replace(/<meta[^>]*property="og:image:secure_url"[^>]*content=".*?"[^>]*>/i, `<meta property="og:image:secure_url" content="${ogImage}">`);
 
     // Replace Twitter Tags
     html = html.replace(/<meta[^>]*name="twitter:title"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:title" content="${title}">`);
     html = html.replace(/<meta[^>]*name="twitter:description"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:description" content="${description}">`);
     html = html.replace(/<meta[^>]*name="twitter:url"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:url" content="${canonical}">`);
+    html = html.replace(/<meta[^>]*name="twitter:image"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:image" content="${ogImage}">`);
+    html = html.replace(/<meta[^>]*name="twitter:image:src"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:image:src" content="${ogImage}">`);
 
     // Pre-render semantic H1 and initial HTML inside #root
     const preRenderedContent = `
@@ -277,9 +296,10 @@ function generatePages() {
     const targetDir = path.join(distDir, 'blog', b.slug);
     fs.mkdirSync(targetDir, { recursive: true });
     const pageTitle = b.seoTitle || b.title;
-    const pageHtml = createPageHtml(postPath, pageTitle, b.title, b.excerpt, b.category);
+    const postImage = b.image || 'https://harikiran-portfolio.netlify.app/og-image.jpg';
+    const pageHtml = createPageHtml(postPath, pageTitle, b.title, b.excerpt, b.category, postImage);
     fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
-    console.log(`Generated pre-rendered blog post: ${postPath}/index.html with H1: "${b.title}"`);
+    console.log(`Generated pre-rendered blog post: ${postPath}/index.html with H1: "${b.title}" and OG Image: ${postImage}`);
   });
 
   // 3. Generate Project Detail Pages
@@ -288,9 +308,10 @@ function generatePages() {
     const targetDir = path.join(distDir, 'work', prj.slug);
     fs.mkdirSync(targetDir, { recursive: true });
     const pageTitle = prj.seoTitle || `${prj.title} | G. Hari Kiran`;
-    const pageHtml = createPageHtml(prjPath, pageTitle, prj.heading, prj.description, prj.category);
+    const prjImage = prj.image || 'https://harikiran-portfolio.netlify.app/og-image.jpg';
+    const pageHtml = createPageHtml(prjPath, pageTitle, prj.heading, prj.description, prj.category, prjImage);
     fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
-    console.log(`Generated pre-rendered work project: ${prjPath}/index.html with H1: "${prj.heading}"`);
+    console.log(`Generated pre-rendered work project: ${prjPath}/index.html with H1: "${prj.heading}" and OG Image: ${prjImage}`);
   });
 
   console.log('Successfully generated all pre-rendered HTML files with valid semantic H1 tags!');
