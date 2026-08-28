@@ -229,28 +229,50 @@ function generatePages() {
     const canonical = `${siteUrl}${pageUrl}`;
     let html = template;
 
-    // Replace Title
-    html = html.replace(/<title[^>]*>.*?<\/title>/i, `<title>${title}</title>`);
+    let imageType = "image/jpeg";
+    if (ogImage.endsWith(".png")) imageType = "image/png";
+    else if (ogImage.endsWith(".webp")) imageType = "image/webp";
 
-    // Replace Meta Description
-    html = html.replace(/<meta[^>]*name="description"[^>]*content=".*?"[^>]*>/i, `<meta name="description" content="${description}">`);
+    // Purge existing tags to prevent duplicates
+    html = html.replace(/<title[^>]*>[\s\S]*?<\/title>/gi, "");
+    html = html.replace(/<meta[^>]+name=["']description["'][^>]*\/?>/gi, "");
+    html = html.replace(/<meta[^>]+property=["']og:[^"']+["'][^>]*\/?>/gi, "");
+    html = html.replace(/<meta[^>]+name=["']twitter:[^"']+["'][^>]*\/?>/gi, "");
+    html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*\/?>/gi, "");
 
-    // Replace Canonical Link
-    html = html.replace(/<link[^>]*rel="canonical"[^>]*>/i, `<link rel="canonical" href="${canonical}">`);
+    const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | G. Hari Kiran`;
 
-    // Replace OG Tags
-    html = html.replace(/<meta[^>]*property="og:title"[^>]*content=".*?"[^>]*>/i, `<meta property="og:title" content="${title}">`);
-    html = html.replace(/<meta[^>]*property="og:description"[^>]*content=".*?"[^>]*>/i, `<meta property="og:description" content="${description}">`);
-    html = html.replace(/<meta[^>]*property="og:url"[^>]*content=".*?"[^>]*>/i, `<meta property="og:url" content="${canonical}">`);
-    html = html.replace(/<meta[^>]*property="og:image"[^>]*content=".*?"[^>]*>/i, `<meta property="og:image" content="${ogImage}">`);
-    html = html.replace(/<meta[^>]*property="og:image:secure_url"[^>]*content=".*?"[^>]*>/i, `<meta property="og:image:secure_url" content="${ogImage}">`);
+    const cleanSocialTags = `
+    <title>${fullTitle}</title>
+    <meta name="description" content="${description}">
+    <link rel="canonical" href="${canonical}">
 
-    // Replace Twitter Tags
-    html = html.replace(/<meta[^>]*name="twitter:title"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:title" content="${title}">`);
-    html = html.replace(/<meta[^>]*name="twitter:description"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:description" content="${description}">`);
-    html = html.replace(/<meta[^>]*name="twitter:url"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:url" content="${canonical}">`);
-    html = html.replace(/<meta[^>]*name="twitter:image"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:image" content="${ogImage}">`);
-    html = html.replace(/<meta[^>]*name="twitter:image:src"[^>]*content=".*?"[^>]*>/i, `<meta name="twitter:image:src" content="${ogImage}">`);
+    <!-- Open Graph (WhatsApp, LinkedIn, Facebook, Slack, Telegram) -->
+    <meta property="og:type" content="${pageUrl.startsWith('/blog/') ? 'article' : 'website'}">
+    <meta property="og:site_name" content="G. Hari Kiran Portfolio">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:title" content="${fullTitle}">
+    <meta property="og:description" content="${description}">
+    <meta property="og:image" content="${ogImage}">
+    <meta property="og:image:secure_url" content="${ogImage}">
+    <meta property="og:image:type" content="${imageType}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="${fullTitle}">
+
+    <!-- Twitter / X Summary Large Image Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@GHariKiran29">
+    <meta name="twitter:creator" content="@GHariKiran29">
+    <meta name="twitter:title" content="${fullTitle}">
+    <meta name="twitter:description" content="${description}">
+    <meta name="twitter:image" content="${ogImage}">
+    <meta name="twitter:image:src" content="${ogImage}">
+    <meta name="twitter:image:alt" content="${fullTitle}">
+    <meta name="twitter:domain" content="harikiran-portfolio.netlify.app">
+    <meta name="twitter:url" content="${canonical}">`;
+
+    html = html.replace(/<head[^>]*>/i, `$&${cleanSocialTags}`);
 
     // Pre-render semantic H1 and initial HTML inside #root
     const preRenderedContent = `

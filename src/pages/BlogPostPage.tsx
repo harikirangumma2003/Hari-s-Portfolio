@@ -250,8 +250,8 @@ const BlogPostPage = () => {
     return <NotFoundPage />;
   }
 
-  const siteUrl = "https://harikiran-portfolio.netlify.app";
-  const shareUrl = `${siteUrl}/blog/${post.slug}`;
+  const currentOrigin = typeof window !== "undefined" ? window.location.origin : "https://harikiran-portfolio.netlify.app";
+  const shareUrl = `${currentOrigin}/blog/${post.slug}`;
 
   const handleShare = (platform: string) => {
     const url = encodeURIComponent(shareUrl);
