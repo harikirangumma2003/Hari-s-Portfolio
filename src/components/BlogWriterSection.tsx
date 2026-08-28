@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo, useRef, FormEvent } from "react";
 import { 
   Sparkles, Plus, FileText, CheckCircle2, AlertTriangle, 
   Heading, Image, Tag, Globe, Check, Loader2, HelpCircle, 
-  RefreshCw, BookOpen, AlertCircle, Eye, Info, PenTool, Link, Bold, List, TrendingUp
+  RefreshCw, BookOpen, AlertCircle, Eye, Info, PenTool, Link, Bold, List, TrendingUp,
+  Share2, Twitter, Linkedin as LinkedinIcon, Facebook, ArrowUpRight
 } from "lucide-react";
 import { ContentHubItem } from "../types/content";
 
@@ -59,7 +60,7 @@ export function BlogWriterSection({
   // Action states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"write" | "seo-meta">("write");
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"write" | "seo-meta" | "social-preview">("write");
 
   // Ref for description text-area to insert formatting tags
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -503,16 +504,25 @@ export function BlogWriterSection({
       const readingSpeedWordsPerMinute = 225;
       const readTimeVal = `${Math.max(1, Math.ceil(wordCount / readingSpeedWordsPerMinute))} min read`;
 
+      const generatedSlug = formTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+      const cleanCanonical = canonicalUrl && canonicalUrl.trim() 
+        ? (canonicalUrl.startsWith('/blog/') || canonicalUrl.startsWith('http') ? canonicalUrl : `/blog/${canonicalUrl.replace(/^\/+/, '')}`)
+        : `/blog/${generatedSlug}`;
+      
+      const cleanCover = formThumbnail && formThumbnail.trim() 
+        ? formThumbnail.trim() 
+        : "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+
       const payload = {
         title: formTitle,
-        excerpt: formExcerpt,
+        excerpt: formExcerpt || (formDescription ? formDescription.replace(/<[^>]*>/g, '').substring(0, 160) : ""),
         description: formDescription,
-        thumbnail: formThumbnail || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+        thumbnail: cleanCover,
         platform: "Portfolio" as const,
         contentType: "Blog" as const,
         category: formCategory,
         tags: formTags,
-        url: canonicalUrl || `#`,
+        url: cleanCanonical,
         featured: false,
         readTime: readTimeVal,
         author: {
@@ -524,13 +534,13 @@ export function BlogWriterSection({
         visibility: formVisibility,
         publishedDate: new Date(),
         
-        // SEO optimization fields
+        // SEO & Social Open Graph / Twitter Card optimization fields
         metaTitle: metaTitle || formTitle,
-        metaDescription: metaDescription || formExcerpt,
-        canonicalUrl: canonicalUrl,
+        metaDescription: metaDescription || formExcerpt || (formDescription ? formDescription.replace(/<[^>]*>/g, '').substring(0, 160) : ""),
+        canonicalUrl: cleanCanonical,
         robots: robots,
-        ogImage: formThumbnail || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-        ogType: ogType,
+        ogImage: cleanCover,
+        ogType: ogType || "article",
 
         // Custom fields for SEO metrics storage
         focusKeyword: focusKeyword,
@@ -547,6 +557,36 @@ export function BlogWriterSection({
         setSelectedBlogId(newId);
         triggerToast(`"${formTitle}" is now live with SEO Score ${seoDiagnostics.score}%!`, "success");
       }
+
+      // Update instant local client cache for instantaneous routing without refresh
+      try {
+        const slug = cleanCanonical.replace(/^.*\/blog\//, "");
+        const cachedStr = localStorage.getItem("portfolio_cms_blog_cache");
+        let list = cachedStr ? JSON.parse(cachedStr) : [];
+        if (!Array.isArray(list)) list = [];
+        
+        const cacheEntry = {
+          title: payload.title,
+          seoTitle: payload.metaTitle,
+          slug: slug,
+          category: payload.category,
+          date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+          image: cleanCover,
+          excerpt: payload.metaDescription,
+          content: payload.description,
+          keywords: payload.tags,
+          isExternal: false,
+          externalUrl: "",
+          readingTime: payload.readTime,
+          rawDate: new Date().toISOString()
+        };
+
+        list = [cacheEntry, ...list.filter((p: any) => p.slug !== slug)];
+        localStorage.setItem("portfolio_cms_blog_cache", JSON.stringify(list));
+      } catch (e) {
+        console.error("Failed to update instant local CMS cache", e);
+      }
+
       onSuccess();
     } catch (err: any) {
       console.error("Save error:", err);
@@ -643,6 +683,18 @@ export function BlogWriterSection({
                 >
                   <Globe className="w-3.5 h-3.5" />
                   Meta Settings
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveWorkspaceTab("social-preview")}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-colors ${
+                    activeWorkspaceTab === "social-preview"
+                      ? "bg-accent/10 text-accent"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                  Social & Twitter Cards
                 </button>
               </div>
 
@@ -1124,6 +1176,124 @@ export function BlogWriterSection({
                           : "bg-zinc-50 border-zinc-200 text-zinc-800"
                       }`}
                     />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tab: Social & Twitter Card Preview */}
+            {activeWorkspaceTab === "social-preview" && (
+              <div className="p-6 space-y-6">
+                <div>
+                  <h3 className="text-sm font-bold tracking-tight text-primary flex items-center gap-2">
+                    <Share2 className="w-4 h-4 text-accent" />
+                    Live Open Graph & Twitter Card Preview
+                  </h3>
+                  <p className="text-xs text-zinc-400 mt-1">
+                    Real-time visualization of how this article renders when shared on Twitter (X), LinkedIn, Facebook, WhatsApp, and Slack.
+                  </p>
+                </div>
+
+                {/* Twitter Summary Large Card Mockup */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-zinc-400 flex items-center gap-1.5">
+                      <Twitter className="w-3.5 h-3.5 text-sky-400" />
+                      Twitter / X Large Image Card (1200 x 630)
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 font-mono">summary_large_image</span>
+                  </div>
+
+                  <div className="rounded-2xl border border-zinc-700/50 bg-[#000000] overflow-hidden max-w-xl shadow-xl">
+                    <div className="relative aspect-[1200/630] w-full bg-zinc-900 overflow-hidden">
+                      <img
+                        src={formThumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp"}
+                        alt={formTitle || "OG Image"}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null;
+                          target.src = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+                        }}
+                      />
+                      <div className="absolute bottom-2 left-2 px-2 py-1 rounded bg-black/70 backdrop-blur-md text-[10px] font-mono text-white/90">
+                        harikiran-portfolio.netlify.app
+                      </div>
+                    </div>
+                    <div className="p-3.5 space-y-1 bg-[#16181c]">
+                      <p className="text-[11px] font-mono text-zinc-400 truncate">
+                        harikiran-portfolio.netlify.app/blog/{formTitle ? formTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "") : "post-slug"}
+                      </p>
+                      <h4 className="text-sm font-bold text-white line-clamp-2 leading-snug">
+                        {metaTitle || formTitle || "Untitled Growth Article"}
+                      </h4>
+                      <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                        {metaDescription || formExcerpt || (formDescription ? formDescription.replace(/<[^>]*>/g, '').substring(0, 140) : "Discover actionable growth insights and technical execution strategies by G. Hari Kiran.")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* LinkedIn / WhatsApp / Facebook Mockup */}
+                <div className="space-y-2 pt-4 border-t border-white/5">
+                  <span className="text-xs font-semibold text-zinc-400 flex items-center gap-1.5">
+                    <LinkedinIcon className="w-3.5 h-3.5 text-blue-500" />
+                    LinkedIn & WhatsApp Link Preview
+                  </span>
+
+                  <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden max-w-xl shadow-md">
+                    <div className="relative aspect-[1200/630] w-full bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
+                      <img
+                        src={formThumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp"}
+                        alt={formTitle || "OG Image"}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-3.5 space-y-1 border-t border-zinc-100 dark:border-zinc-800/80">
+                      <h4 className="text-sm font-bold text-zinc-900 dark:text-white line-clamp-1">
+                        {metaTitle || formTitle || "Untitled Growth Article"}
+                      </h4>
+                      <p className="text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-2">
+                        {metaDescription || formExcerpt || "Discover actionable growth insights and technical execution strategies by G. Hari Kiran."}
+                      </p>
+                      <p className="text-[10px] text-zinc-400 font-mono uppercase tracking-wider pt-1">
+                        HARIKIRAN-PORTFOLIO.NETLIFY.APP
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Inspection & Validator Tools */}
+                <div className="space-y-3 pt-4 border-t border-white/5">
+                  <span className="text-xs font-semibold text-zinc-400">Social Card Debuggers & Direct Testing:</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <a
+                      href={`https://cards-dev.twitter.com/validator`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-2 rounded-xl bg-zinc-800/40 hover:bg-sky-500/10 hover:text-sky-400 border border-white/5 text-[11px] font-semibold text-zinc-300 flex items-center justify-between transition-colors"
+                    >
+                      <span className="flex items-center gap-1.5"><Twitter className="w-3.5 h-3.5 text-sky-400" /> Twitter Card</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                    <a
+                      href={`https://www.linkedin.com/post-inspector/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-2 rounded-xl bg-zinc-800/40 hover:bg-blue-500/10 hover:text-blue-400 border border-white/5 text-[11px] font-semibold text-zinc-300 flex items-center justify-between transition-colors"
+                    >
+                      <span className="flex items-center gap-1.5"><LinkedinIcon className="w-3.5 h-3.5 text-blue-500" /> LinkedIn Inspector</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                    <a
+                      href={`https://developers.facebook.com/tools/debug/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-2 rounded-xl bg-zinc-800/40 hover:bg-indigo-500/10 hover:text-indigo-400 border border-white/5 text-[11px] font-semibold text-zinc-300 flex items-center justify-between transition-colors"
+                    >
+                      <span className="flex items-center gap-1.5"><Facebook className="w-3.5 h-3.5 text-indigo-400" /> FB Debugger</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
                   </div>
                 </div>
               </div>

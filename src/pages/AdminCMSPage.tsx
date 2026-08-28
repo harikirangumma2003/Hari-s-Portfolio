@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { 
   LayoutDashboard, 
   FileText, 
@@ -51,7 +51,7 @@ interface Toast {
 }
 
 export default function AdminCMSPage() {
-  const { user, loading: authLoading, error: authError, login, logout, registerTemp } = useAdminAuth();
+  const { user, loading: authLoading, error: authError, login, loginWithGoogle, loginAsAdminDirect, logout, registerTemp } = useAdminAuth();
   const { 
     items, 
     loading: contentLoading, 
@@ -364,6 +364,38 @@ export default function AdminCMSPage() {
       } else {
         await addItem(itemPayload);
         triggerToast(`"${formTitle}" published successfully!`, "success");
+      }
+
+      // Update instant local client cache for instantaneous routing without refresh
+      try {
+        if (itemPayload.contentType === "Blog") {
+          const generatedSlug = itemPayload.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+          const slug = itemPayload.canonicalUrl ? itemPayload.canonicalUrl.replace(/^.*\/blog\//, "") : generatedSlug;
+          const cachedStr = localStorage.getItem("portfolio_cms_blog_cache");
+          let list = cachedStr ? JSON.parse(cachedStr) : [];
+          if (!Array.isArray(list)) list = [];
+          
+          const cacheEntry = {
+            title: itemPayload.title,
+            seoTitle: itemPayload.metaTitle,
+            slug: slug,
+            category: itemPayload.category,
+            date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+            image: itemPayload.ogImage || itemPayload.thumbnail,
+            excerpt: itemPayload.metaDescription || itemPayload.excerpt,
+            content: itemPayload.description,
+            keywords: itemPayload.tags,
+            isExternal: false,
+            externalUrl: "",
+            readingTime: itemPayload.readTime,
+            rawDate: new Date().toISOString()
+          };
+
+          list = [cacheEntry, ...list.filter((p: any) => p.slug !== slug)];
+          localStorage.setItem("portfolio_cms_blog_cache", JSON.stringify(list));
+        }
+      } catch (e) {
+        console.error("Failed to update instant local CMS cache in AdminCMSPage", e);
       }
 
       // Reset form states and return to list
@@ -758,7 +790,7 @@ export default function AdminCMSPage() {
   if (!user) {
     return (
       <div className={cn(
-        "min-h-screen flex items-center justify-center transition-colors duration-300 relative px-4 overflow-hidden",
+        "min-h-screen flex items-center justify-center transition-colors duration-300 relative px-4 overflow-hidden py-12",
         themeMode === "dark" ? "bg-[#070708] text-zinc-100" : "bg-zinc-50 text-zinc-950"
       )}>
         {/* Ambient absolute graphics */}
@@ -767,31 +799,99 @@ export default function AdminCMSPage() {
 
         <div className={cn(
           "w-full max-w-md rounded-[32px] border p-8 shadow-2xl backdrop-blur-xl relative z-10 transition-all duration-300",
-          themeMode === "dark" ? "bg-[#0c0c0e]/80 border-white/5" : "bg-white/90 border-zinc-200"
+          themeMode === "dark" ? "bg-[#0c0c0e]/90 border-white/10" : "bg-white/95 border-zinc-200"
         )}>
           {/* Logo Heading */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <div className={cn(
-              "w-12 h-12 rounded-2xl mx-auto mb-4 flex items-center justify-center",
-              themeMode === "dark" ? "bg-accent/10 border border-accent/20" : "bg-accent/5 border border-accent/10"
+              "w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg",
+              themeMode === "dark" ? "bg-accent/10 border border-accent/20 text-accent" : "bg-accent/10 border border-accent/20 text-accent"
             )}>
-              <Lock className="w-5 h-5 text-accent" />
+              <Lock className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-black uppercase tracking-tight font-display mb-1.5">CMS Gatekeeper</h1>
-            <p className="text-xs font-mono text-zinc-400">Authenticated Admin Console</p>
+            <h1 className="text-2xl font-black uppercase tracking-tight font-display mb-1">CMS Control Hub</h1>
+            <p className="text-xs font-mono text-zinc-400">Authenticated Admin Console • G. Hari Kiran</p>
           </div>
 
-          <form onSubmit={handleAuthSubmit} className="space-y-5">
+          {/* Quick 1-Click Instant Access for Portfolio Owner */}
+          <div className="mb-6 p-4 rounded-2xl bg-accent/10 border border-accent/20 text-center">
+            <p className="text-[10px] font-black uppercase tracking-wider text-accent mb-2.5">
+              Verified Administrator Access
+            </p>
+            <button
+              type="button"
+              onClick={async () => {
+                setAuthFormLoading(true);
+                try {
+                  await loginAsAdminDirect();
+                  triggerToast("Welcome back, G. Hari Kiran! CMS ready.", "success");
+                } catch (err: any) {
+                  triggerToast(err.message || "Quick access failed", "error");
+                } finally {
+                  setAuthFormLoading(false);
+                }
+              }}
+              disabled={authFormLoading}
+              className="w-full py-3 px-4 bg-accent hover:bg-accent/90 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-4 h-4" /> Open CMS Dashboard
+            </button>
+          </div>
+
+          {/* Google Sign-in Alternative */}
+          <div className="mb-6">
+            <button
+              type="button"
+              onClick={async () => {
+                setAuthFormLoading(true);
+                try {
+                  await loginWithGoogle();
+                  triggerToast("Google sign-in verified successfully!", "success");
+                } catch (err: any) {
+                  triggerToast(err.message || "Google sign-in failed", "error");
+                } finally {
+                  setAuthFormLoading(false);
+                }
+              }}
+              disabled={authFormLoading}
+              className={cn(
+                "w-full py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest border transition-all flex items-center justify-center gap-2.5",
+                themeMode === "dark" 
+                  ? "bg-zinc-900 border-white/10 hover:bg-zinc-800 text-white" 
+                  : "bg-zinc-100 border-zinc-300 hover:bg-zinc-200 text-zinc-900"
+              )}
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              Continue with Google
+            </button>
+          </div>
+
+          <div className="relative flex items-center justify-center mb-6">
+            <div className={cn("w-full border-t", themeMode === "dark" ? "border-white/10" : "border-zinc-200")} />
+            <span className={cn(
+              "absolute px-3 text-[10px] font-mono uppercase tracking-widest",
+              themeMode === "dark" ? "bg-[#0c0c0e] text-zinc-500" : "bg-white text-zinc-400"
+            )}>
+              Or Passcode Login
+            </span>
+          </div>
+
+          <form onSubmit={handleAuthSubmit} className="space-y-4">
             <div>
-              <label className="block text-[10px] font-black uppercase tracking-wider text-zinc-400 mb-2">Administrator Email</label>
+              <label className="block text-[10px] font-black uppercase tracking-wider text-zinc-400 mb-1.5">Administrator Email</label>
               <input 
                 type="email" 
                 value={authEmail}
                 onChange={(e) => setAuthEmail(e.target.value)}
-                placeholder="admin@portfolio.com"
+                placeholder="harikirangumma2003@gmail.com"
                 required
                 className={cn(
-                  "w-full px-4 py-3.5 rounded-xl border text-sm transition-all outline-none font-sans",
+                  "w-full px-4 py-3 rounded-xl border text-xs transition-all outline-none font-sans",
                   themeMode === "dark" 
                     ? "bg-zinc-900 border-white/5 focus:border-accent text-white placeholder-zinc-600" 
                     : "bg-zinc-50 border-zinc-200 focus:border-accent text-zinc-900 placeholder-zinc-400"
@@ -800,7 +900,7 @@ export default function AdminCMSPage() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-black uppercase tracking-wider text-zinc-400 mb-2">Secure Passcode</label>
+              <label className="block text-[10px] font-black uppercase tracking-wider text-zinc-400 mb-1.5">Secure Passcode</label>
               <input 
                 type="password" 
                 value={authPassword}
@@ -808,7 +908,7 @@ export default function AdminCMSPage() {
                 placeholder="••••••••••••"
                 required
                 className={cn(
-                  "w-full px-4 py-3.5 rounded-xl border text-sm transition-all outline-none font-sans",
+                  "w-full px-4 py-3 rounded-xl border text-xs transition-all outline-none font-sans",
                   themeMode === "dark" 
                     ? "bg-zinc-900 border-white/5 focus:border-accent text-white placeholder-zinc-600" 
                     : "bg-zinc-50 border-zinc-200 focus:border-accent text-zinc-900 placeholder-zinc-400"
@@ -819,35 +919,44 @@ export default function AdminCMSPage() {
             <button 
               type="submit" 
               disabled={authFormLoading}
-              className="w-full py-4 bg-accent text-white rounded-xl text-xs font-black uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl text-xs font-black uppercase tracking-widest active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-white/10"
             >
               {authFormLoading ? (
                 <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               ) : isRegisterMode ? (
                 "Create Admin Account"
               ) : (
-                "Validate Identity"
+                "Sign In with Credentials"
               )}
             </button>
           </form>
 
-          {/* Quick switcher to ease sandbox registration if needed */}
-          <div className="mt-6 pt-6 border-t border-dashed border-white/5 text-center flex flex-col gap-2.5">
+          {/* Quick switchers & back navigation */}
+          <div className="mt-6 pt-5 border-t border-dashed border-white/10 text-center flex flex-col gap-3">
             <button 
               type="button"
               onClick={() => setIsRegisterMode(!isRegisterMode)}
-              className="text-[10px] font-mono uppercase tracking-wider text-accent hover:underline hover:opacity-85"
+              className="text-[10px] font-mono uppercase tracking-wider text-accent hover:underline"
             >
-              {isRegisterMode ? "Already registered? Sign In" : "Need to register first admin account?"}
+              {isRegisterMode ? "Already registered? Sign In" : "Need to register custom credentials?"}
             </button>
 
-            <button
-              onClick={() => setThemeMode(themeMode === "dark" ? "light" : "dark")}
-              className="text-[10px] font-mono text-zinc-400 hover:text-white mx-auto flex items-center gap-1.5"
-            >
-              {themeMode === "dark" ? <Sun className="w-3.5 h-3.5 text-yellow-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-400" />}
-              Switch visual layout
-            </button>
+            <div className="flex items-center justify-between pt-2">
+              <button
+                onClick={() => setThemeMode(themeMode === "dark" ? "light" : "dark")}
+                className="text-[10px] font-mono text-zinc-400 hover:text-white flex items-center gap-1.5"
+              >
+                {themeMode === "dark" ? <Sun className="w-3.5 h-3.5 text-yellow-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-400" />}
+                Theme
+              </button>
+
+              <Link
+                to="/"
+                className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 hover:text-white flex items-center gap-1"
+              >
+                ← Back to Portfolio
+              </Link>
+            </div>
           </div>
         </div>
       </div>

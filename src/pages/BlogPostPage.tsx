@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
 import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
@@ -9,6 +9,7 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import NotFoundPage from "./NotFoundPage";
 import { getPublishedContent } from "../services/contentService";
 import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
+import { TableOfContents } from "../components/TableOfContents";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -24,6 +25,27 @@ const formatDate = (dateVal: any): string => {
   } catch { return "Recent Post"; }
 };
 
+const extractTextFromChildren = (children: any): string => {
+  if (!children) return "";
+  if (typeof children === "string") return children;
+  if (typeof children === "number") return String(children);
+  if (Array.isArray(children)) return children.map(extractTextFromChildren).join("");
+  if (children.props && children.props.children) return extractTextFromChildren(children.props.children);
+  return "";
+};
+
+const slugifyHeading = (text: string): string => {
+  const clean = text
+    .toLowerCase()
+    .replace(/<[^>]+>/g, '')
+    .replace(/[*_~`#[\]()]/g, '')
+    .replace(/&[a-z0-9#]+;/gi, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  return clean || 'section';
+};
+
 const BlogPostPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -31,18 +53,35 @@ const BlogPostPage = () => {
   
   const initialPosts = useMemo(() => {
     const staticPosts = blogPosts;
-    const cached = localStorage.getItem("g_hari_kiran_medium_feed");
-    if (cached) {
+    const combined: any[] = [...staticPosts];
+
+    // Read cached CMS posts
+    const cachedCms = localStorage.getItem("portfolio_cms_blog_cache");
+    if (cachedCms) {
       try {
-        const parsed = JSON.parse(cached);
+        const parsed = JSON.parse(cachedCms);
         if (Array.isArray(parsed)) {
-          return [...staticPosts, ...parsed];
+          combined.push(...parsed);
+        }
+      } catch (e) {
+        console.error("Error parsing cached CMS posts inside BlogPostPage", e);
+      }
+    }
+
+    // Read cached Medium posts
+    const cachedMedium = localStorage.getItem("g_hari_kiran_medium_feed");
+    if (cachedMedium) {
+      try {
+        const parsed = JSON.parse(cachedMedium);
+        if (Array.isArray(parsed)) {
+          combined.push(...parsed);
         }
       } catch (e) {
         console.error("Error parsing cached medium posts inside BlogPostPage", e);
       }
     }
-    return staticPosts;
+
+    return combined;
   }, []);
 
   const [posts, setPosts] = useState<any[]>(initialPosts);
@@ -58,10 +97,7 @@ const BlogPostPage = () => {
   }, [posts, slug]);
 
   useEffect(() => {
-    if (post) return;
-
     const fetchAdditionalPosts = async () => {
-      setIsLoading(true);
       try {
         // 1. Fetch CMS posts from Firestore
         const firestoreContent = await getPublishedContent();
@@ -70,27 +106,36 @@ const BlogPostPage = () => {
           if (!postSlug) {
             postSlug = item.url ? item.url.replace(/^.*\/blog\//, "") : generateSlug(item.title);
           }
+          
+          const postImg = item.ogImage || item.thumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+
           return {
             title: item.title,
+            seoTitle: item.metaTitle || item.title,
             slug: postSlug,
             category: item.category || "SEO",
             date: formatDate(item.publishedDate),
-            image: item.thumbnail || item.ogImage || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp",
-            excerpt: item.excerpt || item.description || "",
+            image: postImg,
+            excerpt: item.metaDescription || item.excerpt || item.description || "",
             content: item.description || "",
             keywords: item.tags || [],
             isExternal: false,
-            externalUrl: item.url || "",
+            externalUrl: item.url && !item.url.startsWith('#') && !item.url.startsWith('/blog/') ? item.url : "",
             readingTime: item.readTime || "5 min read",
             rawDate: item.publishedDate ? new Date(item.publishedDate).toISOString() : new Date().toISOString()
           };
         });
 
         if (cmsPosts.length > 0) {
+          localStorage.setItem("portfolio_cms_blog_cache", JSON.stringify(cmsPosts));
           setPosts(prev => {
             const existingSlugs = new Set(prev.map(p => p.slug));
             const newToAdd = cmsPosts.filter(c => !existingSlugs.has(c.slug));
-            return [...prev, ...newToAdd];
+            const updated = prev.map(p => {
+              const matchedCms = cmsPosts.find(c => c.slug === p.slug);
+              return matchedCms ? { ...p, ...matchedCms } : p;
+            });
+            return [...updated, ...newToAdd];
           });
         }
 
@@ -111,7 +156,7 @@ const BlogPostPage = () => {
                 if (match && match[1] && !match[1].includes("stat?event=") && !match[1].includes("avatar")) {
                   img = match[1];
                 } else {
-                  img = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp";
+                  img = "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
                 }
               }
 
@@ -158,7 +203,7 @@ const BlogPostPage = () => {
     };
 
     fetchAdditionalPosts();
-  }, [slug, post]);
+  }, [slug]);
 
   const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
@@ -239,19 +284,20 @@ const BlogPostPage = () => {
   };
 
   const postTitle = post.seoTitle || (post.title.length > 55 ? post.title.slice(0, 52) + "..." : post.title);
-  const postExcerpt = post.excerpt;
+  const postExcerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 160) : "Expert growth and technical SEO strategy by G. Hari Kiran");
+  const postImage = post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
 
   return (
     <div className="pt-32 pb-24">
       <SEO 
         title={postTitle}
         description={postExcerpt}
-        image={post.image}
+        image={postImage}
         url={`/blog/${post.slug}`}
         type="article"
-        canonical={post.externalUrl}
+        canonical={post.externalUrl || `https://harikiran-portfolio.netlify.app/blog/${post.slug}`}
         articleData={{
-          publishedTime: post.date,
+          publishedTime: post.rawDate || post.date,
           author: "G. Hari Kiran",
           section: post.category,
           tags: post.keywords
@@ -260,14 +306,14 @@ const BlogPostPage = () => {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
           "headline": post.title,
-          "image": post.image,
-          "datePublished": post.date,
+          "image": postImage,
+          "datePublished": post.rawDate || post.date,
           "author": {
             "@type": "Person",
             "name": "G. Hari Kiran",
-            "url": "https://harikiran.marketing/about"
+            "url": "https://harikiran-portfolio.netlify.app/about"
           },
-          "description": post.excerpt,
+          "description": postExcerpt,
           "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": shareUrl
@@ -403,6 +449,9 @@ const BlogPostPage = () => {
               </div>
             )}
             
+            {/* Table of Contents for Article Navigation */}
+            <TableOfContents content={post.content || ""} />
+            
             <div 
               className="markdown-content"
               onClick={handleContentClick}
@@ -411,18 +460,42 @@ const BlogPostPage = () => {
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
                 components={{
-                  h1: ({ node, ...props }) => (
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-primary mt-12 mb-6 uppercase border-b border-primary/10 pb-4" {...props} />
-                  ),
-                  h2: ({ node, ...props }) => (
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-black tracking-tight text-primary mt-14 mb-6 uppercase border-b border-primary/10 pb-3" {...props} />
-                  ),
-                  h3: ({ node, ...props }) => (
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-black tracking-tight text-primary mt-10 mb-4 uppercase flex items-center gap-2" {...props} />
-                  ),
-                  h4: ({ node, ...props }) => (
-                    <h4 className="text-lg sm:text-xl font-display font-black text-primary mt-8 mb-3 uppercase" {...props} />
-                  ),
+                  h1: ({ node, children, ...props }: any) => {
+                    const text = extractTextFromChildren(children);
+                    const id = props.id || slugifyHeading(text);
+                    return (
+                      <h1 id={id} className="scroll-mt-28 text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tight text-primary mt-12 mb-6 uppercase border-b border-primary/10 pb-4" {...props}>
+                        {children}
+                      </h1>
+                    );
+                  },
+                  h2: ({ node, children, ...props }: any) => {
+                    const text = extractTextFromChildren(children);
+                    const id = props.id || slugifyHeading(text);
+                    return (
+                      <h2 id={id} className="scroll-mt-28 text-2xl sm:text-3xl md:text-4xl font-display font-black tracking-tight text-primary mt-14 mb-6 uppercase border-b border-primary/10 pb-3" {...props}>
+                        {children}
+                      </h2>
+                    );
+                  },
+                  h3: ({ node, children, ...props }: any) => {
+                    const text = extractTextFromChildren(children);
+                    const id = props.id || slugifyHeading(text);
+                    return (
+                      <h3 id={id} className="scroll-mt-28 text-xl sm:text-2xl md:text-3xl font-display font-black tracking-tight text-primary mt-10 mb-4 uppercase flex items-center gap-2" {...props}>
+                        {children}
+                      </h3>
+                    );
+                  },
+                  h4: ({ node, children, ...props }: any) => {
+                    const text = extractTextFromChildren(children);
+                    const id = props.id || slugifyHeading(text);
+                    return (
+                      <h4 id={id} className="scroll-mt-28 text-lg sm:text-xl font-display font-black text-primary mt-8 mb-3 uppercase" {...props}>
+                        {children}
+                      </h4>
+                    );
+                  },
                   p: ({ node, ...props }) => (
                     <p className="text-base sm:text-lg text-zinc-800 leading-[1.85] mb-6 font-normal" {...props} />
                   ),

@@ -163,6 +163,7 @@ const Footer = () => {
                   { name: "Work", path: "/work" },
                   { name: "Blog", path: "/blog" },
                   { name: "Content Hub", path: "/content-hub" },
+                  { name: "Admin CMS", path: "/admin" },
                   { name: "Partners", path: "/partners" },
                   { name: "Resources", path: "/resources" },
                   { name: "Contact", path: "/contact" },
