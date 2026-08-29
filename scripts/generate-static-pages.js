@@ -109,6 +109,60 @@ const blogPosts = [
     date: 'Aug 20, 2026',
     image: 'https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format,compress&q=80&w=1200&fm=webp',
     excerpt: 'If you find my content useful, adding my website as a Google Preferred Source is an easy way to stay connected with future articles across SEO, AI, and digital marketing.'
+  },
+  {
+    slug: 'seo-services-cost-is-500-enough-for-a-company',
+    title: 'SEO Services Cost: Is $500/Month Enough for a Company in 2026?',
+    seoTitle: 'SEO Services Cost: Is $500 Enough for a Company? | Hari Kiran',
+    category: 'SEO',
+    date: 'Aug 15, 2026',
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format,compress&q=80&w=1200&fm=webp',
+    excerpt: 'Explore the true cost of SEO services in 2026. Discover why $500/month packages often fail, what reputable agencies charge, and how to allocate your SEO budget.'
+  },
+  {
+    slug: 'why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations',
+    title: 'Why Houston Manufacturers Keep Receiving OSHA 1904 Recordkeeping Citations',
+    seoTitle: 'Houston OSHA 1904 Recordkeeping Citations Guide | Hari Kiran',
+    category: 'Compliance',
+    date: 'Aug 10, 2026',
+    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=80&w=1200&fm=webp',
+    excerpt: 'Learn why industrial and manufacturing businesses in Houston and OSHA Region 6 face recurring 1904 recordkeeping penalties, and how to stay 100% compliant.'
+  },
+  {
+    slug: 'why-most-businesses-don-t-need-more-traffic-they-need-better-traffic',
+    title: 'Why Most Businesses Don\'t Need More Traffic: They Need Better Traffic',
+    seoTitle: 'Why You Need Better Traffic, Not More Traffic | Hari Kiran',
+    category: 'Growth',
+    date: 'Aug 05, 2026',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=1200&fm=webp',
+    excerpt: 'Stop chasing vanity page views. Discover how high-intent organic traffic, commercial search queries, and conversion rate optimization drive actual revenue.'
+  },
+  {
+    slug: 'osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands',
+    title: 'OSHA 1904 Recordkeeping: The Mistakes That Cost Manufacturing Companies Thousands',
+    seoTitle: 'Costly OSHA 1904 Recordkeeping Mistakes | Hari Kiran',
+    category: 'Compliance',
+    date: 'Jul 25, 2026',
+    image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format,compress&q=80&w=1200&fm=webp',
+    excerpt: 'Avoid 5-figure OSHA penalties. Uncover the most common recording errors on OSHA Forms 300, 301, and 300A, and how automated compliance prevents costly audits.'
+  },
+  {
+    slug: 'who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand',
+    title: 'Who Records Injuries for Temporary Workers? The OSHA Rule Many Manufacturers Misunderstand',
+    seoTitle: 'Temporary Worker Injury Recording OSHA Rule | Hari Kiran',
+    category: 'Compliance',
+    date: 'Jul 18, 2026',
+    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format,compress&q=80&w=1200&fm=webp',
+    excerpt: 'Staffing agency or host employer? Understand the OSHA 1904.31 Day-to-Day Supervision standard to avoid misclassifying temporary worker injury logs.'
+  },
+  {
+    slug: 'the-2x-growth-formula-in-marketing-customer-experience-employee-experience',
+    title: 'The 2X Growth Formula in Marketing: Customer Experience + Employee Experience',
+    seoTitle: 'The 2X Growth Formula: CX + EX Marketing | Hari Kiran',
+    category: 'Growth',
+    date: 'Jul 12, 2026',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=80&w=1200&fm=webp',
+    excerpt: 'Unlock sustainable business scaling with the 2X Growth Formula. See how aligning Employee Experience (EX) with Customer Experience (CX) doubles retention and revenue.'
   }
 ];
 
@@ -335,6 +389,15 @@ function generatePages() {
     fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
     console.log(`Generated pre-rendered work project: ${prjPath}/index.html with H1: "${prj.heading}" and OG Image: ${prjImage}`);
   });
+
+  // 4. Generate and synchronize image-enabled sitemap.xml to dist and public
+  const publicDir = path.resolve(__dirname, '../public');
+  const sitemapPath = path.join(publicDir, 'sitemap.xml');
+  if (fs.existsSync(sitemapPath)) {
+    const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
+    fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapContent);
+    console.log('Successfully synchronized Google Image-enabled sitemap.xml to dist/sitemap.xml');
+  }
 
   console.log('Successfully generated all pre-rendered HTML files with valid semantic H1 tags!');
 }

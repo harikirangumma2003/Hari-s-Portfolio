@@ -3,9 +3,14 @@ import {
   Sparkles, Plus, FileText, CheckCircle2, AlertTriangle, 
   Heading, Image, Tag, Globe, Check, Loader2, HelpCircle, 
   RefreshCw, BookOpen, AlertCircle, Eye, Info, PenTool, Link, Bold, List, TrendingUp,
-  Share2, Twitter, Linkedin as LinkedinIcon, Facebook, ArrowUpRight
+  Share2, Twitter, Linkedin as LinkedinIcon, Facebook, ArrowUpRight,
+  Zap, Radio, Link2, UploadCloud, Layers
 } from "lucide-react";
 import { ContentHubItem } from "../types/content";
+import { InternalLinkingAssistant } from "./InternalLinkingAssistant";
+import { InstantIndexingManager } from "./InstantIndexingManager";
+import { ImageOptimizationModal } from "./ImageOptimizationModal";
+import { sendInstantIndexPing } from "../services/indexingService";
 
 interface BlogWriterSectionProps {
   themeMode: "dark" | "light";
@@ -60,7 +65,9 @@ export function BlogWriterSection({
   // Action states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"write" | "seo-meta" | "social-preview">("write");
+  const [isImageOptimizerOpen, setIsImageOptimizerOpen] = useState(false);
+  const [autoInstantIndex, setAutoInstantIndex] = useState(true);
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"write" | "seo-meta" | "social-preview" | "internal-links" | "instant-indexing">("write");
 
   // Ref for description text-area to insert formatting tags
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -558,6 +565,17 @@ export function BlogWriterSection({
         triggerToast(`"${formTitle}" is now live with SEO Score ${seoDiagnostics.score}%!`, "success");
       }
 
+      // Automated Instant Indexing Ping on Publish/Update
+      if (autoInstantIndex && payload.status === "Published") {
+        sendInstantIndexPing(cleanCanonical, formTitle, "URL_UPDATED")
+          .then((res) => {
+            if (res.success) {
+              triggerToast(`⚡ Google & IndexNow notified immediately for instant crawl!`, "success");
+            }
+          })
+          .catch((e) => console.warn("Background instant indexing dispatch notice:", e));
+      }
+
       // Update instant local client cache for instantaneous routing without refresh
       try {
         const slug = cleanCanonical.replace(/^.*\/blog\//, "");
@@ -659,13 +677,13 @@ export function BlogWriterSection({
             
             {/* Workspace tabs header */}
             <div className="flex border-b border-white/5 px-5 py-3 justify-between items-center flex-wrap gap-2">
-              <div className="flex gap-2">
+              <div className="flex gap-1.5 overflow-x-auto py-1 max-w-full">
                 <button
                   type="button"
                   onClick={() => setActiveWorkspaceTab("write")}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-colors ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors ${
                     activeWorkspaceTab === "write"
-                      ? "bg-accent/10 text-accent"
+                      ? "bg-accent text-white"
                       : "text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
@@ -674,10 +692,34 @@ export function BlogWriterSection({
                 </button>
                 <button
                   type="button"
+                  onClick={() => setActiveWorkspaceTab("internal-links")}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors ${
+                    activeWorkspaceTab === "internal-links"
+                      ? "bg-accent text-white"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                >
+                  <Link2 className="w-3.5 h-3.5" />
+                  Internal Links
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveWorkspaceTab("instant-indexing")}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors ${
+                    activeWorkspaceTab === "instant-indexing"
+                      ? "bg-accent text-white"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
+                >
+                  <Radio className="w-3.5 h-3.5" />
+                  Instant Indexing
+                </button>
+                <button
+                  type="button"
                   onClick={() => setActiveWorkspaceTab("seo-meta")}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-colors ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors ${
                     activeWorkspaceTab === "seo-meta"
-                      ? "bg-accent/10 text-accent"
+                      ? "bg-accent text-white"
                       : "text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
@@ -687,14 +729,14 @@ export function BlogWriterSection({
                 <button
                   type="button"
                   onClick={() => setActiveWorkspaceTab("social-preview")}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-colors ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 whitespace-nowrap transition-colors ${
                     activeWorkspaceTab === "social-preview"
-                      ? "bg-accent/10 text-accent"
+                      ? "bg-accent text-white"
                       : "text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
                   <Share2 className="w-3.5 h-3.5" />
-                  Social & Twitter Cards
+                  Social Cards
                 </button>
               </div>
 
@@ -885,28 +927,43 @@ export function BlogWriterSection({
                       </p>
                     </div>
 
-                    <button
-                      type="button"
-                      disabled={isGeneratingImage}
-                      onClick={handleAutoGenerateImageAndAlt}
-                      className={`text-[10px] font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer ${
-                        isGeneratingImage 
-                          ? "bg-zinc-800 text-zinc-500" 
-                          : "bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/15"
-                      }`}
-                    >
-                      {isGeneratingImage ? (
-                        <>
-                          <Loader2 className="w-3 h-3 animate-spin" />
-                          Designing...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="w-3 h-3" />
-                          Auto-Generate Cover & Alt Text
-                        </>
-                      )}
-                    </button>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={() => setIsImageOptimizerOpen(true)}
+                        className={`text-[10px] font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border ${
+                          themeMode === "dark"
+                            ? "bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border-white/10"
+                            : "bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border-zinc-300"
+                        }`}
+                      >
+                        <Zap className="w-3.5 h-3.5 text-accent" />
+                        Optimize & WebP Convert
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isGeneratingImage}
+                        onClick={handleAutoGenerateImageAndAlt}
+                        className={`text-[10px] font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer ${
+                          isGeneratingImage 
+                            ? "bg-zinc-800 text-zinc-500" 
+                            : "bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/15"
+                        }`}
+                      >
+                        {isGeneratingImage ? (
+                          <>
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                            Designing...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-3 h-3" />
+                            Auto-Generate Cover & Alt Text
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   {formThumbnail && (
@@ -1299,29 +1356,74 @@ export function BlogWriterSection({
               </div>
             )}
 
+            {/* Tab: Internal Linking Assistant */}
+            {activeWorkspaceTab === "internal-links" && (
+              <div className="p-6">
+                <InternalLinkingAssistant
+                  currentTitle={formTitle}
+                  currentExcerpt={formExcerpt}
+                  currentContent={formDescription}
+                  currentCategory={formCategory}
+                  focusKeyword={focusKeyword}
+                  onInsertLink={(markdownLink) => {
+                    insertTextAtCursor(markdownLink);
+                  }}
+                  themeMode={themeMode}
+                  triggerToast={triggerToast}
+                />
+              </div>
+            )}
+
+            {/* Tab: Instant Indexing Manager */}
+            {activeWorkspaceTab === "instant-indexing" && (
+              <div className="p-6">
+                <InstantIndexingManager
+                  currentUrl={canonicalUrl ? `https://harikiran-portfolio.netlify.app${canonicalUrl.startsWith("/") ? "" : "/"}${canonicalUrl}` : `https://harikiran-portfolio.netlify.app/blog/${formTitle ? formTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-") : ""}`}
+                  currentTitle={formTitle || "SEO Optimized Post"}
+                  themeMode={themeMode}
+                  triggerToast={triggerToast}
+                />
+              </div>
+            )}
+
             {/* Bottom Form Actions */}
-            <div className="flex justify-between items-center px-6 py-4 border-t border-white/5 bg-zinc-800/10 rounded-b-2xl">
-              <button
-                type="button"
-                onClick={handleResetAll}
-                className={`px-4 py-2 text-xs font-semibold rounded-xl transition-colors ${
-                  themeMode === "dark"
-                    ? "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
-                    : "text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100"
-                }`}
-              >
-                Clear Changes
-              </button>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 px-6 py-4 border-t border-white/5 bg-zinc-800/10 rounded-b-2xl">
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={handleResetAll}
+                  className={`px-4 py-2 text-xs font-semibold rounded-xl transition-colors ${
+                    themeMode === "dark"
+                      ? "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
+                      : "text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100"
+                  }`}
+                >
+                  Clear Changes
+                </button>
+
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-zinc-400 select-none">
+                  <input
+                    type="checkbox"
+                    checked={autoInstantIndex}
+                    onChange={(e) => setAutoInstantIndex(e.target.checked)}
+                    className="rounded text-accent focus:ring-accent accent-accent w-3.5 h-3.5"
+                  />
+                  <span className="flex items-center gap-1">
+                    <Radio className="w-3 h-3 text-emerald-400" />
+                    Instant Google Indexing on Publish
+                  </span>
+                </label>
+              </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-5 py-2.5 text-xs font-bold rounded-xl bg-accent text-white hover:bg-accent/90 shadow-xl shadow-accent/15 flex items-center gap-1.5"
+                className="px-5 py-2.5 text-xs font-bold rounded-xl bg-accent text-white hover:bg-accent/90 shadow-xl shadow-accent/15 flex items-center gap-1.5 cursor-pointer"
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    Publishing...
+                    Publishing & Notifying Google...
                   </>
                 ) : (
                   <>
@@ -1469,6 +1571,21 @@ export function BlogWriterSection({
         </div>
 
       </div>
+
+      {/* Image Optimization Pipeline Modal */}
+      <ImageOptimizationModal
+        isOpen={isImageOptimizerOpen}
+        onClose={() => setIsImageOptimizerOpen(false)}
+        onApplyImage={(optimizedUrl, alt) => {
+          setFormThumbnail(optimizedUrl);
+          if (alt && !imageAltText) {
+            setImageAltText(alt);
+          }
+        }}
+        themeMode={themeMode}
+        triggerToast={triggerToast}
+        defaultTitle={formTitle}
+      />
     </div>
   );
 }

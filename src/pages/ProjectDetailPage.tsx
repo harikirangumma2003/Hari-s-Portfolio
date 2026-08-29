@@ -28,7 +28,13 @@ const ProjectDetailPage = () => {
           "@type": "CreativeWork",
           "name": project.title,
           "description": project.description,
-          "image": project.image,
+          "image": {
+            "@type": "ImageObject",
+            "url": project.image,
+            "width": 1200,
+            "height": 630,
+            "caption": project.title
+          },
           "author": {
             "@type": "Person",
             "name": "G. Hari Kiran"

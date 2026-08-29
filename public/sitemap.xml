@@ -1,158 +1,355 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Main Pages -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Core Main Pages -->
   <url>
     <loc>https://harikiran-portfolio.netlify.app/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://harikiran-portfolio.netlify.app/og-image.jpg</image:loc>
+      <image:title>G. Hari Kiran - Top SEO Expert and Growth Marketing Consultant</image:title>
+      <image:caption>Official portfolio and growth systems by G. Hari Kiran, SEO Consultant in Jamshedpur, Jharkhand.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/work</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&amp;fit=crop&amp;fm=webp&amp;q=70&amp;w=1200</image:loc>
+      <image:title>Case Studies and Verified Client Results | G. Hari Kiran</image:title>
+      <image:caption>Selected client work, SEO organic growth campaigns, and high-converting marketing funnels.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/about</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png</image:loc>
+      <image:title>About G. Hari Kiran - SEO Consultant &amp; Growth Specialist</image:title>
+      <image:caption>Professional profile and career trajectory of G. Hari Kiran in digital marketing and technical SEO.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/experience</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>SEO Knowledge Base &amp; Growth Marketing Articles</image:title>
+      <image:caption>Actionable blueprints, case studies, and technical SEO frameworks by G. Hari Kiran.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/partners</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/resources</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/content-hub</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/contact</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/seo-audit</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Free Technical SEO Audit &amp; Performance Analyzer</image:title>
+      <image:caption>Real-time crawler simulation, Core Web Vitals diagnostic, and canonical audit engine.</image:caption>
+    </image:image>
   </url>
 
-  <!-- Case Studies -->
+  <!-- Client Case Studies -->
   <url>
     <loc>https://harikiran-portfolio.netlify.app/work/local-search-dominance</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://harikiran-portfolio.netlify.app/work/sms-conversion-engine</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://harikiran-portfolio.netlify.app/work/viral-brand-campaign</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://harikiran-portfolio.netlify.app/work/b2b-lead-engine</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&amp;fit=crop&amp;fm=webp&amp;q=70&amp;w=1200</image:loc>
+      <image:title>Local Search Dominance Case Study</image:title>
+      <image:caption>300% organic search growth and #1 Google rankings through local SEO optimization.</image:caption>
+    </image:image>
   </url>
 
-  <!-- Blog Posts -->
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/work/sms-conversion-engine</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format,compress&amp;fit=crop&amp;fm=webp&amp;q=70&amp;w=1200</image:loc>
+      <image:title>SMS Marketing Conversion Engine Case Study</image:title>
+      <image:caption>Scaled direct SMS marketing channel delivering a 25% CTR and 21% verified conversion rate.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/work/viral-brand-campaign</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format,compress&amp;fit=crop&amp;fm=webp&amp;q=70&amp;w=1200</image:loc>
+      <image:title>Viral Push Notification Campaign Case Study</image:title>
+      <image:caption>Creative push notification campaign delivering +25% order volume growth.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/work/b2b-lead-engine</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format,compress&amp;fit=crop&amp;fm=webp&amp;q=70&amp;w=1200</image:loc>
+      <image:title>B2B Lead Engine &amp; Email Marketing Funnels</image:title>
+      <image:caption>B2B acquisition funnels delivering a 64% open rate and scalable qualified pipeline.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Complete Blog Knowledge Base with Google Image Sitemap Tags -->
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/google-preferred-source-how-to-add-my-website-on-google</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Google Preferred Source: How to Add My Website on Google</image:title>
+      <image:caption>Guide to adding website as a Google Preferred Source for enhanced AI Overviews and search visibility.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/technical-seo-checklist-2026-audit-before-ranking</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Technical SEO Checklist 2026: 25 Things Every Website Should Audit</image:title>
+      <image:caption>25-point technical SEO audit diagram covering Core Web Vitals INP, crawl budget, and structured data.</image:caption>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/seo-services-cost-is-500-enough-for-a-company</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>SEO Services Cost: Is $500/Month Enough for a Company in 2026?</image:title>
+      <image:caption>SEO pricing tiers, deliverable comparison, and ROI analysis for business owners in 2026.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Why Houston Manufacturers Keep Receiving OSHA 1904 Recordkeeping Citations</image:title>
+      <image:caption>Analysis of OSHA Region 6 inspection trends, 1904 recordkeeping penalties, and compliance checklists.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/why-most-businesses-don-t-need-more-traffic-they-need-better-traffic</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Why Most Businesses Don't Need More Traffic: They Need Better Traffic</image:title>
+      <image:caption>Commercial search intent mapping and conversion rate optimization strategy diagram.</image:caption>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/compliease-osha-log-management-software</loc>
     <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Best OSHA Compliance Software in 2026: Compliease by Sumeera Solutions</image:title>
+      <image:caption>OSHA 300, 301, and 300A digital compliance dashboard and automated recordkeeping.</image:caption>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>OSHA 1904 Recordkeeping: Costly Manufacturing Mistakes</image:title>
+      <image:caption>Breakdown of 5 most expensive OSHA 1904 recordkeeping audit errors and how to avoid them.</image:caption>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/workplace-compliance-software-modern-business</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Why Workplace Compliance Software is Critical for Modern Business Growth</image:title>
+      <image:caption>Digital safety recordkeeping and incident logging workflow for modern manufacturing enterprises.</image:caption>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Who Records Injuries for Temporary Workers? The OSHA 1904.31 Rule</image:title>
+      <image:caption>Day-to-day supervision legal framework for temporary and contract staffing injury logs.</image:caption>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/sumeera-solutions-osha-compliance-software</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Sumeera Solutions: The Smart Way to Manage OSHA Compliance</image:title>
+      <image:caption>SuMeera Solutions software suite and automated enterprise safety reporting.</image:caption>
+    </image:image>
   </url>
+
+  <url>
+    <loc>https://harikiran-portfolio.netlify.app/blog/the-2x-growth-formula-in-marketing-customer-experience-employee-experience</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&amp;q=80&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>The 2X Growth Formula in Marketing: Customer Experience + Employee Experience</image:title>
+      <image:caption>Flywheel model aligning EX and CX to drive double-digit retention and organic referral growth.</image:caption>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/retention-marketing-sustainable-growth</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Retention Marketing: The Secret Sauce to Sustainable Growth</image:title>
+      <image:caption>Customer lifetime value (LTV) compound curve and automated retention marketing loops.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/high-converting-email-newsletter-guide</loc>
     <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>How to Build a High-Converting Email Newsletter</image:title>
+      <image:caption>Newsletter layout architecture, subject line frameworks, and email deliverability guide.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/rank-higher-google-organically</loc>
     <lastmod>2026-06-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>9 Simple Steps How To Rank Higher On Google Organically</image:title>
+      <image:caption>9-step blueprint for organic search engine dominance and technical optimization.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/facebook-marketing-small-businesses</loc>
     <lastmod>2026-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>How Small Businesses Can Win Big on Facebook Marketing</image:title>
+      <image:caption>Local audience targeting and high-ROI social media campaign structure for small businesses.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/organic-seo-services</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Why You Need Organic SEO Services to Scale Your Brand</image:title>
+      <image:caption>Organic search revenue compounding versus paid search ad spend analysis.</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://harikiran-portfolio.netlify.app/blog/best-digital-marketer-in-netaji-subhas-university</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format,compress&amp;q=70&amp;w=1200&amp;fm=webp</image:loc>
+      <image:title>Best Digital Marketer in Netaji Subhas University</image:title>
+      <image:caption>Strategic digital marketing frameworks and growth systems in Jamshedpur, Jharkhand.</image:caption>
+    </image:image>
   </url>
+
 </urlset>

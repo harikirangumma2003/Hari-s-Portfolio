@@ -6,29 +6,11 @@ http://harikiran-portfolio.netlify.app        https://harikiran-portfolio.netlif
 http://www.harikiran-portfolio.netlify.app    https://harikiran-portfolio.netlify.app/ 301!
 https://www.harikiran-portfolio.netlify.app   https://harikiran-portfolio.netlify.app/ 301!
 
-# Legacy OSHA and Recordkeeping posts redirecting to High-Performance OSHA Guides (HTTP 301)
-/blog/osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands  /blog/compliease-osha-log-management-software 301
-/blog/osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands/ /blog/compliease-osha-log-management-software 301
-/blog/why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations  /blog/compliease-osha-log-management-software 301
-/blog/why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations/ /blog/compliease-osha-log-management-software 301
-/blog/who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand  /blog/compliease-osha-log-management-software 301
-/blog/who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand/ /blog/compliease-osha-log-management-software 301
-/blog/the-contractor-injury-reporting-gap-that-creates-osha-1904-problems  /blog/compliease-osha-log-management-software 301
-/blog/the-contractor-injury-reporting-gap-that-creates-osha-1904-problems/ /blog/compliease-osha-log-management-software 301
-
 # Technical SEO Checklist 2026 slug variants redirecting to canonical article (HTTP 301)
 /blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking  /blog/technical-seo-checklist-2026-audit-before-ranking 301
 /blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking/ /blog/technical-seo-checklist-2026-audit-before-ranking 301
 /blog/technical-seo-checklist-2026  /blog/technical-seo-checklist-2026-audit-before-ranking 301
 /blog/technical-seo-checklist-2026/ /blog/technical-seo-checklist-2026-audit-before-ranking 301
-
-# Legacy Growth Formula post redirecting to modern Retention Marketing Bible (HTTP 301)
-/blog/the-2x-growth-formula-in-marketing-customer-experience-employee-experience  /blog/retention-marketing-sustainable-growth 301
-/blog/the-2x-growth-formula-in-marketing-customer-experience-employee-experience/ /blog/retention-marketing-sustainable-growth 301
-
-# Legacy SEO Pricing post redirecting to Complete Organic SEO Guide (HTTP 301)
-/blog/seo-services-cost-is-500-enough-for-a-company  /blog/organic-seo-services 301
-/blog/seo-services-cost-is-500-enough-for-a-company/ /blog/organic-seo-services 301
 
 # Preventing Soft 404 crawler requests for legacy browser configurations (HTTP 301)
 /favicon.ico                    /favicon.svg                     301

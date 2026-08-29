@@ -306,8 +306,15 @@ const BlogPostPage = () => {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
           "headline": post.title,
-          "image": postImage,
+          "image": {
+            "@type": "ImageObject",
+            "url": postImage,
+            "width": 1200,
+            "height": 630,
+            "caption": post.title
+          },
           "datePublished": post.rawDate || post.date,
+          "dateModified": post.rawDate || post.date,
           "author": {
             "@type": "Person",
             "name": "G. Hari Kiran",

@@ -3,8 +3,8 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { ArrowRight, CheckCircle, ShieldAlert, Cpu, Network, Sparkles, Database, FileText, Send, RefreshCw, BarChart2 } from "lucide-react";
-import { submitToIndexNow } from "../lib/indexnow";
+import { ArrowRight, CheckCircle, ShieldAlert, Cpu, Network, Sparkles, Database, FileText, Send, RefreshCw, BarChart2, Radio } from "lucide-react";
+import { sendInstantIndexPing } from "../services/indexingService";
 
 const SEODashboardPage = () => {
   const [indexUrl, setIndexUrl] = useState("");
@@ -32,13 +32,16 @@ const SEODashboardPage = () => {
     e.preventDefault();
     if (!indexUrl) return;
     setIsLoading(true);
-    setIndexStatus("Submitting adjusted URL via IndexNow API protocol...");
+    setIndexStatus("Dispatched instant crawl priority request to Google & IndexNow bots...");
     try {
-      const results = await submitToIndexNow([indexUrl]);
-      const statusText = results.map(r => `${r.message} (HTTP Code: ${r.status})`).join(" | ");
-      setIndexStatus(statusText);
-    } catch {
-      setIndexStatus("Error: IndexNow submission timed out on client request.");
+      const res = await sendInstantIndexPing(indexUrl, "Manual SEO Audit Dispatch");
+      if (res.success) {
+        setIndexStatus(`✅ Successfully notified Google Indexing API & IndexNow for ${res.targetUrl}!`);
+      } else {
+        setIndexStatus(`Notice: ${res.message}`);
+      }
+    } catch (err: any) {
+      setIndexStatus(`Error: ${err.message || "Instant indexing submission timed out."}`);
     } finally {
       setIsLoading(false);
     }
