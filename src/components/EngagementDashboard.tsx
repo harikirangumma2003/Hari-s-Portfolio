@@ -173,6 +173,22 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
     }
   };
 
+  // Safe date formatter
+  const formatDate = (dateVal: any, includeYear = true) => {
+    if (!dateVal) return 'Recently';
+    try {
+      const d = typeof dateVal === 'string' ? new Date(dateVal) : (dateVal.toDate ? dateVal.toDate() : new Date(dateVal));
+      if (isNaN(d.getTime())) return 'Recently';
+      return d.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        ...(includeYear ? { year: 'numeric' } : {})
+      });
+    } catch {
+      return 'Recently';
+    }
+  };
+
   // Group top-level comments and replies
   const { topLevelComments, repliesMap } = useMemo(() => {
     const top: BlogCommentItem[] = [];
@@ -289,7 +305,7 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
             {totalStats.totalCommentsCount}
           </p>
           <p className="text-[10px] text-zinc-400 mt-2">
-            Across {ARTICLES.length} published articles
+            Across {blogPosts.length} published articles
           </p>
         </div>
 
@@ -561,11 +577,7 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
 
                     <div className="flex items-center gap-2 shrink-0">
                       <span className="text-[10px] text-zinc-400 font-mono">
-                        {new Date(comment.createdAt).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
+                        {formatDate(comment.createdAt)}
                       </span>
                       <Link
                         to={`/blog/${comment.postSlug}#comments-section`}
@@ -727,10 +739,7 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
                                 </span>
                               )}
                               <span className="text-[10px] text-zinc-400">
-                                {new Date(reply.createdAt).toLocaleDateString('en-US', {
-                                  month: 'short',
-                                  day: 'numeric'
-                                })}
+                                {formatDate(reply.createdAt, false)}
                               </span>
                             </div>
 

@@ -156,16 +156,32 @@ export default function AdminCMSPage() {
     });
   };
 
-  // Sync activeTab with pathname
+  // Sync activeTab with pathname and query params
   useEffect(() => {
-    if (location.pathname === "/admin/content/trash") {
-      setActiveTab("trash");
-    } else if (location.pathname === "/admin") {
-      if (activeTab === "trash") {
-        setActiveTab("dashboard");
-      }
+    const searchParams = new URLSearchParams(location.search);
+    const tabParam = searchParams.get("tab");
+
+    if (tabParam && ["dashboard", "list", "form", "trash", "archived", "automation", "blog-writer", "engagement"].includes(tabParam)) {
+      setActiveTab(tabParam as any);
+      return;
     }
-  }, [location.pathname]);
+
+    if (location.pathname === "/admin/content/trash" || location.pathname === "/admin/trash") {
+      setActiveTab("trash");
+    } else if (location.pathname === "/admin/engagement" || location.pathname === "/admin/comments") {
+      setActiveTab("engagement");
+    } else if (location.pathname === "/admin/automation") {
+      setActiveTab("automation");
+    } else if (location.pathname === "/admin/blog-writer") {
+      setActiveTab("blog-writer");
+    } else if (location.pathname === "/admin/content/new") {
+      setActiveTab("form");
+    } else if (location.pathname === "/admin/content/archived" || location.pathname === "/admin/archived") {
+      setActiveTab("archived");
+    } else if (location.pathname === "/admin/content") {
+      setActiveTab("list");
+    }
+  }, [location.pathname, location.search]);
 
   // Clear selected elements when filters/pages change to prevent background mutation issues
   useEffect(() => {
