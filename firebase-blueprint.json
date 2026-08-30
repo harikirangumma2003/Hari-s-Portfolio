@@ -214,6 +214,40 @@
         }
       },
       "required": ["utr", "name", "email", "amount", "resourceId", "resourceTitle", "status", "createdAt"]
+    },
+    "BlogReaction": {
+      "title": "Blog Reaction",
+      "description": "Aggregated real-time likes, claps, and reactions for a blog post.",
+      "type": "object",
+      "properties": {
+        "postSlug": { "type": "string" },
+        "claps": { "type": "integer" },
+        "insights": { "type": "integer" },
+        "hearts": { "type": "integer" },
+        "rockets": { "type": "integer" },
+        "totalReactions": { "type": "integer" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["postSlug", "claps", "insights", "hearts", "rockets", "totalReactions"]
+    },
+    "BlogComment": {
+      "title": "Blog Comment",
+      "description": "Reader discussion comments, questions, and author replies on blog posts.",
+      "type": "object",
+      "properties": {
+        "postSlug": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorRole": { "type": "string" },
+        "authorEmail": { "type": "string", "format": "email" },
+        "content": { "type": "string" },
+        "parentId": { "type": "string" },
+        "isAuthor": { "type": "boolean" },
+        "isPinned": { "type": "boolean" },
+        "likes": { "type": "integer" },
+        "status": { "type": "string", "enum": ["published", "pending", "hidden"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["postSlug", "authorName", "content", "status", "createdAt"]
     }
   },
   "firestore": {
@@ -240,6 +274,14 @@
     "syncLogs/{logId}": {
       "schema": "SyncLog",
       "description": "Records of synchronization job outputs."
+    },
+    "blog_reactions/{postSlug}": {
+      "schema": "BlogReaction",
+      "description": "Real-time aggregated engagement reactions per blog article."
+    },
+    "blog_comments/{commentId}": {
+      "schema": "BlogComment",
+      "description": "User questions, feedback, and author replies on blog articles."
     }
   }
 }

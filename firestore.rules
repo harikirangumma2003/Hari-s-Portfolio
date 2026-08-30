@@ -49,6 +49,23 @@ service cloud.firestore {
         && data.createdAt == request.time;
     }
 
+    function isValidBlogReaction(data, postSlug) {
+      return data.postSlug == postSlug
+        && data.claps is int && data.claps >= 0
+        && data.insights is int && data.insights >= 0
+        && data.hearts is int && data.hearts >= 0
+        && data.rockets is int && data.rockets >= 0
+        && data.totalReactions is int && data.totalReactions >= 0;
+    }
+
+    function isValidBlogComment(data) {
+      return data.postSlug is string && data.postSlug.size() <= 200
+        && data.authorName is string && data.authorName.size() >= 1 && data.authorName.size() <= 100
+        && data.content is string && data.content.size() >= 2 && data.content.size() <= 3000
+        && data.status in ['published', 'pending', 'hidden']
+        && (data.likes is int && data.likes >= 0);
+    }
+
     // 2. Collection Rules
     match /contacts/{submissionId} {
       // Public can create submissions through the contact form
@@ -87,6 +104,19 @@ service cloud.firestore {
     match /syncLogs/{logId} {
       // Allow read and write access for synchronization logs
       allow read, write: if true;
+    }
+
+    match /blog_reactions/{postSlug} {
+      // Readers can view reaction counts and increment them in real time
+      allow read: if true;
+      allow write: if isValidBlogReaction(incoming(), postSlug);
+    }
+
+    match /blog_comments/{commentId} {
+      // Readers can read comments and submit new questions/comments
+      allow read: if true;
+      allow create: if isValidBlogComment(incoming());
+      allow update, delete: if true;
     }
   }
 }

@@ -10,6 +10,8 @@ import NotFoundPage from "./NotFoundPage";
 import { getPublishedContent } from "../services/contentService";
 import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
 import { TableOfContents } from "../components/TableOfContents";
+import { BlogReactions } from "../components/BlogReactions";
+import { BlogComments } from "../components/BlogComments";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -555,8 +557,12 @@ const BlogPostPage = () => {
             </div>
           </div>
 
+          {/* Real-time Reader Reactions & Claps */}
+          <BlogReactions postSlug={post.slug} postTitle={post.title} variant="banner" />
+          <BlogReactions postSlug={post.slug} postTitle={post.title} variant="floating" />
+
           {/* Social Share Section - Bottom */}
-          <div className="mt-16 py-12 border-t border-primary/5 flex flex-col items-center text-center">
+          <div className="mt-12 py-10 border-t border-primary/5 flex flex-col items-center text-center">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -597,7 +603,7 @@ const BlogPostPage = () => {
           </div>
 
           {/* Footer / Tags */}
-          <footer className="mt-20 pt-12 border-t border-primary/5">
+          <footer className="mt-16 pt-10 border-t border-primary/5">
             <div className="flex flex-wrap gap-4 mb-12">
               {post.keywords.map((tag) => (
                 <span key={tag} className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-primary/5 rounded-full text-muted border border-transparent hover:border-accent hover:text-accent transition-all">
@@ -612,16 +618,16 @@ const BlogPostPage = () => {
             </div>
 
             {/* Author Card */}
-            <div className="p-12 rounded-[40px] bg-[#faf9f6] border border-primary/5 flex flex-col md:flex-row items-center gap-10">
-              <div className="w-32 h-32 rounded-3xl overflow-hidden bg-white shrink-0 shadow-lg p-2 border border-primary/5">
+            <div className="p-10 sm:p-12 rounded-[40px] bg-[#faf9f6] border border-primary/5 flex flex-col md:flex-row items-center gap-10">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden bg-white shrink-0 shadow-lg p-2 border border-primary/5">
                 <div className="w-full h-full rounded-2xl bg-primary/5 flex items-center justify-center">
-                   <User size={64} className="text-primary/10" />
+                   <User size={56} className="text-primary/10" />
                 </div>
               </div>
               <div className="text-center md:text-left">
-                <h4 className="text-xl font-display font-black uppercase mb-3">Written by G. Hari Kiran</h4>
-                <p className="text-muted text-sm leading-relaxed mb-6 italic">
-                  Digital Marketer and Growth Strategist helpings brands scale with data and precision. Specialist in SEO and Retention Marketing.
+                <h4 className="text-xl font-display font-black uppercase mb-2">Written by G. Hari Kiran</h4>
+                <p className="text-muted text-sm leading-relaxed mb-4 italic">
+                  Digital Marketer and Growth Strategist helping brands scale with data and precision. Specialist in SEO and Retention Marketing.
                 </p>
                 <Link to="/about" className="text-xs font-black uppercase tracking-widest text-accent hover:underline decoration-2 underline-offset-4">
                   View Full Profile →
@@ -629,7 +635,12 @@ const BlogPostPage = () => {
               </div>
             </div>
 
-            <Newsletter />
+            {/* Community Q&A / Real-Time Discussion Section */}
+            <BlogComments postSlug={post.slug} postTitle={post.title} />
+
+            <div className="mt-16">
+              <Newsletter />
+            </div>
           </footer>
         </article>
 
