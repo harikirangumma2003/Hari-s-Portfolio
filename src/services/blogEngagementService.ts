@@ -61,7 +61,7 @@ export const saveUserReactionCounts = (slug: string, counts: Record<string, numb
 };
 
 /**
- * Real-time listener for blog reactions
+ * Real-time listener for blog reactions on a single article
  */
 export const subscribeToBlogReactions = (
   slug: string,
@@ -96,6 +96,34 @@ export const subscribeToBlogReactions = (
   }, (error) => {
     console.warn('Reactions subscription fallback to local cache:', error.message);
     callback(defaultData);
+  });
+};
+
+/**
+ * Real-time listener for all blog reactions across all articles (For CMS Dashboard)
+ */
+export const subscribeToAllBlogReactions = (
+  callback: (reactions: BlogReactionsData[]) => void
+) => {
+  const reactionsRef = collection(db, 'blog_reactions');
+
+  return onSnapshot(reactionsRef, (snapshot) => {
+    const list: BlogReactionsData[] = snapshot.docs.map((docSnap) => {
+      const d = docSnap.data();
+      return {
+        postSlug: docSnap.id,
+        claps: d.claps || 0,
+        insights: d.insights || 0,
+        hearts: d.hearts || 0,
+        rockets: d.rockets || 0,
+        totalReactions: (d.claps || 0) + (d.insights || 0) + (d.hearts || 0) + (d.rockets || 0),
+        updatedAt: d.updatedAt
+      };
+    });
+    callback(list);
+  }, (err) => {
+    console.warn('All reactions subscription fallback:', err.message);
+    callback([]);
   });
 };
 
@@ -180,7 +208,6 @@ export const subscribeToBlogComments = (
     callback(items);
   }, (error) => {
     console.warn('Comments subscription fallback:', error.message);
-    // Fallback: Read from local cache if any
     try {
       const cached = localStorage.getItem(`blog_comments_cache_${slug}`);
       if (cached) {
@@ -195,7 +222,45 @@ export const subscribeToBlogComments = (
 };
 
 /**
- * Post a new comment or reader question
+ * Subscribe to ALL blog comments across all articles (For CMS Engagement Tab)
+ */
+export const subscribeToAllBlogComments = (
+  callback: (comments: BlogCommentItem[]) => void
+) => {
+  const commentsRef = collection(db, 'blog_comments');
+  const q = query(
+    commentsRef,
+    orderBy('createdAt', 'desc')
+  );
+
+  return onSnapshot(q, (snapshot) => {
+    const items: BlogCommentItem[] = snapshot.docs.map((docSnap) => {
+      const d = docSnap.data();
+      return {
+        id: docSnap.id,
+        postSlug: d.postSlug,
+        authorName: d.authorName,
+        authorRole: d.authorRole || 'Reader',
+        authorEmail: d.authorEmail || '',
+        content: d.content,
+        parentId: d.parentId || null,
+        isAuthor: d.isAuthor || false,
+        isPinned: d.isPinned || false,
+        likes: d.likes || 0,
+        status: d.status || 'published',
+        createdAt: d.createdAt ? (d.createdAt.toDate ? d.createdAt.toDate().toISOString() : d.createdAt) : new Date().toISOString()
+      };
+    }).filter(item => item.status !== 'hidden');
+
+    callback(items);
+  }, (err) => {
+    console.warn('All comments subscription fallback:', err.message);
+    callback([]);
+  });
+};
+
+/**
+ * Post a new comment or reader question, and trigger instant email notification
  */
 export const postBlogComment = async (
   comment: Omit<BlogCommentItem, 'id' | 'createdAt' | 'likes' | 'status'> & { isAuthor?: boolean }
@@ -218,7 +283,7 @@ export const postBlogComment = async (
 
     const docRef = await addDoc(commentsRef, docData);
 
-    // Cache locally as well
+    // Cache locally
     try {
       const cacheKey = `blog_comments_cache_${comment.postSlug}`;
       const existing = JSON.parse(localStorage.getItem(cacheKey) || '[]');
@@ -234,12 +299,48 @@ export const postBlogComment = async (
       console.warn('Local comment cache update error', e);
     }
 
+    // Trigger instant email notification to harikirangumma2003@gmail.com if it's a reader comment
+    if (!comment.isAuthor) {
+      triggerCommentNotificationEmail({
+        postSlug: comment.postSlug,
+        authorName: comment.authorName,
+        authorRole: comment.authorRole,
+        authorEmail: comment.authorEmail,
+        content: comment.content,
+        parentId: comment.parentId
+      }).catch((emailErr) => {
+        console.warn('Comment notification email dispatch notice:', emailErr);
+      });
+    }
+
     return docRef.id;
   } catch (error) {
     console.error('Error posting comment:', error);
     throw error;
   }
 };
+
+/**
+ * Send Instant Email Alert to Hari via server-side /api/notifications/comment endpoint
+ */
+export async function triggerCommentNotificationEmail(payload: {
+  postSlug: string;
+  authorName: string;
+  authorRole?: string;
+  authorEmail?: string;
+  content: string;
+  parentId?: string | null;
+}) {
+  try {
+    await fetch('/api/notifications/comment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.warn('Failed to send comment notification email:', err);
+  }
+}
 
 /**
  * Like a comment

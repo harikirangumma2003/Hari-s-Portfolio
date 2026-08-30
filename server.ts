@@ -371,6 +371,99 @@ async function startServer() {
     }
   });
 
+  // Instant Email Notification Webhook for new Reader Comments / Discussion Questions
+  app.post("/api/notifications/comment", async (req, res) => {
+    try {
+      const { postSlug, authorName, authorRole, authorEmail, content, parentId } = req.body;
+      const targetEmail = "harikirangumma2003@gmail.com";
+      const timestamp = new Date().toISOString();
+      const articleUrl = `https://harikiran-portfolio.netlify.app/blog/${postSlug}#comments-section`;
+      const adminCmsUrl = `https://harikiran-portfolio.netlify.app/admin`;
+
+      console.log(`[Instant Notification] New comment on /blog/${postSlug} by "${authorName}" (${authorEmail || "no email"})`);
+
+      // 1. Prepare formatted notification email payload
+      const emailSubject = `🔔 New Blog Comment on /blog/${postSlug} from ${authorName}`;
+      const emailBody = `
+=========================================
+NEW READER COMMENT / QUESTION RECEIVED
+=========================================
+Article: /blog/${postSlug}
+Direct URL: ${articleUrl}
+CMS Reply Desk: ${adminCmsUrl}
+
+Commenter Details:
+- Name: ${authorName}
+- Role / Company: ${authorRole || "Reader"}
+- Contact Email: ${authorEmail || "Not provided (Anonymous Reader)"}
+- Type: ${parentId ? "Reply to discussion" : "New top-level question"}
+- Submitted At: ${timestamp}
+
+Comment Content:
+-----------------------------------------
+"${content}"
+-----------------------------------------
+
+To reply officially with your verified Author Badge or moderate this comment:
+👉 Open CMS Engagement Hub: ${adminCmsUrl}
+👉 Open Article Discussion: ${articleUrl}
+`;
+
+      // 2. Dispatch via external webhook / formspree / email webhook if configured
+      // Supports optional custom SMTP or Webhook forwarding
+      const webhookUrl = process.env.NOTIFICATION_WEBHOOK_URL;
+      if (webhookUrl) {
+        try {
+          await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              to: targetEmail,
+              subject: emailSubject,
+              message: emailBody,
+              metadata: { postSlug, authorName, authorEmail, content }
+            })
+          });
+        } catch (wErr) {
+          console.warn("[Instant Notification] Webhook relay notice:", wErr);
+        }
+      }
+
+      // Also attempt free formsubmit/email notification trigger for instant delivery
+      try {
+        await fetch("https://formsubmit.co/ajax/harikirangumma2003@gmail.com", {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            _subject: emailSubject,
+            _template: "box",
+            Article: `https://harikiran-portfolio.netlify.app/blog/${postSlug}`,
+            "Reader Name": authorName,
+            "Reader Role": authorRole || "Reader",
+            "Reader Email": authorEmail || "None",
+            "Question / Comment": content,
+            "Reply in CMS": adminCmsUrl
+          })
+        }).catch(() => null);
+      } catch (submitErr) {
+        // Safe fallback
+      }
+
+      res.json({
+        success: true,
+        deliveredTo: targetEmail,
+        timestamp,
+        message: `Instant notification alert registered for ${targetEmail}`
+      });
+    } catch (err: any) {
+      console.error("[Instant Notification] Error:", err);
+      res.status(500).json({ error: err.message || "Failed to trigger comment notification" });
+    }
+  });
+
   // Dynamic SSR Open Graph & Twitter Card Meta Tag Handler for /blog/:slug and /work/:slug
   app.get(["/blog/:slug", "/work/:slug"], async (req, res, next) => {
     const rawSlug = req.params.slug || "";

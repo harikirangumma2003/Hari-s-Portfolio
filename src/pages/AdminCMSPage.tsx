@@ -33,7 +33,10 @@ import {
   Archive,
   RotateCcw,
   RefreshCw,
-  PenTool
+  PenTool,
+  MessageSquare,
+  Flame,
+  Heart
 } from "lucide-react";
 import { useAdminAuth } from "../hooks/useAdminAuth";
 import { useAdminContent } from "../hooks/useAdminContent";
@@ -42,6 +45,7 @@ import { uploadImage } from "../services/storageService";
 import { cn } from "../lib/utils";
 import AutomationSection from "../components/AutomationSection";
 import { BlogWriterSection } from "../components/BlogWriterSection";
+import { EngagementDashboard } from "../components/EngagementDashboard";
 
 // Types for Toast Notifications
 interface Toast {
@@ -71,8 +75,8 @@ export default function AdminCMSPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // CMS Views: "dashboard" | "list" | "form" | "trash" | "archived" | "automation" | "blog-writer"
-  const [activeTab, setActiveTab] = useState<"dashboard" | "list" | "form" | "trash" | "archived" | "automation" | "blog-writer">("dashboard");
+  // CMS Views: "dashboard" | "list" | "form" | "trash" | "archived" | "automation" | "blog-writer" | "engagement"
+  const [activeTab, setActiveTab] = useState<"dashboard" | "list" | "form" | "trash" | "archived" | "automation" | "blog-writer" | "engagement">("dashboard");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewItem, setPreviewItem] = useState<ContentHubItem | null>(null);
@@ -1059,6 +1063,19 @@ export default function AdminCMSPage() {
             </button>
 
             <button
+              onClick={() => { navigate("/admin"); resetForm(); setActiveTab("engagement"); }}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
+                activeTab === "engagement"
+                  ? "bg-accent text-white shadow-xl shadow-accent/15"
+                  : (themeMode === "dark" ? "text-zinc-400 hover:bg-white/5 hover:text-white" : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950")
+              )}
+            >
+              <MessageSquare className="w-4 h-4 text-accent" />
+              Engagement & Likes
+            </button>
+
+            <button
               onClick={() => { navigate("/admin"); resetForm(); setActiveTab("blog-writer"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
@@ -1196,6 +1213,13 @@ export default function AdminCMSPage() {
                 title="Create"
               >
                 <PlusCircle className="w-4 h-4" />
+              </button>
+              <button 
+                onClick={() => { navigate("/admin"); resetForm(); setActiveTab("engagement"); }}
+                className={cn("p-1.5 rounded", activeTab === "engagement" ? "text-accent" : "text-zinc-400")}
+                title="Engagement & Comments"
+              >
+                <MessageSquare className="w-4 h-4 text-accent" />
               </button>
               <button 
                 onClick={() => { navigate("/admin"); resetForm(); setActiveTab("blog-writer"); }}
@@ -2250,6 +2274,14 @@ export default function AdminCMSPage() {
                 refresh();
                 setActiveTab("list");
               }}
+            />
+          )}
+
+          {/* VIEW: ENGAGEMENT DASHBOARD & COMMENTS MANAGEMENT */}
+          {activeTab === "engagement" && (
+            <EngagementDashboard
+              themeMode={themeMode}
+              triggerToast={triggerToast}
             />
           )}
 
