@@ -458,6 +458,7 @@ const ContentHubPage = () => {
       <SEO 
         title="Omnichannel Content Hub & Playbooks | G. Hari Kiran"
         description="Explore G. Hari Kiran's curated growth library: SEO audits, viral marketing playbooks, video breakdowns, and syndications across modern platforms."
+        image="/og-blog.jpg"
         url="/content-hub"
         schemaData={collectionSchema}
       />

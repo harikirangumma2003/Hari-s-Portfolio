@@ -471,6 +471,7 @@ export default function ResourcesPage() {
       <SEO 
         title="Google Sheets Growth & Finance Templates | G. Hari Kiran" 
         description="Access custom-engineered, fully automated Google Sheets templates for personal finance tracking, habit building, and book reading management." 
+        image="/og-resources.jpg"
         url="/resources"
       />
 

@@ -198,6 +198,7 @@ ${formData.message || "N/A"}
       <SEO 
         title="SEO & Digital Marketing Partnerships | G. Hari Kiran"
         description="Partner with the top SEO Expert and Digital Marketing Consultant in Jamshedpur. Build strategic brand authority and scale local presence."
+        image="/og-work.jpg"
         url="/partners"
         schemaData={schemaData}
       />

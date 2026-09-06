@@ -31,7 +31,7 @@ export const blogPosts: BlogPost[] = [
     slug: "technical-seo-checklist-2026-audit-before-ranking",
     category: "SEO",
     date: "Aug 02, 2026",
-    image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "The 25-point technical SEO checklist for 2026. Audit Core Web Vitals INP, AI crawler rules, Schema JSON-LD, and site speed for top rankings.",
     author: {
       name: "G. Hari Kiran",
@@ -163,7 +163,7 @@ export const blogPosts: BlogPost[] = [
     slug: "compliease-osha-log-management-software",
     category: "Compliance",
     date: "Apr 30, 2026",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Compliease by Sumeera Solutions automates OSHA 300 logs, incident reporting, and safety tracking to help businesses prevent costly fines.",
     content: `
       <h2>Why Businesses Need OSHA Compliance Software Today</h2>
@@ -307,7 +307,7 @@ export const blogPosts: BlogPost[] = [
     slug: "workplace-compliance-software-modern-business",
     category: "Compliance",
     date: "Apr 27, 2026",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Learn how workplace compliance software automates regulatory tracking, prevents costly OSHA fines, and protects employee safety records.",
     content: `
       <h2>The Hidden Cost of Manual Compliance</h2>
@@ -406,7 +406,7 @@ export const blogPosts: BlogPost[] = [
     slug: "sumeera-solutions-osha-compliance-software",
     category: "Compliance",
     date: "Apr 25, 2026",
-    image: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Sumeera Solutions simplifies OSHA log management with automated compliance tracking, proactive error detection, and audit protection.",
     content: `
       <h2>What is OSHA Compliance and Why Does It Matter?</h2>
@@ -536,7 +536,7 @@ export const blogPosts: BlogPost[] = [
     slug: "retention-marketing-sustainable-growth",
     category: "Retention",
     date: "Apr 24, 2026",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Customer acquisition is expensive while retention builds profit. Discover practical retention frameworks to maximize user lifetime value.",
     content: `
       <h2>Why Retention is the New Acquisition</h2>
@@ -575,7 +575,7 @@ export const blogPosts: BlogPost[] = [
     slug: "high-converting-email-newsletter-guide",
     category: "Email Marketing",
     date: "Apr 23, 2026",
-    image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Email marketing remains the highest-ROI direct channel. Learn how to craft magnetic hooks, value-first content, and high-converting CTAs.",
     content: `
       <h2>The Anatomy of a Perfect Newsletter</h2>
@@ -610,7 +610,7 @@ export const blogPosts: BlogPost[] = [
     slug: "rank-higher-google-organically",
     category: "SEO",
     date: "Dec 31, 2025",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Learn how to rank higher on Google organically using keyword research, technical on-page optimization, and high-authority semantic content.",
     content: `
       <h2>The Foundation of Organic SEO</h2>
@@ -655,7 +655,7 @@ export const blogPosts: BlogPost[] = [
     slug: "facebook-marketing-small-businesses",
     category: "Digital Marketing",
     date: "Apr 20, 2026",
-    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Master Facebook marketing in 2026 with hyper-local targeting, short-form video reels, and custom audience retargeting frameworks.",
     content: `
       <h2>Facebook Marketing in 2026: The Strategy</h2>
@@ -686,7 +686,7 @@ export const blogPosts: BlogPost[] = [
     slug: "organic-seo-services",
     category: "SEO",
     date: "Apr 18, 2026",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Discover why organic SEO services remain the highest-ROI channel for long-term customer acquisition, brand credibility, and compounding traffic.",
     content: `
       <h2>The Long Game of Digital Marketing</h2>
@@ -718,7 +718,7 @@ export const blogPosts: BlogPost[] = [
     slug: "best-digital-marketer-in-netaji-subhas-university",
     category: "Digital Marketing",
     date: "Jul 17, 2026",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=70&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Discover why the best digital marketer in Netaji Subhas University focuses on consumer psychology, search dominance, and growth strategy.",
     content: `
       <h2>The Dilution of Modern Digital Marketing</h2>
@@ -769,7 +769,7 @@ export const blogPosts: BlogPost[] = [
     slug: "google-preferred-source-how-to-add-my-website-on-google",
     category: "SEO",
     date: "Aug 20, 2026",
-    image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Add this website as a Google Preferred Source to receive the latest updates, SEO guides, and AI search insights directly in your personalized Google feed.",
     author: {
       name: "G. Hari Kiran",
@@ -949,7 +949,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     slug: "seo-services-cost-is-500-enough-for-a-company",
     category: "SEO",
     date: "Aug 15, 2026",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Explore the true cost of SEO services in 2026. Discover why $500/month packages often fail, what reputable agencies charge, and how to allocate your SEO budget.",
     author: {
       name: "G. Hari Kiran",
@@ -1054,7 +1054,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     slug: "why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations",
     category: "Compliance",
     date: "Aug 10, 2026",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Learn why industrial and manufacturing businesses in Houston and OSHA Region 6 face recurring 1904 recordkeeping penalties, and how to stay 100% compliant.",
     author: {
       name: "G. Hari Kiran",
@@ -1114,7 +1114,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     slug: "why-most-businesses-don-t-need-more-traffic-they-need-better-traffic",
     category: "Growth",
     date: "Aug 05, 2026",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Stop chasing vanity page views. Discover how high-intent organic traffic, commercial search queries, and conversion rate optimization drive actual revenue.",
     author: {
       name: "G. Hari Kiran",
@@ -1177,7 +1177,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     slug: "osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands",
     category: "Compliance",
     date: "Jul 25, 2026",
-    image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Avoid 5-figure OSHA penalties. Uncover the most common recording errors on OSHA Forms 300, 301, and 300A, and how automated compliance prevents costly audits.",
     author: {
       name: "G. Hari Kiran",
@@ -1231,7 +1231,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     slug: "who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand",
     category: "Compliance",
     date: "Jul 18, 2026",
-    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Staffing agency or host employer? Understand the OSHA 1904.31 Day-to-Day Supervision standard to avoid misclassifying temporary worker injury logs.",
     author: {
       name: "G. Hari Kiran",
@@ -1291,7 +1291,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     slug: "the-2x-growth-formula-in-marketing-customer-experience-employee-experience",
     category: "Growth",
     date: "Jul 12, 2026",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=80&w=1200&fm=webp",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg",
     excerpt: "Unlock business scaling with the 2X Growth Formula. Aligning Employee Experience with Customer Experience doubles retention and lifetime customer value.",
     author: {
       name: "G. Hari Kiran",

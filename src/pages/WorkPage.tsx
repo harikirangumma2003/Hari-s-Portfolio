@@ -11,6 +11,7 @@ const WorkPage = () => {
       <SEO 
         title="Selected SEO Portfolio & Case Studies | G. Hari Kiran"
         description="Explore high-impact search marketing and growth case studies by G. Hari Kiran, the premier SEO Expert & Digital Marketing Consultant in Jamshedpur."
+        image="/og-work.jpg"
         url="/work"
         schemaData={{
           "@context": "https://schema.org",

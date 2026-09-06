@@ -252,8 +252,9 @@ const BlogPostPage = () => {
     return <NotFoundPage />;
   }
 
-  const currentOrigin = typeof window !== "undefined" ? window.location.origin : "https://harikiran-portfolio.netlify.app";
-  const shareUrl = `${currentOrigin}/blog/${post.slug}`;
+  // The publicly accessible canonical domain ensures social platform crawlers (WhatsApp, LinkedIn, Facebook, X) can resolve the cover image
+  const productionDomain = "https://harikiran-portfolio.netlify.app";
+  const shareUrl = `${productionDomain}/blog/${post.slug}`;
 
   const handleShare = (platform: string) => {
     const url = encodeURIComponent(shareUrl);
@@ -287,7 +288,7 @@ const BlogPostPage = () => {
 
   const postTitle = post.seoTitle || (post.title.length > 55 ? post.title.slice(0, 52) + "..." : post.title);
   const postExcerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 160) : "Expert growth and technical SEO strategy by G. Hari Kiran");
-  const postImage = post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+  const postImage = post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg";
 
   return (
     <div className="pt-32 pb-24">

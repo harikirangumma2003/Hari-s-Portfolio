@@ -281,6 +281,7 @@ const BlogPage = () => {
       <SEO 
         title="SEO & Growth Marketing Strategy Blog | G. Hari Kiran"
         description="Explore actionable SEO guides, organic growth strategies, and digital marketing insights written by G. Hari Kiran in Jamshedpur, Jharkhand."
+        image="/og-blog.jpg"
         url="/blog"
         schemaData={{
           "@context": "https://schema.org",

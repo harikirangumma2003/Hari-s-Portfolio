@@ -20,6 +20,7 @@ const staticPages = [
     title: 'About G. Hari Kiran | Leading SEO Expert & Growth Consultant Jamshedpur',
     heading: 'About G. Hari Kiran - SEO & Growth Specialist',
     description: 'Meet G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Learn about my background, core marketing philosophies, and proven track record in scaling organic search traffic and client revenue.',
+    image: 'https://harikiran-portfolio.netlify.app/og-about.jpg',
     content: `
       <h2>Executive Summary & Background</h2>
       <p>I am G. Hari Kiran, an SEO Expert and Digital Marketing Consultant based in Jamshedpur, Jharkhand, India. Over the past several years, I have specialized in building data-backed search engine optimization strategies, technical site architectures, organic content engines, and high-converting customer retention funnels.</p>
@@ -40,6 +41,7 @@ const staticPages = [
     title: 'Professional SEO Experience & Career Timeline | G. Hari Kiran',
     heading: 'Professional Experience & Strategic Milestones',
     description: 'View the professional career timeline of G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur. Explore lead generation campaigns, consulting roles, and client growth outcomes.',
+    image: 'https://harikiran-portfolio.netlify.app/og-about.jpg',
     content: `
       <h2>Career Track Record & Achievements</h2>
       <p>Detailed timeline of professional consulting roles, lead generation architectures, and high-ROI growth initiatives spearheaded by G. Hari Kiran across retail, SaaS, and industrial enterprises.</p>
@@ -56,6 +58,7 @@ const staticPages = [
     title: 'Selected SEO Portfolio & Case Studies | G. Hari Kiran',
     heading: 'Selected Case Studies & Proven Growth Results',
     description: 'Explore high-impact search marketing and growth case studies by G. Hari Kiran. Discover how data-driven SEO, local search dominance, and direct marketing scaled client revenue.',
+    image: 'https://harikiran-portfolio.netlify.app/og-work.jpg',
     content: `
       <h2>Real Deliverables & Data-Driven Case Studies</h2>
       <p>Explore detailed case studies documenting organic traffic expansion, top SERP rankings, and high-converting marketing engines engineered by G. Hari Kiran.</p>
@@ -69,6 +72,7 @@ const staticPages = [
     title: 'SEO & Growth Marketing Strategy Blog | G. Hari Kiran',
     heading: 'The Growth Journal - SEO, AI & Marketing Insights',
     description: 'Explore actionable SEO guides, organic growth strategies, OSHA compliance checklists, and digital marketing insights written by G. Hari Kiran in Jamshedpur, Jharkhand.',
+    image: 'https://harikiran-portfolio.netlify.app/og-blog.jpg',
     content: `
       <h2>Published Articles & Strategy Guides</h2>
       <p>Browse our in-depth library of actionable search engine optimization tutorials, compliance manuals, and retention playbooks:</p>
@@ -82,6 +86,7 @@ const staticPages = [
     title: 'Omnichannel Content Hub & Playbooks | G. Hari Kiran',
     heading: 'The Content Hub - Multi-Platform Insights & Playbooks',
     description: 'Explore G. Hari Kiran\'s curated growth library: SEO audits, viral marketing playbooks, video breakdowns, and syndications across Blogger, Medium, YouTube, and LinkedIn.',
+    image: 'https://harikiran-portfolio.netlify.app/og-blog.jpg',
     content: `
       <h2>Curated Omnichannel Resources</h2>
       <p>Access articles, tutorials, video analyses, and playbooks published across top platforms including Blogger, Medium, LinkedIn, and YouTube.</p>
@@ -95,6 +100,7 @@ const staticPages = [
     title: 'Hire SEO Expert G. Hari Kiran | Free Website Audit Jamshedpur',
     heading: 'Get in Touch - Request a Free SEO Consultation',
     description: 'Book a consultation with G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Request your free website audit and customized growth strategy.',
+    image: 'https://harikiran-portfolio.netlify.app/og-contact.jpg',
     content: `
       <h2>Ready to Scale Your Organic Search Revenue?</h2>
       <p>Whether you need a full technical SEO audit, a local search ranking roadmap in Jamshedpur/Jharkhand, or a custom retention funnel, I am here to help.</p>
@@ -109,6 +115,7 @@ const staticPages = [
     title: 'Strategic Growth Partnerships | G. Hari Kiran',
     heading: 'Growth Partnerships & Client Collaborations',
     description: 'Partner with the top SEO Expert and Digital Marketing Consultant in Jamshedpur. Build strategic brand authority and scale local presence.',
+    image: 'https://harikiran-portfolio.netlify.app/og-work.jpg',
     content: `
       <h2>Collaborations & Client Ecosystem</h2>
       <p>Discover successful partnerships and joint initiatives engineered with modern brands, software developers, and retail platforms.</p>
@@ -122,6 +129,7 @@ const staticPages = [
     title: 'Google Sheets Growth & Finance Templates | G. Hari Kiran',
     heading: 'Automated Google Sheets & Digital Productivity Products',
     description: 'Access custom-engineered, fully automated Google Sheets templates for personal finance tracking, habit building, and book reading management.',
+    image: 'https://harikiran-portfolio.netlify.app/og-resources.jpg',
     content: `
       <h2>Automated Tools & Digital Systems</h2>
       <p>Explore custom Google Sheets spreadsheets designed for automated budget tracking, habit formation analytics, and personal library management.</p>
@@ -132,6 +140,7 @@ const staticPages = [
     title: 'Technical SEO Audit & Diagnostics | G. Hari Kiran',
     heading: 'Technical SEO Diagnostics & Crawler Health Dashboard',
     description: 'View real-time technical SEO health diagnostics, IndexNow submission logs, and Core Web Vitals performance for G. Hari Kiran\'s SEO consulting portfolio in Jamshedpur.',
+    image: 'https://harikiran-portfolio.netlify.app/og-image.jpg',
     content: `
       <h2>Website Health & Indexing Diagnostics</h2>
       <p>Real-time telemetry evaluating crawl efficiency, schema graph compliance, canonical resolution, and search crawler indexation across Bing, Google, and AI Search Engines.</p>
@@ -139,7 +148,7 @@ const staticPages = [
   }
 ];
 
-function generatePages() {
+async function generatePages() {
   if (!fs.existsSync(distDir)) {
     console.error('dist directory does not exist! Please run vite build first.');
     return;
@@ -295,22 +304,42 @@ function generatePages() {
     return html;
   }
 
+  const publicDir = path.resolve(__dirname, '../public');
+  const distCoversDir = path.join(distDir, 'assets', 'blog-covers');
+  const publicCoversDir = path.join(publicDir, 'assets', 'blog-covers');
+
+  // Ensure dist/assets/blog-covers exists and synchronize all covers
+  fs.mkdirSync(distCoversDir, { recursive: true });
+  if (fs.existsSync(publicCoversDir)) {
+    const coverFiles = fs.readdirSync(publicCoversDir);
+    for (const f of coverFiles) {
+      fs.copyFileSync(path.join(publicCoversDir, f), path.join(distCoversDir, f));
+    }
+    console.log(`Synchronized ${coverFiles.length} blog cover images to dist/assets/blog-covers/`);
+  }
+
   // 1. Generate Static Pages
   staticPages.forEach(p => {
     const targetDir = path.join(distDir, p.path.slice(1));
     fs.mkdirSync(targetDir, { recursive: true });
-    const pageHtml = createPageHtml(p.path, p.title, p.heading, p.description, p.content);
+    const pageHtml = createPageHtml(p.path, p.title, p.heading, p.description, p.content, '', p.image);
     fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
     console.log(`Generated rich pre-rendered page: ${p.path}/index.html`);
   });
 
-  // 2. Generate Blog Post Pages with FULL content
+  // 2. Generate Blog Post Pages with FULL content & optimized social covers
   blogPosts.forEach(b => {
     const postPath = `/blog/${b.slug}`;
     const targetDir = path.join(distDir, 'blog', b.slug);
     fs.mkdirSync(targetDir, { recursive: true });
     const pageTitle = b.seoTitle || b.title;
-    const postImage = b.image || 'https://harikiran-portfolio.netlify.app/og-image.jpg';
+
+    // Check if high-resolution local cover exists
+    const localCoverPath = path.join(publicCoversDir, `${b.slug}.jpg`);
+    const postImage = fs.existsSync(localCoverPath)
+      ? `https://harikiran-portfolio.netlify.app/assets/blog-covers/${b.slug}.jpg`
+      : (b.image || 'https://harikiran-portfolio.netlify.app/og-image.jpg');
+
     const authorName = b.author?.name || 'G. Hari Kiran';
     const pageHtml = createPageHtml(
       postPath,
@@ -326,6 +355,53 @@ function generatePages() {
     fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
     console.log(`Generated full-content pre-rendered blog post: ${postPath}/index.html (${b.content.length} chars)`);
   });
+
+  // 2b. Pre-render dynamic Firestore articles if available
+  try {
+    const configPath = path.resolve(__dirname, '../firebase-applet-config.json');
+    if (fs.existsSync(configPath)) {
+      const { initializeApp } = await import('firebase/app');
+      const { getFirestore, collection, getDocs, terminate } = await import('firebase/firestore');
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      const app = initializeApp(config);
+      const db = getFirestore(app, config.firestoreDatabaseId);
+
+      const snap = await getDocs(collection(db, 'content'));
+      console.log(`Pre-rendering ${snap.size} Firestore articles...`);
+      snap.forEach(doc => {
+        const data = doc.data();
+        const title = data.title || '';
+        const cleanSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        if (!cleanSlug) return;
+
+        const postPath = `/blog/${cleanSlug}`;
+        const targetDir = path.join(distDir, 'blog', cleanSlug);
+        fs.mkdirSync(targetDir, { recursive: true });
+
+        const localCoverPath = path.join(publicCoversDir, `${cleanSlug}.jpg`);
+        const postImage = fs.existsSync(localCoverPath)
+          ? `https://harikiran-portfolio.netlify.app/assets/blog-covers/${cleanSlug}.jpg`
+          : (data.thumbnail || data.image || data.ogImage || 'https://harikiran-portfolio.netlify.app/og-image.jpg');
+
+        const pageHtml = createPageHtml(
+          postPath,
+          data.metaTitle || title,
+          title,
+          data.excerpt || data.metaDescription || data.description || '',
+          data.description || data.content || '',
+          data.category || 'SEO Tips',
+          postImage,
+          data.author?.name || 'G. Hari Kiran',
+          data.publishedDate || '2026-08-30'
+        );
+        fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
+        console.log(`Generated Firestore pre-rendered blog post: ${postPath}/index.html`);
+      });
+      await terminate(db);
+    }
+  } catch (fsErr: any) {
+    console.warn('[Static Generator] Firestore pre-render note:', fsErr.message);
+  }
 
   // 3. Generate Project Detail Pages with FULL details
   projects.forEach(prj => {
@@ -367,12 +443,36 @@ function generatePages() {
   });
 
   // 4. Generate and synchronize image-enabled sitemap.xml to dist and public
-  const publicDir = path.resolve(__dirname, '../public');
   const sitemapPath = path.join(publicDir, 'sitemap.xml');
   if (fs.existsSync(sitemapPath)) {
     const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
     fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapContent);
     console.log('Successfully synchronized Google Image-enabled sitemap.xml to dist/sitemap.xml');
+  }
+
+  // 5. Enhance root dist/index.html with default social sharing meta tags
+  const rootIndex = path.join(distDir, 'index.html');
+  if (fs.existsSync(rootIndex)) {
+    let rootHtml = fs.readFileSync(rootIndex, 'utf8');
+    if (!rootHtml.includes('property="og:image"')) {
+      const defaultMeta = `
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="G. Hari Kiran | Leading SEO Expert & Digital Marketing Consultant" />
+    <meta property="og:description" content="Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and client revenue." />
+    <meta property="og:url" content="https://harikiran-portfolio.netlify.app/" />
+    <meta property="og:image" content="https://harikiran-portfolio.netlify.app/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://harikiran-portfolio.netlify.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="G. Hari Kiran | Leading SEO Expert & Digital Marketing Consultant" />
+    <meta name="twitter:description" content="Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and client revenue." />
+    <meta name="twitter:image" content="https://harikiran-portfolio.netlify.app/og-image.jpg" />`;
+      rootHtml = rootHtml.replace('</head>', `${defaultMeta}\n  </head>`);
+      fs.writeFileSync(rootIndex, rootHtml);
+      console.log('Injected default Open Graph metadata into root dist/index.html');
+    }
   }
 
   console.log('Successfully generated all pre-rendered HTML files with full content depth for Bing & Google search engines!');

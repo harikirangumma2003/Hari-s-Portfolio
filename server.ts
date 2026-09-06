@@ -1,7 +1,11 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
+import { execFileSync } from "child_process";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
+import { initializeApp, getApps } from "firebase/app";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 async function startServer() {
   const app = express();
@@ -464,206 +468,459 @@ To reply officially with your verified Author Badge or moderate this comment:
     }
   });
 
-  // Dynamic SSR Open Graph & Twitter Card Meta Tag Handler for /blog/:slug and /work/:slug
-  app.get(["/blog/:slug", "/work/:slug"], async (req, res, next) => {
-    const rawSlug = req.params.slug || "";
-    const isWork = req.path.startsWith("/work");
-    const cleanSlug = rawSlug.trim().toLowerCase().replace(/\/$/, "");
-    
+  // -------------------------------------------------------------
+  // Dynamic Open Graph Social Image Generator & Universal SSR
+  // -------------------------------------------------------------
+  let dbInstance: any = null;
+  function getDb() {
+    if (dbInstance) return dbInstance;
     try {
-      let postMeta: { title: string; excerpt: string; image: string; slug: string; isWork?: boolean } | null = null;
+      const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+      if (fs.existsSync(configPath)) {
+        const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+        const app = getApps().length === 0 ? initializeApp(config, "server-ssr") : getApps()[0];
+        dbInstance = getFirestore(app, config.firestoreDatabaseId);
+      }
+    } catch (e) {
+      console.warn("[Server] Firebase initialization warning:", e);
+    }
+    return dbInstance;
+  }
 
-      // 1. Static articles dictionary
-      const staticArticles = [
-        {
-          slug: 'technical-seo-checklist-2026-audit-before-ranking',
-          title: 'Technical SEO Checklist for 2026: 25 Things Every Website Should Audit Before Ranking',
-          excerpt: 'Actionable 25-point technical SEO checklist for 2026. Audit Core Web Vitals INP, AI Bot crawling, canonical integrity, and crawl budget to rank #1.',
-          image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'google-preferred-source-how-to-add-my-website-on-google',
-          title: 'Google Preferred Source: How to Add My Website on Google',
-          excerpt: 'Add my website as a Google Preferred Source to boost discovery in your personalized Google Search and AI Overviews feed.',
-          image: 'https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'compliease-osha-log-management-software',
-          title: 'Best OSHA Compliance Software in 2026: Compliease by Sumeera Solutions',
-          excerpt: 'Compliease by Sumeera Solutions is the top OSHA compliance software for manufacturing in 2026. Streamline OSHA 300 logs and incident reporting.',
-          image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'workplace-compliance-software-modern-business',
-          title: 'Why Workplace Compliance Software is Critical for Modern Business Growth',
-          excerpt: 'Why workplace compliance software is essential for scaling modern businesses. Prevent OSHA fines, protect workers, and automate safety recordkeeping.',
-          image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'sumeera-solutions-osha-compliance-software',
-          title: 'Sumeera Solutions: The Smart Way to Manage OSHA Compliance & Avoid Costly Fines',
-          excerpt: 'How SuMeera Solutions transforms OSHA compliance and workplace safety logging for modern enterprise and manufacturing organizations.',
-          image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'retention-marketing-sustainable-growth',
-          title: 'Retention Marketing: The Secret Sauce to Sustainable Growth',
-          excerpt: 'Learn why customer retention drives sustainable growth and how to build automated retention loops that maximize customer lifetime value.',
-          image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'high-converting-email-newsletter-guide',
-          title: 'How to Build a High-Converting Email Newsletter',
-          excerpt: 'Step-by-step blueprint to designing, writing, and automating high-converting email newsletters with 50%+ open rates and rapid subscriber growth.',
-          image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'rank-higher-google-organically',
-          title: '9 Simple Steps How To Rank Higher On Google Organically',
-          excerpt: 'Master organic search rankings with 9 proven steps: search intent alignment, technical architecture, schema markup, and content authority.',
-          image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'facebook-marketing-small-businesses',
-          title: 'How Small Businesses Can Win Big on Facebook Marketing',
-          excerpt: 'A practical guide for local and small businesses to generate high-intent leads and sales through organic Facebook communities and targeted ads.',
-          image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'organic-seo-services',
-          title: 'Why You Need Organic SEO Services to Scale Your Brand',
-          excerpt: 'Understand the power of organic SEO services to outrank competitors, capture commercial search intent, and drive qualified organic revenue.',
-          image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'best-digital-marketer-in-netaji-subhas-university',
-          title: 'Best Digital Marketer in Netaji Subhas University: The Power of Strategy Over Execution',
-          excerpt: 'Discover why strategic digital marketing elevates brands far beyond basic execution in Netaji Subhas University and Jamshedpur.',
-          image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'seo-services-cost-is-500-enough-for-a-company',
-          title: 'SEO Services Cost: Is $500/Month Enough for a Company in 2026? | G. Hari Kiran',
-          excerpt: 'Explore the true cost of SEO services in 2026. Discover why $500/month packages often fail, what reputable agencies charge, and how to allocate your SEO budget.',
-          image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations',
-          title: 'Why Houston Manufacturers Keep Receiving OSHA 1904 Recordkeeping Citations | G. Hari Kiran',
-          excerpt: 'Learn why industrial and manufacturing businesses in Houston and OSHA Region 6 face recurring 1904 recordkeeping penalties, and how to stay 100% compliant.',
-          image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'why-most-businesses-don-t-need-more-traffic-they-need-better-traffic',
-          title: 'Why Most Businesses Don\'t Need More Traffic: They Need Better Traffic | G. Hari Kiran',
-          excerpt: 'Stop chasing vanity page views. Discover how high-intent organic traffic, commercial search queries, and conversion rate optimization drive actual revenue.',
-          image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands',
-          title: 'OSHA 1904 Recordkeeping: The Mistakes That Cost Manufacturing Companies Thousands | G. Hari Kiran',
-          excerpt: 'Avoid 5-figure OSHA penalties. Uncover the most common recording errors on OSHA Forms 300, 301, and 300A, and how automated compliance prevents costly audits.',
-          image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand',
-          title: 'Who Records Injuries for Temporary Workers? The OSHA Rule Many Manufacturers Misunderstand | G. Hari Kiran',
-          excerpt: 'Staffing agency or host employer? Understand the OSHA 1904.31 Day-to-Day Supervision standard to avoid misclassifying temporary worker injury logs.',
-          image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        {
-          slug: 'the-2x-growth-formula-in-marketing-customer-experience-employee-experience',
-          title: 'The 2X Growth Formula in Marketing: Customer Experience + Employee Experience | G. Hari Kiran',
-          excerpt: 'Unlock sustainable business scaling with the 2X Growth Formula. See how aligning Employee Experience (EX) with Customer Experience (CX) doubles retention and revenue.',
-          image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=80'
-        },
-        // Work Project Case Studies
-        {
-          slug: 'local-search-dominance',
-          title: 'Local Search Dominance Case Study | G. Hari Kiran',
-          excerpt: 'Achieved 300% growth in organic traffic through local SEO dominance, citations, and content clustering.',
-          image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=80',
-          isWork: true
-        },
-        {
-          slug: 'sms-conversion-engine',
-          title: 'SMS & Mobile Lead Conversion Engine Case Study | G. Hari Kiran',
-          excerpt: 'Scaled a high-conversion direct marketing channel to drive 21% conversion rates and automated SMS sequences.',
-          image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&h=630&q=80',
-          isWork: true
-        },
-        {
-          slug: 'viral-brand-campaign',
-          title: 'Viral Brand Campaign Case Study | G. Hari Kiran',
-          excerpt: 'High-impact push notification and viral marketing campaign driving substantial customer acquisition and retention.',
-          image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=80',
-          isWork: true
-        },
-        {
-          slug: 'b2b-lead-engine',
-          title: 'B2B Lead Engine Case Study | G. Hari Kiran',
-          excerpt: 'Built high-impact automated B2B customer acquisition campaigns driving 48% open rates and steady demos.',
-          image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&h=630&q=80',
-          isWork: true
+  let cachedArticles: Array<{ slug: string; title: string; excerpt: string; image: string; category?: string }> = [];
+  let lastFetchTime = 0;
+
+  async function getPublishedArticles() {
+    const now = Date.now();
+    if (cachedArticles.length > 0 && now - lastFetchTime < 60000) {
+      return cachedArticles;
+    }
+    const db = getDb();
+    if (!db) return cachedArticles;
+    try {
+      const snapshot = await getDocs(collection(db, "content"));
+      const articles = snapshot.docs.map(d => {
+        const data = d.data();
+        const title = data.title || "";
+        const metaTitle = data.metaTitle || title;
+        const excerpt = data.excerpt || data.metaDescription || data.description || "";
+        const thumbnail = data.thumbnail || "";
+        const ogImage = data.ogImage || thumbnail;
+        const canonicalUrl = data.canonicalUrl || "";
+        const url = data.url || "";
+        let slug = canonicalUrl ? canonicalUrl.replace(/^.*\/blog\//, "").replace(/\/$/, "") : "";
+        if (!slug) {
+          slug = url ? url.replace(/^.*\/blog\//, "").replace(/\/$/, "") : title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
         }
+        return {
+          slug: slug.trim().toLowerCase(),
+          title: metaTitle || title,
+          excerpt: (excerpt || "").replace(/<[^>]*>/g, "").substring(0, 180),
+          image: ogImage || thumbnail || "",
+          category: data.category || "SEO & Growth"
+        };
+      }).filter(a => a.slug);
+      cachedArticles = articles;
+      lastFetchTime = now;
+      console.log(`[Server] Refreshed Firestore articles: ${articles.length} active posts ready for social scrapers.`);
+    } catch (e) {
+      console.warn("[Server] Failed to fetch articles from Firestore:", e);
+    }
+    return cachedArticles;
+  }
+
+  // Dynamic Open Graph Cover Card Endpoint: /api/og-image
+  const ogImageBufferCache = new Map<string, Buffer>();
+
+  app.get("/api/og-image", (req, res) => {
+    try {
+      const rawTitle = (req.query.title as string || "G. Hari Kiran | SEO Strategy").slice(0, 75);
+      const rawCat = (req.query.category as string || "GROWTH JOURNAL").slice(0, 24).toUpperCase();
+      const cacheKey = `${rawCat}::${rawTitle}`;
+
+      if (ogImageBufferCache.has(cacheKey)) {
+        res.setHeader("Content-Type", "image/jpeg");
+        res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800");
+        return res.send(ogImageBufferCache.get(cacheKey));
+      }
+
+      const safeTitle = rawTitle.replace(/[\\"]/g, "");
+      const safeCat = rawCat.replace(/[\\"]/g, "");
+      const outPath = `/tmp/og_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.jpg`;
+
+      const args = [
+        "-size", "1200x630", "xc:#08080C",
+        "-fill", "#12121A", "-draw", "roundrectangle 24,24 1176,606 20,20",
+        "-fill", "#1E1E2C", "-draw", "roundrectangle 26,26 1174,604 18,18",
+        "-fill", "#0E0E16", "-draw", "roundrectangle 32,32 1168,598 16,16",
+        "-fill", "#FF6B00", "-draw", "roundrectangle 70,70 340,125 12,12",
+        "-font", "FreeSans-Bold", "-pointsize", "20", "-fill", "#FFFFFF", "-annotate", "+95+105", safeCat,
+        "-font", "FreeSans-Bold", "-pointsize", "46", "-fill", "#FFFFFF", "-annotate", "+70+250", safeTitle,
+        "-font", "FreeSans", "-pointsize", "24", "-fill", "#9E9EB8", "-annotate", "+70+330", "Actionable Search Engine Strategy & Verified Growth Playbooks",
+        "-fill", "#252535", "-draw", "line 70,470 1130,470",
+        "-font", "FreeSans-Bold", "-pointsize", "26", "-fill", "#FFFFFF", "-annotate", "+70+535", "G. Hari Kiran",
+        "-font", "FreeSans", "-pointsize", "22", "-fill", "#8E8EA0", "-annotate", "+260+535", "• SEO Expert & Digital Marketing Consultant",
+        "-quality", "86", outPath
       ];
 
-      const matchedStatic = staticArticles.find(p => p.slug === cleanSlug);
-      if (matchedStatic) {
-        postMeta = matchedStatic;
+      execFileSync("convert", args);
+      const buf = fs.readFileSync(outPath);
+      try { fs.unlinkSync(outPath); } catch (_) {}
+
+      if (ogImageBufferCache.size > 200) {
+        const firstKey = ogImageBufferCache.keys().next().value;
+        if (firstKey) ogImageBufferCache.delete(firstKey);
+      }
+      ogImageBufferCache.set(cacheKey, buf);
+
+      res.setHeader("Content-Type", "image/jpeg");
+      res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800");
+      res.send(buf);
+    } catch (err: any) {
+      console.warn("[OG Generator] Serving static fallback:", err.message);
+      const fallbackPath = path.join(process.cwd(), "public", "og-blog.jpg");
+      if (fs.existsSync(fallbackPath)) {
+        res.setHeader("Content-Type", "image/jpeg");
+        res.setHeader("Cache-Control", "public, max-age=86400");
+        return res.sendFile(fallbackPath);
+      }
+      res.status(500).send("Failed to generate social preview image");
+    }
+  });
+
+  // High-performance image proxy endpoint that bypasses CDN bot-blocking
+  app.get("/api/proxy/image", async (req, res) => {
+    try {
+      const targetUrl = req.query.url as string;
+      if (!targetUrl || !targetUrl.startsWith("http")) {
+        return res.status(400).send("Invalid or missing image URL");
+      }
+      const response = await fetch(targetUrl, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+          "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+        }
+      });
+      if (!response.ok) {
+        return res.redirect("https://harikiran-portfolio.netlify.app/og-blog.jpg");
+      }
+      const contentType = response.headers.get("content-type") || "image/jpeg";
+      const buffer = Buffer.from(await response.arrayBuffer());
+      res.setHeader("Content-Type", contentType);
+      res.setHeader("Cache-Control", "public, max-age=604800, s-maxage=2592000");
+      res.send(buffer);
+    } catch (e: any) {
+      console.warn("[Image Proxy] Fallback on error:", e.message);
+      res.redirect("https://harikiran-portfolio.netlify.app/og-blog.jpg");
+    }
+  });
+
+  // Helper to sanitize image URLs to guarantee scraper compatibility (JPEG, 1200x630, no webp/crawling blocks)
+  function sanitizeImageUrl(rawImg: string, title = "Article", category = "BLOG", slug = ""): string {
+    // 1. If slug has a local cover file in public/assets/blog-covers/ or dist/assets/blog-covers/, use it directly!
+    if (slug) {
+      const cleanSlug = slug.toLowerCase().trim();
+      const localFilePublic = path.join(process.cwd(), "public", "assets", "blog-covers", `${cleanSlug}.jpg`);
+      const localFileDist = path.join(process.cwd(), "dist", "assets", "blog-covers", `${cleanSlug}.jpg`);
+      if (fs.existsSync(localFilePublic) || fs.existsSync(localFileDist)) {
+        return `https://harikiran-portfolio.netlify.app/assets/blog-covers/${cleanSlug}.jpg`;
+      }
+    }
+
+    if (!rawImg || typeof rawImg !== "string") {
+      return `https://harikiran-portfolio.netlify.app/api/og-image?title=${encodeURIComponent(title.slice(0, 60))}&category=${encodeURIComponent(category.slice(0, 20))}`;
+    }
+
+    let img = rawImg.trim();
+    if (img.startsWith("/")) {
+      return `https://harikiran-portfolio.netlify.app${img}`;
+    } else if (!img.startsWith("http")) {
+      img = `https://${img}`;
+    }
+
+    // Clean trailing dots
+    img = img.replace(/\.+$/, '');
+
+    // Medium CDN URLs block social crawlers with 405 Method Not Allowed; proxy through server or generate dynamic card
+    if (img.includes("medium.com") || img.includes("cdn-images-1.medium.com")) {
+      return `https://harikiran-portfolio.netlify.app/api/proxy/image?url=${encodeURIComponent(img)}`;
+    }
+
+    // Optimize Unsplash images for social crawlers (force JPEG and 1200x630 aspect ratio)
+    if (img.includes("images.unsplash.com")) {
+      img = img.replace(/[?&]fm=webp/g, '').replace(/fm=webp&?/g, '');
+      if (!img.includes("fm=jpg") && !img.includes("fm=png")) {
+        img += (img.includes("?") ? "&" : "?") + "fm=jpg";
+      }
+      if (!img.includes("w=1200")) {
+        img += "&fit=crop&w=1200&h=630&q=82";
+      }
+    }
+
+    return img;
+  }
+
+  // Static site pages dictionary
+  const staticPagesMeta: Record<string, { title: string; excerpt: string; image: string }> = {
+    "/": {
+      title: "G. Hari Kiran | SEO Expert & Digital Marketing Consultant Jamshedpur",
+      excerpt: "Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and revenue.",
+      image: "https://harikiran-portfolio.netlify.app/og-image.jpg"
+    },
+    "/blog": {
+      title: "SEO & Growth Marketing Strategy Blog | G. Hari Kiran",
+      excerpt: "Explore actionable SEO checklists, organic growth playbooks, and digital marketing insights by G. Hari Kiran in Jamshedpur.",
+      image: "https://harikiran-portfolio.netlify.app/og-blog.jpg"
+    },
+    "/work": {
+      title: "Selected SEO Portfolio & Case Studies | G. Hari Kiran",
+      excerpt: "Explore high-impact search marketing and growth case studies by G. Hari Kiran: 300% organic growth, automated conversion engines, and ROI.",
+      image: "https://harikiran-portfolio.netlify.app/og-work.jpg"
+    },
+    "/about": {
+      title: "About G. Hari Kiran | Leading SEO Expert Jamshedpur",
+      excerpt: "Meet G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Proven enterprise SEO strategies that drive measurable ROI.",
+      image: "https://harikiran-portfolio.netlify.app/og-about.jpg"
+    },
+    "/contact": {
+      title: "Hire SEO Expert G. Hari Kiran | Free Website Audit",
+      excerpt: "Book a consultation with G. Hari Kiran, SEO Expert in Jamshedpur. Request your free technical SEO audit and growth roadmap.",
+      image: "https://harikiran-portfolio.netlify.app/og-contact.jpg"
+    },
+    "/resources": {
+      title: "Google Sheets Growth & Finance Templates | G. Hari Kiran",
+      excerpt: "Access custom-engineered, fully automated Google Sheets templates for personal finance tracking, habit building, and book reading management.",
+      image: "https://harikiran-portfolio.netlify.app/og-resources.jpg"
+    },
+    "/content-hub": {
+      title: "Omnichannel Content Hub & Playbooks | G. Hari Kiran",
+      excerpt: "Explore curated growth library: SEO audits, viral marketing playbooks, video breakdowns, and syndications across modern platforms.",
+      image: "https://harikiran-portfolio.netlify.app/og-blog.jpg"
+    },
+    "/partners": {
+      title: "SEO & Digital Marketing Partnerships | G. Hari Kiran",
+      excerpt: "Partner with the top SEO Expert and Digital Marketing Consultant in Jamshedpur. Build strategic brand authority and scale local presence.",
+      image: "https://harikiran-portfolio.netlify.app/og-work.jpg"
+    },
+    "/seo-audit": {
+      title: "Technical SEO Audit & Diagnostics | G. Hari Kiran",
+      excerpt: "View real-time technical SEO health diagnostics and Core Web Vitals performance for G. Hari Kiran's SEO consulting portfolio.",
+      image: "https://harikiran-portfolio.netlify.app/og-image.jpg"
+    },
+    "/experience": {
+      title: "Professional Background & SEO Track Record | G. Hari Kiran",
+      excerpt: "Review the professional background, agency certifications, and demonstrated enterprise growth metrics engineered by G. Hari Kiran.",
+      image: "https://harikiran-portfolio.netlify.app/og-about.jpg"
+    }
+  };
+
+  // Static articles dictionary
+  const staticArticles = [
+    {
+      slug: 'technical-seo-checklist-2026-audit-before-ranking',
+      title: 'Technical SEO Checklist for 2026: 25 Things Every Website Should Audit Before Ranking',
+      excerpt: 'Actionable 25-point technical SEO checklist for 2026. Audit Core Web Vitals INP, AI Bot crawling, canonical integrity, and crawl budget to rank #1.',
+      image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'google-preferred-source-how-to-add-my-website-on-google',
+      title: 'Google Preferred Source: How to Add My Website on Google',
+      excerpt: 'Add my website as a Google Preferred Source to boost discovery in your personalized Google Search and AI Overviews feed.',
+      image: 'https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'compliease-osha-log-management-software',
+      title: 'Best OSHA Compliance Software in 2026: Compliease by Sumeera Solutions',
+      excerpt: 'Compliease by Sumeera Solutions is the top OSHA compliance software for manufacturing in 2026. Streamline OSHA 300 logs and incident reporting.',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'workplace-compliance-software-modern-business',
+      title: 'Why Workplace Compliance Software is Critical for Modern Business Growth',
+      excerpt: 'Why workplace compliance software is essential for scaling modern businesses. Prevent OSHA fines, protect workers, and automate safety recordkeeping.',
+      image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'sumeera-solutions-osha-compliance-software',
+      title: 'Sumeera Solutions: The Smart Way to Manage OSHA Compliance & Avoid Costly Fines',
+      excerpt: 'How SuMeera Solutions transforms OSHA compliance and workplace safety logging for modern enterprise and manufacturing organizations.',
+      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'retention-marketing-sustainable-growth',
+      title: 'Retention Marketing: The Secret Sauce to Sustainable Growth',
+      excerpt: 'Learn why customer retention drives sustainable growth and how to build automated retention loops that maximize customer lifetime value.',
+      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'high-converting-email-newsletter-guide',
+      title: 'How to Build a High-Converting Email Newsletter',
+      excerpt: 'Step-by-step blueprint to designing, writing, and automating high-converting email newsletters with 50%+ open rates and rapid subscriber growth.',
+      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'rank-higher-google-organically',
+      title: '9 Simple Steps How To Rank Higher On Google Organically',
+      excerpt: 'Master organic search rankings with 9 proven steps: search intent alignment, technical architecture, schema markup, and content authority.',
+      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'facebook-marketing-small-businesses',
+      title: 'How Small Businesses Can Win Big on Facebook Marketing',
+      excerpt: 'A practical guide for local and small businesses to generate high-intent leads and sales through organic Facebook communities and targeted ads.',
+      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'organic-seo-services',
+      title: 'Why You Need Organic SEO Services to Scale Your Brand',
+      excerpt: 'Understand the power of organic SEO services to outrank competitors, capture commercial search intent, and drive qualified organic revenue.',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'best-digital-marketer-in-netaji-subhas-university',
+      title: 'Best Digital Marketer in Netaji Subhas University: The Power of Strategy Over Execution',
+      excerpt: 'Discover why strategic digital marketing elevates brands far beyond basic execution in Netaji Subhas University and Jamshedpur.',
+      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'seo-services-cost-is-500-enough-for-a-company',
+      title: 'SEO Services Cost: Is $500/Month Enough for a Company in 2026? | G. Hari Kiran',
+      excerpt: 'Explore the true cost of SEO services in 2026. Discover why $500/month packages often fail, what reputable agencies charge, and how to allocate your SEO budget.',
+      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations',
+      title: 'Why Houston Manufacturers Keep Receiving OSHA 1904 Recordkeeping Citations | G. Hari Kiran',
+      excerpt: 'Learn why industrial and manufacturing businesses in Houston and OSHA Region 6 face recurring 1904 recordkeeping penalties, and how to stay 100% compliant.',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'why-most-businesses-don-t-need-more-traffic-they-need-better-traffic',
+      title: 'Why Most Businesses Don\'t Need More Traffic: They Need Better Traffic | G. Hari Kiran',
+      excerpt: 'Stop chasing vanity page views. Discover how high-intent organic traffic, commercial search queries, and conversion rate optimization drive actual revenue.',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands',
+      title: 'OSHA 1904 Recordkeeping: The Mistakes That Cost Manufacturing Companies Thousands | G. Hari Kiran',
+      excerpt: 'Avoid 5-figure OSHA penalties. Uncover the most common recording errors on OSHA Forms 300, 301, and 300A, and how automated compliance prevents costly audits.',
+      image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand',
+      title: 'Who Records Injuries for Temporary Workers? The OSHA Rule Many Manufacturers Misunderstand | G. Hari Kiran',
+      excerpt: 'Staffing agency or host employer? Understand the OSHA 1904.31 Day-to-Day Supervision standard to avoid misclassifying temporary worker injury logs.',
+      image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    {
+      slug: 'the-2x-growth-formula-in-marketing-customer-experience-employee-experience',
+      title: 'The 2X Growth Formula in Marketing: Customer Experience + Employee Experience | G. Hari Kiran',
+      excerpt: 'Unlock sustainable business scaling with the 2X Growth Formula. See how aligning Employee Experience (EX) with Customer Experience (CX) doubles retention and revenue.',
+      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+    },
+    // Work Project Case Studies
+    {
+      slug: 'local-search-dominance',
+      title: 'Local Search Dominance Case Study | G. Hari Kiran',
+      excerpt: 'Achieved 300% growth in organic traffic through local SEO dominance, citations, and content clustering.',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg',
+      isWork: true
+    },
+    {
+      slug: 'sms-conversion-engine',
+      title: 'SMS & Mobile Lead Conversion Engine Case Study | G. Hari Kiran',
+      excerpt: 'Scaled a high-conversion direct marketing channel to drive 21% conversion rates and automated SMS sequences.',
+      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg',
+      isWork: true
+    },
+    {
+      slug: 'viral-brand-campaign',
+      title: 'Viral Brand Campaign Case Study | G. Hari Kiran',
+      excerpt: 'High-impact push notification and viral marketing campaign driving substantial customer acquisition and retention.',
+      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg',
+      isWork: true
+    },
+    {
+      slug: 'b2b-lead-engine',
+      title: 'B2B Lead Engine Case Study | G. Hari Kiran',
+      excerpt: 'Built high-impact automated B2B customer acquisition campaigns driving 48% open rates and steady demos.',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg',
+      isWork: true
+    }
+  ];
+
+  const BOT_USER_AGENTS = /facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Slackbot|Discordbot|SkypeUriPreview|Applebot|Pinterest|Googlebot|bingbot|baiduspider|yandex|crawlers|feedfetcher/i;
+
+  // Universal SSR Open Graph Middleware & Route Handler
+  app.use(async (req, res, next) => {
+    const rawPath = req.path || "/";
+    // Ignore static assets and internal api
+    if (rawPath.startsWith("/api/") || rawPath.startsWith("/assets/") || rawPath.includes(".")) {
+      return next();
+    }
+
+    const cleanPath = rawPath.replace(/\/$/, "") || "/";
+    const userAgent = req.get("user-agent") || "";
+    const isBot = BOT_USER_AGENTS.test(userAgent);
+    const isPostRoute = cleanPath.startsWith("/blog/") || cleanPath.startsWith("/work/") || cleanPath.startsWith("/content/");
+    const isStaticPageRoute = staticPagesMeta[cleanPath] !== undefined;
+
+    // Trigger SSR if it's a blog/work post route, a static landing page, or any social crawler bot
+    if (!isPostRoute && !isStaticPageRoute && !isBot) {
+      return next();
+    }
+
+    try {
+      let pageData: { title: string; excerpt: string; image: string; isArticle?: boolean } | null = null;
+      const isWork = cleanPath.startsWith("/work");
+      const isArticle = cleanPath.startsWith("/blog") || cleanPath.startsWith("/content");
+
+      // 1. Check if it matches a static top-level page
+      if (staticPagesMeta[cleanPath]) {
+        const sm = staticPagesMeta[cleanPath];
+        pageData = {
+          title: sm.title,
+          excerpt: sm.excerpt,
+          image: sanitizeImageUrl(sm.image, sm.title),
+          isArticle: false
+        };
       }
 
-      // 2. Query Firestore Database for custom published articles
-      if (!postMeta && !isWork) {
-        try {
-          const projectId = "ai-studio-39fdbe7e-0650-402d-8291-ceb99e0322a0";
-          const firestoreUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/content`;
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2500);
-          
-          const fsRes = await fetch(firestoreUrl, { signal: controller.signal });
-          clearTimeout(timeoutId);
-
-          if (fsRes.ok) {
-            const fsData = await fsRes.json();
-            if (Array.isArray(fsData.documents)) {
-              for (const doc of fsData.documents) {
-                const fields = doc.fields || {};
-                const title = fields.title?.stringValue || "";
-                const metaTitle = fields.metaTitle?.stringValue || title;
-                const excerpt = fields.excerpt?.stringValue || fields.metaDescription?.stringValue || fields.description?.stringValue || "";
-                const thumbnail = fields.thumbnail?.stringValue || "";
-                const ogImage = fields.ogImage?.stringValue || thumbnail;
-                const canonicalUrl = fields.canonicalUrl?.stringValue || "";
-                const url = fields.url?.stringValue || "";
-
-                let postSlug = canonicalUrl ? canonicalUrl.replace(/^.*\/blog\//, "") : "";
-                if (!postSlug) {
-                  postSlug = url ? url.replace(/^.*\/blog\//, "") : title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
-                }
-
-                if (postSlug.toLowerCase() === cleanSlug) {
-                  postMeta = {
-                    title: metaTitle || title,
-                    excerpt: (excerpt || "").replace(/<[^>]*>/g, "").substring(0, 180),
-                    image: ogImage || thumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=80",
-                    slug: postSlug
-                  };
-                  break;
-                }
-              }
-            }
-          }
-        } catch (fsErr) {
-          console.warn("[SSR Meta] Firestore query fallback:", fsErr);
+      // 2. Check static blog/work articles dictionary
+      if (!pageData && isPostRoute) {
+        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").toLowerCase();
+        const matchedStatic = staticArticles.find(p => p.slug === slug);
+        if (matchedStatic) {
+          pageData = {
+            title: matchedStatic.title,
+            excerpt: matchedStatic.excerpt,
+            image: sanitizeImageUrl(matchedStatic.image, matchedStatic.title, "BLOG", slug),
+            isArticle: !matchedStatic.isWork
+          };
         }
       }
 
-      // 3. Query Medium RSS Feed for dynamic syndications
-      if (!postMeta && !isWork) {
+      // 3. Query Firestore for published blogs
+      if (!pageData && (isArticle || isBot)) {
+        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").toLowerCase();
+        const firestoreArticles = await getPublishedArticles();
+        const matchedFs = firestoreArticles.find(a => a.slug === slug);
+        if (matchedFs) {
+          pageData = {
+            title: matchedFs.title,
+            excerpt: matchedFs.excerpt,
+            image: sanitizeImageUrl(matchedFs.image, matchedFs.title, matchedFs.category, slug),
+            isArticle: true
+          };
+        }
+      }
+
+      // 4. Query Medium RSS Feed as fallback
+      if (!pageData && isArticle) {
+        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").toLowerCase();
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2500);
+          const timeoutId = setTimeout(() => controller.abort(), 2000);
           const rssRes = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@harikirangumma2003", { signal: controller.signal });
           clearTimeout(timeoutId);
 
@@ -672,131 +929,121 @@ To reply officially with your verified Author Badge or moderate this comment:
             if (rssData.status === "ok" && Array.isArray(rssData.items)) {
               for (const item of rssData.items) {
                 const itemSlug = (item.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
-                if (itemSlug === cleanSlug) {
-                  let img = item.thumbnail;
-                  const content = item.content || item.description || "";
-                  if (!img || img.includes("stat?event=") || img.includes("avatar")) {
-                    const match = content.match(/<img[^>]+src="([^">]+)"/i);
-                    if (match && match[1] && !match[1].includes("stat?event=") && !match[1].includes("avatar")) {
-                      img = match[1];
-                    }
-                  }
-                  postMeta = {
+                if (itemSlug === slug) {
+                  pageData = {
                     title: item.title,
-                    excerpt: (content.replace(/<[^>]*>/g, "") || "").substring(0, 180),
-                    image: img || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=80",
-                    slug: itemSlug
+                    excerpt: (item.description || "").replace(/<[^>]*>/g, "").substring(0, 180),
+                    image: `https://harikiran-portfolio.netlify.app/api/og-image?title=${encodeURIComponent(item.title.slice(0, 60))}&category=MEDIUM%20ARTICLE`,
+                    isArticle: true
                   };
                   break;
                 }
               }
             }
           }
-        } catch (rssErr) {
-          console.warn("[SSR Meta] Medium RSS query fallback:", rssErr);
-        }
+        } catch (_) {}
       }
 
-      // 4. Default algorithmic slug generator if still not found
-      if (!postMeta) {
-        const readableTitle = cleanSlug
+      // 5. Algorithmic fallback if post route is not matched
+      if (!pageData && isPostRoute) {
+        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "");
+        const readableTitle = slug
           .split("-")
           .map(w => w.charAt(0).toUpperCase() + w.slice(1))
           .join(" ");
-        postMeta = {
+        pageData = {
           title: `${readableTitle} | G. Hari Kiran`,
           excerpt: `Read "${readableTitle}" — actionable growth, digital marketing, and technical SEO insights by G. Hari Kiran.`,
-          image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=80",
-          slug: cleanSlug
+          image: `https://harikiran-portfolio.netlify.app/api/og-image?title=${encodeURIComponent(readableTitle.slice(0, 60))}&category=GROWTH%20JOURNAL`,
+          isArticle: true
         };
+      }
+
+      // 6. Generic homepage fallback if nothing matched and it's a bot
+      if (!pageData && isBot) {
+        pageData = {
+          title: "G. Hari Kiran | SEO Expert & Digital Marketing Consultant Jamshedpur",
+          excerpt: "Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and revenue.",
+          image: "https://harikiran-portfolio.netlify.app/og-image.jpg",
+          isArticle: false
+        };
+      }
+
+      if (!pageData) {
+        return next();
       }
 
       const indexPath = process.env.NODE_ENV !== "production"
         ? path.join(process.cwd(), "index.html")
         : path.join(process.cwd(), "dist", "index.html");
 
-      const fs = await import("fs");
       let html = await fs.promises.readFile(indexPath, "utf-8");
 
-      // Build complete, absolute Open Graph & Twitter metadata
       const host = req.get("x-forwarded-host") || req.get("host") || "harikiran-portfolio.netlify.app";
-      const protocol = req.get("x-forwarded-proto") || req.protocol || "https";
-      const baseUrl = `${protocol}://${host}`;
-      
-      const escape = (s: string) => (s || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/\n/g, " ")
-        .trim();
+      const pageUrl = `https://harikiran-portfolio.netlify.app${cleanPath}`;
+      const escape = (s: string) => (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").trim();
 
-      const rawTitle = postMeta.title.includes("G. Hari Kiran") ? postMeta.title : `${postMeta.title} | G. Hari Kiran`;
+      const rawTitle = pageData.title.includes("G. Hari Kiran") ? pageData.title : `${pageData.title} | G. Hari Kiran`;
       const pageTitle = escape(rawTitle);
-      const desc = escape(postMeta.excerpt || "Expert growth, digital marketing, and technical SEO strategy by G. Hari Kiran.");
-      
-      let imageUrl = postMeta.image || "https://harikiran-portfolio.netlify.app/og-image.jpg";
-      if (!imageUrl.startsWith("http")) {
-        imageUrl = `${baseUrl}${imageUrl.startsWith("/") ? "" : "/"}${imageUrl}`;
-      }
-      // Ensure unsplash has high-res aspect ratio
-      if (imageUrl.includes("images.unsplash.com") && !imageUrl.includes("w=1200")) {
-        imageUrl = `${imageUrl}&auto=format&fit=crop&w=1200&h=630&q=80`;
-      }
+      const desc = escape(pageData.excerpt);
+      const imageUrl = pageData.image;
 
       let imageType = "image/jpeg";
-      if (imageUrl.endsWith(".png")) imageType = "image/png";
-      else if (imageUrl.endsWith(".webp")) imageType = "image/webp";
-      else if (imageUrl.endsWith(".svg")) imageType = "image/svg+xml";
+      if (imageUrl.toLowerCase().endsWith(".png")) imageType = "image/png";
 
-      const pageUrl = `${baseUrl}/${isWork ? "work" : "blog"}/${postMeta.slug}`;
-
-      // Purge all existing title, description, og:*, twitter:*, and canonical tags to prevent duplicate or conflicting tags
+      // Purge existing title, description, og:*, twitter:*, and canonical tags
       html = html.replace(/<title[^>]*>[\s\S]*?<\/title>/gi, "");
       html = html.replace(/<meta[^>]+name=["']description["'][^>]*\/?>/gi, "");
       html = html.replace(/<meta[^>]+property=["']og:[^"']+["'][^>]*\/?>/gi, "");
       html = html.replace(/<meta[^>]+name=["']twitter:[^"']+["'][^>]*\/?>/gi, "");
       html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*\/?>/gi, "");
+      html = html.replace(/<link[^>]+rel=["']image_src["'][^>]*\/?>/gi, "");
 
       const cleanSocialTags = `
-    <title data-react-helmet="true">${pageTitle}</title>
-    <meta data-react-helmet="true" name="description" content="${desc}" />
-    <link data-react-helmet="true" rel="canonical" href="${pageUrl}" />
+    <title>${pageTitle}</title>
+    <meta name="description" content="${desc}" />
+    <link rel="canonical" href="${pageUrl}" />
+
+    <!-- Standard Link & Meta Image References -->
+    <meta name="image" content="${imageUrl}" />
+    <meta name="thumbnail" content="${imageUrl}" />
+    <link rel="image_src" href="${imageUrl}" />
 
     <!-- Open Graph (WhatsApp, LinkedIn, Facebook, Slack, Telegram) -->
-    <meta data-react-helmet="true" property="og:type" content="${isWork ? "website" : "article"}" />
-    <meta data-react-helmet="true" property="og:site_name" content="G. Hari Kiran Portfolio" />
-    <meta data-react-helmet="true" property="og:url" content="${pageUrl}" />
-    <meta data-react-helmet="true" property="og:title" content="${pageTitle}" />
-    <meta data-react-helmet="true" property="og:description" content="${desc}" />
-    <meta data-react-helmet="true" property="og:image" content="${imageUrl}" />
-    <meta data-react-helmet="true" property="og:image:secure_url" content="${imageUrl}" />
-    <meta data-react-helmet="true" property="og:image:type" content="${imageType}" />
-    <meta data-react-helmet="true" property="og:image:width" content="1200" />
-    <meta data-react-helmet="true" property="og:image:height" content="630" />
-    <meta data-react-helmet="true" property="og:image:alt" content="${pageTitle}" />
+    <meta property="og:type" content="${pageData.isArticle ? "article" : "website"}" />
+    <meta property="og:site_name" content="G. Hari Kiran Portfolio" />
+    <meta property="og:url" content="${pageUrl}" />
+    <meta property="og:title" content="${pageTitle}" />
+    <meta property="og:description" content="${desc}" />
+    <meta property="og:image" content="${imageUrl}" />
+    <meta property="og:image:secure_url" content="${imageUrl}" />
+    <meta property="og:image:type" content="${imageType}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="${pageTitle}" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale:alternate" content="en_US" />
 
     <!-- Twitter / X Large Summary Card -->
-    <meta data-react-helmet="true" name="twitter:card" content="summary_large_image" />
-    <meta data-react-helmet="true" name="twitter:site" content="@GHariKiran29" />
-    <meta data-react-helmet="true" name="twitter:creator" content="@GHariKiran29" />
-    <meta data-react-helmet="true" name="twitter:title" content="${pageTitle}" />
-    <meta data-react-helmet="true" name="twitter:description" content="${desc}" />
-    <meta data-react-helmet="true" name="twitter:image" content="${imageUrl}" />
-    <meta data-react-helmet="true" name="twitter:image:src" content="${imageUrl}" />
-    <meta data-react-helmet="true" name="twitter:image:alt" content="${pageTitle}" />
-    <meta data-react-helmet="true" name="twitter:domain" content="${host}" />
-    <meta data-react-helmet="true" name="twitter:url" content="${pageUrl}" />`;
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@GHariKiran29" />
+    <meta name="twitter:creator" content="@GHariKiran29" />
+    <meta name="twitter:title" content="${pageTitle}" />
+    <meta name="twitter:description" content="${desc}" />
+    <meta name="twitter:image" content="${imageUrl}" />
+    <meta name="twitter:image:src" content="${imageUrl}" />
+    <meta name="twitter:image:alt" content="${pageTitle}" />
+    <meta name="twitter:domain" content="harikiran-portfolio.netlify.app" />
+    <meta name="twitter:url" content="${pageUrl}" />`;
 
-      // Inject clean social block right after <head>
       html = html.replace(/<head[^>]*>/i, `$&${cleanSocialTags}`);
 
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
-      res.send(html);
+      return res.send(html);
     } catch (e) {
       console.error("[SSR Meta Handler] Error:", e);
-      next();
+      return next();
     }
   });
 

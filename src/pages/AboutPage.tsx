@@ -33,6 +33,7 @@ const AboutPage = () => {
       <SEO 
         title="About G. Hari Kiran | Leading SEO Expert Jamshedpur"
         description="Meet G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Learn how I grow organic search authority and revenue."
+        image="/og-about.jpg"
         url="/about"
         type="profile"
         schemaData={{

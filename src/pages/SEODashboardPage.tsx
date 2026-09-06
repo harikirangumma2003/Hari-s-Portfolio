@@ -122,6 +122,7 @@ const SEODashboardPage = () => {
       <SEO 
         title="Technical SEO Audit & Diagnostics | G. Hari Kiran"
         description="View real-time technical SEO health diagnostics and Core Web Vitals performance for G. Hari Kiran's SEO consulting portfolio in Jamshedpur."
+        image="/og-image.jpg"
         url="/seo-audit"
         schemaData={{
           "@context": "https://schema.org",

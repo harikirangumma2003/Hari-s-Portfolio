@@ -45,19 +45,34 @@ export const SEO: React.FC<SEOProps> = ({
   const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg";
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 
-  // Determine absolute image URL
-  const ogImage = image 
-    ? (image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`) 
-    : defaultImage;
+  // Determine absolute image URL with strict social platform compatibility (JPEG/PNG, 1200x630, <300KB)
+  let rawImage = image || defaultImage;
+  let ogImage = rawImage.startsWith('http') 
+    ? rawImage 
+    : `${siteUrl}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`;
 
-  // Determine image mime type
+  // Optimize Unsplash images for social crawlers (force JPEG and 1200x630 aspect ratio)
+  if (ogImage.includes('images.unsplash.com')) {
+    ogImage = ogImage.replace(/[?&]fm=webp/g, '').replace(/fm=webp&?/g, '');
+    if (!ogImage.includes('fm=jpg') && !ogImage.includes('fm=png')) {
+      ogImage += (ogImage.includes('?') ? '&' : '?') + 'fm=jpg';
+    }
+    if (!ogImage.includes('w=1200')) {
+      ogImage += '&fit=crop&w=1200&h=630&q=82';
+    }
+  }
+
+  // Clean trailing dots or trailing punctuation from CDN urls (e.g. Medium CDN edge cases)
+  ogImage = ogImage.replace(/\.+$/, '');
+
+  // Determine image mime type - strictly prioritize image/jpeg or image/png for universal WhatsApp/LinkedIn/Twitter support
   let imageType = "image/jpeg";
-  if (ogImage.endsWith(".png")) {
+  if (ogImage.toLowerCase().endsWith(".png")) {
     imageType = "image/png";
-  } else if (ogImage.endsWith(".webp")) {
-    imageType = "image/webp";
-  } else if (ogImage.endsWith(".svg")) {
-    imageType = "image/svg+xml";
+  } else if (ogImage.toLowerCase().endsWith(".gif")) {
+    imageType = "image/gif";
+  } else {
+    imageType = "image/jpeg";
   }
 
   // Determine precise canonical URL dynamically matching Netlify server canonical format
@@ -76,7 +91,20 @@ export const SEO: React.FC<SEOProps> = ({
   }
   // Enforce canonical trailing slash to prevent Netlify 301 canonical redirects
   const normalizedPath = cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`;
-  const canonicalUrl = canonical || `${siteUrl}${normalizedPath === '//' ? '/' : normalizedPath}`;
+  const pageUrl = `${siteUrl}${normalizedPath === '//' ? '/' : normalizedPath}`;
+  const canonicalUrl = canonical || pageUrl;
+
+  // Medium CDN and third-party URLs block social scrapers (returning 405 Method Not Allowed)
+  // For blog posts, route through our pre-optimized 1200x630 local assets or proxy endpoint
+  const blogMatch = cleanPath.match(/^\/blog\/([^/]+)/);
+  if (blogMatch && blogMatch[1]) {
+    const postSlug = blogMatch[1];
+    if (ogImage.includes('medium.com') || ogImage.includes('cdn-images-1.medium.com') || ogImage === defaultImage) {
+      ogImage = `${siteUrl}/assets/blog-covers/${postSlug}.jpg`;
+    }
+  } else if (ogImage.includes('medium.com') || ogImage.includes('cdn-images-1.medium.com')) {
+    ogImage = `${siteUrl}/api/proxy/image?url=${encodeURIComponent(ogImage)}`;
+  }
 
   return (
     <Helmet>
@@ -119,6 +147,9 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="DC.coverage" content="Jamshedpur, Jharkhand, India" />
 
       {/* Complete Open Graph / Facebook / LinkedIn / WhatsApp */}
+      <meta name="image" content={ogImage} />
+      <meta name="thumbnail" content={ogImage} />
+      <link rel="image_src" href={ogImage} />
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
@@ -128,7 +159,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={fullTitle} />
-      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:url" content={pageUrl} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_IN" />
       <meta property="og:locale:alternate" content="en_US" />
@@ -149,7 +180,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:image:src" content={ogImage} />
       <meta name="twitter:image:alt" content={fullTitle} />
       <meta name="twitter:domain" content="harikiran-portfolio.netlify.app" />
-      <meta name="twitter:url" content={canonicalUrl} />
+      <meta name="twitter:url" content={pageUrl} />
 
       {/* Article Specific Open Graph Attributes */}
       {type === 'article' && articleData && (
