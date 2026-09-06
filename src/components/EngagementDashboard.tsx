@@ -39,7 +39,48 @@ interface EngagementDashboardProps {
   triggerToast?: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
+class EngagementErrorBoundary extends React.Component<
+  { children: React.ReactNode; themeMode?: 'dark' | 'light' },
+  { hasError: boolean; error: any }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('EngagementDashboard error boundary caught:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-8 rounded-[32px] border border-red-500/20 bg-red-500/5 text-center space-y-4 my-4">
+          <div className="w-12 h-12 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center mx-auto">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+          <h3 className="text-base font-bold text-white">Engagement Dashboard</h3>
+          <p className="text-xs text-zinc-400 max-w-md mx-auto">
+            A temporary issue occurred while rendering comments or reactions. You can click below to refresh the view.
+          </p>
+          <button
+            onClick={() => this.setState({ hasError: false, error: null })}
+            className="px-5 py-2.5 bg-accent hover:bg-white text-white hover:text-black rounded-xl text-xs font-bold transition-all"
+          >
+            Refresh Engagement Hub
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+const EngagementDashboardInner: React.FC<EngagementDashboardProps> = ({
   themeMode = 'dark',
   triggerToast
 }) => {
@@ -61,22 +102,48 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
   useEffect(() => {
     setLoading(true);
 
-    const unsubComments = subscribeToAllBlogComments((allComments) => {
-      setComments(allComments);
-      setLoading(false);
-    });
+    let unsubComments: (() => void) | undefined;
+    let unsubReactions: (() => void) | undefined;
 
-    const unsubReactions = subscribeToAllBlogReactions((allReactions) => {
-      const map: Record<string, BlogReactionsData> = {};
-      allReactions.forEach((r) => {
-        map[r.postSlug] = r;
+    try {
+      unsubComments = subscribeToAllBlogComments((allComments) => {
+        setComments(Array.isArray(allComments) ? allComments : []);
+        setLoading(false);
       });
-      setReactionsMap(map);
-    });
+    } catch (err) {
+      console.warn('Comments subscription setup error:', err);
+      setLoading(false);
+    }
+
+    try {
+      unsubReactions = subscribeToAllBlogReactions((allReactions) => {
+        const map: Record<string, BlogReactionsData> = {};
+        if (Array.isArray(allReactions)) {
+          allReactions.forEach((r) => {
+            if (r && r.postSlug) {
+              map[r.postSlug] = r;
+            }
+          });
+        }
+        setReactionsMap(map);
+      });
+    } catch (err) {
+      console.warn('Reactions subscription setup error:', err);
+    }
+
+    // Safety timeout: Ensure loading spinner never locks up UI even if Firebase is unreachable
+    const safetyTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
 
     return () => {
-      unsubComments();
-      unsubReactions();
+      clearTimeout(safetyTimer);
+      if (typeof unsubComments === 'function') {
+        try { unsubComments(); } catch {}
+      }
+      if (typeof unsubReactions === 'function') {
+        try { unsubReactions(); } catch {}
+      }
     };
   }, []);
 
@@ -218,8 +285,8 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
       const q = searchTerm.toLowerCase();
       list = list.filter(
         (c) =>
-          c.authorName.toLowerCase().includes(q) ||
-          c.content.toLowerCase().includes(q) ||
+          (c.authorName && c.authorName.toLowerCase().includes(q)) ||
+          (c.content && c.content.toLowerCase().includes(q)) ||
           (c.authorEmail && c.authorEmail.toLowerCase().includes(q)) ||
           (c.authorRole && c.authorRole.toLowerCase().includes(q))
       );
@@ -598,12 +665,12 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
                           comment.isAuthor ? 'bg-accent text-white' : 'bg-white/10 text-zinc-200'
                         }`}
                       >
-                        {comment.isAuthor ? 'HK' : comment.authorName.substring(0, 2)}
+                        {comment.isAuthor ? 'HK' : ((comment.authorName || 'R').substring(0, 2).toUpperCase())}
                       </div>
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-xs font-black text-white">
-                            {comment.authorName}
+                            {comment.authorName || 'Anonymous Reader'}
                           </span>
                           {comment.isAuthor && (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent text-white text-[9px] font-black uppercase">
@@ -767,3 +834,11 @@ export const EngagementDashboard: React.FC<EngagementDashboardProps> = ({
     </div>
   );
 };
+
+export const EngagementDashboard: React.FC<EngagementDashboardProps> = (props) => (
+  <EngagementErrorBoundary themeMode={props.themeMode}>
+    <EngagementDashboardInner {...props} />
+  </EngagementErrorBoundary>
+);
+
+export default EngagementDashboard;

@@ -166,20 +166,26 @@ export default function AdminCMSPage() {
       return;
     }
 
-    if (location.pathname === "/admin/content/trash" || location.pathname === "/admin/trash") {
+    const path = location.pathname.replace(/\/$/, "");
+    if (path === "/admin/content/trash" || path === "/admin/trash") {
       setActiveTab("trash");
-    } else if (location.pathname === "/admin/engagement" || location.pathname === "/admin/comments") {
+    } else if (path === "/admin/engagement" || path === "/admin/comments" || path.endsWith("/engagement") || path.endsWith("/comments")) {
       setActiveTab("engagement");
-    } else if (location.pathname === "/admin/automation") {
+    } else if (path === "/admin/automation" || path.endsWith("/automation")) {
       setActiveTab("automation");
-    } else if (location.pathname === "/admin/blog-writer") {
+    } else if (path === "/admin/blog-writer" || path.endsWith("/blog-writer")) {
       setActiveTab("blog-writer");
-    } else if (location.pathname === "/admin/content/new") {
+    } else if (path === "/admin/content/new") {
       setActiveTab("form");
-    } else if (location.pathname === "/admin/content/archived" || location.pathname === "/admin/archived") {
+    } else if (path === "/admin/content/archived" || path === "/admin/archived") {
       setActiveTab("archived");
-    } else if (location.pathname === "/admin/content") {
+    } else if (path === "/admin/content") {
       setActiveTab("list");
+    } else if (path === "/admin") {
+      // If directly at /admin root and no tab query param, keep current activeTab if valid or default to dashboard
+      if (!tabParam && activeTab !== "engagement" && activeTab !== "blog-writer" && activeTab !== "automation" && activeTab !== "form" && activeTab !== "list" && activeTab !== "archived" && activeTab !== "trash") {
+        setActiveTab("dashboard");
+      }
     }
   }, [location.pathname, location.search]);
 
@@ -1053,7 +1059,7 @@ export default function AdminCMSPage() {
             </button>
 
             <button
-              onClick={() => { navigate("/admin"); setActiveTab("list"); resetForm(); }}
+              onClick={() => { navigate("/admin/content"); resetForm(); setActiveTab("list"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
                 activeTab === "list"
@@ -1066,7 +1072,7 @@ export default function AdminCMSPage() {
             </button>
 
             <button
-              onClick={() => { navigate("/admin"); resetForm(); setActiveTab("form"); }}
+              onClick={() => { navigate("/admin/content/new"); resetForm(); setActiveTab("form"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
                 activeTab === "form" && !editingId
@@ -1079,7 +1085,7 @@ export default function AdminCMSPage() {
             </button>
 
             <button
-              onClick={() => { navigate("/admin"); resetForm(); setActiveTab("engagement"); }}
+              onClick={() => { navigate("/admin/engagement"); resetForm(); setActiveTab("engagement"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
                 activeTab === "engagement"
@@ -1092,7 +1098,7 @@ export default function AdminCMSPage() {
             </button>
 
             <button
-              onClick={() => { navigate("/admin"); resetForm(); setActiveTab("blog-writer"); }}
+              onClick={() => { navigate("/admin/blog-writer"); resetForm(); setActiveTab("blog-writer"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
                 activeTab === "blog-writer"
@@ -1105,7 +1111,7 @@ export default function AdminCMSPage() {
             </button>
 
             <button
-              onClick={() => { navigate("/admin"); resetForm(); setActiveTab("archived"); }}
+              onClick={() => { navigate("/admin/content/archived"); resetForm(); setActiveTab("archived"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
                 activeTab === "archived"
@@ -1118,7 +1124,7 @@ export default function AdminCMSPage() {
             </button>
 
             <button
-              onClick={() => { navigate("/admin"); resetForm(); setActiveTab("automation"); }}
+              onClick={() => { navigate("/admin/automation"); resetForm(); setActiveTab("automation"); }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all",
                 activeTab === "automation"
@@ -1224,35 +1230,35 @@ export default function AdminCMSPage() {
                 <FileText className="w-4 h-4" />
               </button>
               <button 
-                onClick={() => { navigate("/admin"); resetForm(); setActiveTab("form"); }}
+                onClick={() => { navigate("/admin/content/new"); resetForm(); setActiveTab("form"); }}
                 className={cn("p-1.5 rounded", activeTab === "form" && !editingId ? "text-accent" : "text-zinc-400")}
                 title="Create"
               >
                 <PlusCircle className="w-4 h-4" />
               </button>
               <button 
-                onClick={() => { navigate("/admin"); resetForm(); setActiveTab("engagement"); }}
+                onClick={() => { navigate("/admin/engagement"); resetForm(); setActiveTab("engagement"); }}
                 className={cn("p-1.5 rounded", activeTab === "engagement" ? "text-accent" : "text-zinc-400")}
                 title="Engagement & Comments"
               >
                 <MessageSquare className="w-4 h-4 text-accent" />
               </button>
               <button 
-                onClick={() => { navigate("/admin"); resetForm(); setActiveTab("blog-writer"); }}
+                onClick={() => { navigate("/admin/blog-writer"); resetForm(); setActiveTab("blog-writer"); }}
                 className={cn("p-1.5 rounded", activeTab === "blog-writer" ? "text-accent" : "text-zinc-400")}
                 title="Blog Writer"
               >
                 <PenTool className="w-4 h-4 text-accent" />
               </button>
               <button 
-                onClick={() => { navigate("/admin"); resetForm(); setActiveTab("archived"); }}
+                onClick={() => { navigate("/admin/content/archived"); resetForm(); setActiveTab("archived"); }}
                 className={cn("p-1.5 rounded", activeTab === "archived" ? "text-accent" : "text-zinc-400")}
                 title="Archived"
               >
                 <Archive className="w-4 h-4" />
               </button>
               <button 
-                onClick={() => { navigate("/admin"); resetForm(); setActiveTab("automation"); }}
+                onClick={() => { navigate("/admin/automation"); resetForm(); setActiveTab("automation"); }}
                 className={cn("p-1.5 rounded", activeTab === "automation" ? "text-accent" : "text-zinc-400")}
                 title="Automation"
               >
@@ -1300,14 +1306,23 @@ export default function AdminCMSPage() {
                   <p className="text-xs font-mono text-zinc-400 mt-1">Holistic health snapshot of syndicated channels & growth index.</p>
                 </div>
 
-                {items.length === 0 && !contentLoading && (
+                <div className="flex items-center gap-3 flex-wrap">
                   <button
-                    onClick={handleSeedSamples}
-                    className="px-6 py-3 bg-accent/10 border border-accent/20 text-accent hover:bg-accent hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                    onClick={() => { navigate("/admin/engagement"); setActiveTab("engagement"); }}
+                    className="flex items-center gap-2 px-4 py-2.5 bg-accent/10 border border-accent/20 text-accent hover:bg-accent hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm"
                   >
-                    🚀 Seed Sample Content
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    Engagement & Comments
                   </button>
-                )}
+                  {items.length === 0 && !contentLoading && (
+                    <button
+                      onClick={handleSeedSamples}
+                      className="px-5 py-2.5 bg-zinc-800/80 border border-white/10 text-zinc-200 hover:bg-zinc-700 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                    >
+                      🚀 Seed Sample Content
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* STAT CARDS GRID */}

@@ -60,7 +60,7 @@ const staticPages = [
       <h2>Real Deliverables & Data-Driven Case Studies</h2>
       <p>Explore detailed case studies documenting organic traffic expansion, top SERP rankings, and high-converting marketing engines engineered by G. Hari Kiran.</p>
       <ul>
-        ${projects.map(p => `<li><a href="/work/${p.slug}"><strong>${p.title}:</strong></a> ${p.description}</li>`).join('')}
+        ${projects.map(p => `<li><a href="/work/${p.slug}/"><strong>${p.title}:</strong></a> ${p.description}</li>`).join('')}
       </ul>
     `
   },
@@ -73,7 +73,7 @@ const staticPages = [
       <h2>Published Articles & Strategy Guides</h2>
       <p>Browse our in-depth library of actionable search engine optimization tutorials, compliance manuals, and retention playbooks:</p>
       <ul>
-        ${blogPosts.map(b => `<li><a href="/blog/${b.slug}"><strong>${b.title}</strong></a> (${b.category} - ${b.date})<br/><p>${b.excerpt}</p></li>`).join('')}
+        ${blogPosts.map(b => `<li><a href="/blog/${b.slug}/"><strong>${b.title}</strong></a> (${b.category} - ${b.date})<br/><p>${b.excerpt}</p></li>`).join('')}
       </ul>
     `
   },
@@ -165,7 +165,8 @@ function generatePages() {
     authorName = 'G. Hari Kiran',
     publishDate = '2026-08-30'
   ) {
-    const canonical = `${siteUrl}${pageUrl}`;
+    const normalizedPageUrl = pageUrl.endsWith('/') ? pageUrl : `${pageUrl}/`;
+    const canonical = `${siteUrl}${normalizedPageUrl}`;
     let html = template;
 
     let imageType = "image/jpeg";
@@ -257,7 +258,7 @@ function generatePages() {
         <nav aria-label="Breadcrumb" style="margin-bottom: 24px;">
           <a href="/" style="color: #FF6B00; text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;">Home</a>
           <span style="color: #999; margin: 0 8px;">/</span>
-          ${isArticle ? `<a href="/blog" style="color: #FF6B00; text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;">Blog</a><span style="color: #999; margin: 0 8px;">/</span>` : ''}
+          ${isArticle ? `<a href="/blog/" style="color: #FF6B00; text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;">Blog</a><span style="color: #999; margin: 0 8px;">/</span>` : ''}
           <span style="color: #666; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">${heading}</span>
         </nav>
         
@@ -283,7 +284,7 @@ function generatePages() {
         </article>
 
         <footer style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #e5e5e5; font-size: 0.95rem; color: #555;">
-          <p><strong>About the Author:</strong> G. Hari Kiran is an SEO Expert and Digital Marketing Consultant based in Jamshedpur, Jharkhand, India. For consultations, inquiries, or custom marketing audits, visit the <a href="/contact" style="color: #FF6B00; font-weight: 700;">Contact Page</a> or explore the <a href="/blog" style="color: #FF6B00; font-weight: 700;">SEO Blog</a>.</p>
+          <p><strong>About the Author:</strong> G. Hari Kiran is an SEO Expert and Digital Marketing Consultant based in Jamshedpur, Jharkhand, India. For consultations, inquiries, or custom marketing audits, visit the <a href="/contact/" style="color: #FF6B00; font-weight: 700;">Contact Page</a> or explore the <a href="/blog/" style="color: #FF6B00; font-weight: 700;">SEO Blog</a>.</p>
         </footer>
       </div>
     `;

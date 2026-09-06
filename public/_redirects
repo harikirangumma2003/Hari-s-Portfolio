@@ -7,10 +7,10 @@ http://www.harikiran-portfolio.netlify.app    https://harikiran-portfolio.netlif
 https://www.harikiran-portfolio.netlify.app   https://harikiran-portfolio.netlify.app/ 301!
 
 # Technical SEO Checklist 2026 slug variants redirecting to canonical article (HTTP 301)
-/blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking  /blog/technical-seo-checklist-2026-audit-before-ranking 301
-/blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking/ /blog/technical-seo-checklist-2026-audit-before-ranking 301
-/blog/technical-seo-checklist-2026  /blog/technical-seo-checklist-2026-audit-before-ranking 301
-/blog/technical-seo-checklist-2026/ /blog/technical-seo-checklist-2026-audit-before-ranking 301
+/blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking  /blog/technical-seo-checklist-2026-audit-before-ranking/ 301
+/blog/technical-seo-checklist-for-2026-25-things-every-website-should-audit-before-ranking/ /blog/technical-seo-checklist-2026-audit-before-ranking/ 301
+/blog/technical-seo-checklist-2026  /blog/technical-seo-checklist-2026-audit-before-ranking/ 301
+/blog/technical-seo-checklist-2026/ /blog/technical-seo-checklist-2026-audit-before-ranking/ 301
 
 # Preventing Soft 404 crawler requests for legacy browser configurations (HTTP 301)
 /favicon.ico                    /favicon.svg                     301

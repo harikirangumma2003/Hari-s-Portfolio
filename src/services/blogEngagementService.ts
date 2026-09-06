@@ -105,26 +105,32 @@ export const subscribeToBlogReactions = (
 export const subscribeToAllBlogReactions = (
   callback: (reactions: BlogReactionsData[]) => void
 ) => {
-  const reactionsRef = collection(db, 'blog_reactions');
+  try {
+    const reactionsRef = collection(db, 'blog_reactions');
 
-  return onSnapshot(reactionsRef, (snapshot) => {
-    const list: BlogReactionsData[] = snapshot.docs.map((docSnap) => {
-      const d = docSnap.data();
-      return {
-        postSlug: docSnap.id,
-        claps: d.claps || 0,
-        insights: d.insights || 0,
-        hearts: d.hearts || 0,
-        rockets: d.rockets || 0,
-        totalReactions: (d.claps || 0) + (d.insights || 0) + (d.hearts || 0) + (d.rockets || 0),
-        updatedAt: d.updatedAt
-      };
+    return onSnapshot(reactionsRef, (snapshot) => {
+      const list: BlogReactionsData[] = snapshot.docs.map((docSnap) => {
+        const d = docSnap.data();
+        return {
+          postSlug: docSnap.id,
+          claps: Number(d.claps) || 0,
+          insights: Number(d.insights) || 0,
+          hearts: Number(d.hearts) || 0,
+          rockets: Number(d.rockets) || 0,
+          totalReactions: (Number(d.claps) || 0) + (Number(d.insights) || 0) + (Number(d.hearts) || 0) + (Number(d.rockets) || 0),
+          updatedAt: d.updatedAt
+        };
+      });
+      callback(list);
+    }, (err) => {
+      console.warn('All reactions subscription fallback:', err.message);
+      callback([]);
     });
-    callback(list);
-  }, (err) => {
-    console.warn('All reactions subscription fallback:', err.message);
+  } catch (err: any) {
+    console.warn('Failed to initiate reactions listener:', err?.message);
     callback([]);
-  });
+    return () => {};
+  }
 };
 
 /**
@@ -227,36 +233,61 @@ export const subscribeToBlogComments = (
 export const subscribeToAllBlogComments = (
   callback: (comments: BlogCommentItem[]) => void
 ) => {
-  const commentsRef = collection(db, 'blog_comments');
-  const q = query(
-    commentsRef,
-    orderBy('createdAt', 'desc')
-  );
+  try {
+    const commentsRef = collection(db, 'blog_comments');
+    const q = query(
+      commentsRef,
+      orderBy('createdAt', 'desc')
+    );
 
-  return onSnapshot(q, (snapshot) => {
-    const items: BlogCommentItem[] = snapshot.docs.map((docSnap) => {
-      const d = docSnap.data();
-      return {
-        id: docSnap.id,
-        postSlug: d.postSlug,
-        authorName: d.authorName,
-        authorRole: d.authorRole || 'Reader',
-        authorEmail: d.authorEmail || '',
-        content: d.content,
-        parentId: d.parentId || null,
-        isAuthor: d.isAuthor || false,
-        isPinned: d.isPinned || false,
-        likes: d.likes || 0,
-        status: d.status || 'published',
-        createdAt: d.createdAt ? (d.createdAt.toDate ? d.createdAt.toDate().toISOString() : d.createdAt) : new Date().toISOString()
-      };
-    }).filter(item => item.status !== 'hidden');
+    return onSnapshot(q, (snapshot) => {
+      const items: BlogCommentItem[] = snapshot.docs.map((docSnap) => {
+        const d = docSnap.data();
+        return {
+          id: docSnap.id,
+          postSlug: d.postSlug || '',
+          authorName: d.authorName || 'Anonymous',
+          authorRole: d.authorRole || 'Reader',
+          authorEmail: d.authorEmail || '',
+          content: d.content || '',
+          parentId: d.parentId || null,
+          isAuthor: Boolean(d.isAuthor),
+          isPinned: Boolean(d.isPinned),
+          likes: Number(d.likes) || 0,
+          status: d.status || 'published',
+          createdAt: d.createdAt ? (d.createdAt.toDate ? d.createdAt.toDate().toISOString() : d.createdAt) : new Date().toISOString()
+        };
+      }).filter(item => item.status !== 'hidden');
 
-    callback(items);
-  }, (err) => {
-    console.warn('All comments subscription fallback:', err.message);
+      callback(items);
+    }, (err) => {
+      console.warn('All comments subscription fallback:', err.message);
+      try {
+        const cachedList: BlogCommentItem[] = [];
+        if (typeof window !== 'undefined' && window.localStorage) {
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('blog_comments_cache_')) {
+              const raw = localStorage.getItem(key);
+              if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) {
+                  cachedList.push(...parsed);
+                }
+              }
+            }
+          }
+        }
+        callback(cachedList);
+      } catch {
+        callback([]);
+      }
+    });
+  } catch (err: any) {
+    console.warn('Failed to initiate all comments listener:', err?.message);
     callback([]);
-  });
+    return () => {};
+  }
 };
 
 /**

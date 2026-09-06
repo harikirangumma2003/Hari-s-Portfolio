@@ -765,12 +765,12 @@ export const blogPosts: BlogPost[] = [
   },
   {
     title: "Google Preferred Source: How to Add My Website on Google",
-    seoTitle: "Google Preferred Source: How to Add My Website on Google | Hari Kiran",
+    seoTitle: "Google Preferred Source: Add Website to Google | Hari Kiran",
     slug: "google-preferred-source-how-to-add-my-website-on-google",
     category: "SEO",
     date: "Aug 20, 2026",
     image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format,compress&q=80&w=1200&fm=webp",
-    excerpt: "If you find my content useful, adding my website as a Google Preferred Source is an easy way to stay connected with future articles across SEO, AI, and digital marketing.",
+    excerpt: "Add this website as a Google Preferred Source to receive the latest updates, SEO guides, and AI search insights directly in your personalized Google feed.",
     author: {
       name: "G. Hari Kiran",
       role: "SEO Consultant & Growth Strategist",
@@ -1292,7 +1292,7 @@ Not exactly. Google has separate personalization and following experiences. Pref
     category: "Growth",
     date: "Jul 12, 2026",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format,compress&q=80&w=1200&fm=webp",
-    excerpt: "Unlock sustainable business scaling with the 2X Growth Formula. See how aligning Employee Experience (EX) with Customer Experience (CX) doubles retention and revenue.",
+    excerpt: "Unlock business scaling with the 2X Growth Formula. Aligning Employee Experience with Customer Experience doubles retention and lifetime customer value.",
     author: {
       name: "G. Hari Kiran",
       role: "Growth Strategist",

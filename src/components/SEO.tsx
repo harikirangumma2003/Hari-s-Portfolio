@@ -60,7 +60,7 @@ export const SEO: React.FC<SEOProps> = ({
     imageType = "image/svg+xml";
   }
 
-  // Determine precise canonical URL dynamically
+  // Determine precise canonical URL dynamically matching Netlify server canonical format
   const path = url !== undefined ? url : location.pathname;
   let cleanPath = path.toLowerCase();
   if (cleanPath.includes('://')) {
@@ -74,10 +74,9 @@ export const SEO: React.FC<SEOProps> = ({
   if (!cleanPath.startsWith('/')) {
     cleanPath = `/${cleanPath}`;
   }
-  if (cleanPath.endsWith('/') && cleanPath.length > 1) {
-    cleanPath = cleanPath.slice(0, -1);
-  }
-  const canonicalUrl = canonical || (cleanPath === '/' ? siteUrl : `${siteUrl}${cleanPath}`);
+  // Enforce canonical trailing slash to prevent Netlify 301 canonical redirects
+  const normalizedPath = cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`;
+  const canonicalUrl = canonical || `${siteUrl}${normalizedPath === '//' ? '/' : normalizedPath}`;
 
   return (
     <Helmet>
