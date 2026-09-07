@@ -720,103 +720,103 @@ To reply officially with your verified Author Badge or moderate this comment:
       slug: 'technical-seo-checklist-2026-audit-before-ranking',
       title: 'Technical SEO Checklist for 2026: 25 Things Every Website Should Audit Before Ranking',
       excerpt: 'Actionable 25-point technical SEO checklist for 2026. Audit Core Web Vitals INP, AI Bot crawling, canonical integrity, and crawl budget to rank #1.',
-      image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/technical-seo-checklist-2026-audit-before-ranking.jpg'
     },
     {
       slug: 'google-preferred-source-how-to-add-my-website-on-google',
       title: 'Google Preferred Source: How to Add My Website on Google',
       excerpt: 'Add my website as a Google Preferred Source to boost discovery in your personalized Google Search and AI Overviews feed.',
-      image: 'https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/google-preferred-source-how-to-add-my-website-on-google.jpg'
     },
     {
       slug: 'compliease-osha-log-management-software',
       title: 'Best OSHA Compliance Software in 2026: Compliease by Sumeera Solutions',
       excerpt: 'Compliease by Sumeera Solutions is the top OSHA compliance software for manufacturing in 2026. Streamline OSHA 300 logs and incident reporting.',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/compliease-osha-log-management-software.jpg'
     },
     {
       slug: 'workplace-compliance-software-modern-business',
       title: 'Why Workplace Compliance Software is Critical for Modern Business Growth',
       excerpt: 'Why workplace compliance software is essential for scaling modern businesses. Prevent OSHA fines, protect workers, and automate safety recordkeeping.',
-      image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/workplace-compliance-software-modern-business.jpg'
     },
     {
       slug: 'sumeera-solutions-osha-compliance-software',
       title: 'Sumeera Solutions: The Smart Way to Manage OSHA Compliance & Avoid Costly Fines',
       excerpt: 'How SuMeera Solutions transforms OSHA compliance and workplace safety logging for modern enterprise and manufacturing organizations.',
-      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/sumeera-solutions-osha-compliance-software.jpg'
     },
     {
       slug: 'retention-marketing-sustainable-growth',
       title: 'Retention Marketing: The Secret Sauce to Sustainable Growth',
       excerpt: 'Learn why customer retention drives sustainable growth and how to build automated retention loops that maximize customer lifetime value.',
-      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/retention-marketing-sustainable-growth.jpg'
     },
     {
       slug: 'high-converting-email-newsletter-guide',
       title: 'How to Build a High-Converting Email Newsletter',
       excerpt: 'Step-by-step blueprint to designing, writing, and automating high-converting email newsletters with 50%+ open rates and rapid subscriber growth.',
-      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/high-converting-email-newsletter-guide.jpg'
     },
     {
       slug: 'rank-higher-google-organically',
       title: '9 Simple Steps How To Rank Higher On Google Organically',
       excerpt: 'Master organic search rankings with 9 proven steps: search intent alignment, technical architecture, schema markup, and content authority.',
-      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/rank-higher-google-organically.jpg'
     },
     {
       slug: 'facebook-marketing-small-businesses',
       title: 'How Small Businesses Can Win Big on Facebook Marketing',
       excerpt: 'A practical guide for local and small businesses to generate high-intent leads and sales through organic Facebook communities and targeted ads.',
-      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/facebook-marketing-small-businesses.jpg'
     },
     {
       slug: 'organic-seo-services',
       title: 'Why You Need Organic SEO Services to Scale Your Brand',
       excerpt: 'Understand the power of organic SEO services to outrank competitors, capture commercial search intent, and drive qualified organic revenue.',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/organic-seo-services.jpg'
     },
     {
       slug: 'best-digital-marketer-in-netaji-subhas-university',
       title: 'Best Digital Marketer in Netaji Subhas University: The Power of Strategy Over Execution',
       excerpt: 'Discover why strategic digital marketing elevates brands far beyond basic execution in Netaji Subhas University and Jamshedpur.',
-      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/best-digital-marketer-in-netaji-subhas-university.jpg'
     },
     {
       slug: 'seo-services-cost-is-500-enough-for-a-company',
       title: 'SEO Services Cost: Is $500/Month Enough for a Company in 2026? | G. Hari Kiran',
       excerpt: 'Explore the true cost of SEO services in 2026. Discover why $500/month packages often fail, what reputable agencies charge, and how to allocate your SEO budget.',
-      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/seo-services-cost-is-500-enough-for-a-company.jpg'
     },
     {
       slug: 'why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations',
       title: 'Why Houston Manufacturers Keep Receiving OSHA 1904 Recordkeeping Citations | G. Hari Kiran',
       excerpt: 'Learn why industrial and manufacturing businesses in Houston and OSHA Region 6 face recurring 1904 recordkeeping penalties, and how to stay 100% compliant.',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/why-houston-manufacturers-keep-receiving-osha-1904-recordkeeping-citations.jpg'
     },
     {
       slug: 'why-most-businesses-don-t-need-more-traffic-they-need-better-traffic',
       title: 'Why Most Businesses Don\'t Need More Traffic: They Need Better Traffic | G. Hari Kiran',
       excerpt: 'Stop chasing vanity page views. Discover how high-intent organic traffic, commercial search queries, and conversion rate optimization drive actual revenue.',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/why-most-businesses-don-t-need-more-traffic-they-need-better-traffic.jpg'
     },
     {
       slug: 'osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands',
       title: 'OSHA 1904 Recordkeeping: The Mistakes That Cost Manufacturing Companies Thousands | G. Hari Kiran',
       excerpt: 'Avoid 5-figure OSHA penalties. Uncover the most common recording errors on OSHA Forms 300, 301, and 300A, and how automated compliance prevents costly audits.',
-      image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/osha-1904-recordkeeping-the-mistakes-that-cost-manufacturing-companies-thousands.jpg'
     },
     {
       slug: 'who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand',
       title: 'Who Records Injuries for Temporary Workers? The OSHA Rule Many Manufacturers Misunderstand | G. Hari Kiran',
       excerpt: 'Staffing agency or host employer? Understand the OSHA 1904.31 Day-to-Day Supervision standard to avoid misclassifying temporary worker injury logs.',
-      image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/who-records-injuries-for-temporary-workers-the-osha-rule-many-houston-manufacturers-misunderstand.jpg'
     },
     {
       slug: 'the-2x-growth-formula-in-marketing-customer-experience-employee-experience',
       title: 'The 2X Growth Formula in Marketing: Customer Experience + Employee Experience | G. Hari Kiran',
       excerpt: 'Unlock sustainable business scaling with the 2X Growth Formula. See how aligning Employee Experience (EX) with Customer Experience (CX) doubles retention and revenue.',
-      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg'
+      image: '/assets/blog-covers/the-2x-growth-formula-in-marketing-customer-experience-employee-experience.jpg'
     },
     // Work Project Case Studies
     {
@@ -930,10 +930,11 @@ To reply officially with your verified Author Badge or moderate this comment:
               for (const item of rssData.items) {
                 const itemSlug = (item.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
                 if (itemSlug === slug) {
+                  const mediumImg = item.thumbnail || (typeof item.description === 'string' ? item.description.match(/<img[^>]+src="([^">]+)"/)?.[1] : "") || "";
                   pageData = {
                     title: item.title,
                     excerpt: (item.description || "").replace(/<[^>]*>/g, "").substring(0, 180),
-                    image: `https://harikiran-portfolio.netlify.app/api/og-image?title=${encodeURIComponent(item.title.slice(0, 60))}&category=MEDIUM%20ARTICLE`,
+                    image: sanitizeImageUrl(mediumImg, item.title, "MEDIUM ARTICLE", slug),
                     isArticle: true
                   };
                   break;

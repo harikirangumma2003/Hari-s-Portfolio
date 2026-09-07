@@ -288,7 +288,8 @@ const BlogPostPage = () => {
 
   const postTitle = post.seoTitle || (post.title.length > 55 ? post.title.slice(0, 52) + "..." : post.title);
   const postExcerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 160) : "Expert growth and technical SEO strategy by G. Hari Kiran");
-  const postImage = post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&h=630&q=82&fm=jpg";
+  const localCover = post.slug ? `/assets/blog-covers/${post.slug}.jpg` : "";
+  const postImage = post.image || localCover || "https://harikiran-portfolio.netlify.app/og-image.jpg";
 
   return (
     <div className="pt-32 pb-24">
