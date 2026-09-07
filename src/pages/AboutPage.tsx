@@ -122,6 +122,26 @@ const AboutPage = () => {
           </motion.div>
         </div>
 
+        {/* Official Brand Identity Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-24"
+        >
+          <div className="rounded-3xl overflow-hidden border border-primary/10 shadow-xl bg-neutral-900 group relative">
+            <img 
+              src="/banner.png" 
+              alt="G. Hari Kiran - Digital Marketing & Growth Strategy Official Brand Banner"
+              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+              loading="lazy"
+              width="1584"
+              height="396"
+            />
+          </div>
+        </motion.div>
+
         {/* Abstract Desktop Element */}
         <div className="absolute top-[20%] right-[-5%] text-[15vw] font-black text-primary/[0.02] uppercase tracking-tighter -z-10 pointer-events-none hidden xl:block select-none">
           Strategy
