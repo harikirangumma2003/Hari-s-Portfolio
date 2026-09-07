@@ -42,6 +42,7 @@ export interface FirestoreContentHubItem {
 
 export interface ContentHubItem {
   id: string;
+  slug?: string;
   title: string;
   excerpt: string;
   description: string;

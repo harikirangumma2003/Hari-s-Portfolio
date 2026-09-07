@@ -140,7 +140,7 @@ const staticPages = [
     title: 'Technical SEO Audit & Diagnostics | G. Hari Kiran',
     heading: 'Technical SEO Diagnostics & Crawler Health Dashboard',
     description: 'View real-time technical SEO health diagnostics, IndexNow submission logs, and Core Web Vitals performance for G. Hari Kiran\'s SEO consulting portfolio in Jamshedpur.',
-    image: 'https://harikiran-portfolio.netlify.app/og-image.jpg',
+    image: 'https://harikiran-portfolio.netlify.app/banner.png',
     content: `
       <h2>Website Health & Indexing Diagnostics</h2>
       <p>Real-time telemetry evaluating crawl efficiency, schema graph compliance, canonical resolution, and search crawler indexation across Bing, Google, and AI Search Engines.</p>
@@ -170,7 +170,7 @@ async function generatePages() {
     description: string,
     bodyHtml: string,
     category = '',
-    ogImage = 'https://harikiran-portfolio.netlify.app/og-image.jpg',
+    ogImage = 'https://harikiran-portfolio.netlify.app/banner.png',
     authorName = 'G. Hari Kiran',
     publishDate = '2026-08-30'
   ) {
@@ -334,11 +334,8 @@ async function generatePages() {
     fs.mkdirSync(targetDir, { recursive: true });
     const pageTitle = b.seoTitle || b.title;
 
-    // Check if high-resolution local cover exists
-    const localCoverPath = path.join(publicCoversDir, `${b.slug}.jpg`);
-    const postImage = fs.existsSync(localCoverPath)
-      ? `https://harikiran-portfolio.netlify.app/assets/blog-covers/${b.slug}.jpg`
-      : (b.image || 'https://harikiran-portfolio.netlify.app/og-image.jpg');
+    // Every blog URL must have its unique cover image as preview image
+    const postImage = `https://harikiran-portfolio.netlify.app/assets/blog-covers/${b.slug}.jpg`;
 
     const authorName = b.author?.name || 'G. Hari Kiran';
     const pageHtml = createPageHtml(
@@ -370,18 +367,26 @@ async function generatePages() {
       console.log(`Pre-rendering ${snap.size} Firestore articles...`);
       snap.forEach(doc => {
         const data = doc.data();
+        // Skip YouTube video entries from generating /blog/ paths
+        if (data.platform === 'YouTube') return;
         const title = data.title || '';
-        const cleanSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        let cleanSlug = (data.slug || '').trim().toLowerCase();
+        if (!cleanSlug && data.canonicalUrl && data.canonicalUrl.includes('/blog/')) {
+          cleanSlug = data.canonicalUrl.split('/blog/')[1].replace(/\/$/, '').trim().toLowerCase();
+        }
+        if (!cleanSlug && data.url && data.url.includes('/blog/')) {
+          cleanSlug = data.url.split('/blog/')[1].replace(/\/$/, '').trim().toLowerCase();
+        }
+        if (!cleanSlug && title) {
+          cleanSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        }
         if (!cleanSlug) return;
 
         const postPath = `/blog/${cleanSlug}`;
         const targetDir = path.join(distDir, 'blog', cleanSlug);
         fs.mkdirSync(targetDir, { recursive: true });
 
-        const localCoverPath = path.join(publicCoversDir, `${cleanSlug}.jpg`);
-        const postImage = fs.existsSync(localCoverPath)
-          ? `https://harikiran-portfolio.netlify.app/assets/blog-covers/${cleanSlug}.jpg`
-          : (data.thumbnail || data.image || data.ogImage || 'https://harikiran-portfolio.netlify.app/og-image.jpg');
+        const postImage = `https://harikiran-portfolio.netlify.app/assets/blog-covers/${cleanSlug}.jpg`;
 
         const pageHtml = createPageHtml(
           postPath,
@@ -409,7 +414,7 @@ async function generatePages() {
     const targetDir = path.join(distDir, 'work', prj.slug);
     fs.mkdirSync(targetDir, { recursive: true });
     const pageTitle = prj.seoTitle || `${prj.title} | G. Hari Kiran`;
-    const prjImage = prj.image || 'https://harikiran-portfolio.netlify.app/og-image.jpg';
+    const prjImage = prj.image || 'https://harikiran-portfolio.netlify.app/banner.png';
     const projectContent = `
       <h2>Executive Overview</h2>
       <p>${prj.longDescription || prj.description}</p>
@@ -460,15 +465,15 @@ async function generatePages() {
     <meta property="og:title" content="G. Hari Kiran | Leading SEO Expert & Digital Marketing Consultant" />
     <meta property="og:description" content="Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and client revenue." />
     <meta property="og:url" content="https://harikiran-portfolio.netlify.app/" />
-    <meta property="og:image" content="https://harikiran-portfolio.netlify.app/og-image.jpg" />
-    <meta property="og:image:secure_url" content="https://harikiran-portfolio.netlify.app/og-image.jpg" />
+    <meta property="og:image" content="https://harikiran-portfolio.netlify.app/banner.png" />
+    <meta property="og:image:secure_url" content="https://harikiran-portfolio.netlify.app/banner.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="G. Hari Kiran | Leading SEO Expert & Digital Marketing Consultant" />
     <meta name="twitter:description" content="Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and client revenue." />
-    <meta name="twitter:image" content="https://harikiran-portfolio.netlify.app/og-image.jpg" />`;
+    <meta name="twitter:image" content="https://harikiran-portfolio.netlify.app/banner.png" />`;
       rootHtml = rootHtml.replace('</head>', `${defaultMeta}\n  </head>`);
       fs.writeFileSync(rootIndex, rootHtml);
       console.log('Injected default Open Graph metadata into root dist/index.html');

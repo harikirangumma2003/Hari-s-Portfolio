@@ -42,7 +42,7 @@ export const SEO: React.FC<SEOProps> = ({
     }
   }
   
-  const defaultImage = "https://harikiran-portfolio.netlify.app/og-image.jpg";
+  const defaultImage = "https://harikiran-portfolio.netlify.app/banner.png";
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 
   // Determine absolute image URL with strict social platform compatibility (JPEG/PNG, 1200x630, <300KB)
@@ -50,6 +50,34 @@ export const SEO: React.FC<SEOProps> = ({
   let ogImage = rawImage.startsWith('http') 
     ? rawImage 
     : `${siteUrl}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`;
+
+  // Determine precise canonical URL dynamically matching Netlify server canonical format
+  const path = url !== undefined ? url : location.pathname;
+  let cleanPath = path.toLowerCase();
+  if (cleanPath.includes('://')) {
+    try {
+      cleanPath = new URL(cleanPath).pathname;
+    } catch (e) {
+      const index = cleanPath.indexOf('/', cleanPath.indexOf('://') + 3);
+      cleanPath = index !== -1 ? cleanPath.substring(index) : '/';
+    }
+  }
+  if (!cleanPath.startsWith('/')) {
+    cleanPath = `/${cleanPath}`;
+  }
+  // Enforce canonical trailing slash to prevent Netlify 301 canonical redirects
+  const normalizedPath = cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`;
+  const pageUrl = `${siteUrl}${normalizedPath === '//' ? '/' : normalizedPath}`;
+  const canonicalUrl = canonical || pageUrl;
+
+  // For any blog post URL, always guarantee its unique cover image as the URL preview image
+  const blogMatch = cleanPath.match(/^\/blog\/([^/]+)/);
+  if (blogMatch && blogMatch[1]) {
+    const postSlug = blogMatch[1].trim().toLowerCase();
+    ogImage = `${siteUrl}/assets/blog-covers/${postSlug}.jpg`;
+  } else if (ogImage.includes('medium.com') || ogImage.includes('cdn-images-1.medium.com')) {
+    ogImage = `${siteUrl}/api/proxy/image?url=${encodeURIComponent(ogImage)}`;
+  }
 
   // Optimize Unsplash images for social crawlers (force JPEG and 1200x630 aspect ratio)
   if (ogImage.includes('images.unsplash.com')) {
@@ -73,37 +101,6 @@ export const SEO: React.FC<SEOProps> = ({
     imageType = "image/gif";
   } else {
     imageType = "image/jpeg";
-  }
-
-  // Determine precise canonical URL dynamically matching Netlify server canonical format
-  const path = url !== undefined ? url : location.pathname;
-  let cleanPath = path.toLowerCase();
-  if (cleanPath.includes('://')) {
-    try {
-      cleanPath = new URL(cleanPath).pathname;
-    } catch (e) {
-      const index = cleanPath.indexOf('/', cleanPath.indexOf('://') + 3);
-      cleanPath = index !== -1 ? cleanPath.substring(index) : '/';
-    }
-  }
-  if (!cleanPath.startsWith('/')) {
-    cleanPath = `/${cleanPath}`;
-  }
-  // Enforce canonical trailing slash to prevent Netlify 301 canonical redirects
-  const normalizedPath = cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`;
-  const pageUrl = `${siteUrl}${normalizedPath === '//' ? '/' : normalizedPath}`;
-  const canonicalUrl = canonical || pageUrl;
-
-  // Medium CDN and third-party URLs block social scrapers (returning 405 Method Not Allowed)
-  // For blog posts, route through our pre-optimized 1200x630 local assets or proxy endpoint
-  const blogMatch = cleanPath.match(/^\/blog\/([^/]+)/);
-  if (blogMatch && blogMatch[1]) {
-    const postSlug = blogMatch[1];
-    if (ogImage.includes('medium.com') || ogImage.includes('cdn-images-1.medium.com') || ogImage === defaultImage) {
-      ogImage = `${siteUrl}/assets/blog-covers/${postSlug}.jpg`;
-    }
-  } else if (ogImage.includes('medium.com') || ogImage.includes('cdn-images-1.medium.com')) {
-    ogImage = `${siteUrl}/api/proxy/image?url=${encodeURIComponent(ogImage)}`;
   }
 
   return (

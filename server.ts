@@ -508,9 +508,15 @@ To reply officially with your verified Author Badge or moderate this comment:
         const ogImage = data.ogImage || thumbnail;
         const canonicalUrl = data.canonicalUrl || "";
         const url = data.url || "";
-        let slug = canonicalUrl ? canonicalUrl.replace(/^.*\/blog\//, "").replace(/\/$/, "") : "";
-        if (!slug) {
-          slug = url ? url.replace(/^.*\/blog\//, "").replace(/\/$/, "") : title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+        let slug = (data.slug || "").trim().toLowerCase();
+        if (!slug && canonicalUrl && canonicalUrl.includes("/blog/")) {
+          slug = canonicalUrl.split("/blog/")[1].replace(/\/$/, "").trim().toLowerCase();
+        }
+        if (!slug && url && url.includes("/blog/")) {
+          slug = url.split("/blog/")[1].replace(/\/$/, "").trim().toLowerCase();
+        }
+        if (!slug && title) {
+          slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
         }
         return {
           slug: slug.trim().toLowerCase(),
@@ -665,7 +671,7 @@ To reply officially with your verified Author Badge or moderate this comment:
     "/": {
       title: "G. Hari Kiran | SEO Expert & Digital Marketing Consultant Jamshedpur",
       excerpt: "Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and revenue.",
-      image: "https://harikiran-portfolio.netlify.app/og-image.jpg"
+      image: "https://harikiran-portfolio.netlify.app/banner.png"
     },
     "/blog": {
       title: "SEO & Growth Marketing Strategy Blog | G. Hari Kiran",
@@ -705,7 +711,7 @@ To reply officially with your verified Author Badge or moderate this comment:
     "/seo-audit": {
       title: "Technical SEO Audit & Diagnostics | G. Hari Kiran",
       excerpt: "View real-time technical SEO health diagnostics and Core Web Vitals performance for G. Hari Kiran's SEO consulting portfolio.",
-      image: "https://harikiran-portfolio.netlify.app/og-image.jpg"
+      image: "https://harikiran-portfolio.netlify.app/banner.png"
     },
     "/experience": {
       title: "Professional Background & SEO Track Record | G. Hari Kiran",
@@ -886,86 +892,39 @@ To reply officially with your verified Author Badge or moderate this comment:
         };
       }
 
-      // 2. Check static blog/work articles dictionary
+      // 2. Blog post routes: Guarantee each blog URL receives its unique cover image preview
       if (!pageData && isPostRoute) {
-        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").toLowerCase();
-        const matchedStatic = staticArticles.find(p => p.slug === slug);
-        if (matchedStatic) {
-          pageData = {
-            title: matchedStatic.title,
-            excerpt: matchedStatic.excerpt,
-            image: sanitizeImageUrl(matchedStatic.image, matchedStatic.title, "BLOG", slug),
-            isArticle: !matchedStatic.isWork
-          };
+        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").replace(/\/$/, "").toLowerCase();
+        
+        let matchedArticle = staticArticles.find(p => p.slug === slug);
+        if (!matchedArticle) {
+          const firestoreArticles = await getPublishedArticles();
+          matchedArticle = firestoreArticles.find(a => a.slug === slug);
         }
-      }
 
-      // 3. Query Firestore for published blogs
-      if (!pageData && (isArticle || isBot)) {
-        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").toLowerCase();
-        const firestoreArticles = await getPublishedArticles();
-        const matchedFs = firestoreArticles.find(a => a.slug === slug);
-        if (matchedFs) {
-          pageData = {
-            title: matchedFs.title,
-            excerpt: matchedFs.excerpt,
-            image: sanitizeImageUrl(matchedFs.image, matchedFs.title, matchedFs.category, slug),
-            isArticle: true
-          };
-        }
-      }
-
-      // 4. Query Medium RSS Feed as fallback
-      if (!pageData && isArticle) {
-        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "").toLowerCase();
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2000);
-          const rssRes = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@harikirangumma2003", { signal: controller.signal });
-          clearTimeout(timeoutId);
-
-          if (rssRes.ok) {
-            const rssData = await rssRes.json();
-            if (rssData.status === "ok" && Array.isArray(rssData.items)) {
-              for (const item of rssData.items) {
-                const itemSlug = (item.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
-                if (itemSlug === slug) {
-                  const mediumImg = item.thumbnail || (typeof item.description === 'string' ? item.description.match(/<img[^>]+src="([^">]+)"/)?.[1] : "") || "";
-                  pageData = {
-                    title: item.title,
-                    excerpt: (item.description || "").replace(/<[^>]*>/g, "").substring(0, 180),
-                    image: sanitizeImageUrl(mediumImg, item.title, "MEDIUM ARTICLE", slug),
-                    isArticle: true
-                  };
-                  break;
-                }
-              }
-            }
-          }
-        } catch (_) {}
-      }
-
-      // 5. Algorithmic fallback if post route is not matched
-      if (!pageData && isPostRoute) {
-        const slug = cleanPath.replace(/^\/(blog|work|content)\//, "");
         const readableTitle = slug
           .split("-")
           .map(w => w.charAt(0).toUpperCase() + w.slice(1))
           .join(" ");
+
+        const articleTitle = matchedArticle?.title || `${readableTitle} | G. Hari Kiran`;
+        const articleExcerpt = matchedArticle?.excerpt || `Read "${readableTitle}" — actionable growth, digital marketing, and technical SEO insights by G. Hari Kiran.`;
+        const uniqueCover = `https://harikiran-portfolio.netlify.app/assets/blog-covers/${slug}.jpg`;
+
         pageData = {
-          title: `${readableTitle} | G. Hari Kiran`,
-          excerpt: `Read "${readableTitle}" — actionable growth, digital marketing, and technical SEO insights by G. Hari Kiran.`,
-          image: `https://harikiran-portfolio.netlify.app/api/og-image?title=${encodeURIComponent(readableTitle.slice(0, 60))}&category=GROWTH%20JOURNAL`,
+          title: articleTitle,
+          excerpt: articleExcerpt,
+          image: uniqueCover,
           isArticle: true
         };
       }
 
-      // 6. Generic homepage fallback if nothing matched and it's a bot
+      // 3. Generic homepage fallback if nothing matched and it's a bot
       if (!pageData && isBot) {
         pageData = {
           title: "G. Hari Kiran | SEO Expert & Digital Marketing Consultant Jamshedpur",
           excerpt: "Premier SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. I scale organic search traffic, commercial keyword rankings, and revenue.",
-          image: "https://harikiran-portfolio.netlify.app/og-image.jpg",
+          image: "https://harikiran-portfolio.netlify.app/banner.png",
           isArticle: false
         };
       }

@@ -204,39 +204,38 @@ export class YoutubeImporter implements ContentImporter {
         });
       }
       
-      // Ensure at least 3 items exist by adding high-quality syndicated fallback videos
-      if (result.length < 3) {
+      // If network or feed fails to return items, fall back to verified videos from channel
+      if (result.length === 0) {
         const fallbacks: RawPlatformItem[] = [
           {
-            id: "z7_S3eA9g0Y",
-            title: "How to Build a High-Converting B2B Lead Funnel",
-            excerpt: "A step-by-step masterclass on constructing B2B marketing funnels that generate high-quality sales opportunities. Learn conversion tracking and lead scoring.",
-            description: "In this video, I walk through the exact B2B lead generation architecture that drives consistent pipeline growth. We cover landing page optimization, email nurturing sequences, and multi-channel attribution strategies to maximize return on ad spend (ROAS). Useful for digital marketers, founders, and growth managers.",
-            thumbnail: "https://i2.ytimg.com/vi/z7_S3eA9g0Y/hqdefault.jpg",
+            id: "IWbpR1FsQYI",
+            title: "Still Managing OSHA Compliance Manually? Try CompliEase",
+            excerpt: "Managing OSHA compliance shouldn't be complicated. CompliEase helps businesses simplify compliance management, track requirements and deadlines, and reduce manual effort.",
+            description: "Managing OSHA compliance shouldn't be complicated. CompliEase helps businesses simplify compliance management, track requirements and deadlines, and reduce manual effort - all in one platform. Try CompliEase with a 30-day free trial. Learn more: www.sumeerasolutions.com",
+            thumbnail: "https://i.ytimg.com/vi/IWbpR1FsQYI/maxresdefault.jpg",
             authorName: "Hari Kiran",
-            url: "https://www.youtube.com/watch?v=z7_S3eA9g0Y",
-            publishedDate: new Date("2026-06-15T10:00:00Z"),
-            categories: ["B2B Marketing", "Lead Generation"],
-            views: 4210,
-            likes: 384
+            url: "https://www.youtube.com/watch?v=IWbpR1FsQYI",
+            publishedDate: new Date("2026-09-07T10:00:00Z"),
+            categories: ["OSHA", "CompliEase", "Compliance"],
+            views: 4737,
+            likes: 120
           },
           {
-            id: "dG4OnyUvjU8",
-            title: "SEO Case Study: Scaling Organic Traffic by 150% in 90 Days",
-            excerpt: "Breaking down the exact technical SEO and content strategy we used to scale an e-commerce platform's traffic without a huge ad budget.",
-            description: "Welcome to our latest SEO case study. We analyze the audit phase, technical optimizations, keyword clustering, and editorial workflows that helped double organic visibility for a high-growth retail brand. Discover how to identify low-hanging fruit in search query console data.",
-            thumbnail: "https://i2.ytimg.com/vi/dG4OnyUvjU8/hqdefault.jpg",
+            id: "a2PrJ944ndI",
+            title: "CompliEase a SuMeera Solutions Product | Promotional Campaign",
+            excerpt: "Brand: SuMeera Solutions. Promotional video showcasing creative campaigns, product features, and brand advertisements for CompliEase.",
+            description: "Brand: SuMeera Solutions. This promotional video is part of my Digital Marketing Portfolio, showcasing creative campaigns, product features, and brand advertisements for CompliEase.",
+            thumbnail: "https://i.ytimg.com/vi/a2PrJ944ndI/maxresdefault.jpg",
             authorName: "Hari Kiran",
-            url: "https://www.youtube.com/watch?v=dG4OnyUvjU8",
-            publishedDate: new Date("2026-05-10T14:30:00Z"),
-            categories: ["SEO", "Growth Case Study"],
-            views: 5820,
-            likes: 492
+            url: "https://www.youtube.com/watch?v=a2PrJ944ndI",
+            publishedDate: new Date("2026-07-04T10:00:00Z"),
+            categories: ["Promotional Campaign", "Digital Marketing"],
+            views: 1350,
+            likes: 95
           }
         ];
 
         for (const item of fallbacks) {
-          if (result.length >= 3) break;
           if (!result.some(r => r.id === item.id)) {
             result.push(item);
           }

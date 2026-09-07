@@ -168,16 +168,23 @@ const BlogPage = () => {
         cmsPosts = firestoreContent
           .filter(item => item.contentType === "Blog" || item.platform === "Portfolio" || item.platform === "Medium")
           .map(item => {
-            let postSlug = item.canonicalUrl ? item.canonicalUrl.replace(/^.*\/blog\//, "") : "";
-            if (!postSlug) {
-              postSlug = item.url ? item.url.replace(/^.*\/blog\//, "") : generateSlug(item.title);
+            let postSlug = (item.slug || "").trim().toLowerCase();
+            if (!postSlug && item.canonicalUrl && item.canonicalUrl.includes("/blog/")) {
+              postSlug = item.canonicalUrl.split("/blog/")[1].replace(/\/$/, "").trim().toLowerCase();
             }
+            if (!postSlug && item.url && item.url.includes("/blog/")) {
+              postSlug = item.url.split("/blog/")[1].replace(/\/$/, "").trim().toLowerCase();
+            }
+            if (!postSlug && item.title) {
+              postSlug = generateSlug(item.title);
+            }
+            const uniqueCover = postSlug ? `/assets/blog-covers/${postSlug}.jpg` : "";
             return {
               title: item.title,
               slug: postSlug,
               category: item.category || "SEO",
               date: formatDate(item.publishedDate),
-              image: item.thumbnail || item.ogImage || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp",
+              image: uniqueCover || item.thumbnail || item.ogImage || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp",
               excerpt: item.excerpt || item.description || "",
               content: item.description || "",
               keywords: item.tags || [],

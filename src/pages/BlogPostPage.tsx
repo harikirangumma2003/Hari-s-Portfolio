@@ -104,12 +104,19 @@ const BlogPostPage = () => {
         // 1. Fetch CMS posts from Firestore
         const firestoreContent = await getPublishedContent();
         const cmsPosts = firestoreContent.map(item => {
-          let postSlug = item.canonicalUrl ? item.canonicalUrl.replace(/^.*\/blog\//, "") : "";
-          if (!postSlug) {
-            postSlug = item.url ? item.url.replace(/^.*\/blog\//, "") : generateSlug(item.title);
+          let postSlug = (item.slug || "").trim().toLowerCase();
+          if (!postSlug && item.canonicalUrl && item.canonicalUrl.includes("/blog/")) {
+            postSlug = item.canonicalUrl.split("/blog/")[1].replace(/\/$/, "").trim().toLowerCase();
+          }
+          if (!postSlug && item.url && item.url.includes("/blog/")) {
+            postSlug = item.url.split("/blog/")[1].replace(/\/$/, "").trim().toLowerCase();
+          }
+          if (!postSlug && item.title) {
+            postSlug = generateSlug(item.title);
           }
           
-          const postImg = item.ogImage || item.thumbnail || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=1200&fm=webp";
+          const uniqueCover = `/assets/blog-covers/${postSlug}.jpg`;
+          const postImg = uniqueCover || item.ogImage || item.thumbnail || "/banner.png";
 
           return {
             title: item.title,
@@ -252,9 +259,9 @@ const BlogPostPage = () => {
     return <NotFoundPage />;
   }
 
-  // The publicly accessible canonical domain ensures social platform crawlers (WhatsApp, LinkedIn, Facebook, X) can resolve the cover image
+  const postSlug = (post.slug || slug || (post.title ? generateSlug(post.title) : "")).trim().toLowerCase();
   const productionDomain = "https://harikiran-portfolio.netlify.app";
-  const shareUrl = `${productionDomain}/blog/${post.slug}`;
+  const shareUrl = `${productionDomain}/blog/${postSlug}`;
 
   const handleShare = (platform: string) => {
     const url = encodeURIComponent(shareUrl);
@@ -288,8 +295,8 @@ const BlogPostPage = () => {
 
   const postTitle = post.seoTitle || (post.title.length > 55 ? post.title.slice(0, 52) + "..." : post.title);
   const postExcerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 160) : "Expert growth and technical SEO strategy by G. Hari Kiran");
-  const localCover = post.slug ? `/assets/blog-covers/${post.slug}.jpg` : "";
-  const postImage = post.image || localCover || "https://harikiran-portfolio.netlify.app/og-image.jpg";
+  const uniqueCoverUrl = `https://harikiran-portfolio.netlify.app/assets/blog-covers/${postSlug}.jpg`;
+  const postImage = uniqueCoverUrl;
 
   return (
     <div className="pt-32 pb-24">
@@ -297,9 +304,9 @@ const BlogPostPage = () => {
         title={postTitle}
         description={postExcerpt}
         image={postImage}
-        url={`/blog/${post.slug}`}
+        url={`/blog/${postSlug}`}
         type="article"
-        canonical={post.externalUrl || `https://harikiran-portfolio.netlify.app/blog/${post.slug}`}
+        canonical={`https://harikiran-portfolio.netlify.app/blog/${postSlug}`}
         articleData={{
           publishedTime: post.rawDate || post.date,
           author: "G. Hari Kiran",

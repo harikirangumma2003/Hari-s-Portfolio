@@ -85,7 +85,9 @@ export const VideoCarousel: React.FC = () => {
   }
 
   const currentItem = youtubeItems[currentIndex];
-  const videoId = currentItem ? getYoutubeVideoId(currentItem.url) : null;
+  const videoId = currentItem 
+    ? (getYoutubeVideoId(currentItem.url) || (currentItem as any).externalIds?.youtube || (currentItem.id?.length === 11 ? currentItem.id : null)) 
+    : null;
 
   return (
     <div id="video-carousel" className="w-full relative group/carousel">

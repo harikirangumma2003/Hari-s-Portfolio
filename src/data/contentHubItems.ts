@@ -1,5 +1,6 @@
 export interface ContentHubItem {
   id: string;
+  slug?: string;
   title: string;
   excerpt: string;
   description: string;
@@ -23,6 +24,52 @@ export interface ContentHubItem {
 }
 
 export const contentHubItems: ContentHubItem[] = [
+  {
+    id: "L93GWofKnpwtTSe8DBGA",
+    title: "Still Managing OSHA Compliance Manually? Try CompliEase",
+    excerpt: "Managing OSHA compliance shouldn't be complicated. CompliEase helps businesses simplify compliance management, track requirements and deadlines, and reduce manual effort.",
+    description: "Managing OSHA compliance shouldn't be complicated. CompliEase helps businesses simplify compliance management, track requirements and deadlines, and reduce manual effort - all in one platform. Try CompliEase with a 30-day free trial. Learn more: www.sumeerasolutions.com",
+    thumbnail: "https://i.ytimg.com/vi/IWbpR1FsQYI/maxresdefault.jpg",
+    platform: "YouTube",
+    contentType: "Video",
+    category: "Compliance",
+    tags: ["Still", "Managing", "OSHA", "Compliance", "CompliEase", "Video"],
+    url: "https://www.youtube.com/watch?v=IWbpR1FsQYI",
+    featured: true,
+    publishedDate: "2026-09-07T10:00:00Z",
+    readTime: "3 min watch",
+    views: 4737,
+    likes: 120,
+    author: {
+      name: "Hari Kiran",
+      role: "Digital Marketing Expert & Growth Strategist",
+      image: "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png"
+    },
+    status: "published"
+  },
+  {
+    id: "CpLzGBgTn1yIlXspQDvw",
+    title: "CompliEase a SuMeera Solutions Product | Promotional Campaign",
+    excerpt: "Brand: SuMeera Solutions. Promotional video showcasing creative campaigns, product features, and brand advertisements for CompliEase.",
+    description: "Brand: SuMeera Solutions. This promotional video is part of my Digital Marketing Portfolio, showcasing creative campaigns, product features, and brand advertisements for CompliEase.",
+    thumbnail: "https://i.ytimg.com/vi/a2PrJ944ndI/maxresdefault.jpg",
+    platform: "YouTube",
+    contentType: "Video",
+    category: "Marketing",
+    tags: ["CompliEase", "SuMeera Solutions", "Promotional Campaign", "Video"],
+    url: "https://www.youtube.com/watch?v=a2PrJ944ndI",
+    featured: false,
+    publishedDate: "2026-07-04T10:00:00Z",
+    readTime: "3 min watch",
+    views: 1350,
+    likes: 95,
+    author: {
+      name: "Hari Kiran",
+      role: "Digital Marketing Expert & Growth Strategist",
+      image: "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png"
+    },
+    status: "published"
+  },
   {
     id: "hub-blogger-1",
     title: "When Should You Update or Correct an OSHA 300 Log? A Complete Guide",
