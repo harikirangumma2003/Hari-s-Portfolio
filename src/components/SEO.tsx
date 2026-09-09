@@ -34,13 +34,26 @@ export const SEO: React.FC<SEOProps> = ({
   const location = useLocation();
   const siteName = "G. Hari Kiran";
   
-  // Format title without over-extending length beyond 60 chars
+  // Format title strictly <= 60 characters for Google SERP & social display
   let fullTitle = title.trim();
-  if (!fullTitle.includes("Hari Kiran") && !fullTitle.includes("G. Hari Kiran")) {
-    if (fullTitle.length <= 42) {
+  if (fullTitle.length > 60) {
+    if (fullTitle.includes(" | ")) {
+      const firstPart = fullTitle.split(" | ")[0].trim();
+      fullTitle = firstPart.length <= 60 ? firstPart : firstPart.slice(0, 57).trim() + "...";
+    } else {
+      fullTitle = fullTitle.slice(0, 57).trim() + "...";
+    }
+  } else if (!fullTitle.includes("Hari Kiran") && !fullTitle.includes("G. Hari Kiran")) {
+    if (fullTitle.length + 15 <= 60) {
       fullTitle = `${fullTitle} | ${siteName}`;
     }
   }
+
+  // Format description strictly <= 155 characters to prevent SERP truncation
+  const cleanDescription = (description || "").trim().replace(/\s+/g, ' ');
+  const finalDescription = cleanDescription.length > 155 
+    ? cleanDescription.slice(0, 152).trim() + "..." 
+    : cleanDescription;
   
   const defaultImage = "https://harikiran-portfolio.netlify.app/banner.png";
   const siteUrl = "https://harikiran-portfolio.netlify.app";
@@ -68,7 +81,10 @@ export const SEO: React.FC<SEOProps> = ({
   // Enforce canonical trailing slash to prevent Netlify 301 canonical redirects
   const normalizedPath = cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`;
   const pageUrl = `${siteUrl}${normalizedPath === '//' ? '/' : normalizedPath}`;
-  const canonicalUrl = canonical || pageUrl;
+  let canonicalUrl = canonical || pageUrl;
+  if (!canonicalUrl.endsWith('/')) {
+    canonicalUrl = `${canonicalUrl}/`;
+  }
 
   // For any blog post URL, always guarantee its unique cover image as the URL preview image
   const blogMatch = cleanPath.match(/^\/blog\/([^/]+)/);
@@ -114,7 +130,7 @@ export const SEO: React.FC<SEOProps> = ({
 
       {/* Basic Metadata */}
       <title>{fullTitle}</title>
-      <meta name="description" content={description.trim()} />
+      <meta name="description" content={finalDescription} />
       <meta name="author" content="G. Hari Kiran" />
       <meta name="application-name" content="G. Hari Kiran Portfolio" />
       <meta name="apple-mobile-web-app-title" content="G. Hari Kiran" />
@@ -138,7 +154,7 @@ export const SEO: React.FC<SEOProps> = ({
       {/* Dublin Core Metadata */}
       <meta name="DC.title" content={fullTitle} />
       <meta name="DC.creator" content="G. Hari Kiran" />
-      <meta name="DC.description" content={description} />
+      <meta name="DC.description" content={finalDescription} />
       <meta name="DC.publisher" content="G. Hari Kiran" />
       <meta name="DC.language" content="en" />
       <meta name="DC.coverage" content="Jamshedpur, Jharkhand, India" />
@@ -149,7 +165,7 @@ export const SEO: React.FC<SEOProps> = ({
       <link rel="image_src" href={ogImage} />
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
+      <meta property="og:description" content={finalDescription} />
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:secure_url" content={ogImage} />
       <meta property="og:image:type" content={imageType} />
@@ -172,7 +188,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:site" content="@GHariKiran29" />
       <meta name="twitter:creator" content="@GHariKiran29" />
       <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:description" content={finalDescription} />
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:image:src" content={ogImage} />
       <meta name="twitter:image:alt" content={fullTitle} />

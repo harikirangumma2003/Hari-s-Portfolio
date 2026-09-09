@@ -16,6 +16,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   const siteUrl = "https://harikiran-portfolio.netlify.app";
 
   // Create schema objects for JSON-LD BreadcrumbList
+  const currentHref = typeof window !== 'undefined' ? window.location.href : `${siteUrl}/`;
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -24,14 +25,22 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": siteUrl
+        "item": `${siteUrl}/`
       },
-      ...items.map((item, index) => ({
-        "@type": "ListItem",
-        "position": index + 2,
-        "name": item.name,
-        "item": item.path ? `${siteUrl}${item.path}` : undefined
-      }))
+      ...items.map((item, index) => {
+        let itemUrl = item.path 
+          ? `${siteUrl}${item.path.startsWith('/') ? item.path : '/' + item.path}`
+          : currentHref;
+        if (!itemUrl.endsWith('/')) {
+          itemUrl = `${itemUrl}/`;
+        }
+        return {
+          "@type": "ListItem",
+          "position": index + 2,
+          "name": item.name,
+          "item": itemUrl
+        };
+      })
     ]
   };
 

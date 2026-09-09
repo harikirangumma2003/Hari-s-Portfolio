@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { marked } from 'marked';
+import { normalizeArticleContent } from '../src/utils/blogContent';
 import { blogPosts } from '../src/data/blogPosts';
 import { projects } from '../src/data/projects';
 import { partnersData } from '../src/data/partners';
@@ -17,9 +19,9 @@ const siteUrl = 'https://harikiran-portfolio.netlify.app';
 const staticPages = [
   {
     path: '/about',
-    title: 'About G. Hari Kiran | Leading SEO Expert & Growth Consultant Jamshedpur',
+    title: 'About G. Hari Kiran | SEO Expert Jamshedpur',
     heading: 'About G. Hari Kiran - SEO & Growth Specialist',
-    description: 'Meet G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Learn about my background, core marketing philosophies, and proven track record in scaling organic search traffic and client revenue.',
+    description: 'Meet G. Hari Kiran, SEO Expert & Digital Marketing Consultant in Jamshedpur, Jharkhand. Discover proven organic growth and retention marketing strategies.',
     image: 'https://harikiran-portfolio.netlify.app/og-about.jpg',
     content: `
       <h2>Executive Summary & Background</h2>
@@ -38,9 +40,9 @@ const staticPages = [
   },
   {
     path: '/experience',
-    title: 'Professional SEO Experience & Career Timeline | G. Hari Kiran',
+    title: 'SEO Experience & Career Timeline | G. Hari Kiran',
     heading: 'Professional Experience & Strategic Milestones',
-    description: 'View the professional career timeline of G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur. Explore lead generation campaigns, consulting roles, and client growth outcomes.',
+    description: 'Explore the career timeline, consulting roles, and organic growth track record of G. Hari Kiran, SEO Expert & Digital Marketing Consultant in Jamshedpur.',
     image: 'https://harikiran-portfolio.netlify.app/og-about.jpg',
     content: `
       <h2>Career Track Record & Achievements</h2>
@@ -57,7 +59,7 @@ const staticPages = [
     path: '/work',
     title: 'Selected SEO Portfolio & Case Studies | G. Hari Kiran',
     heading: 'Selected Case Studies & Proven Growth Results',
-    description: 'Explore high-impact search marketing and growth case studies by G. Hari Kiran. Discover how data-driven SEO, local search dominance, and direct marketing scaled client revenue.',
+    description: 'Explore verified SEO case studies and search marketing results by G. Hari Kiran. Discover how data-driven SEO and local dominance scale enterprise revenue.',
     image: 'https://harikiran-portfolio.netlify.app/og-work.jpg',
     content: `
       <h2>Real Deliverables & Data-Driven Case Studies</h2>
@@ -71,7 +73,7 @@ const staticPages = [
     path: '/blog',
     title: 'SEO & Growth Marketing Strategy Blog | G. Hari Kiran',
     heading: 'The Growth Journal - SEO, AI & Marketing Insights',
-    description: 'Explore actionable SEO guides, organic growth strategies, OSHA compliance checklists, and digital marketing insights written by G. Hari Kiran in Jamshedpur, Jharkhand.',
+    description: 'Read actionable SEO guides, organic growth strategies, and digital marketing insights written by G. Hari Kiran, SEO Expert in Jamshedpur, Jharkhand.',
     image: 'https://harikiran-portfolio.netlify.app/og-blog.jpg',
     content: `
       <h2>Published Articles & Strategy Guides</h2>
@@ -85,7 +87,7 @@ const staticPages = [
     path: '/content-hub',
     title: 'Omnichannel Content Hub & Playbooks | G. Hari Kiran',
     heading: 'The Content Hub - Multi-Platform Insights & Playbooks',
-    description: 'Explore G. Hari Kiran\'s curated growth library: SEO audits, viral marketing playbooks, video breakdowns, and syndications across Blogger, Medium, YouTube, and LinkedIn.',
+    description: 'Explore G. Hari Kiran\'s curated library of SEO audits, growth playbooks, and video breakdowns syndicated across Medium, YouTube, and LinkedIn.',
     image: 'https://harikiran-portfolio.netlify.app/og-blog.jpg',
     content: `
       <h2>Curated Omnichannel Resources</h2>
@@ -97,9 +99,9 @@ const staticPages = [
   },
   {
     path: '/contact',
-    title: 'Hire SEO Expert G. Hari Kiran | Free Website Audit Jamshedpur',
+    title: 'Hire SEO Expert G. Hari Kiran | Free Website Audit',
     heading: 'Get in Touch - Request a Free SEO Consultation',
-    description: 'Book a consultation with G. Hari Kiran, SEO Expert and Digital Marketing Consultant in Jamshedpur, Jharkhand. Request your free website audit and customized growth strategy.',
+    description: 'Book an SEO consultation with G. Hari Kiran in Jamshedpur, Jharkhand. Request your free technical website audit and custom organic growth roadmap.',
     image: 'https://harikiran-portfolio.netlify.app/og-contact.jpg',
     content: `
       <h2>Ready to Scale Your Organic Search Revenue?</h2>
@@ -139,7 +141,7 @@ const staticPages = [
     path: '/seo-audit',
     title: 'Technical SEO Audit & Diagnostics | G. Hari Kiran',
     heading: 'Technical SEO Diagnostics & Crawler Health Dashboard',
-    description: 'View real-time technical SEO health diagnostics, IndexNow submission logs, and Core Web Vitals performance for G. Hari Kiran\'s SEO consulting portfolio in Jamshedpur.',
+    description: 'Live technical SEO health diagnostics, IndexNow submission logs, and Core Web Vitals performance for G. Hari Kiran\'s SEO portfolio in Jamshedpur.',
     image: 'https://harikiran-portfolio.netlify.app/banner.png',
     content: `
       <h2>Website Health & Indexing Diagnostics</h2>
@@ -189,7 +191,24 @@ async function generatePages() {
     html = html.replace(/<meta[^>]+name=["']twitter:[^"']+["'][^>]*\/?>/gi, "");
     html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*\/?>/gi, "");
 
-    const fullTitle = title.includes("G. Hari Kiran") ? title : `${title} | G. Hari Kiran`;
+    // Format title strictly <= 60 characters
+    let fullTitle = title.trim();
+    if (fullTitle.length > 60) {
+      if (fullTitle.includes(" | ")) {
+        const first = fullTitle.split(" | ")[0].trim();
+        fullTitle = first.length <= 60 ? first : first.slice(0, 57).trim() + "...";
+      } else {
+        fullTitle = fullTitle.slice(0, 57).trim() + "...";
+      }
+    } else if (!fullTitle.includes("G. Hari Kiran") && !fullTitle.includes("Hari Kiran")) {
+      if (fullTitle.length + 15 <= 60) {
+        fullTitle = `${fullTitle} | G. Hari Kiran`;
+      }
+    }
+
+    // Format description strictly <= 155 characters
+    const cleanDesc = (description || '').trim().replace(/\s+/g, ' ');
+    const safeDesc = cleanDesc.length > 155 ? cleanDesc.slice(0, 152).trim() + '...' : cleanDesc;
 
     const isArticle = pageUrl.startsWith('/blog/');
     const schemaJsonLd = isArticle ? JSON.stringify({
@@ -197,8 +216,13 @@ async function generatePages() {
       "@type": "BlogPosting",
       "headline": heading,
       "name": fullTitle,
-      "description": description,
-      "image": ogImage,
+      "description": safeDesc,
+      "image": {
+        "@type": "ImageObject",
+        "url": ogImage,
+        "width": 1200,
+        "height": 630
+      },
       "datePublished": publishDate,
       "dateModified": publishDate,
       "mainEntityOfPage": {
@@ -208,25 +232,30 @@ async function generatePages() {
       "author": {
         "@type": "Person",
         "name": authorName,
-        "url": siteUrl
+        "url": `${siteUrl}/about/`
       },
       "publisher": {
-        "@type": "Person",
-        "name": "G. Hari Kiran",
-        "url": siteUrl,
-        "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png"
+        "@type": "Organization",
+        "name": "G. Hari Kiran Consulting",
+        "url": `${siteUrl}/`,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/banner.png`,
+          "width": 1200,
+          "height": 630
+        }
       }
     }) : JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": fullTitle,
-      "description": description,
+      "description": safeDesc,
       "url": canonical
     });
 
     const cleanSocialTags = `
     <title>${fullTitle}</title>
-    <meta name="description" content="${description}">
+    <meta name="description" content="${safeDesc}">
     <link rel="canonical" href="${canonical}">
 
     <!-- Open Graph (Bing, WhatsApp, LinkedIn, Facebook, Slack, Telegram) -->
@@ -234,7 +263,7 @@ async function generatePages() {
     <meta property="og:site_name" content="G. Hari Kiran Portfolio">
     <meta property="og:url" content="${canonical}">
     <meta property="og:title" content="${fullTitle}">
-    <meta property="og:description" content="${description}">
+    <meta property="og:description" content="${safeDesc}">
     <meta property="og:image" content="${ogImage}">
     <meta property="og:image:secure_url" content="${ogImage}">
     <meta property="og:image:type" content="${imageType}">
@@ -247,7 +276,7 @@ async function generatePages() {
     <meta name="twitter:site" content="@GHariKiran29">
     <meta name="twitter:creator" content="@GHariKiran29">
     <meta name="twitter:title" content="${fullTitle}">
-    <meta name="twitter:description" content="${description}">
+    <meta name="twitter:description" content="${safeDesc}">
     <meta name="twitter:image" content="${ogImage}">
     <meta name="twitter:image:src" content="${ogImage}">
     <meta name="twitter:image:alt" content="${fullTitle}">
@@ -260,6 +289,20 @@ async function generatePages() {
     </script>`;
 
     html = html.replace(/<head[^>]*>/i, `$&${cleanSocialTags}`);
+
+    // Parse markdown into rich semantic HTML if it's not already structured HTML
+    let formattedBodyHtml = bodyHtml || '';
+    if (formattedBodyHtml) {
+      formattedBodyHtml = normalizeArticleContent(formattedBodyHtml);
+      const isPureHtml = /<[a-z][\s\S]*>/i.test(formattedBodyHtml) && !formattedBodyHtml.trim().startsWith('#');
+      if (!isPureHtml) {
+        try {
+          formattedBodyHtml = marked.parse(formattedBodyHtml) as string;
+        } catch (e) {
+          console.warn('Markdown parsing fallback:', e);
+        }
+      }
+    }
 
     // Pre-render rich, complete semantic HTML inside #root so Bingbot & search crawlers see 1000+ words immediately
     const preRenderedContent = `
@@ -277,7 +320,7 @@ async function generatePages() {
             ${heading}
           </h1>
           <p style="font-size: 1.15rem; line-height: 1.6; color: #444; margin-bottom: 16px; font-weight: 500;">
-            ${description}
+            ${safeDesc}
           </p>
           <div style="font-size: 0.85rem; color: #777; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
             <span>By <strong>${authorName}</strong></span>
@@ -289,7 +332,7 @@ async function generatePages() {
         </header>
 
         <article style="font-size: 1.05rem; color: #222;">
-          ${bodyHtml}
+          ${formattedBodyHtml}
         </article>
 
         <footer style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #e5e5e5; font-size: 0.95rem; color: #555;">
@@ -388,16 +431,22 @@ async function generatePages() {
 
         const postImage = `https://harikiran-portfolio.netlify.app/assets/blog-covers/${cleanSlug}.jpg`;
 
+        const matchingLocal = blogPosts.find(b => b.slug === cleanSlug || (b.title && b.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') === cleanSlug));
+        const richContent = (data.content && data.content.length > 300)
+          ? data.content
+          : (matchingLocal ? matchingLocal.content : (data.content || data.description || ''));
+        const richExcerpt = data.excerpt || data.metaDescription || (matchingLocal ? matchingLocal.excerpt : data.description) || '';
+
         const pageHtml = createPageHtml(
           postPath,
-          data.metaTitle || title,
+          data.metaTitle || (matchingLocal ? (matchingLocal.seoTitle || matchingLocal.title) : title),
           title,
-          data.excerpt || data.metaDescription || data.description || '',
-          data.description || data.content || '',
-          data.category || 'SEO Tips',
+          richExcerpt,
+          richContent,
+          data.category || (matchingLocal ? matchingLocal.category : 'SEO Tips'),
           postImage,
           data.author?.name || 'G. Hari Kiran',
-          data.publishedDate || '2026-08-30'
+          data.publishedDate || (matchingLocal ? matchingLocal.date : '2026-08-30')
         );
         fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml);
         console.log(`Generated Firestore pre-rendered blog post: ${postPath}/index.html`);

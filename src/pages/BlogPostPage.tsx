@@ -15,6 +15,7 @@ import { BlogComments } from "../components/BlogComments";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { normalizeArticleContent, calculateReadingTime } from "../utils/blogContent";
 
 const generateSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "").substring(0, 100);
 
@@ -88,15 +89,25 @@ const BlogPostPage = () => {
 
   const [posts, setPosts] = useState<any[]>(initialPosts);
 
+  const cleanUrlSlug = (slug || "").replace(/\/+$/, "").trim().toLowerCase();
+
   const initialPostFound = useMemo(() => {
-    return initialPosts.some((p) => p.slug === slug);
-  }, [initialPosts, slug]);
+    return initialPosts.some((p) => (p.slug || "").toLowerCase() === cleanUrlSlug || (p.title && generateSlug(p.title) === cleanUrlSlug));
+  }, [initialPosts, cleanUrlSlug]);
 
   const [isLoading, setIsLoading] = useState(!initialPostFound);
 
   const post = useMemo(() => {
-    return posts.find((p) => p.slug === slug);
-  }, [posts, slug]);
+    return posts.find((p) => (p.slug || "").toLowerCase() === cleanUrlSlug || (p.title && generateSlug(p.title) === cleanUrlSlug));
+  }, [posts, cleanUrlSlug]);
+
+  const normalizedContent = useMemo(() => {
+    return normalizeArticleContent(post?.content || "");
+  }, [post?.content]);
+
+  const dynamicReadingTime = useMemo(() => {
+    return post?.readingTime || calculateReadingTime(normalizedContent);
+  }, [post?.readingTime, normalizedContent]);
 
   useEffect(() => {
     const fetchAdditionalPosts = async () => {
@@ -126,7 +137,7 @@ const BlogPostPage = () => {
             date: formatDate(item.publishedDate),
             image: postImg,
             excerpt: item.metaDescription || item.excerpt || item.description || "",
-            content: item.description || "",
+            content: (item.content && item.content.length > 200) ? item.content : (item.description || item.content || ""),
             keywords: item.tags || [],
             isExternal: false,
             externalUrl: item.url && !item.url.startsWith('#') && !item.url.startsWith('/blog/') ? item.url : "",
@@ -142,7 +153,13 @@ const BlogPostPage = () => {
             const newToAdd = cmsPosts.filter(c => !existingSlugs.has(c.slug));
             const updated = prev.map(p => {
               const matchedCms = cmsPosts.find(c => c.slug === p.slug);
-              return matchedCms ? { ...p, ...matchedCms } : p;
+              if (matchedCms) {
+                const preservedContent = (matchedCms.content && matchedCms.content.length > (p.content?.length || 0))
+                  ? matchedCms.content
+                  : (p.content || matchedCms.content);
+                return { ...p, ...matchedCms, content: preservedContent };
+              }
+              return p;
             });
             return [...updated, ...newToAdd];
           });
@@ -294,7 +311,8 @@ const BlogPostPage = () => {
   };
 
   const postTitle = post.seoTitle || (post.title.length > 55 ? post.title.slice(0, 52) + "..." : post.title);
-  const postExcerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 160) : "Expert growth and technical SEO strategy by G. Hari Kiran");
+  const rawExcerpt = post.excerpt || (post.content ? post.content.replace(/<[^>]*>/g, '').replace(/#+\s*/g, '').substring(0, 150) : "Expert growth and technical SEO strategy by G. Hari Kiran");
+  const postExcerpt = rawExcerpt.length > 155 ? rawExcerpt.slice(0, 152).trim() + "..." : rawExcerpt;
   const uniqueCoverUrl = `https://harikiran-portfolio.netlify.app/assets/blog-covers/${postSlug}.jpg`;
   const postImage = uniqueCoverUrl;
 
@@ -304,9 +322,9 @@ const BlogPostPage = () => {
         title={postTitle}
         description={postExcerpt}
         image={postImage}
-        url={`/blog/${postSlug}`}
+        url={`/blog/${postSlug}/`}
         type="article"
-        canonical={`https://harikiran-portfolio.netlify.app/blog/${postSlug}`}
+        canonical={`https://harikiran-portfolio.netlify.app/blog/${postSlug}/`}
         articleData={{
           publishedTime: post.rawDate || post.date,
           author: "G. Hari Kiran",
@@ -329,16 +347,23 @@ const BlogPostPage = () => {
           "author": {
             "@type": "Person",
             "name": "G. Hari Kiran",
-            "url": "https://harikiran-portfolio.netlify.app/about"
+            "url": "https://harikiran-portfolio.netlify.app/about/"
           },
           "description": postExcerpt,
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": shareUrl
+            "@id": `${productionDomain}/blog/${postSlug}/`
           },
           "publisher": {
-            "@type": "Person",
-            "name": "G. Hari Kiran"
+            "@type": "Organization",
+            "name": "G. Hari Kiran Consulting",
+            "url": "https://harikiran-portfolio.netlify.app/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://harikiran-portfolio.netlify.app/banner.png",
+              "width": 1200,
+              "height": 630
+            }
           }
         }}
       />
@@ -363,7 +388,7 @@ const BlogPostPage = () => {
               </span>
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted">
                 <Clock size={12} className="text-accent" />
-                {post.readingTime || "5 min read"}
+                {dynamicReadingTime}
               </div>
             </div>
             
@@ -468,7 +493,7 @@ const BlogPostPage = () => {
             )}
             
             {/* Table of Contents for Article Navigation */}
-            <TableOfContents content={post.content || ""} />
+            <TableOfContents content={normalizedContent} />
             
             <div 
               className="markdown-content"
@@ -550,9 +575,26 @@ const BlogPostPage = () => {
                   strong: ({ node, ...props }) => (
                     <strong className="font-bold text-zinc-950" {...props} />
                   ),
-                  code: ({ node, ...props }: any) => (
-                    <code className="bg-zinc-100 text-accent font-mono text-sm px-2 py-0.5 rounded border border-zinc-200" {...props} />
+                  pre: ({ node, children, ...props }: any) => (
+                    <pre className="my-8 overflow-x-auto rounded-2xl bg-zinc-950 p-6 text-sm text-zinc-100 border border-zinc-800 shadow-xl font-mono leading-relaxed" {...props}>
+                      {children}
+                    </pre>
                   ),
+                  code: ({ node, inline, className, children, ...props }: any) => {
+                    const isInline = inline || !className;
+                    if (isInline) {
+                      return (
+                        <code className="bg-zinc-100 text-accent font-mono text-sm px-1.5 py-0.5 rounded border border-zinc-200 font-medium" {...props}>
+                          {children}
+                        </code>
+                      );
+                    }
+                    return (
+                      <code className="font-mono text-sm text-zinc-100" {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
                   hr: ({ node, ...props }) => (
                     <hr className="my-12 border-t border-primary/10" {...props} />
                   ),
@@ -561,7 +603,7 @@ const BlogPostPage = () => {
                   )
                 }}
               >
-                {post.content || ""}
+                {normalizedContent}
               </Markdown>
             </div>
           </div>
@@ -666,7 +708,7 @@ const BlogPostPage = () => {
                 transition={{ delay: i * 0.1 }}
                 className="group flex flex-col h-full bento-card border border-primary/5 hover:border-accent/30 transition-all overflow-hidden"
               >
-                  <Link to={`/blog/${related.slug}`} className="flex flex-col h-full">
+                  <Link to={`/blog/${related.slug}/`} className="flex flex-col h-full">
                     <div className="relative aspect-[16/9] mb-6 overflow-hidden rounded-2xl">
                        <img 
                          src={related.image} 

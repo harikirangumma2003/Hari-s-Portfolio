@@ -18,5 +18,18 @@ https://www.harikiran-portfolio.netlify.app   https://harikiran-portfolio.netlif
 /apple-touch-icon-precomposed.png /favicon.svg                   301
 /browserconfig.xml              /favicon.svg                     301
 
+# Direct static route mapping to serve pre-rendered pages with 200 OK (no 301 redirects)
+/blog/:slug                     /blog/:slug/index.html           200
+/work/:slug                     /work/:slug/index.html           200
+/about                          /about/index.html                200
+/experience                     /experience/index.html           200
+/work                           /work/index.html                 200
+/blog                           /blog/index.html                 200
+/content-hub                    /content-hub/index.html          200
+/contact                        /contact/index.html              200
+/partners                       /partners/index.html             200
+/resources                      /resources/index.html            200
+/seo-audit                      /seo-audit/index.html            200
+
 # SPA fallback router to support direct deep linking on static hostings (HTTP 200)
 /*                              /index.html                      200

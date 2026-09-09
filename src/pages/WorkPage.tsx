@@ -66,7 +66,7 @@ const WorkPage = () => {
                 transition={{ delay: i * 0.1, duration: 0.8, ease: "easeOut" }}
                 className="group flex flex-col"
               >
-                <Link to={`/work/${project.slug}`} className="flex flex-col h-full bg-white border border-primary/5 rounded-[48px] p-8 lg:p-10 hover:border-accent/40 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group/card">
+                <Link to={`/work/${project.slug}/`} className="flex flex-col h-full bg-white border border-primary/5 rounded-[48px] p-8 lg:p-10 hover:border-accent/40 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden group/card">
                   <div className="relative aspect-[16/10] overflow-hidden mb-10 rounded-[32px] shadow-sm">
                       <img
                         src={project.image}

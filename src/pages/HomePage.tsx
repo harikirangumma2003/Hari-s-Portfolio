@@ -309,7 +309,7 @@ const HomePage = () => {
               <span className="text-[10px] font-black uppercase tracking-[4px] text-accent mb-4 block">Selected Works</span>
               <h2 className="text-4xl sm:text-5xl md:text-8xl font-display font-black tracking-tighter uppercase leading-[1] md:leading-[0.85]">Selected <br className="hidden md:block"/> Solutions</h2>
             </div>
-            <Link to="/work" className="w-full sm:w-auto btn-primary group">
+            <Link to="/work/" className="w-full sm:w-auto btn-primary group">
               Explore All <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
@@ -324,7 +324,7 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: i * 0.1 }}
                 className="group bento-card p-0 h-[450px] relative cursor-pointer border-none"
               >
-                <Link to={`/work/${project.slug}`} className="block h-full w-full relative overflow-hidden rounded-[40px]">
+                <Link to={`/work/${project.slug}/`} className="block h-full w-full relative overflow-hidden rounded-[40px]">
                   <img 
                     src={project.image} 
                     alt={project.title} 

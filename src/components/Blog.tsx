@@ -16,7 +16,7 @@ const Blog = () => {
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
           <GooglePreferredSourceButton variant="compact" />
-          <Link to="/blog" className="w-full sm:w-auto btn-primary flex items-center justify-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
+          <Link to="/blog/" className="w-full sm:w-auto btn-primary flex items-center justify-center bg-primary hover:bg-accent px-8 py-3 rounded-full text-white text-[10px] font-black uppercase tracking-widest transition-all">
             Browse All <ArrowRight className="ml-2" size={16}/>
           </Link>
         </div>
@@ -32,7 +32,7 @@ const Blog = () => {
             transition={{ delay: i * 0.2 }}
             className="group cursor-pointer bento-card border border-primary/5 hover:border-accent/30 transition-all flex flex-col h-full"
           >
-            <Link to={`/blog/${post.slug}`} className="flex flex-col h-full">
+            <Link to={`/blog/${post.slug}/`} className="flex flex-col h-full">
               <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] mb-6">
                 <img
                   src={post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp"}

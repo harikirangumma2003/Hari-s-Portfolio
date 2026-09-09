@@ -11,6 +11,7 @@ export interface FirestoreContentHubItem {
   title: string;
   excerpt: string;
   description: string;
+  content?: string;
   thumbnail: string;
   platform: 'Blogger' | 'Medium' | 'Portfolio' | 'Instagram' | 'YouTube' | 'LinkedIn' | 'X' | 'Threads' | 'Podcast' | 'Case Study' | 'Resource';
   contentType: 'Blog' | 'Video' | 'Short' | 'Social Post' | 'Case Study' | 'Resource' | 'Audio';
@@ -46,6 +47,7 @@ export interface ContentHubItem {
   title: string;
   excerpt: string;
   description: string;
+  content?: string;
   thumbnail: string;
   platform: 'Blogger' | 'Medium' | 'Portfolio' | 'Instagram' | 'YouTube' | 'LinkedIn' | 'X' | 'Threads' | 'Podcast' | 'Case Study' | 'Resource';
   contentType: 'Blog' | 'Video' | 'Short' | 'Social Post' | 'Case Study' | 'Resource' | 'Audio';

@@ -13,8 +13,10 @@ const ProjectDetailPage = () => {
     return <Navigate to="/work" replace />;
   }
 
-  const seoTitle = project.seoTitle || `${project.title} Case Study | Hari Kiran`;
-  const seoDescription = project.description;
+  const rawTitle = project.seoTitle || `${project.title} Case Study | Hari Kiran`;
+  const seoTitle = rawTitle.length > 60 ? rawTitle.slice(0, 57).trim() + "..." : rawTitle;
+  const rawDesc = project.description || "";
+  const seoDescription = rawDesc.length > 155 ? rawDesc.slice(0, 152).trim() + "..." : rawDesc;
 
   return (
     <div className="pt-32 pb-24">
@@ -22,12 +24,14 @@ const ProjectDetailPage = () => {
         title={seoTitle}
         description={seoDescription}
         image={project.image}
-        url={`/work/${project.slug}`}
+        url={`/work/${project.slug}/`}
+        canonical={`https://harikiran-portfolio.netlify.app/work/${project.slug}/`}
         schemaData={{
           "@context": "https://schema.org",
           "@type": "CreativeWork",
           "name": project.title,
-          "description": project.description,
+          "description": seoDescription,
+          "url": `https://harikiran-portfolio.netlify.app/work/${project.slug}/`,
           "image": {
             "@type": "ImageObject",
             "url": project.image,
@@ -37,7 +41,19 @@ const ProjectDetailPage = () => {
           },
           "author": {
             "@type": "Person",
-            "name": "G. Hari Kiran"
+            "name": "G. Hari Kiran",
+            "url": "https://harikiran-portfolio.netlify.app/about/"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "G. Hari Kiran Consulting",
+            "url": "https://harikiran-portfolio.netlify.app/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://harikiran-portfolio.netlify.app/banner.png",
+              "width": 1200,
+              "height": 630
+            }
           },
           "genre": project.category,
           "keywords": project.tags.join(", "),
@@ -89,6 +105,12 @@ const ProjectDetailPage = () => {
               width="1600"
               height="900"
               className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format,compress&q=80&w=1600&fm=webp";
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
           </motion.div>

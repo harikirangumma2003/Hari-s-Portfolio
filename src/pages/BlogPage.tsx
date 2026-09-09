@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, Calendar, Search, ArrowRight, ArrowUpRight, ExternalLink, Clock } from "lucide-react";
+import { ArrowLeft, Calendar, Search, ArrowRight, ArrowUpRight, ExternalLink, Clock, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts, categories } from "../data/blogPosts";
@@ -8,6 +8,7 @@ import { SEO } from "../components/SEO";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { getPublishedContent } from "../services/contentService";
 import { GooglePreferredSourceButton } from "../components/GooglePreferredSourceButton";
+import { calculateReadingTime } from "../utils/blogContent";
 
 interface UnifiedBlogPost {
   title: string;
@@ -70,7 +71,7 @@ const BlogPage = () => {
     return blogPosts.map(post => ({
       ...post,
       isExternal: false,
-      readingTime: "5 min read",
+      readingTime: post.readingTime || calculateReadingTime(post.content),
       rawDate: safeToISOString(post.date)
     }));
   }, []);
@@ -78,6 +79,14 @@ const BlogPage = () => {
   const allCategories = useMemo(() => {
     return ["All Posts", ...categories, "Medium Articles"];
   }, []);
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { "All Posts": posts.length };
+    posts.forEach(p => {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+    return counts;
+  }, [posts]);
 
   useEffect(() => {
     const fetchAllPosts = async () => {
@@ -330,19 +339,32 @@ const BlogPage = () => {
           {/* Search/Filter */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-16 pb-8 border-b border-primary/5">
             <div className="flex gap-3 overflow-x-auto pb-4 w-full md:w-auto -mx-5 px-5 sm:mx-0 sm:px-0 no-scrollbar">
-              {allCategories.map((cat) => (
-                <button 
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-full border transition-all whitespace-nowrap shadow-sm ${
-                    activeCategory === cat 
-                    ? 'bg-primary text-white border-primary shadow-primary/20' 
-                    : 'bg-white border-primary/10 text-primary hover:border-accent hover:text-accent'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+              {allCategories.map((cat) => {
+                const count = categoryCounts[cat];
+                if (cat !== "All Posts" && count === undefined) return null;
+                return (
+                  <button 
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`text-[10px] font-black uppercase tracking-widest px-5 py-3 rounded-full border transition-all whitespace-nowrap shadow-sm flex items-center gap-2 ${
+                      activeCategory === cat 
+                      ? 'bg-primary text-white border-primary shadow-primary/20' 
+                      : 'bg-white border-primary/10 text-primary hover:border-accent hover:text-accent'
+                    }`}
+                  >
+                    <span>{cat}</span>
+                    {count !== undefined && (
+                      <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                        activeCategory === cat
+                          ? 'bg-white/20 text-white'
+                          : 'bg-primary/5 text-muted'
+                      }`}>
+                        {count}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
             <div className="relative w-full md:w-80">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
@@ -351,8 +373,17 @@ const BlogPage = () => {
                 placeholder="Search articles..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-6 py-4 bg-white rounded-2xl border border-primary/5 text-xs font-bold uppercase tracking-widest focus:border-accent focus:ring-0 transition-all shadow-sm"
+                className="w-full pl-12 pr-10 py-4 bg-white rounded-2xl border border-primary/5 text-xs font-bold uppercase tracking-widest focus:border-accent focus:ring-0 transition-all shadow-sm"
               />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-muted hover:text-primary transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X size={14} />
+                </button>
+              )}
             </div>
           </div>
 
@@ -420,7 +451,7 @@ const BlogPage = () => {
                       </div>
                     </a>
                   ) : (
-                    <Link to={`/blog/${post.slug}`} className="flex flex-col h-full">
+                    <Link to={`/blog/${post.slug}/`} className="flex flex-col h-full">
                       <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] mb-6">
                         <img 
                           src={post.image || "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format,compress&q=80&w=800&fm=webp"} 
@@ -468,7 +499,16 @@ const BlogPage = () => {
               <div className="col-span-full py-24 text-center">
                 <Search size={48} className="mx-auto text-muted/30 mb-6" />
                 <h3 className="text-2xl font-display font-black uppercase mb-2">No articles found</h3>
-                <p className="text-muted text-sm uppercase tracking-widest">Try adjusting your search or category filters.</p>
+                <p className="text-muted text-sm uppercase tracking-widest mb-6">Try adjusting your search or category filters.</p>
+                <button
+                  onClick={() => {
+                    setActiveCategory("All Posts");
+                    setSearchQuery("");
+                  }}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-widest hover:bg-accent transition-all shadow-sm"
+                >
+                  Reset All Filters
+                </button>
               </div>
             )}
           </div>
