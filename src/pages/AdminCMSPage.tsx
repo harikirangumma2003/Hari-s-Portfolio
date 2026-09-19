@@ -16,6 +16,7 @@ import {
   Trash2, 
   Edit, 
   Eye, 
+  EyeOff,
   UploadCloud, 
   Globe, 
   User as UserIcon, 
@@ -86,6 +87,9 @@ export default function AdminCMSPage() {
   const [authPassword, setAuthPassword] = useState("");
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [authFormLoading, setAuthFormLoading] = useState(false);
+  const [directPassword, setDirectPassword] = useState("");
+  const [showDirectPassword, setShowDirectPassword] = useState(false);
+  const [directPasswordError, setDirectPasswordError] = useState("");
 
   // Custom Toast System
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -236,6 +240,27 @@ export default function AdminCMSPage() {
       setFormPublishedDate(todayStr);
     }
   }, [formPublishedDate]);
+
+  // Handle Direct Password Unlock (Hari2026)
+  const handleDirectPasswordUnlock = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!directPassword) {
+      setDirectPasswordError("Please enter the administrator password.");
+      return;
+    }
+    setAuthFormLoading(true);
+    try {
+      await loginAsAdminDirect(directPassword);
+      triggerToast("Welcome back, G. Hari Kiran! CMS ready.", "success");
+      setDirectPassword("");
+      setDirectPasswordError("");
+    } catch (err: any) {
+      setDirectPasswordError(err.message || "Incorrect password. Access denied.");
+      triggerToast(err.message || "Incorrect password. Access denied.", "error");
+    } finally {
+      setAuthFormLoading(false);
+    }
+  };
 
   // Handle Authentication submit
   const handleAuthSubmit = async (e: React.FormEvent) => {
@@ -839,29 +864,74 @@ export default function AdminCMSPage() {
             <p className="text-xs font-mono text-zinc-400">Authenticated Admin Console • G. Hari Kiran</p>
           </div>
 
-          {/* Quick 1-Click Instant Access for Portfolio Owner */}
-          <div className="mb-6 p-4 rounded-2xl bg-accent/10 border border-accent/20 text-center">
-            <p className="text-[10px] font-black uppercase tracking-wider text-accent mb-2.5">
-              Verified Administrator Access
-            </p>
-            <button
-              type="button"
-              onClick={async () => {
-                setAuthFormLoading(true);
-                try {
-                  await loginAsAdminDirect();
-                  triggerToast("Welcome back, G. Hari Kiran! CMS ready.", "success");
-                } catch (err: any) {
-                  triggerToast(err.message || "Quick access failed", "error");
-                } finally {
-                  setAuthFormLoading(false);
-                }
-              }}
-              disabled={authFormLoading}
-              className="w-full py-3 px-4 bg-accent hover:bg-accent/90 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-4 h-4" /> Open CMS Dashboard
-            </button>
+          {/* Password Protection for Admin CMS Dashboard */}
+          <div className={cn(
+            "mb-6 p-5 rounded-2xl border text-left relative overflow-hidden",
+            themeMode === "dark" 
+              ? "bg-accent/5 border-accent/25 shadow-[0_0_25px_rgba(255,107,0,0.08)]" 
+              : "bg-accent/5 border-accent/25 shadow-sm"
+          )}>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[10px] font-black uppercase tracking-wider text-accent flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5" /> Password Protected
+              </span>
+              <span className="text-[9px] font-mono font-bold text-zinc-400 bg-black/20 px-2 py-0.5 rounded border border-white/5">
+                Restricted Access
+              </span>
+            </div>
+
+            <form onSubmit={handleDirectPasswordUnlock} className="space-y-3">
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-wider text-zinc-400 mb-1.5">
+                  Enter Admin Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showDirectPassword ? "text" : "password"}
+                    value={directPassword}
+                    onChange={(e) => {
+                      setDirectPassword(e.target.value);
+                      if (directPasswordError) setDirectPasswordError("");
+                    }}
+                    placeholder="Enter password..."
+                    className={cn(
+                      "w-full pl-3.5 pr-10 py-3 rounded-xl border text-xs transition-all outline-none font-mono",
+                      directPasswordError
+                        ? "border-red-500 bg-red-500/10 text-red-200"
+                        : themeMode === "dark"
+                          ? "bg-zinc-900/90 border-white/10 focus:border-accent text-white placeholder-zinc-500"
+                          : "bg-white border-zinc-300 focus:border-accent text-zinc-900 placeholder-zinc-400"
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowDirectPassword(!showDirectPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white p-1 transition-colors"
+                  >
+                    {showDirectPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {directPasswordError && (
+                  <p className="text-[10px] text-red-400 font-mono mt-1.5 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3 flex-shrink-0" /> {directPasswordError}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={authFormLoading}
+                className="w-full py-3.5 px-4 bg-accent hover:bg-accent/90 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                {authFormLoading ? (
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4" /> Open CMS Dashboard
+                  </>
+                )}
+              </button>
+            </form>
           </div>
 
           {/* Google Sign-in Alternative */}

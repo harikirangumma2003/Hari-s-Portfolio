@@ -12,6 +12,12 @@
 - **Primary Roles**: Local SEO Consultant, Technical SEO Auditor, Customer Retention Architect, Conversion Rate Optimization (CRO) Specialist, Programmatic Copywriter.
 - **Geographic Focus & Service Area**: Jamshedpur, Bistupur, Sakchi, Golmuri, Kadma, Sonari, Mango, Tatanagar, Adityapur, Ranchi, Dhanbad, Bokaro, Jharkhand, East India, as well as global remote clients (US, UK, APAC).
 - **Direct Contact**: harikirangumma2003@gmail.com
+- **Official Profiles & Knowledge Graph Entities**:
+  - Facebook: https://www.facebook.com/profile.php?id=61586795668847
+  - LinkedIn: https://www.linkedin.com/in/hari-kiran-gumma
+  - Twitter / X: https://x.com/GHariKiran29
+  - Blogger: https://gharikiran.blogspot.com/
+  - Medium: https://medium.com/@harikirangumma2003
 - **Google Preferred Source URL**: https://www.google.com/preferences/source?q=harikiran-portfolio.netlify.app
 - **Full Knowledge Ingestion File**: https://harikiran-portfolio.netlify.app/llms-full.txt
 
@@ -70,6 +76,37 @@
 - [Facebook Marketing for Small & Local Businesses](https://harikiran-portfolio.netlify.app/blog/facebook-marketing-small-businesses) : Low-cost organic group strategies and localized hyper-targeted ad funnels.
 - [Why You Need Organic SEO Services to Scale Your Brand](https://harikiran-portfolio.netlify.app/blog/organic-seo-services) : Strategic breakdown on why technical SEO and organic search outperform fleeting paid ad campaigns.
 - [Best Digital Marketer in Netaji Subhas University](https://harikiran-portfolio.netlify.app/blog/best-digital-marketer-in-netaji-subhas-university) : Philosophy on why strategic positioning and data systems trump shallow tactical tool usage.
+
+---
+
+## Digital Products, Growth Templates & Resource Library
+
+All spreadsheet tools and executive dashboards are accessible at: https://harikiran-portfolio.netlify.app/resources
+
+1. **21-Point SEO Checklist & Tracker Spreadsheet**
+   - **Type**: Automated Google Sheets & CSV Template
+   - **Coverage**: Full-funnel technical SEO audit (Search Console, sitemaps, Core Web Vitals, robots.txt), on-page keyword hierarchy, and off-page backlink trackers with automated completion formulas.
+   - **Direct Access**: https://harikiran-portfolio.netlify.app/resources
+
+2. **Google Ads Performance Dashboard Spreadsheet**
+   - **Type**: Multi-Campaign PPC Reporting Google Sheet
+   - **Coverage**: Granular campaign reporting across Display Retargeting, Search Brand, and Search Non-Brand, tracking 650K+ impressions, 17,950 clicks, 1,273 conversions, and CPA efficiency metrics ($4.84 vs $28.73 CPA).
+   - **Direct Access**: https://harikiran-portfolio.netlify.app/resources
+
+3. **Meta Ads Performance Dashboard Sheet**
+   - **Type**: Facebook & Instagram Media Buying Google Sheet
+   - **Coverage**: 1M+ reach, 1.1M+ impression performance reporting with automated frequency calculations, demographic age-split matrices (18-24 to 65+), and day-by-day ROAS/CPC tracking.
+   - **Direct Access**: https://harikiran-portfolio.netlify.app/resources
+
+4. **Personal Finance Tracker Spreadsheet**
+   - **Type**: Automated Cashflow & Budget Google Sheet
+   - **Coverage**: Multi-account ledger, automated monthly budget versus actual calculators, expense distribution charts, and savings milestone progress gauges.
+   - **Direct Access**: https://harikiran-portfolio.netlify.app/resources
+
+5. **Ultimate Habit Tracker & Daily Routine Planner**
+   - **Type**: Behavioral Consistency Google Sheet
+   - **Coverage**: Dynamic daily streak counters, monthly consistency heatmaps, and customizable routine checklists.
+   - **Direct Access**: https://harikiran-portfolio.netlify.app/resources
 
 ---
 

@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { ArrowRight, CheckCircle, ShieldAlert, Cpu, Network, Sparkles, Database, FileText, Send, RefreshCw, BarChart2, Radio } from "lucide-react";
+import { ArrowRight, CheckCircle, ShieldAlert, Cpu, Network, Sparkles, Database, FileText, Send, RefreshCw, BarChart2, Radio, Lock, Eye, EyeOff } from "lucide-react";
 import { sendInstantIndexPing } from "../services/indexingService";
 
 const SEODashboardPage = () => {
@@ -11,21 +11,32 @@ const SEODashboardPage = () => {
   const [indexStatus, setIndexStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [passcodeInput, setPasscodeInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(() => {
-    return localStorage.getItem("seo_dashboard_unlocked") === "true";
+    return sessionStorage.getItem("seo_audit_unlocked") === "Hari2026" || localStorage.getItem("seo_audit_unlocked") === "Hari2026";
   });
   const [passcodeError, setPasscodeError] = useState("");
 
   const handleUnlockSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const correctPasscodes = ["hk-seo-audit", "harikiran-seo", "audit2026", "hk-audit-360"];
-    if (correctPasscodes.includes(passcodeInput.trim().toLowerCase())) {
+    if (passcodeInput.trim() === "Hari2026") {
       setIsUnlocked(true);
       setPasscodeError("");
-      localStorage.setItem("seo_dashboard_unlocked", "true");
+      sessionStorage.setItem("seo_audit_unlocked", "Hari2026");
+      localStorage.setItem("seo_audit_unlocked", "Hari2026");
+      localStorage.removeItem("seo_dashboard_unlocked");
     } else {
-      setPasscodeError("Invalid validation credential key. Please try again.");
+      setPasscodeError("Incorrect password. Access denied.");
     }
+  };
+
+  const handleLockDashboard = () => {
+    sessionStorage.removeItem("seo_audit_unlocked");
+    localStorage.removeItem("seo_audit_unlocked");
+    localStorage.removeItem("seo_dashboard_unlocked");
+    setIsUnlocked(false);
+    setPasscodeInput("");
+    setPasscodeError("");
   };
 
   const handleIndexSubmit = async (e: React.FormEvent) => {
@@ -150,48 +161,79 @@ const SEODashboardPage = () => {
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-md mx-auto bg-white border border-primary/5 rounded-[32px] p-8 md:p-10 shadow-xl text-center my-12"
+            className="max-w-md mx-auto bg-white border border-primary/10 rounded-[32px] p-8 md:p-10 shadow-xl text-center my-12"
           >
-            <div className="w-16 h-16 bg-neutral-900 border border-neutral-800 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
-              <ShieldAlert size={28} className="animate-pulse text-accent" />
+            <div className="w-16 h-16 bg-neutral-900 border border-neutral-800 text-accent rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <Lock size={26} className="text-accent" />
             </div>
             
-            <h2 className="text-2xl font-display font-black uppercase text-neutral-950 mb-3">Audit Board Locked</h2>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[10px] font-mono font-bold uppercase tracking-wider mb-3">
+              <ShieldAlert size={12} /> Password Protected
+            </div>
+
+            <h2 className="text-2xl font-display font-black uppercase text-neutral-950 mb-2">SEO Audit Locked</h2>
             <p className="text-neutral-500 text-xs leading-relaxed mb-6 font-sans">
-              To guarantee competitive security, G. Hari Kiran's live IndexNow crawlers and system health metrics are closed to the public. Enter the authorized access key to proceed.
+              Real-time crawl verification, site health telemetry, and IndexNow dispatches are restricted. Enter the authorized password to access this page.
             </p>
 
             <form onSubmit={handleUnlockSubmit} className="space-y-4">
               <div className="space-y-1.5 text-left">
-                <label htmlFor="passcode" className="text-[9px] font-black uppercase tracking-wider text-neutral-400 font-mono">Verification Passkey</label>
-                <input 
-                  id="passcode"
-                  type="password" 
-                  placeholder="Enter validation key..." 
-                  value={passcodeInput}
-                  onChange={(e) => setPasscodeInput(e.target.value)}
-                  className="w-full bg-neutral-50 text-neutral-950 font-mono text-xs px-4 py-3.5 border border-primary/10 rounded-xl focus:outline-none focus:border-accent"
-                />
+                <label htmlFor="passcode" className="text-[9px] font-black uppercase tracking-wider text-neutral-500 font-mono">Administrator Password</label>
+                <div className="relative">
+                  <input 
+                    id="passcode"
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Enter password..." 
+                    value={passcodeInput}
+                    onChange={(e) => {
+                      setPasscodeInput(e.target.value);
+                      if (passcodeError) setPasscodeError("");
+                    }}
+                    className={`w-full bg-neutral-50 text-neutral-950 font-mono text-xs pl-4 pr-10 py-3.5 border rounded-xl focus:outline-none transition-colors ${
+                      passcodeError ? "border-red-500 bg-red-50/50" : "border-primary/15 focus:border-accent"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 p-1"
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
 
               {passcodeError && (
-                <p className="text-xs text-red-500 font-semibold">{passcodeError}</p>
+                <p className="text-xs text-red-500 font-semibold font-mono text-left">{passcodeError}</p>
               )}
 
               <button 
                 type="submit"
-                className="w-full bg-neutral-950 text-white hover:bg-accent hover:shadow-[0_8px_20px_rgba(255,107,0,0.25)] py-4 rounded-xl text-[10px] uppercase font-black tracking-widest font-mono transition-all"
+                className="w-full bg-neutral-950 hover:bg-accent text-white py-4 rounded-xl text-[10px] uppercase font-black tracking-widest font-mono transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
               >
-                Access Diagnostics Dashboard
+                <Sparkles size={14} /> Unlock SEO Audit Dashboard
               </button>
             </form>
-
-            <div className="mt-6 pt-6 border-t border-neutral-100 text-[10px] text-neutral-400 font-mono">
-              Demo Key: <span className="font-semibold text-neutral-600">hk-seo-audit</span>
-            </div>
           </motion.div>
         ) : (
           <>
+            {/* Top Bar for Unlocked State */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8 bg-white border border-primary/10 rounded-2xl p-4 shadow-sm">
+              <div className="flex items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-900">
+                  Audit Telemetry • Authenticated
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleLockDashboard}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 hover:border-neutral-950 bg-white hover:bg-neutral-50 text-neutral-700 hover:text-neutral-950 text-[11px] font-mono font-black uppercase tracking-wider transition-all"
+              >
+                <Lock size={13} /> Lock Page
+              </button>
+            </div>
+
             {/* Live Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               {siteScores.map((score, idx) => (

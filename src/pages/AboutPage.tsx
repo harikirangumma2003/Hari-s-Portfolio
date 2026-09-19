@@ -43,6 +43,7 @@ const AboutPage = () => {
           "jobTitle": "SEO Expert & Digital Marketing Consultant in Jamshedpur",
           "url": "https://harikiran-portfolio.netlify.app/about",
           "sameAs": [
+            "https://www.facebook.com/profile.php?id=61586795668847",
             "https://gharikiran.blogspot.com/",
             "https://www.linkedin.com/in/hari-kiran-gumma",
             "https://x.com/GHariKiran29",

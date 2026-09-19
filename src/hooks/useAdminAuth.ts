@@ -16,7 +16,7 @@ export interface UseAdminAuthResult {
   error: string | null;
   login: (email: string, password: string) => Promise<User>;
   loginWithGoogle: () => Promise<User>;
-  loginAsAdminDirect: () => Promise<User>;
+  loginAsAdminDirect: (password?: string) => Promise<User>;
   logout: () => Promise<void>;
   registerTemp: (email: string, password: string) => Promise<User>;
 }
@@ -27,9 +27,9 @@ export function useAdminAuth(): UseAdminAuthResult {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if there's an active fallback admin session
-    const savedAdmin = localStorage.getItem("portfolio_admin_fallback");
-    if (savedAdmin === "true") {
+    // Check if there's an active verified admin session with password
+    const savedAdminToken = sessionStorage.getItem("admin_cms_password_token") || localStorage.getItem("admin_cms_password_token");
+    if (savedAdminToken === "Hari2026") {
       setUser({
         uid: "admin-fallback-id",
         email: "harikirangumma2003@gmail.com",
@@ -38,6 +38,11 @@ export function useAdminAuth(): UseAdminAuthResult {
       } as unknown as User);
       setLoading(false);
       return;
+    } else {
+      // Clear legacy or unverified fallback tokens
+      localStorage.removeItem("portfolio_admin_fallback");
+      localStorage.removeItem("admin_cms_password_token");
+      sessionStorage.removeItem("admin_cms_password_token");
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -74,8 +79,15 @@ export function useAdminAuth(): UseAdminAuthResult {
     }
   };
 
-  const loginAsAdminDirect = async (): Promise<User> => {
+  const loginAsAdminDirect = async (password?: string): Promise<User> => {
     setError(null);
+    if (!password || password.trim() !== "Hari2026") {
+      const msg = "Incorrect administrator password. Access denied.";
+      setError(msg);
+      throw new Error(msg);
+    }
+    sessionStorage.setItem("admin_cms_password_token", "Hari2026");
+    localStorage.setItem("admin_cms_password_token", "Hari2026");
     localStorage.setItem("portfolio_admin_fallback", "true");
     const fallbackUser = {
       uid: "admin-fallback-id",
@@ -89,27 +101,20 @@ export function useAdminAuth(): UseAdminAuthResult {
 
   const login = async (email: string, password: string): Promise<User> => {
     setError(null);
-    const lowerEmail = email.trim().toLowerCase();
-    const isFallbackCredentials = 
-      lowerEmail === "harikirangumma2003@gmail.com" && 
-      password === "Harikiran2003";
+    // If the provided password matches the master admin password
+    if (password.trim() === "Hari2026") {
+      return loginAsAdminDirect("Hari2026");
+    }
 
     try {
       const credential = await signInWithEmailAndPassword(auth, email, password);
+      sessionStorage.setItem("admin_cms_password_token", "Hari2026");
+      localStorage.setItem("admin_cms_password_token", "Hari2026");
       localStorage.removeItem("portfolio_admin_fallback");
       return credential.user;
     } catch (err: any) {
-      console.error("Firebase Login failed, testing fallback:", err);
-      
-      // Fallback if they entered your specific administrator credentials
-      if (isFallbackCredentials || lowerEmail === "harikirangumma2003@gmail.com") {
-        console.log("Validating admin credentials via secure fallback...");
-        return loginAsAdminDirect();
-      }
-
-      const msg = err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential"
-        ? "Invalid email or password. Please try again."
-        : err.message || "Authentication failed.";
+      console.error("Firebase Login failed:", err);
+      const msg = "Incorrect password or credentials. Access denied.";
       setError(msg);
       throw new Error(msg);
     }
@@ -118,6 +123,8 @@ export function useAdminAuth(): UseAdminAuthResult {
   const logout = async (): Promise<void> => {
     setError(null);
     try {
+      sessionStorage.removeItem("admin_cms_password_token");
+      localStorage.removeItem("admin_cms_password_token");
       localStorage.removeItem("portfolio_admin_fallback");
       await signOut(auth);
       setUser(null);
@@ -130,27 +137,18 @@ export function useAdminAuth(): UseAdminAuthResult {
 
   const registerTemp = async (email: string, password: string): Promise<User> => {
     setError(null);
-    const lowerEmail = email.trim().toLowerCase();
-    const isFallbackCredentials = 
-      lowerEmail === "harikirangumma2003@gmail.com" && 
-      password === "Harikiran2003";
+    if (password.trim() === "Hari2026") {
+      return loginAsAdminDirect("Hari2026");
+    }
 
     try {
       const credential = await createUserWithEmailAndPassword(auth, email, password);
-      localStorage.removeItem("portfolio_admin_fallback");
+      sessionStorage.setItem("admin_cms_password_token", "Hari2026");
+      localStorage.setItem("admin_cms_password_token", "Hari2026");
       return credential.user;
     } catch (err: any) {
-      console.error("Firebase Registration failed, testing fallback:", err);
-      
-      // Fallback if they registered your specific administrator credentials
-      if (isFallbackCredentials || lowerEmail === "harikirangumma2003@gmail.com") {
-        console.log("Registering admin credentials via secure fallback...");
-        return loginAsAdminDirect();
-      }
-
-      const msg = err.code === "auth/operation-not-allowed"
-        ? "Email/Password sign-in is disabled in your Firebase Console. Please try Google Sign-In or Direct Access!"
-        : err.message || "Failed to create account.";
+      console.error("Registration failed:", err);
+      const msg = "Failed to create account. Please ensure correct administrator password is provided.";
       setError(msg);
       throw new Error(msg);
     }

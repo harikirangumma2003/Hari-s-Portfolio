@@ -1,16 +1,17 @@
-import { useState, useEffect, useMemo, useRef, FormEvent } from "react";
+import { useState, useEffect, useMemo, useRef, FormEvent, ChangeEvent } from "react";
 import { 
   Sparkles, Plus, FileText, CheckCircle2, AlertTriangle, 
   Heading, Image, Tag, Globe, Check, Loader2, HelpCircle, 
   RefreshCw, BookOpen, AlertCircle, Eye, Info, PenTool, Link, Bold, List, TrendingUp,
   Share2, Twitter, Linkedin as LinkedinIcon, Facebook, ArrowUpRight,
-  Zap, Radio, Link2, UploadCloud, Layers
+  Zap, Radio, Link2, UploadCloud, Layers, FolderOpen, Upload
 } from "lucide-react";
 import { ContentHubItem } from "../types/content";
 import { InternalLinkingAssistant } from "./InternalLinkingAssistant";
 import { InstantIndexingManager } from "./InstantIndexingManager";
 import { ImageOptimizationModal } from "./ImageOptimizationModal";
 import { sendInstantIndexPing } from "../services/indexingService";
+import { uploadImage } from "../services/storageService";
 
 interface BlogWriterSectionProps {
   themeMode: "dark" | "light";
@@ -66,11 +67,14 @@ export function BlogWriterSection({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [isImageOptimizerOpen, setIsImageOptimizerOpen] = useState(false);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
   const [autoInstantIndex, setAutoInstantIndex] = useState(true);
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<"write" | "seo-meta" | "social-preview" | "internal-links" | "instant-indexing">("write");
 
   // Ref for description text-area to insert formatting tags
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const coverFileInputRef = useRef<HTMLInputElement>(null);
+  const inlineFileInputRef = useRef<HTMLInputElement>(null);
 
   // Filter current content to list blogs
   const blogsList = useMemo(() => {
@@ -147,6 +151,88 @@ export function BlogWriterSection({
       textarea.focus();
       textarea.setSelectionRange(start + before.length, start + before.length + selected.length);
     }, 50);
+  };
+
+  // Handle direct file browsing and upload for cover image
+  const handleFileUploadForCover = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      triggerToast("Please select a valid image file (PNG, JPG, WebP, GIF, SVG).", "error");
+      return;
+    }
+
+    // Limit check (e.g., 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      triggerToast("File size exceeds 10MB limit. Please choose a smaller image or use the Optimizer.", "error");
+      return;
+    }
+
+    setIsUploadingFile(true);
+    triggerToast(`Uploading "${file.name}"...`, "info");
+
+    try {
+      const uploadedUrl = await uploadImage(file);
+      setFormThumbnail(uploadedUrl);
+
+      // If alt text is empty, auto-generate a meaningful default from the filename or title
+      if (!imageAltText.trim()) {
+        const cleanName = file.name
+          .replace(/\.[^/.]+$/, "")
+          .replace(/[-_]+/g, " ")
+          .trim();
+        const fallbackAlt = formTitle ? `${formTitle} - ${cleanName}` : cleanName;
+        setImageAltText(fallbackAlt);
+      }
+
+      triggerToast("Image file uploaded successfully from your computer!", "success");
+    } catch (err: any) {
+      console.error("Failed to upload local image file:", err);
+      triggerToast(err.message || "Failed to upload image file from computer", "error");
+    } finally {
+      setIsUploadingFile(false);
+      // Reset input value so user can re-upload the same file if needed
+      if (e.target) {
+        e.target.value = "";
+      }
+    }
+  };
+
+  // Handle direct file browsing and upload for inserting an image inside the markdown body
+  const handleFileUploadForInlineBody = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      triggerToast("Please select a valid image file (PNG, JPG, WebP, GIF, SVG).", "error");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      triggerToast("File size exceeds 10MB limit. Please choose a smaller image.", "error");
+      return;
+    }
+
+    triggerToast(`Uploading inline image "${file.name}"...`, "info");
+
+    try {
+      const uploadedUrl = await uploadImage(file);
+      const cleanAlt = file.name
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[-_]+/g, " ")
+        .trim();
+      const markdownSnippet = `\n\n![${cleanAlt || "Illustration"}](${uploadedUrl})\n\n`;
+      insertTextAtCursor(markdownSnippet, "");
+      triggerToast("Image inserted into blog body at cursor position!", "success");
+    } catch (err: any) {
+      console.error("Failed to upload inline body image:", err);
+      triggerToast(err.message || "Failed to upload image file for blog body", "error");
+    } finally {
+      if (e.target) {
+        e.target.value = "";
+      }
+    }
   };
 
   // Reset function
@@ -856,6 +942,15 @@ export function BlogWriterSection({
                     
                     {/* Formatting utilities */}
                     <div className="flex items-center gap-1 bg-zinc-800/30 p-1 rounded-lg">
+                      {/* Hidden file input for inline body image upload */}
+                      <input
+                        type="file"
+                        ref={inlineFileInputRef}
+                        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+                        className="hidden"
+                        onChange={handleFileUploadForInlineBody}
+                      />
+
                       <button
                         type="button"
                         onClick={() => insertTextAtCursor("## ", "")}
@@ -896,6 +991,15 @@ export function BlogWriterSection({
                       >
                         <Link className="w-3.5 h-3.5" />
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => inlineFileInputRef.current?.click()}
+                        title="Browse & insert image from computer into article body"
+                        className="px-1.5 py-1 rounded text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 flex items-center gap-1 text-[10px] font-semibold transition-colors"
+                      >
+                        <FolderOpen className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Add Image</span>
+                      </button>
                     </div>
                   </div>
 
@@ -928,6 +1032,42 @@ export function BlogWriterSection({
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap">
+                      {/* Hidden File Input for Browsing Computer */}
+                      <input
+                        type="file"
+                        ref={coverFileInputRef}
+                        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+                        className="hidden"
+                        onChange={handleFileUploadForCover}
+                      />
+
+                      {/* Browse File from Computer Option */}
+                      <button
+                        type="button"
+                        disabled={isUploadingFile}
+                        onClick={() => coverFileInputRef.current?.click()}
+                        className={`text-[10px] font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border ${
+                          isUploadingFile
+                            ? "bg-zinc-800 text-zinc-500 border-transparent cursor-not-allowed"
+                            : themeMode === "dark"
+                              ? "bg-zinc-800 hover:bg-zinc-700 text-emerald-400 border-emerald-500/20 hover:border-emerald-500/40 shadow-sm"
+                              : "bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200 shadow-sm"
+                        }`}
+                        title="Choose an image file directly from your computer"
+                      >
+                        {isUploadingFile ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            <span>Uploading...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FolderOpen className="w-3.5 h-3.5 text-emerald-500" />
+                            <span>Browse Computer File</span>
+                          </>
+                        )}
+                      </button>
+
                       <button
                         type="button"
                         onClick={() => setIsImageOptimizerOpen(true)}
@@ -991,18 +1131,40 @@ export function BlogWriterSection({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Thumbnail URL Manual Input */}
                     <div className="space-y-1">
-                      <span className="text-[10px] font-semibold text-zinc-500">Thumbnail Link</span>
-                      <input
-                        type="text"
-                        value={formThumbnail}
-                        onChange={(e) => setFormThumbnail(e.target.value)}
-                        placeholder="Paste image URL or use AI to generate..."
-                        className={`w-full px-3 py-2 rounded-lg border text-[10px] focus:outline-none ${
-                          themeMode === "dark" 
-                            ? "bg-zinc-950 border-white/5 text-zinc-300" 
-                            : "bg-zinc-50 border-zinc-200 text-zinc-800"
-                        }`}
-                      />
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-semibold text-zinc-500">Thumbnail Link / Upload</span>
+                        <button
+                          type="button"
+                          disabled={isUploadingFile}
+                          onClick={() => coverFileInputRef.current?.click()}
+                          className="text-[10px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer transition-colors"
+                        >
+                          <Upload className="w-2.5 h-2.5" />
+                          Browse File
+                        </button>
+                      </div>
+                      <div className="relative flex items-center">
+                        <input
+                          type="text"
+                          value={formThumbnail}
+                          onChange={(e) => setFormThumbnail(e.target.value)}
+                          placeholder="Paste image URL or browse from computer..."
+                          className={`w-full pl-3 pr-20 py-2 rounded-lg border text-[10px] focus:outline-none ${
+                            themeMode === "dark" 
+                              ? "bg-zinc-950 border-white/5 text-zinc-300" 
+                              : "bg-zinc-50 border-zinc-200 text-zinc-800"
+                          }`}
+                        />
+                        <button
+                          type="button"
+                          disabled={isUploadingFile}
+                          onClick={() => coverFileInputRef.current?.click()}
+                          className="absolute right-1.5 px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-[9px] font-bold text-zinc-300 hover:text-white flex items-center gap-1 border border-white/10 transition-colors cursor-pointer"
+                        >
+                          <FolderOpen className="w-2.5 h-2.5 text-emerald-400" />
+                          Browse
+                        </button>
+                      </div>
                     </div>
 
                     {/* Image Alt Text manual field */}

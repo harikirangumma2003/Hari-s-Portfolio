@@ -67,9 +67,24 @@
 
   <url>
     <loc>https://harikiran-portfolio.netlify.app/resources/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://harikiran-portfolio.netlify.app/seo_checklist_preview.jpg</image:loc>
+      <image:title>21-Point SEO Checklist &amp; Tracker Google Sheets Template</image:title>
+      <image:caption>Automated SEO execution audit checklist and progress tracker spreadsheet by G. Hari Kiran.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://harikiran-portfolio.netlify.app/google_ads_dashboard_preview.jpg</image:loc>
+      <image:title>Google Ads Performance Reporting Dashboard Google Sheet</image:title>
+      <image:caption>Multi-campaign Google Ads PPC reporting spreadsheet with CPA, clicks, and conversion tracking.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://harikiran-portfolio.netlify.app/meta_ads_dashboard_preview.jpg</image:loc>
+      <image:title>Meta Ads Dashboard Google Sheets Template</image:title>
+      <image:caption>Automated Meta Ads performance spreadsheet tracking CPC, CPM, and ROAS across age and demographics.</image:caption>
+    </image:image>
   </url>
 
   <url>

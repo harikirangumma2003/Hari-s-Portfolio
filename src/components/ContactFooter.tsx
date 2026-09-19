@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Linkedin } from "lucide-react";
+import { ArrowUpRight, Linkedin, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Contact = () => {
@@ -19,6 +19,12 @@ const Contact = () => {
       link: "https://www.linkedin.com/in/hari-kiran-gumma", 
       handle: "G. Hari Kiran",
       icon: Linkedin
+    },
+    { 
+      name: "Facebook", 
+      link: "https://www.facebook.com/profile.php?id=61586795668847", 
+      handle: "G. Hari Kiran",
+      icon: Facebook
     },
     { 
       name: "Medium", 
@@ -57,7 +63,7 @@ const Contact = () => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5 relative z-10">
           {socials.map((social, i) => (
             <motion.a
               key={social.name}
@@ -68,7 +74,7 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="flex flex-col p-8 rounded-[32px] bg-[#fafafa] border border-primary/5 group transition-all hover:border-accent/40 hover:bg-white hover:shadow-xl w-full min-w-0"
+              className="flex flex-col p-6 sm:p-7 rounded-[32px] bg-[#fafafa] border border-primary/5 group transition-all hover:border-accent/40 hover:bg-white hover:shadow-xl w-full min-w-0"
             >
               <div className="flex justify-between items-start mb-6">
                 <div className="flex items-center gap-2.5 min-w-0">
@@ -86,8 +92,8 @@ const Contact = () => {
               <span 
                 className={`font-display font-black uppercase tracking-tight text-primary truncate block w-full transition-colors group-hover:text-accent ${
                   social.handle.length > 15 
-                    ? "text-base sm:text-lg lg:text-sm xl:text-base min-[1400px]:text-lg" 
-                    : "text-lg sm:text-xl lg:text-base xl:text-lg min-[1400px]:text-xl"
+                    ? "text-base sm:text-lg lg:text-xs xl:text-sm min-[1400px]:text-base" 
+                    : "text-lg sm:text-xl lg:text-sm xl:text-base min-[1400px]:text-lg"
                 }`}
                 title={social.handle}
               >
@@ -135,7 +141,7 @@ const Footer = () => {
               Architecting scalable brand systems through high-velocity SEO, data-driven content, and human-centric growth engines.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
                {/* Digital Availability Badge */}
                <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(255,107,0,0.5)]" />
@@ -148,6 +154,61 @@ const Footer = () => {
                >
                  Back to top <ArrowUpRight size={14} className="-rotate-45 group-hover/top:translate-y-[-2px] transition-transform" />
                </button>
+            </div>
+
+            {/* Quick Social Connect Icons */}
+            <div className="flex items-center gap-3">
+              {[
+                { 
+                  name: "Facebook", 
+                  href: "https://www.facebook.com/profile.php?id=61586795668847", 
+                  icon: Facebook 
+                },
+                { 
+                  name: "LinkedIn", 
+                  href: "https://www.linkedin.com/in/hari-kiran-gumma", 
+                  icon: Linkedin 
+                },
+                { 
+                  name: "Twitter / X", 
+                  href: "https://x.com/GHariKiran29", 
+                  icon: (props: any) => (
+                    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  ) 
+                },
+                { 
+                  name: "Blogger", 
+                  href: "https://gharikiran.blogspot.com/", 
+                  icon: (props: any) => (
+                    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                      <path d="M19.78 4.22A5.96 5.96 0 0 0 15.56 2.5H8.44A5.94 5.94 0 0 0 2.5 8.44v7.12a5.94 5.94 0 0 0 5.94 5.94h7.12a5.94 5.94 0 0 0 5.94-5.94V8.44c0-1.58-.62-3.08-1.72-4.22zM15 17H9a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2zm-1.5-6h-3a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2zm-1.5 3h-1.5a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2z"/>
+                    </svg>
+                  ) 
+                },
+                { 
+                  name: "Medium", 
+                  href: "https://medium.com/@harikirangumma2003", 
+                  icon: (props: any) => (
+                    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                      <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42zM24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                    </svg>
+                  ) 
+                }
+              ].map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                  title={s.name}
+                  className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-accent hover:border-accent transition-all"
+                >
+                  <s.icon className="w-3.5 h-3.5" />
+                </a>
+              ))}
             </div>
           </div>
           

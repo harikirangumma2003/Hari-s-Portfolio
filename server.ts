@@ -15,6 +15,110 @@ async function startServer() {
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+  // Ensure public/uploads directory exists and is statically served
+  const uploadsDir = path.join(process.cwd(), "public", "uploads");
+  if (!fs.existsSync(uploadsDir)) {
+    try {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    } catch (e) {
+      console.warn("[Server] Could not create uploads directory:", e);
+    }
+  }
+  app.use("/uploads", express.static(uploadsDir));
+
+  // Direct Image Upload Endpoint for CMS & Blog Writer
+  app.post("/api/cms/upload-image", async (req, res) => {
+    try {
+      const { dataUrl, fileName } = req.body;
+      if (!dataUrl) {
+        res.status(400).json({ error: "Missing dataUrl parameter" });
+        return;
+      }
+
+      const matches = dataUrl.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      if (!matches || matches.length !== 3) {
+        res.status(400).json({ error: "Invalid data URL format" });
+        return;
+      }
+
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      const buffer = Buffer.from(base64Data, "base64");
+
+      // Determine extension from mime type
+      let ext = "webp";
+      if (mimeType.includes("jpeg") || mimeType.includes("jpg")) ext = "jpg";
+      else if (mimeType.includes("png")) ext = "png";
+      else if (mimeType.includes("svg")) ext = "svg";
+      else if (mimeType.includes("gif")) ext = "gif";
+      else if (mimeType.includes("webp")) ext = "webp";
+
+      const cleanName = (fileName || "image")
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[^a-zA-Z0-9_-]/g, "_")
+        .toLowerCase()
+        .substring(0, 40);
+
+      const uniqueFileName = `upload_${Date.now()}_${cleanName || "asset"}.${ext}`;
+      const targetPath = path.join(uploadsDir, uniqueFileName);
+
+      fs.writeFileSync(targetPath, buffer);
+
+      // If production dist exists, also sync to dist/uploads
+      const distUploadsDir = path.join(process.cwd(), "dist", "uploads");
+      if (fs.existsSync(path.join(process.cwd(), "dist"))) {
+        if (!fs.existsSync(distUploadsDir)) {
+          fs.mkdirSync(distUploadsDir, { recursive: true });
+        }
+        fs.writeFileSync(path.join(distUploadsDir, uniqueFileName), buffer);
+      }
+
+      console.log(`[Upload API] Image saved: /uploads/${uniqueFileName} (${buffer.length} bytes)`);
+      res.json({
+        success: true,
+        url: `/uploads/${uniqueFileName}`,
+        fileName: uniqueFileName,
+        size: buffer.length
+      });
+    } catch (err: any) {
+      console.error("[Upload API] Error uploading image:", err);
+      res.status(500).json({ error: err.message || "Failed to upload image" });
+    }
+  });
+
+  // Image proxy endpoint to bypass CORS when optimizing external images
+  app.get("/api/proxy/image", async (req, res) => {
+    try {
+      const targetUrl = req.query.url as string;
+      if (!targetUrl) {
+        res.status(400).json({ error: "Missing url query parameter" });
+        return;
+      }
+
+      const response = await fetch(targetUrl, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+      });
+
+      if (!response.ok) {
+        res.status(response.status).json({ error: `Failed to fetch image: HTTP ${response.status}` });
+        return;
+      }
+
+      const contentType = response.headers.get("content-type") || "image/jpeg";
+      const buffer = await response.arrayBuffer();
+
+      res.setHeader("Content-Type", contentType);
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Cache-Control", "public, max-age=86400");
+      res.send(Buffer.from(buffer));
+    } catch (err: any) {
+      console.error("[Image Proxy] Error fetching external image:", err);
+      res.status(500).json({ error: err.message || "Failed to proxy image" });
+    }
+  });
+
   // Serve proxy endpoint for Medium RSS Feed (CORS-free, server-to-server)
   app.get("/api/proxy/medium", async (req, res) => {
     try {

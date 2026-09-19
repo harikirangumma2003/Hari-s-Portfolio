@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, MapPin, Linkedin } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, MapPin, Linkedin, Facebook } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { db, auth } from '@/src/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -198,7 +198,14 @@ const ContactPage = () => {
               "addressRegion": "Jharkhand",
               "postalCode": "831001",
               "addressCountry": "IN"
-            }
+            },
+            "sameAs": [
+              "https://www.facebook.com/profile.php?id=61586795668847",
+              "https://www.linkedin.com/in/hari-kiran-gumma",
+              "https://x.com/GHariKiran29",
+              "https://gharikiran.blogspot.com/",
+              "https://medium.com/@harikirangumma2003"
+            ]
           }
         }}
       />
@@ -266,6 +273,11 @@ const ContactPage = () => {
                       title: "Blogger"
                     },
                     { icon: Linkedin, href: "https://www.linkedin.com/in/hari-kiran-gumma", title: "LinkedIn" },
+                    {
+                      icon: Facebook,
+                      href: "https://www.facebook.com/profile.php?id=61586795668847",
+                      title: "Facebook"
+                    },
                     {
                       icon: () => (
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

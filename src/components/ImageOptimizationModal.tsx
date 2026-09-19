@@ -20,7 +20,7 @@ import {
   ImageOptimizationResult, 
   formatBytes 
 } from "../utils/imageOptimization";
-import { uploadImage } from "../services/storageService";
+import { uploadBase64Image } from "../services/storageService";
 
 interface ImageOptimizationModalProps {
   isOpen: boolean;
@@ -89,19 +89,8 @@ export function ImageOptimizationModal({
       setResult(optimized);
       triggerToast(`Converted external image to WebP with ${optimized.savingsPercentage}% savings!`, "success");
     } catch (err: any) {
-      triggerToast("URL optimization note: If CORS blocked the canvas, the original URL can still be applied directly.", "info");
-      // Create fallback mock result for direct URL
-      setResult({
-        dataUrl: imageUrlInput.trim(),
-        blob: new Blob(),
-        originalSize: 850000,
-        optimizedSize: 220000,
-        savingsPercentage: 74,
-        width: 1200,
-        height: 630,
-        format: "image/webp",
-        fileName: "optimized-preview.webp"
-      });
+      console.warn("URL optimization notice:", err);
+      triggerToast(err?.message || "Could not optimize URL. Try browsing a local file instead.", "error");
     } finally {
       setIsProcessing(false);
     }
@@ -135,20 +124,17 @@ export function ImageOptimizationModal({
     if (!result) return;
 
     setIsUploadingToCloud(true);
-    triggerToast("Saving optimized WebP asset to storage...", "info");
+    triggerToast("Applying optimized WebP asset...", "info");
 
     try {
       let finalUrl = result.dataUrl;
 
-      // Upload the compressed Blob to Firebase Storage if available
-      if (result.blob && result.blob.size > 0) {
-        const webpFile = new File([result.blob], result.fileName || "header.webp", {
-          type: "image/webp"
-        });
+      // Upload the compressed Base64 data to server if needed
+      if (result.dataUrl.startsWith("data:")) {
         try {
-          finalUrl = await uploadImage(webpFile);
+          finalUrl = await uploadBase64Image(result.dataUrl, result.fileName || "header.webp");
         } catch (uploadErr) {
-          console.warn("Storage upload fallback to Data URL", uploadErr);
+          console.warn("Server upload fallback to optimized data URL", uploadErr);
           finalUrl = result.dataUrl;
         }
       }

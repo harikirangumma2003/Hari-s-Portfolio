@@ -18,7 +18,15 @@ import {
   Copy,
   AlertCircle,
   Mail,
-  Maximize2
+  Maximize2,
+  Megaphone,
+  Download,
+  Table,
+  BarChart3,
+  CheckCheck,
+  ChevronDown,
+  ChevronUp,
+  Sparkles
 } from "lucide-react";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -27,7 +35,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 interface DigitalProduct {
   id: string;
   name: string;
-  category: "Finance & Budgeting" | "Productivity & Habits" | "Reading & Learning";
+  category: "Finance & Budgeting" | "Productivity & Habits" | "Reading & Learning" | "Marketing & Ads" | "SEO & Growth";
   description: string;
   longDescription: string;
   valueProposition: string;
@@ -36,6 +44,7 @@ interface DigitalProduct {
   originalPrice?: string;
   features: string[];
   googleSheetLink: string;
+  csvDownloadLink?: string;
   logo: string;
   badge: string;
   badgeColor: string;
@@ -43,6 +52,77 @@ interface DigitalProduct {
 }
 
 const DIGITAL_PRODUCTS: DigitalProduct[] = [
+  {
+    id: "seo-checklist-tracker",
+    name: "SEO Checklist & Tracker",
+    category: "SEO & Growth",
+    description: "21-point full-funnel SEO execution roadmap with automated progress tracking across Technical, On-Page, and Off-Page SEO.",
+    longDescription: "An executive-grade 21-point SEO audit spreadsheet designed to systematically diagnose, prioritize, and fix organic search blockers. Features automated progress tracking (Total: 21 tasks, live completion %), priority matrix (High/Medium/Low), task assignee logging, and categorized modules for Technical SEO (GSC, XML sitemap, Core Web Vitals, HTTPS), On-Page SEO (keywords, H1-H3 hierarchy, alt text, content), and Off-Page SEO (backlinks, Google Business Profile).",
+    valueProposition: "Execute a comprehensive 21-point organic search audit with automated progress tracking and clear priority delegation without expensive agency retainers.",
+    price: "₹399",
+    numericPrice: 399,
+    originalPrice: "₹1,299",
+    features: [
+      "21-Point Full-Funnel SEO Framework (Technical, On-Page & Off-Page)",
+      "Automated Progress Tracker with Live Completion & Status Gauges (21 Tasks)",
+      "Technical SEO Audit (GSC, Bing, XML Sitemap, Robots.txt, Core Web Vitals, HTTPS)",
+      "On-Page & Off-Page Action Plan (Keywords, H1-H3 Tags, Backlinks, GBP)",
+      "Includes Ready-to-Use Google Sheets & CSV Template with Dynamic Formulas"
+    ],
+    googleSheetLink: "https://docs.google.com/spreadsheets/d/1Y8tQ4Wk2E6z9_SEOChecklistAndTracker2026/copy",
+    csvDownloadLink: "/seo_checklist_tracker.csv",
+    logo: "SEO",
+    badge: "Growth Engine",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+    tags: ["SEO Checklist", "Technical SEO", "On-Page SEO", "Off-Page SEO", "Search Console", "Core Web Vitals"]
+  },
+  {
+    id: "google-ads-dashboard",
+    name: "Google Ads Performance Dashboard",
+    category: "Marketing & Ads",
+    description: "Multi-campaign Google Ads reporting spreadsheet tracking 650K+ impressions, $19K+ spend, conversions, and CPA efficiency.",
+    longDescription: "A battle-tested Google Ads performance spreadsheet engineered for PPC specialists, media buyers, and agencies. Automatically tracks multi-campaign performance across Display Retargeting (335,000 impr, 1,750 clicks, $1,750 cost, 177 conversions at $9.89 CPA), Search Brand (80,000 impr, 3,100 clicks, $6,210 cost, 640 conversions at $4.84 CPA), and Search Non-Brand (235,000 impr, 13,100 clicks, $11,100 cost, 456 conversions at $28.73 CPA) with 1,273 total conversions tracked.",
+    valueProposition: "Eliminate costly third-party PPC reporting subscriptions with an automated Google Sheet tracking spend, conversions, and CPA across all campaigns.",
+    price: "₹499",
+    numericPrice: 499,
+    originalPrice: "₹1,499",
+    features: [
+      "Multi-Campaign Performance Matrix (650K+ Impr, 17,950 Clicks, $19,060 Spend)",
+      "Granular Campaign Breakdown (Display Retargeting, Search Brand & Search Non-Brand)",
+      "Automated CPA Calculator ($4.84 Brand vs $28.73 Non-Brand) & 1,273 Conversions",
+      "Blended Efficiency Metrics: CTR %, Conversion Rates, and Cost per Acquisition",
+      "Includes Ready-to-Use Google Sheets & CSV Template with Dynamic Formulas"
+    ],
+    googleSheetLink: "https://docs.google.com/spreadsheets/d/1F4k9E8v3X_GoogleAdsPerformanceDashboard2026/copy",
+    csvDownloadLink: "/google_ads_performance_dashboard.csv",
+    logo: "GA",
+    badge: "PPC Essential",
+    badgeColor: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+    tags: ["Google Ads", "PPC Dashboard", "Paid Search", "Conversion Tracking", "Ad Spend", "CPA Optimization"]
+  },
+  {
+    id: "meta-ads-dashboard",
+    name: "Meta Ads Dashboard Sheet",
+    category: "Marketing & Ads",
+    description: "Enterprise Meta & Instagram Ads reporting spreadsheet. Track 1M+ reach cohorts, spend pacing, CPM, CPC, CTR, and age demographics.",
+    longDescription: "A battle-tested Meta Ads performance dashboard engineered for media buyers, growth marketers, and agencies. Automatically tracks date-wise pacing (₹6,493.61 spent across 1,116,344 impressions, 1,097 link clicks), and provides multi-dimensional breakdowns across age cohorts (18-24 to 65+) and gender splits with instant executive client reporting.",
+    valueProposition: "Eliminate expensive monthly ad-analytics software ($50/mo) with a zero-subscription Google Sheet template engineered for high-impact ROI reporting.",
+    price: "₹399",
+    numericPrice: 399,
+    originalPrice: "₹1,299",
+    features: [
+      "Executive KPI Summary (1M+ Reach, 1.1M+ Impr, ₹5.92 CPC, ₹5.82 CPM, 1.05 Freq)",
+      "Granular Age-Demographic Performance Matrix (18-24 to 65+)",
+      "Gender Distribution & Link Click Allocation Insights (Male/Female/Unknown)",
+      "Date-Wise Trend Analysis with Daily ROAS, CPC, CTR % & Spend Pacing",
+      "Includes Ready-to-Use Google Sheets Template with Automated Formulas"
+    ],
+    googleSheetLink: "https://docs.google.com/spreadsheets/d/1B7j7eO43WJc412VwZ_MetaAdsPerformanceDashboard2026/copy",
+    logo: "MA",
+    badge: "Bestseller",
+    badgeColor: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+    tags: ["Meta Ads", "Facebook Ads", "Instagram Ads", "Media Buying", "PPC Dashboard", "Paid Marketing"]
+  },
   {
     id: "personal-finance",
     name: "Personal Finance Tracker",
@@ -140,6 +220,21 @@ const SheetPreviewCard: React.FC<SheetPreviewCardProps> = ({ id, onZoom }) => {
     title = "Personal Book Tracker";
     originalName = "reading_ledger_2026.xlsx";
     accentColor = "border-purple-500/20 text-purple-400 bg-purple-500/10";
+  } else if (id === "meta-ads-dashboard") {
+    imgSrc = "/meta_ads_dashboard_preview.jpg";
+    title = "Meta Ads Dashboard Sheet";
+    originalName = "meta_ads_performance_report_2026.xlsx";
+    accentColor = "border-blue-500/20 text-blue-400 bg-blue-500/10";
+  } else if (id === "seo-checklist-tracker") {
+    imgSrc = "/seo_checklist_preview.jpg";
+    title = "SEO Checklist & Tracker";
+    originalName = "seo_checklist_and_tracker_2026.xlsx";
+    accentColor = "border-emerald-500/20 text-emerald-400 bg-emerald-500/10";
+  } else if (id === "google-ads-dashboard") {
+    imgSrc = "/google_ads_dashboard_preview.jpg";
+    title = "Google Ads Performance Dashboard";
+    originalName = "google_ads_performance_dashboard_2026.xlsx";
+    accentColor = "border-amber-500/20 text-amber-400 bg-amber-500/10";
   } else {
     return null;
   }
@@ -281,6 +376,191 @@ const SheetPreviewCard: React.FC<SheetPreviewCardProps> = ({ id, onZoom }) => {
         </div>
       );
     }
+    if (id === "meta-ads-dashboard") {
+      return (
+        <div className="w-full h-full p-3 font-mono text-[8px] flex flex-col justify-between relative bg-zinc-950">
+          <div className="space-y-1.5 flex-grow">
+            <div className="grid grid-cols-4 gap-1 p-1.5 bg-blue-950/40 rounded-lg border border-blue-500/20 text-[7.5px]">
+              <div>
+                <span className="text-zinc-500 block text-[6.5px]">REACH</span>
+                <span className="text-blue-400 font-bold">1,068,064</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6.5px]">IMPR</span>
+                <span className="text-white font-bold">1,116,344</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6.5px]">CLICKS</span>
+                <span className="text-emerald-400 font-bold">1,097</span>
+              </div>
+              <div className="text-right">
+                <span className="text-zinc-500 block text-[6.5px]">SPENT</span>
+                <span className="text-amber-400 font-bold">₹6,493.61</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center px-1 text-[7px] text-zinc-400 border-b border-white/5 pb-1">
+              <span>CPC: <strong className="text-emerald-400">₹5.92</strong></span>
+              <span>CPM: <strong className="text-zinc-300">₹5.82</strong></span>
+              <span>CTR: <strong className="text-blue-400">0.21%</strong></span>
+              <span>FREQ: <strong className="text-purple-400">1.05</strong></span>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 text-[7px] text-zinc-500 border-b border-white/10 pb-0.5 font-bold">
+              <div className="col-span-3">AGE</div>
+              <div className="col-span-3 text-right">REACH</div>
+              <div className="col-span-2 text-right">CLICKS</div>
+              <div className="col-span-2 text-right">SPENT</div>
+              <div className="col-span-2 text-right">CPC</div>
+            </div>
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-zinc-300 text-[7.5px]">
+              <div className="col-span-3 font-sans text-white font-bold">18-24</div>
+              <div className="col-span-3 text-right text-zinc-400">710,103</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">690</div>
+              <div className="col-span-2 text-right text-zinc-300">₹2,290</div>
+              <div className="col-span-2 text-right text-emerald-400">₹3.32</div>
+            </div>
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-zinc-300 text-[7.5px]">
+              <div className="col-span-3 font-sans text-white font-bold">25-34</div>
+              <div className="col-span-3 text-right text-zinc-400">225,939</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">212</div>
+              <div className="col-span-2 text-right text-zinc-300">₹1,331</div>
+              <div className="col-span-2 text-right text-emerald-400">₹6.28</div>
+            </div>
+            <div className="grid grid-cols-12 gap-1 items-center text-zinc-300 text-[7.5px]">
+              <div className="col-span-3 font-sans text-white font-bold">35-44</div>
+              <div className="col-span-3 text-right text-zinc-400">65,963</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">81</div>
+              <div className="col-span-2 text-right text-zinc-300">₹1,106</div>
+              <div className="col-span-2 text-right text-amber-400">₹13.65</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    if (id === "seo-checklist-tracker") {
+      return (
+        <div className="w-full h-full p-3 font-mono text-[8px] flex flex-col justify-between relative bg-zinc-950">
+          <div className="space-y-1.5 flex-grow">
+            <div className="grid grid-cols-5 gap-1 p-1.5 bg-emerald-950/40 rounded-lg border border-emerald-500/20 text-[7px]">
+              <div>
+                <span className="text-zinc-500 block text-[6px]">TOTAL TASKS</span>
+                <span className="text-white font-bold">21</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6px]">COMPLETED</span>
+                <span className="text-emerald-400 font-bold">0</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6px]">IN PROGRESS</span>
+                <span className="text-amber-400 font-bold">0</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6px]">NOT STARTED</span>
+                <span className="text-zinc-300 font-bold">21</span>
+              </div>
+              <div className="text-right">
+                <span className="text-zinc-500 block text-[6px]">PROGRESS</span>
+                <span className="text-emerald-400 font-bold">0.0%</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 text-[7px] text-zinc-500 border-b border-white/10 pb-0.5 font-bold">
+              <div className="col-span-3">CATEGORY</div>
+              <div className="col-span-5">TASK NAME</div>
+              <div className="col-span-2 text-center">PRIORITY</div>
+              <div className="col-span-2 text-right">STATUS</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-[7px]">
+              <div className="col-span-3 font-sans text-emerald-400 font-semibold truncate">Technical SEO</div>
+              <div className="col-span-5 text-zinc-200 truncate">Set up Google Search Console & Bing</div>
+              <div className="col-span-2 text-center"><span className="px-1 py-0.5 bg-red-500/10 text-red-400 rounded text-[6.5px] font-bold">High</span></div>
+              <div className="col-span-2 text-right text-zinc-400">Not Started</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-[7px]">
+              <div className="col-span-3 font-sans text-emerald-400 font-semibold truncate">Technical SEO</div>
+              <div className="col-span-5 text-zinc-200 truncate">Optimize speed (Core Web Vitals)</div>
+              <div className="col-span-2 text-center"><span className="px-1 py-0.5 bg-red-500/10 text-red-400 rounded text-[6.5px] font-bold">High</span></div>
+              <div className="col-span-2 text-right text-zinc-400">Not Started</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-[7px]">
+              <div className="col-span-3 font-sans text-blue-400 font-semibold truncate">On-Page SEO</div>
+              <div className="col-span-5 text-zinc-200 truncate">Conduct keyword research for pages</div>
+              <div className="col-span-2 text-center"><span className="px-1 py-0.5 bg-red-500/10 text-red-400 rounded text-[6.5px] font-bold">High</span></div>
+              <div className="col-span-2 text-right text-zinc-400">Not Started</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center text-[7px]">
+              <div className="col-span-3 font-sans text-purple-400 font-semibold truncate">Off-Page SEO</div>
+              <div className="col-span-5 text-zinc-200 truncate">Build high-quality backlinks</div>
+              <div className="col-span-2 text-center"><span className="px-1 py-0.5 bg-red-500/10 text-red-400 rounded text-[6.5px] font-bold">High</span></div>
+              <div className="col-span-2 text-right text-zinc-400">Not Started</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    if (id === "google-ads-dashboard") {
+      return (
+        <div className="w-full h-full p-3 font-mono text-[8px] flex flex-col justify-between relative bg-zinc-950">
+          <div className="space-y-1.5 flex-grow">
+            <div className="grid grid-cols-4 gap-1 p-1.5 bg-amber-950/30 rounded-lg border border-amber-500/20 text-[7.5px]">
+              <div>
+                <span className="text-zinc-500 block text-[6.5px]">TOTAL IMPR</span>
+                <span className="text-white font-bold">650,000</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6.5px]">CLICKS</span>
+                <span className="text-emerald-400 font-bold">17,950</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[6.5px]">CONV</span>
+                <span className="text-blue-400 font-bold">1,273</span>
+              </div>
+              <div className="text-right">
+                <span className="text-zinc-500 block text-[6.5px]">TOTAL COST</span>
+                <span className="text-amber-400 font-bold">$19,060</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 text-[7px] text-zinc-500 border-b border-white/10 pb-0.5 font-bold">
+              <div className="col-span-4">CAMPAIGN</div>
+              <div className="col-span-2 text-right">IMPR</div>
+              <div className="col-span-2 text-right">CLICKS</div>
+              <div className="col-span-2 text-right">COST</div>
+              <div className="col-span-2 text-right">CPA</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-[7.5px]">
+              <div className="col-span-4 font-sans text-white font-bold truncate">Display - Retargeting</div>
+              <div className="col-span-2 text-right text-zinc-400">335,000</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">1,750</div>
+              <div className="col-span-2 text-right text-zinc-300">$1,750</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">$9.89</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center py-0.5 border-b border-white/5 text-[7.5px]">
+              <div className="col-span-4 font-sans text-white font-bold truncate">Search - Brand</div>
+              <div className="col-span-2 text-right text-zinc-400">80,000</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">3,100</div>
+              <div className="col-span-2 text-right text-zinc-300">$6,210</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">$4.84</div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-1 items-center text-[7.5px]">
+              <div className="col-span-4 font-sans text-white font-bold truncate">Search - Non-Brand</div>
+              <div className="col-span-2 text-right text-zinc-400">235,000</div>
+              <div className="col-span-2 text-right text-emerald-400 font-bold">13,100</div>
+              <div className="col-span-2 text-right text-zinc-300">$11,100</div>
+              <div className="col-span-2 text-right text-amber-400 font-bold">$28.73</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return null;
   };
 
@@ -360,6 +640,12 @@ export default function ResourcesPage() {
   const [zoomImage, setZoomImage] = useState<string | null>(null);
   const [zoomTitle, setZoomTitle] = useState("");
 
+  // Unlocked Sheet Link copied state
+  const [copiedSheetLink, setCopiedSheetLink] = useState(false);
+
+  // FAQ accordion state for SEO FAQs
+  const [openFaqId, setOpenFaqId] = useState<string | null>("resource-faq-1");
+
   const handleOpenPaymentModal = (product: DigitalProduct) => {
     setSelectedProduct(product);
     setPaymentStep('checkout');
@@ -368,7 +654,17 @@ export default function ResourcesPage() {
     setPaymentUtr("");
     setVerificationError("");
     setVerifyingStatus([]);
+    setCopiedSheetLink(false);
     setIsPaymentModalOpen(true);
+  };
+
+  const handleCopySheetLink = () => {
+    if (selectedProduct?.googleSheetLink) {
+      navigator.clipboard.writeText(selectedProduct.googleSheetLink).then(() => {
+        setCopiedSheetLink(true);
+        setTimeout(() => setCopiedSheetLink(false), 2500);
+      });
+    }
   };
 
   const getUpiUrl = (amount: number, title: string) => {
@@ -435,10 +731,6 @@ export default function ResourcesPage() {
 
       setPaymentStep('success');
 
-      // Automatically trigger sheet open
-      const sheetUrl = selectedProduct?.googleSheetLink || "#";
-      window.open(sheetUrl, "_blank");
-
     } catch (err: any) {
       console.error("Payment logging failed:", err);
       setVerificationError("Network timeout. Please retry or contact support with your UTR.");
@@ -448,6 +740,8 @@ export default function ResourcesPage() {
 
   const productCategories = [
     { id: "all", name: "All Products", icon: Layers },
+    { id: "Marketing & Ads", name: "Marketing & Ads", icon: Megaphone },
+    { id: "SEO & Growth", name: "SEO & Growth", icon: Search },
     { id: "Finance & Budgeting", name: "Finance", icon: FileSpreadsheet },
     { id: "Productivity & Habits", name: "Habits", icon: BookOpen },
     { id: "Reading & Learning", name: "Reading", icon: TrendingUp }
@@ -466,13 +760,120 @@ export default function ResourcesPage() {
     });
   }, [searchQuery, selectedProductCategory]);
 
+  const resourceFaqs = [
+    {
+      id: "resource-faq-1",
+      question: "Why use automated Google Sheets instead of monthly subscription software?",
+      answer: "Custom Google Sheets eliminate SaaS fatigue and recurring monthly software costs. You own 100% of your data with no lock-in, zero latency, seamless multi-device collaboration, and the ability to customize formulas, dashboards, and automated charts without technical limitations."
+    },
+    {
+      id: "resource-faq-2",
+      question: "How do I access and copy the Google Sheet template after payment?",
+      answer: "Immediately upon payment confirmation, you receive the direct Google Sheets access link. Simply click 'Copy Sheet Link' or 'Open in Google Sheets' to create your private, independent Google Drive copy in one click with automated formulas pre-loaded."
+    },
+    {
+      id: "resource-faq-3",
+      question: "Are these Google Sheets templates beginner-friendly?",
+      answer: "Yes, every template includes built-in step-by-step instructions, pre-configured formula protections, visual dashboards, and sample demo records so you can start inputting data immediately without advanced spreadsheet knowledge."
+    },
+    {
+      id: "resource-faq-4",
+      question: "Can I request custom modifications or enterprise team dashboards?",
+      answer: "Absolutely. I provide bespoke spreadsheet architecture, Google Apps Script automation, and custom Looker Studio integrations. You can reach out directly via the Custom Sheet contact banner on this page."
+    }
+  ];
+
+  // Comprehensive JSON-LD structured data for Google Rich Results
+  const resourcesSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://harikiran-portfolio.netlify.app/resources/#webpage",
+        "url": "https://harikiran-portfolio.netlify.app/resources",
+        "name": "Google Sheets Growth & Marketing Templates | G. Hari Kiran",
+        "description": "Access custom-engineered, fully automated Google Sheets templates for SEO audits & tracking, Google & Meta Ads performance dashboards, personal finances, habit building, and reading management.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://harikiran-portfolio.netlify.app/#website",
+          "name": "G. Hari Kiran Portfolio",
+          "url": "https://harikiran-portfolio.netlify.app"
+        },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://harikiran-portfolio.netlify.app"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Resources",
+              "item": "https://harikiran-portfolio.netlify.app/resources"
+            }
+          ]
+        }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://harikiran-portfolio.netlify.app/resources/#itemlist",
+        "name": "Featured Growth & Marketing Google Sheets Templates",
+        "numberOfItems": DIGITAL_PRODUCTS.length,
+        "itemListElement": DIGITAL_PRODUCTS.map((prod, idx) => ({
+          "@type": "ListItem",
+          "position": idx + 1,
+          "name": prod.name,
+          "item": {
+            "@type": "Product",
+            "@id": `https://harikiran-portfolio.netlify.app/resources#${prod.id}`,
+            "name": prod.name,
+            "description": prod.description,
+            "category": prod.category,
+            "image": `https://harikiran-portfolio.netlify.app/${prod.id.replace(/-/g, '_')}_preview.jpg`,
+            "brand": {
+              "@type": "Person",
+              "name": "G. Hari Kiran"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": prod.numericPrice.toString(),
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock",
+              "url": `https://harikiran-portfolio.netlify.app/resources#${prod.id}`,
+              "seller": {
+                "@type": "Person",
+                "name": "G. Hari Kiran"
+              }
+            }
+          }
+        }))
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://harikiran-portfolio.netlify.app/resources/#faq",
+        "mainEntity": resourceFaqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      }
+    ]
+  };
+
   return (
     <>
       <SEO 
-        title="Google Sheets Growth & Finance Templates | G. Hari Kiran" 
-        description="Access custom-engineered, fully automated Google Sheets templates for personal finance tracking, habit building, and book reading management." 
+        title="Google Sheets Growth & Marketing Templates | G. Hari Kiran" 
+        description="Access custom-engineered, fully automated Google Sheets templates for SEO audits & tracking, Google & Meta Ads performance dashboards, personal finances, habit building, and reading management." 
         image="/og-resources.jpg"
         url="/resources"
+        schemaData={resourcesSchema}
       />
 
       <main className="pt-24 pb-32 bg-white text-primary" id="resources-page-container">
@@ -656,6 +1057,59 @@ export default function ResourcesPage() {
               )}
             </motion.div>
           </AnimatePresence>
+        </section>
+
+        {/* Educational Architecture & SEO FAQ Section */}
+        <section className="container-custom max-w-7xl mx-auto px-6 lg:px-12 mb-20" id="resources-faq-section">
+          <div className="border-t border-primary/10 pt-16">
+            <div className="max-w-3xl mb-12">
+              <div className="flex items-center gap-2 text-accent text-[10px] font-black uppercase tracking-[3px] mb-3">
+                <Sparkles size={14} />
+                <span>Spreadsheet Architecture & FAQ</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-display font-black tracking-tighter uppercase leading-[0.95] text-primary mb-6">
+                Engineered for Performance. <br />
+                <span className="text-accent underline underline-offset-8 decoration-4">Zero Monthly Subscription.</span>
+              </h2>
+              <p className="text-sm md:text-base text-muted leading-relaxed">
+                Learn why digital marketing leaders and founders use automated Google Sheets dashboards for PPC auditing, SEO tracking, and executive reporting instead of expensive SaaS platforms.
+              </p>
+            </div>
+
+            {/* Accordion List */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {resourceFaqs.map((faq) => {
+                const isOpen = openFaqId === faq.id;
+                return (
+                  <div
+                    key={faq.id}
+                    id={faq.id}
+                    className="p-6 md:p-8 rounded-[32px] bg-[#fafafa] border border-primary/5 transition-all hover:border-accent/30 hover:bg-white hover:shadow-md flex flex-col justify-between"
+                  >
+                    <div>
+                      <button
+                        onClick={() => setOpenFaqId(isOpen ? null : faq.id)}
+                        className="w-full flex items-start justify-between gap-4 text-left group cursor-pointer focus:outline-none"
+                      >
+                        <h3 className="font-display font-black text-sm md:text-base uppercase tracking-tight text-primary group-hover:text-accent transition-colors leading-snug">
+                          {faq.question}
+                        </h3>
+                        <div className="w-8 h-8 rounded-full border border-primary/10 flex items-center justify-center shrink-0 group-hover:border-accent group-hover:bg-accent group-hover:text-white transition-all">
+                          {isOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                        </div>
+                      </button>
+
+                      {isOpen && (
+                        <p className="mt-4 text-xs md:text-sm text-muted leading-relaxed border-t border-primary/5 pt-4">
+                          {faq.answer}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </section>
 
         {/* Custom Solution Contact Banner */}
@@ -909,55 +1363,120 @@ export default function ResourcesPage() {
                 )}
 
                 {/* Success Step */}
-                {paymentStep === 'success' && (
-                  <div className="p-12 flex flex-col items-center justify-center text-center space-y-6">
-                    <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 flex items-center justify-center animate-bounce">
+                {paymentStep === 'success' && selectedProduct && (
+                  <div className="p-6 sm:p-10 flex flex-col items-center justify-center text-center space-y-6">
+                    <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center animate-bounce">
                       <CheckCircle2 size={36} />
                     </div>
 
-                    <div className="space-y-2 max-w-md">
-                      <h3 className="text-lg font-display font-black text-white uppercase tracking-tight">Payment Verified!</h3>
-                      <p className="text-xs text-zinc-400 leading-relaxed">
-                        Your transaction with UTR <code className="font-mono text-zinc-200">{paymentUtr}</code> has been verified. Google Sheet access has been unlocked!
-                      </p>
-                    </div>
-
-                    {/* Delivery Info */}
-                    <div className="w-full max-w-md p-5 rounded-2xl bg-zinc-900 border border-white/5 space-y-3 text-left">
-                      <h4 className="text-[10px] font-black text-white uppercase tracking-widest">Receipt & Delivery</h4>
-                      <p className="text-xs text-zinc-400 leading-relaxed">
-                        We have sent your template access link, along with your receipt, to:
-                      </p>
-                      <div className="p-2.5 rounded-lg bg-black text-center font-bold text-xs text-zinc-100 border border-white/5">
-                        {paymentEmail}
+                    <div className="space-y-1.5 max-w-md">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-wider mb-1">
+                        <ShieldCheck size={12} />
+                        <span>Payment Verified</span>
                       </div>
-                      <p className="text-[10px] text-zinc-500 leading-relaxed">
-                        Click the button below to open and copy your premium template directly. You can copy it to your own Google Drive using <strong className="text-white">File &gt; Make a copy</strong>.
+                      <h3 className="text-xl font-display font-black text-white uppercase tracking-tight">
+                        {selectedProduct.name} Unlocked
+                      </h3>
+                      <p className="text-xs text-zinc-400 leading-relaxed">
+                        Transaction confirmed for UTR <code className="font-mono text-zinc-200 bg-black/40 px-1.5 py-0.5 rounded border border-white/10">{paymentUtr}</code>. Your Google Sheet template link is ready below.
                       </p>
                     </div>
 
-                    <div className="flex gap-4 w-full max-w-md">
-                      <a
-                        href={selectedProduct.googleSheetLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-black text-[10px] uppercase tracking-widest border border-white/10 hover:border-white transition-all text-center flex items-center justify-center gap-1.5"
-                      >
-                        <ExternalLink size={12} /> Open Spreadsheet
-                      </a>
-                      <button
-                        onClick={() => setIsPaymentModalOpen(false)}
-                        className="flex-1 py-3.5 rounded-xl bg-accent hover:bg-accent/90 text-white font-black text-[10px] uppercase tracking-widest transition-all text-center animate-pulse"
-                      >
-                        Done
-                      </button>
+                    {/* Unlocked Sheet Link Box */}
+                    <div className="w-full max-w-lg p-5 rounded-2xl bg-zinc-900 border border-emerald-500/30 shadow-xl space-y-4 text-left">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+                          <span className="text-[10px] font-black text-white uppercase tracking-widest">
+                            Google Sheet Template Link
+                          </span>
+                        </div>
+                        <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase tracking-wider">
+                          Ready to Copy & Open
+                        </span>
+                      </div>
+
+                      {/* Link Display Field */}
+                      <div className="flex items-center gap-2 p-2.5 rounded-xl bg-black border border-white/10 text-zinc-200">
+                        <input
+                          type="text"
+                          readOnly
+                          value={selectedProduct.googleSheetLink}
+                          className="w-full bg-transparent font-mono text-[11px] text-zinc-300 outline-none select-all truncate px-1"
+                        />
+                      </div>
+
+                      {/* Action Buttons: Copy Link + Open Sheet */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                        <button
+                          type="button"
+                          onClick={handleCopySheetLink}
+                          className={`w-full py-3 px-4 rounded-xl font-black text-[10px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                            copiedSheetLink
+                              ? "bg-emerald-600 text-white shadow-lg"
+                              : "bg-zinc-800 hover:bg-zinc-700 text-white border border-white/10"
+                          }`}
+                        >
+                          {copiedSheetLink ? (
+                            <>
+                              <Check size={14} className="text-white" />
+                              <span>Link Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy size={14} />
+                              <span>Copy Sheet Link</span>
+                            </>
+                          )}
+                        </button>
+
+                        <a
+                          href={selectedProduct.googleSheetLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg hover:-translate-y-0.5 active:translate-y-0 text-center"
+                        >
+                          <ExternalLink size={14} />
+                          <span>Open Sheet</span>
+                        </a>
+                      </div>
+
+                      {/* How to use instructions */}
+                      <div className="p-3 rounded-xl bg-black/40 border border-white/5 text-[10px] text-zinc-400 space-y-1">
+                        <p className="font-bold text-zinc-300 flex items-center gap-1.5">
+                          <Info size={12} className="text-emerald-400" />
+                          How to save to your Google Drive:
+                        </p>
+                        <p className="leading-relaxed pl-4">
+                          1. Click <strong className="text-white">Open Sheet</strong> (or paste the copied link in your browser).
+                        </p>
+                        <p className="leading-relaxed pl-4">
+                          2. In the Google Sheets menu, click <strong className="text-white">File &gt; Make a copy</strong> to create your personal editable version.
+                        </p>
+                      </div>
                     </div>
+
+                    {/* Delivery receipt notice */}
+                    <p className="text-[10px] text-zinc-500">
+                      A copy of this link was also logged for <span className="text-zinc-300 font-bold">{paymentEmail}</span>
+                    </p>
+
+                    {/* Done Button */}
+                    <button
+                      type="button"
+                      onClick={() => setIsPaymentModalOpen(false)}
+                      className="px-8 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white font-black text-[10px] uppercase tracking-widest transition-colors cursor-pointer border border-white/10"
+                    >
+                      Done
+                    </button>
                   </div>
                 )}
               </motion.div>
             </div>
           )}
         </AnimatePresence>
+
+
 
         {/* Lightbox Zoom Modal */}
         <AnimatePresence>

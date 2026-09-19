@@ -54,6 +54,7 @@ const HomePage = () => {
         "image": "https://i.postimg.cc/d1MxW0j1/Hari-Portfolio.png",
         "url": "https://harikiran-portfolio.netlify.app",
         "sameAs": [
+          "https://www.facebook.com/profile.php?id=61586795668847",
           "https://gharikiran.blogspot.com/",
           "https://www.linkedin.com/in/hari-kiran-gumma",
           "https://x.com/GHariKiran29",

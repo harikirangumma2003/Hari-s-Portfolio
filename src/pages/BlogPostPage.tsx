@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin as LinkedinIcon, Link as LinkIcon, Clock, Check, MessageCircle, Tag, ArrowRight, ArrowUpRight, ExternalLink, FileSpreadsheet, Sparkles } from "lucide-react";
 import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { Newsletter } from "../components/Newsletter";
 import { blogPosts } from "../data/blogPosts";
@@ -605,6 +605,38 @@ const BlogPostPage = () => {
               >
                 {normalizedContent}
               </Markdown>
+
+              {/* Contextual SEO Internal Link / Resource Banner */}
+              <div className="mt-12 p-8 rounded-3xl bg-zinc-950 text-white border border-white/10 shadow-2xl relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 text-accent text-[9px] font-black uppercase tracking-[3px] mb-3">
+                    <Sparkles size={13} />
+                    <span>Free Execution Template & Dashboard</span>
+                  </div>
+                  <h4 className="text-xl md:text-2xl font-display font-black tracking-tight uppercase mb-3">
+                    Put this strategy into action with automated spreadsheets
+                  </h4>
+                  <p className="text-zinc-400 text-xs md:text-sm leading-relaxed mb-6 max-w-xl">
+                    Skip manual reporting and tedious tracking. Access the 21-Point SEO Audit Checklist, multi-campaign Google Ads Dashboard, and Meta Ads reporting spreadsheets directly in the Resources Hub.
+                  </p>
+                  <div className="flex flex-wrap gap-4 items-center">
+                    <Link
+                      to="/resources"
+                      className="px-6 py-3 rounded-full bg-accent hover:bg-white hover:text-primary text-white text-[10px] font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2"
+                    >
+                      <FileSpreadsheet size={14} />
+                      <span>Explore Google Sheets Templates</span>
+                    </Link>
+                    <Link
+                      to="/resources#seo-checklist"
+                      className="px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 text-[10px] font-black uppercase tracking-widest transition-all"
+                    >
+                      SEO Audit Checklist &rarr;
+                    </Link>
+                  </div>
+                </div>
+                <div className="absolute top-1/2 -right-10 w-48 h-48 bg-accent/15 rounded-full blur-[60px] -translate-y-1/2 pointer-events-none" />
+              </div>
             </div>
           </div>
 
