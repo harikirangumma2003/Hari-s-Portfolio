@@ -56,28 +56,57 @@ const BlogPostPage = () => {
   
   const initialPosts = useMemo(() => {
     const staticPosts = blogPosts;
-    const combined: any[] = [...staticPosts];
+    const existingSlugs = new Set<string>();
+    const existingTitles = new Set<string>();
+    const combined: any[] = [];
 
-    // Read cached CMS posts
+    // 1. Static posts (priority)
+    for (const post of staticPosts) {
+      const s = ((post.slug || generateSlug(post.title)) || "").trim().toLowerCase();
+      const t = (post.title || "").trim().toLowerCase();
+      if (s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+        existingSlugs.add(s);
+        if (t) existingTitles.add(t);
+        combined.push({ ...post, slug: s });
+      }
+    }
+
+    // 2. Read cached CMS posts
     const cachedCms = localStorage.getItem("portfolio_cms_blog_cache");
     if (cachedCms) {
       try {
         const parsed = JSON.parse(cachedCms);
         if (Array.isArray(parsed)) {
-          combined.push(...parsed);
+          for (const item of parsed) {
+            const s = ((item.slug || generateSlug(item.title)) || "").trim().toLowerCase();
+            const t = (item.title || "").trim().toLowerCase();
+            if (s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+              existingSlugs.add(s);
+              if (t) existingTitles.add(t);
+              combined.push({ ...item, slug: s });
+            }
+          }
         }
       } catch (e) {
         console.error("Error parsing cached CMS posts inside BlogPostPage", e);
       }
     }
 
-    // Read cached Medium posts
+    // 3. Read cached Medium posts
     const cachedMedium = localStorage.getItem("g_hari_kiran_medium_feed");
     if (cachedMedium) {
       try {
         const parsed = JSON.parse(cachedMedium);
         if (Array.isArray(parsed)) {
-          combined.push(...parsed);
+          for (const item of parsed) {
+            const s = ((item.slug || generateSlug(item.title)) || "").trim().toLowerCase();
+            const t = (item.title || "").trim().toLowerCase();
+            if (s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+              existingSlugs.add(s);
+              if (t) existingTitles.add(t);
+              combined.push({ ...item, slug: s });
+            }
+          }
         }
       } catch (e) {
         console.error("Error parsing cached medium posts inside BlogPostPage", e);
@@ -149,19 +178,42 @@ const BlogPostPage = () => {
         if (cmsPosts.length > 0) {
           localStorage.setItem("portfolio_cms_blog_cache", JSON.stringify(cmsPosts));
           setPosts(prev => {
-            const existingSlugs = new Set(prev.map(p => p.slug));
-            const newToAdd = cmsPosts.filter(c => !existingSlugs.has(c.slug));
-            const updated = prev.map(p => {
-              const matchedCms = cmsPosts.find(c => c.slug === p.slug);
-              if (matchedCms) {
-                const preservedContent = (matchedCms.content && matchedCms.content.length > (p.content?.length || 0))
-                  ? matchedCms.content
-                  : (p.content || matchedCms.content);
-                return { ...p, ...matchedCms, content: preservedContent };
+            const existingSlugs = new Set<string>();
+            const existingTitles = new Set<string>();
+            const result: any[] = [];
+
+            // Add existing posts, updating with CMS content if matched
+            for (const p of prev) {
+              const s = (p.slug || "").trim().toLowerCase();
+              const t = (p.title || "").trim().toLowerCase();
+              if (s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+                existingSlugs.add(s);
+                if (t) existingTitles.add(t);
+
+                const matchedCms = cmsPosts.find(c => (c.slug || "").toLowerCase() === s);
+                if (matchedCms) {
+                  const preservedContent = (matchedCms.content && matchedCms.content.length > (p.content?.length || 0))
+                    ? matchedCms.content
+                    : (p.content || matchedCms.content);
+                  result.push({ ...p, ...matchedCms, content: preservedContent });
+                } else {
+                  result.push(p);
+                }
               }
-              return p;
-            });
-            return [...updated, ...newToAdd];
+            }
+
+            // Append new CMS posts that do not exist yet
+            for (const c of cmsPosts) {
+              const s = (c.slug || "").trim().toLowerCase();
+              const t = (c.title || "").trim().toLowerCase();
+              if (s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+                existingSlugs.add(s);
+                if (t) existingTitles.add(t);
+                result.push(c);
+              }
+            }
+
+            return result;
           });
         }
 
@@ -215,8 +267,34 @@ const BlogPostPage = () => {
             if (freshMedium.length > 0) {
               localStorage.setItem("g_hari_kiran_medium_feed", JSON.stringify(freshMedium));
               setPosts(prev => {
-                const base = prev.filter(p => !freshMedium.some(f => f.slug === p.slug));
-                return [...base, ...freshMedium];
+                const existingSlugs = new Set<string>();
+                const existingTitles = new Set<string>();
+                const result: any[] = [];
+
+                // Keep non-medium posts and deduplicate
+                for (const p of prev) {
+                  const s = (p.slug || "").trim().toLowerCase();
+                  const t = (p.title || "").trim().toLowerCase();
+                  const isMediumDuplicate = freshMedium.some(f => (f.slug || "").trim().toLowerCase() === s);
+                  if (!isMediumDuplicate && s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+                    existingSlugs.add(s);
+                    if (t) existingTitles.add(t);
+                    result.push(p);
+                  }
+                }
+
+                // Add fresh medium posts
+                for (const m of freshMedium) {
+                  const s = (m.slug || "").trim().toLowerCase();
+                  const t = (m.title || "").trim().toLowerCase();
+                  if (s && !existingSlugs.has(s) && (!t || !existingTitles.has(t))) {
+                    existingSlugs.add(s);
+                    if (t) existingTitles.add(t);
+                    result.push(m);
+                  }
+                }
+
+                return result;
               });
             }
           }
@@ -243,11 +321,27 @@ const BlogPostPage = () => {
     }
   };
 
-  // Find related posts - same category first, then most recent
+  // Find related posts - same category first, then most recent, strictly deduplicated
   const relatedPosts = useMemo(() => {
     if (!post) return [];
-    return posts
-      .filter(p => p.slug !== slug)
+    const currentSlug = (slug || "").trim().toLowerCase();
+    const currentTitle = (post.title || "").trim().toLowerCase();
+    const seenSlugs = new Set<string>([currentSlug]);
+    const seenTitles = new Set<string>();
+    if (currentTitle) seenTitles.add(currentTitle);
+
+    const candidates = posts.filter(p => {
+      const s = (p.slug || "").trim().toLowerCase();
+      const t = (p.title || "").trim().toLowerCase();
+      if (!s || seenSlugs.has(s) || (t && seenTitles.has(t))) {
+        return false;
+      }
+      seenSlugs.add(s);
+      if (t) seenTitles.add(t);
+      return true;
+    });
+
+    return candidates
       .sort((a, b) => {
         if (a.category === post.category && b.category !== post.category) return -1;
         if (b.category === post.category && b.category !== post.category) return 1;
@@ -733,7 +827,7 @@ const BlogPostPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedPosts.map((related, i) => (
               <motion.div
-                key={related.slug}
+                key={`${related.slug}-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
